@@ -22,11 +22,12 @@ public final class MainScene extends Scene {
 
     private final List<IBullet> enemyBullets = new ArrayList<>(64);
     private final List<IBullet> playerBullets = new ArrayList<>(32);
+    private final List<IEnemy> enemies = new ArrayList<>(32);
     private final Player player = new Player(WIDTH / 2, HEIGHT / 6 * 5);
 
     private byte updatePhase = -1;
     private Updater[] updatePhases = new Updater[]{
-        this::updateEnemyBulletPos, this::updatePlayerPos, this::updatePlayerBulletPos, this::testCollisions
+        this::updateEnemyBulletPos, this::updateEnemyPos, this::updatePlayerPos, this::updatePlayerBulletPos, this::testCollisions
     };
 
     private float playerFireTimeout = 0;
@@ -44,6 +45,9 @@ public final class MainScene extends Scene {
         for (int i = 0; i < playerBullets.size(); ++i) {
             playerBullets.get(i).render(g);
         }
+        for (int i = 0; i < enemies.size(); ++i) {
+            enemies.get(i).render(g);
+        }
     }
 
     @Override
@@ -53,6 +57,18 @@ public final class MainScene extends Scene {
         }
         playerFireTimeout -= dt;
         return updatePhases[updatePhase].test(dt);
+    }
+
+    private boolean updateEnemyPos(final float dt) {
+        for (int i = 0; i < enemies.size(); ++i) {
+            final IEnemy enemy = enemies.get(i);
+            enemy.update(dt);
+            if (enemy.isOutOfScreen(WIDTH, HEIGHT)) {
+                enemies.remove(i);
+                if (--i < -1) break;
+            }
+        }
+        return true;
     }
 
     private boolean updateEnemyBulletPos(final float dt) {
@@ -129,14 +145,33 @@ public final class MainScene extends Scene {
 
         for (int i = 0; i < enemyBullets.size(); ++i) {
             final IBullet bullet = enemyBullets.get(i);
-            bullet.update(dt);
             if (bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 enemyBullets.remove(i);
                 if (--i < -1) break;
             }
         }
 
-        // Test player bullet collisions with enemies
+        enemy_loop:
+        for (int i = 0; i < enemies.size(); ++i) {
+            final IEnemy enemy = enemies.get(i);
+            if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+                enemies.remove(i);
+                if (--i < -1) break;
+            }
+
+            for (int j = 0; j < playerBullets.size(); ++j) {
+                final IBullet bullet = playerBullets.get(j);
+                final float r = bullet.getR();
+                if (r < 0) continue;
+                if (enemy.collidesWith(bullet.getX(), bullet.getY(), r)) {
+                    enemies.remove(i);
+                    playerBullets.remove(j);
+                    if (--i < -1) break enemy_loop;
+                    if (--j < -1) break;
+                }
+            }
+        }
+
         return true;
     }
 
@@ -158,6 +193,7 @@ public final class MainScene extends Scene {
         // Dispose references and hope GC cleans them up
         enemyBullets.clear();
         playerBullets.clear();
+        enemies.clear();
         running.set(false);
         try {
             thread.join();
