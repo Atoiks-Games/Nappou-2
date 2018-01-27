@@ -50,7 +50,7 @@ public final class PointEnemy implements IEnemy {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        // x, y are the center of the bullet
+        // x, y are the center of the enemy
         final float lr = r;
         final int ld = (int) (lr * 2);
         g.drawOval((int) (x - lr), (int) (y - lr), ld, ld);

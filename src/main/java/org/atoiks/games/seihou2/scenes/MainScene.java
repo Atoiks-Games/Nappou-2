@@ -138,11 +138,6 @@ public final class MainScene extends Scene {
         enemy_loop:
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
-            if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                game.enemies.remove(i);
-                if (--i < -1) break;
-            }
-
             for (int j = 0; j < game.playerBullets.size(); ++j) {
                 final IBullet bullet = game.playerBullets.get(j);
                 final float r = bullet.getR();
@@ -152,7 +147,15 @@ public final class MainScene extends Scene {
                     game.playerBullets.remove(j);
                     if (--i < -1) break enemy_loop;
                     if (--j < -1) break;
+
+                    // Enemy is killed, do not test collision against the player
+                    continue enemy_loop;
                 }
+            }
+
+            if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+                game.enemies.remove(i);
+                if (--i < -1) break;
             }
         }
 
