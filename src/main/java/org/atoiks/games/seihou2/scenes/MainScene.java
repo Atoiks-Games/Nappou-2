@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import org.atoiks.games.framework.Frame;
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
 

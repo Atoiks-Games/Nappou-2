@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public final class Beam implements IBullet {
 
+    private static final long serialVersionUID = 4412375L;
+
     private float x, y, thickness, length, angle, dmag;
 
     // Update will fill in these values

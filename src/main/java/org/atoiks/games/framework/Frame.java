@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 public class Frame extends AbstractFrame<JFrame> {
 
     private final JPanel canvas = new JPanel() {
-        
+
+        private static final long serialVersionUID = 91727385L;
+
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);

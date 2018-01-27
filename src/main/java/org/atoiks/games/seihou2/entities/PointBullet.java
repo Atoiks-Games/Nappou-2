@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public final class PointBullet implements IBullet {
 
+    private static final long serialVersionUID = 3928242215L;
+
     private static final int SCREEN_EDGE_BUFFER = 16;
 
     private float x, y, r, dx, dy;

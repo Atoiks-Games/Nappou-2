@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public final class PointEnemy implements IEnemy {
 
+    private static final long serialVersionUID = 5619264522L;
+
     private static final int SCREEN_EDGE_BUFFER = 16;
 
     private float x, y, r;
