@@ -14,8 +14,8 @@ public final class MainScene extends Scene {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    public static final float DEFAULT_DX = 400f;
-    public static final float DEFAULT_DY = 400f;
+    public static final float DEFAULT_DX = 800f;
+    public static final float DEFAULT_DY = 800f;
 
     private final Game game = new Game(WIDTH / 2, HEIGHT / 6 * 5);
 
@@ -40,7 +40,7 @@ public final class MainScene extends Scene {
             updatePhase = 0;
         }
         playerFireTimeout -= dt;
-        return updatePhases[updatePhase].test(dt);
+        return updatePhases[updatePhase].update(dt);
     }
 
     private boolean updateEnemyPos(final float dt) {
@@ -106,7 +106,7 @@ public final class MainScene extends Scene {
                     }
                     game.player.setDx(tmpVal);
 
-                    game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.65f : 1);
+                    game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
                 }
             });
             thread.start();
@@ -188,5 +188,5 @@ public final class MainScene extends Scene {
 
 interface Updater {
 
-    public boolean test(float dt);
+    public boolean update(float dt);
 }
