@@ -9,4 +9,6 @@ public interface IEnemy extends ICollidable, IRender, IUpdate, Serializable {
 
     public float getX();
     public float getY();
+
+    public void attachGame(Game game);
 }

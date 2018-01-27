@@ -1,6 +1,9 @@
 package org.atoiks.games.framework;
 
+import java.awt.Toolkit;
 import java.awt.Graphics;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,7 +29,7 @@ public class Frame extends AbstractFrame<JFrame> {
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(info.resizable);
-        canvas.setPreferredSize(new java.awt.Dimension(info.width, info.height));
+        canvas.setPreferredSize(new Dimension(info.width, info.height));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.addKeyListener(sceneMgr.keyboard());
@@ -34,23 +37,23 @@ public class Frame extends AbstractFrame<JFrame> {
 
     @Override
     protected int getWidth() {
-        return frame.getWidth();
+        return canvas.getPreferredSize().width;
     }
 
     @Override
     protected int getHeight() {
-        return frame.getHeight();
+        return canvas.getPreferredSize().height;
     }
 
     @Override
     protected void renderGame() {
         canvas.repaint();
-        java.awt.Toolkit.getDefaultToolkit().sync();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
     public void setSize(int width, int height) {
-        canvas.setPreferredSize(new java.awt.Dimension(width, height));
+        canvas.setPreferredSize(new Dimension(width, height));
         frame.pack();
     }
 

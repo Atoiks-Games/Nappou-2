@@ -8,8 +8,22 @@ public final class PointEnemy implements IEnemy {
     private static final long serialVersionUID = 5619264522L;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
+    private static final double PI_OVER_12 = Math.PI / 12;
 
     private float x, y, r;
+    private Game game;
+    private float time;
+
+    public PointEnemy(float x, float y, float r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+    }
+
+    @Override
+    public void attachGame(Game game) {
+        this.game = game;
+    }
 
     @Override
     public float getX() {
@@ -23,7 +37,14 @@ public final class PointEnemy implements IEnemy {
 
     @Override
     public void update(float dt) {
-        // TODO
+        // Placeholder
+        if ((time += dt) >= 0.25) {
+            time = 0;
+            final double angle = Math.atan2(-(y - game.player.getY()), -(x - game.player.getX()));
+            game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle + PI_OVER_12), 720));
+            game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle), 720));
+            game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle - PI_OVER_12), 720));
+        }
     }
 
     @Override
