@@ -1,7 +1,5 @@
 package org.atoiks.games.seihou2.scenes;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
