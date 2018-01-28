@@ -1,0 +1,45 @@
+package org.atoiks.games.seihou2.entities.enemies;
+
+import java.awt.Graphics;
+
+public final class PointEnemy extends AbstractEnemy {
+
+    private static final long serialVersionUID = 56192645221L;
+    //This needs to be different for every enemy...
+
+    private static final double PI_OVER_12 = Math.PI / 12;
+
+    private float time;
+    private boolean right;
+
+    public DummyEnemy(float x, float y, float r, boolean right) {
+        super(x, y, r);
+        this.right = right;
+    }
+
+    @Override
+    public void update(float dt) {
+        // Placeholder
+        time += dt;
+
+    if(right && x > 700){
+      right = false;
+    }
+    if(!right && x < 50){
+      right = true;
+    }
+
+    if(right){
+      x += 1 * dt;
+    } else {
+      x -= 1 *dt;
+    }
+
+    }
+
+    @Override
+    public void render(Graphics g) {
+        // Convert to drawImage later on?
+        super.render(g);
+    }
+}
