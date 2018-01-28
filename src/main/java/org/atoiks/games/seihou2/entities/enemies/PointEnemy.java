@@ -1,7 +1,11 @@
-package org.atoiks.games.seihou2.entities;
+package org.atoiks.games.seihou2.entities.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import org.atoiks.games.seihou2.entities.Beam;
+import org.atoiks.games.seihou2.entities.Game;
+import org.atoiks.games.seihou2.entities.IEnemy;
 
 public final class PointEnemy implements IEnemy {
 

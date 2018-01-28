@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
+import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class MainScene extends Scene {
 
