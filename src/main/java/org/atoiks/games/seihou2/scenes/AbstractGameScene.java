@@ -27,7 +27,7 @@ public abstract class AbstractGameScene extends Scene {
 
     protected float playerFireTimeout;
     protected Image hpImg;
-    protected Image lifeImg;
+    protected Image statsImg;
     protected Image pauseImg;
     protected boolean pause;
 
@@ -39,7 +39,7 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void enter() {
         hpImg = (Image) scene.resources().get("hp.png");
-        lifeImg = (Image) scene.resources().get("life.png");
+        statsImg = (Image) scene.resources().get("stats.png");
         pauseImg = (Image) scene.resources().get("pause.png");
 
         playerFireTimeout = 0f;
@@ -57,16 +57,21 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     public void renderStats(final Graphics g) {
-        if (lifeImg != null) {
-            g.drawImage(lifeImg, GAME_BORDER + 5, 2, null);
+
+        if (statsImg != null) {
+            g.drawImage(statsImg, GAME_BORDER, 0, null);
         }
+
         if (hpImg != null) {
             final int hp = game.player.getHp();
             final int w = hpImg.getWidth(null);
             for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, lifeImg.getHeight(null) - 8, null);
+                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24, null);
             }
         }
+
+        final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
+        g.drawString(str, GAME_BORDER + 5, 72);
     }
 
     @Override
@@ -200,9 +205,12 @@ public abstract class AbstractGameScene extends Scene {
                 final float r = bullet.getR();
                 if (r < 0) continue;
                 if (enemy.collidesWith(bullet.getX(), bullet.getY(), r)) {
-                    game.enemies.remove(i);
                     game.playerBullets.remove(j);
-                    if (--i < -1) break enemy_loop;
+                    if (enemy.changeHp(-1) <= 0) {
+                        game.enemies.remove(i);
+                        game.changeScore(enemy.getScore());
+                        if (--i < -1) break enemy_loop;
+                    }
                     if (--j < -1) break;
 
                     // Enemy is killed, do not test collision against the player
@@ -216,8 +224,11 @@ public abstract class AbstractGameScene extends Scene {
                     scene.switchToScene(1);
                     return true;
                 }
-                game.enemies.remove(i);
-                if (--i < -1) break;
+                if (enemy.changeHp(-1) <= 0) {
+                    game.enemies.remove(i);
+                    game.changeScore(enemy.getScore());
+                    if (--i < -1) break;
+                }
             }
         }
 

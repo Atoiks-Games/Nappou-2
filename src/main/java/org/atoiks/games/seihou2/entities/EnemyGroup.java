@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public final class EnemyGroup implements IEnemy {
+public final class EnemyGroup extends IEnemy {
 
     private static final long serialVersionUID = 823469624677L;
 
@@ -17,12 +17,24 @@ public final class EnemyGroup implements IEnemy {
     private int index;
 
     public EnemyGroup(float delay, IEnemy... enemies) {
+        super(0);
         this.delay = delay;
         this.enemies = enemies;
     }
 
     public EnemyGroup(float delay, int count, Supplier<? extends IEnemy> sup) {
         this(delay, Stream.generate(sup).limit(count).toArray(IEnemy[]::new));
+    }
+
+    @Override
+    public boolean isDead() {
+        // A spawner cannot die
+        return false;
+    }
+
+    @Override
+    public int changeHp(int delta) {
+        return 1;
     }
 
     @Override
@@ -64,5 +76,11 @@ public final class EnemyGroup implements IEnemy {
         // Out of screen is used for resource cleanup
         // Dispose group when all enemies are sent/spawned
         return index >= enemies.length;
+    }
+
+    @Override
+    public int getScore() {
+        // You cannot destroy enemy groups by attacking it...
+        return 0;
     }
 }

@@ -13,8 +13,8 @@ public final class PointEnemy extends AbstractEnemy {
     private float time;
     private boolean fireGate;
 
-    public PointEnemy(float x, float y, float r) {
-        super(x, y, r);
+    public PointEnemy(int hp, float x, float y, float r) {
+        super(hp, x, y, r);
     }
 
     @Override
@@ -43,5 +43,10 @@ public final class PointEnemy extends AbstractEnemy {
     public void render(Graphics g) {
         // Convert to drawImage later on?
         super.render(g);
+    }
+
+    @Override
+    public int getScore() {
+        return 1;
     }
 }

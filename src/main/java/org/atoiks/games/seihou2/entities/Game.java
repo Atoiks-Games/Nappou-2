@@ -18,6 +18,8 @@ public final class Game implements Serializable, IRender {
 
     public final Player player;
 
+    private int score;
+
     public Game(float playerX, float playerY) {
         this.player = new Player(playerX, playerY);
     }
@@ -50,6 +52,18 @@ public final class Game implements Serializable, IRender {
     public void addEnemy(final IEnemy enemy) {
         enemies.add(enemy);
         enemy.attachGame(this);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int changeScore(int delta) {
+        return this.score += delta;
     }
 
     public void cleanup() {

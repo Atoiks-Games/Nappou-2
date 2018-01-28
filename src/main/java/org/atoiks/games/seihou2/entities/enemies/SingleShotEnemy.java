@@ -11,8 +11,8 @@ public final class SingleShotEnemy extends AbstractEnemy {
     private float time;
     private boolean fireGate;
 
-    public SingleShotEnemy(float x, float y, float r) {
-        super(x, y, r);
+    public SingleShotEnemy(int hp, float x, float y, float r) {
+        super(hp, x, y, r);
     }
 
     @Override
@@ -36,5 +36,10 @@ public final class SingleShotEnemy extends AbstractEnemy {
     public void render(Graphics g) {
         // Convert to drawImage later on?
         super.render(g);
+    }
+
+    @Override
+    public int getScore() {
+        return 1;
     }
 }

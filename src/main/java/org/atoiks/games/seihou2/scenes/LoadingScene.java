@@ -62,7 +62,7 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("loading.png");
                     loadImageFromResources("title.png");
                     loadImageFromResources("hp.png");
-                    loadImageFromResources("life.png");
+                    loadImageFromResources("stats.png");
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
 

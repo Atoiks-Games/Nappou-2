@@ -9,8 +9,8 @@ public final class DummyEnemy extends AbstractEnemy {
 
     private boolean right;
 
-    public DummyEnemy(float x, float y, float r, boolean right) {
-        super(x, y, r);
+    public DummyEnemy(int hp, float x, float y, float r, boolean right) {
+        super(hp, x, y, r);
         this.right = right;
     }
 
@@ -34,5 +34,10 @@ public final class DummyEnemy extends AbstractEnemy {
     public void render(Graphics g) {
         // Convert to drawImage later on?
         super.render(g);
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
     }
 }

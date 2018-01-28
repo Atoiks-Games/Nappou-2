@@ -7,14 +7,14 @@ import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class TutorialScene extends AbstractGameScene {
 
-private int waveCounter;
-private Image tutorialImg;
+    private int waveCounter;
+    private Image tutorialImg;
 
     @Override
     public void enter() {
         super.enter();
         
-        game.addEnemy(new DummyEnemy(-10, 50, 8, true));
+        game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
         
         game.player.setHp(5);
         waveCounter = 0;
@@ -42,8 +42,8 @@ private Image tutorialImg;
         }
 
         if (game.enemies.isEmpty() && waveCounter == 1) {
-            game.addEnemy(new SingleShotEnemy(250, -10, 8));
-            game.addEnemy(new SingleShotEnemy(500, -10, 8));
+            game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
+            game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
         }
 
         return true;

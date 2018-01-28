@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import org.atoiks.games.seihou2.entities.Game;
 import org.atoiks.games.seihou2.entities.IEnemy;
 
-public abstract class AbstractEnemy implements IEnemy {
+public abstract class AbstractEnemy extends IEnemy {
 
     private static final long serialVersionUID = 7192746L;
 
@@ -15,7 +15,8 @@ public abstract class AbstractEnemy implements IEnemy {
     protected float x, y, r;
     protected Game game;
 
-    protected AbstractEnemy(float x, float y, float r) {
+    protected AbstractEnemy(int hp, float x, float y, float r) {
+        super(hp);
         this.x = x;
         this.y = y;
         this.r = r;
