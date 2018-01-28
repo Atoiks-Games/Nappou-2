@@ -1,5 +1,6 @@
 package org.atoiks.games.seihou2.scenes;
 
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -25,6 +26,7 @@ public final class MainScene extends Scene {
     };
 
     private float playerFireTimeout = 0;
+    private Image hpImg;
 
     @Override
     public void render(final Graphics g) {
@@ -38,6 +40,14 @@ public final class MainScene extends Scene {
         g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
         g.setColor(Color.white);
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
+
+        if (hpImg != null) {
+            final int hp = game.player.getHp();
+            final int w = hpImg.getWidth(null);
+            for (int i = 0; i < hp; ++i) {
+                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 10, null);
+            }
+        }
     }
 
     @Override
@@ -127,6 +137,11 @@ public final class MainScene extends Scene {
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
             if (bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+                if (game.player.changeHpBy(-1) <= 0) {
+                    // Goto title scene
+                    scene.switchToScene(1);
+                    return true;
+                }
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
             }
@@ -151,6 +166,11 @@ public final class MainScene extends Scene {
             }
 
             if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+                if (game.player.changeHpBy(-1) <= 0) {
+                    // Goto title scene
+                    scene.switchToScene(1);
+                    return true;
+                }
                 game.enemies.remove(i);
                 if (--i < -1) break;
             }
@@ -166,12 +186,15 @@ public final class MainScene extends Scene {
 
     @Override
     public void enter() {
-        //game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
+        hpImg = (Image) scene.resources().get("hp.png");
 
-        //game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(30, 10, 8)));
-        //game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
+        game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
+
+        game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(30, 10, 8)));
+        game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
         game.addEnemy(new DummyEnemy(-10, 50, 8, true));
 
+        game.player.setHp(5);
         playerFireTimeout = 0f;
     }
 

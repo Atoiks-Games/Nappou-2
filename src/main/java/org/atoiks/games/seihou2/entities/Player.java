@@ -18,6 +18,7 @@ public final class Player implements IRender, IUpdate, Serializable {
 
     private float x, y, dx, dy;
     private float speedScale = 1;
+    private int hp = 5;
 
     public Player(float x, float y) {
         this.x = x;
@@ -38,6 +39,18 @@ public final class Player implements IRender, IUpdate, Serializable {
     public void update(final float dt) {
         this.x += this.dx * this.speedScale * dt;
         this.y += this.dy * this.speedScale * dt;
+    }
+    
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int changeHpBy(int delta) {
+        return this.hp += delta;
     }
 
     public void setSpeedScale(float scale) {

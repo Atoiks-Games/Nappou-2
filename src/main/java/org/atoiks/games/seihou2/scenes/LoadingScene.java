@@ -61,6 +61,8 @@ public final class LoadingScene extends Scene {
                 loader.submit(() -> {
                     loadImageFromResources("loading.png");
                     loadImageFromResources("title.png");
+                    loadImageFromResources("hp.png");
+
                     loaded = LoadState.DONE;
                 });
                 break;
