@@ -2,8 +2,8 @@ package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework.Scene;
 

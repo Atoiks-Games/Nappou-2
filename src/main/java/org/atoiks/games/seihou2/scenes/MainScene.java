@@ -10,13 +10,14 @@ import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class MainScene extends Scene {
 
-    public static final int WIDTH = 800;
+    public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
+    public static final int GAME_BORDER = 750;
 
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
 
-    private final Game game = new Game(WIDTH / 2, HEIGHT / 6 * 5);
+    private final Game game = new Game(GAME_BORDER / 2, HEIGHT / 6 * 5);
 
     private byte updatePhase = -1;
     private Updater[] updatePhases = new Updater[]{
@@ -27,10 +28,16 @@ public final class MainScene extends Scene {
 
     @Override
     public void render(final Graphics g) {
+        // The bullet-curtain part
         g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-
+        g.fillRect(0, 0, GAME_BORDER, HEIGHT);
         game.render(g);
+
+        // The game stats part
+        g.setColor(Color.black);
+        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
+        g.setColor(Color.white);
+        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
     }
 
     @Override
@@ -47,7 +54,7 @@ public final class MainScene extends Scene {
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
             enemy.update(dt);
-            if (enemy.isOutOfScreen(WIDTH, HEIGHT)) {
+            if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemies.remove(i);
                 if (--i < -1) break;
             }
@@ -59,7 +66,7 @@ public final class MainScene extends Scene {
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
             bullet.update(dt);
-            if (bullet.isOutOfScreen(WIDTH, HEIGHT)) {
+            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
             }
@@ -71,7 +78,7 @@ public final class MainScene extends Scene {
         for (int i = 0; i < game.playerBullets.size(); ++i) {
             final IBullet bullet = game.playerBullets.get(i);
             bullet.update(dt);
-            if (bullet.isOutOfScreen(WIDTH, HEIGHT)) {
+            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.playerBullets.remove(i);
                 if (--i < -1) break;
             }
@@ -93,7 +100,7 @@ public final class MainScene extends Scene {
         tmpVal = 0;
         tmpPos = game.player.getX();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT)) {
-            if (tmpPos + Player.RADIUS < WIDTH) tmpVal += DEFAULT_DX;
+            if (tmpPos + Player.RADIUS < GAME_BORDER) tmpVal += DEFAULT_DX;
         }
         if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT)) {
             if (tmpPos - Player.RADIUS > 0) tmpVal -= DEFAULT_DX;
@@ -159,7 +166,7 @@ public final class MainScene extends Scene {
 
     @Override
     public void enter() {
-        game.addEnemyBullet(new PointBullet(WIDTH / 2, -10, 10, 20, 60));
+        game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
 
         game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(30, 10, 8)));
         game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
