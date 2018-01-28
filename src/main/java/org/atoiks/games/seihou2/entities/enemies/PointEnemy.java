@@ -1,45 +1,21 @@
 package org.atoiks.games.seihou2.entities.enemies;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import org.atoiks.games.seihou2.entities.Beam;
-import org.atoiks.games.seihou2.entities.Game;
-import org.atoiks.games.seihou2.entities.IEnemy;
 
-public final class PointEnemy implements IEnemy {
+public final class PointEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
-    private static final int SCREEN_EDGE_BUFFER = 16;
     private static final double PI_OVER_12 = Math.PI / 12;
 
-    private float x, y, r;
-    private Game game;
     private float time;
+    private boolean fireGate;
 
     public PointEnemy(float x, float y, float r) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
+        super(x, y, r);
     }
-
-    @Override
-    public void attachGame(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    private boolean fireGate = false;
 
     @Override
     public void update(float dt) {
@@ -65,25 +41,7 @@ public final class PointEnemy implements IEnemy {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        // x, y are the center of the enemy
-        final float lr = r;
-        final int ld = (int) (lr * 2);
-        g.drawOval((int) (x - lr), (int) (y - lr), ld, ld);
-    }
-
-    @Override
-    public boolean collidesWith(float x1, float y1, float r1) {
-        final float sumRadius = r + r1;
-        return (Math.abs(x1 - x) < sumRadius)
-            && (Math.abs(y1 - y) < sumRadius);
-    }
-
-    @Override
-    public boolean isOutOfScreen(final int w, final int h) {
-        return (x + r < -SCREEN_EDGE_BUFFER)
-            || (x - r > w + SCREEN_EDGE_BUFFER)
-            || (y + r < -SCREEN_EDGE_BUFFER)
-            || (y - r > h + SCREEN_EDGE_BUFFER);
+        // Convert to drawImage later on?
+        super.render(g);
     }
 }
