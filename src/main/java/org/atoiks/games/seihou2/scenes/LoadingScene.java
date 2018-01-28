@@ -22,7 +22,7 @@ public final class LoadingScene extends Scene {
     private static final int RADIUS = 100;
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
-    
+
     private LoadState loaded = LoadState.WAITING;
 
     private float time;
@@ -63,6 +63,8 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("title.png");
                     loadImageFromResources("hp.png");
                     loadImageFromResources("pause.png");
+                    loadImageFromResources("z.png");
+                    loadImageFromResources("none.png");
 
                     loaded = LoadState.DONE;
                 });

@@ -12,7 +12,7 @@ public class App {
                 .setTitle("Atoiks Games - Seihou 2")
                 .setResizable(false)
                 .setSize(900, 600)
-                .setScenes(new LoadingScene(), new TitleScene(), new MainScene());
+                .setScenes(new LoadingScene(), new TitleScene(), new TutorialScene(), new MainScene());
         try (final Frame frame = new Frame(info)) {
             frame.init();
             frame.loop();
