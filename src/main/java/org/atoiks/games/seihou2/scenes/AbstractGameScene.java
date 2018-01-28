@@ -27,6 +27,7 @@ public abstract class AbstractGameScene extends Scene {
 
     protected float playerFireTimeout;
     protected Image hpImg;
+    protected Image lifeImg;
     protected Image pauseImg;
     protected boolean pause;
 
@@ -38,6 +39,7 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void enter() {
         hpImg = (Image) scene.resources().get("hp.png");
+        lifeImg = (Image) scene.resources().get("life.png");
         pauseImg = (Image) scene.resources().get("pause.png");
 
         playerFireTimeout = 0f;
@@ -47,13 +49,30 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void leave() {
         game.cleanup();
+    } 
+
+    public void renderBackground(final Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+    }
+
+    public void renderStats(final Graphics g) {
+        if (lifeImg != null) {
+            g.drawImage(lifeImg, GAME_BORDER + 5, 2, null);
+        }
+        if (hpImg != null) {
+            final int hp = game.player.getHp();
+            final int w = hpImg.getWidth(null);
+            for (int i = 0; i < hp; ++i) {
+                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, lifeImg.getHeight(null) - 8, null);
+            }
+        }
     }
 
     @Override
-    public void render(final Graphics g) {
+    public final void render(final Graphics g) {
         // The bullet-curtain part
-        g.setColor(Color.black);
-        g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+        renderBackground(g);
         game.render(g);
         if (pause) {
             g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
@@ -65,13 +84,7 @@ public abstract class AbstractGameScene extends Scene {
         g.setColor(Color.white);
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
-        if (hpImg != null) {
-            final int hp = game.player.getHp();
-            final int w = hpImg.getWidth(null);
-            for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 10, null);
-            }
-        }
+        renderStats(g);
     }
 
     @Override
