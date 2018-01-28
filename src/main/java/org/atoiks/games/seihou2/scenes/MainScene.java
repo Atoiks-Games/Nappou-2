@@ -170,7 +170,7 @@ public final class MainScene extends Scene {
 
         //game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(30, 10, 8)));
         //game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
-        game.addEnemy(new DummyEnemy(-10, -50, 8));
+        game.addEnemy(new DummyEnemy(-10, 50, 8, true));
 
         playerFireTimeout = 0f;
     }

@@ -2,7 +2,7 @@ package org.atoiks.games.seihou2.entities.enemies;
 
 import java.awt.Graphics;
 
-public final class PointEnemy extends AbstractEnemy {
+public final class DummyEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 56192645221L;
     //This needs to be different for every enemy...
@@ -30,9 +30,9 @@ public final class PointEnemy extends AbstractEnemy {
     }
 
     if(right){
-      x += 1 * dt;
+      x += 100 * dt;
     } else {
-      x -= 1 *dt;
+      x -= 100 *dt;
     }
 
     }
