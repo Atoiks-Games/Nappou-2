@@ -5,203 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.enemies.*;
 
-public final class MainScene extends Scene {
-
-    public static final int WIDTH = 900;
-    public static final int HEIGHT = 600;
-    public static final int GAME_BORDER = 750;
-
-    public static final float DEFAULT_DX = 300f;
-    public static final float DEFAULT_DY = 300f;
-    public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
-
-    private final Game game = new Game(GAME_BORDER / 2, HEIGHT / 6 * 5);
-
-    private byte updatePhase = -1;
-    private Updater[] updatePhases = new Updater[]{
-        this::updateEnemyBulletPos, this::updateEnemyPos, this::updatePlayerBulletPos, this::testCollisions
-    };
-
-    private float playerFireTimeout = 0;
-    private Image hpImg;
-    private Image pauseImg;
-    private boolean pause;
-
-    @Override
-    public void render(final Graphics g) {
-        // The bullet-curtain part
-        g.setColor(Color.black);
-        g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-        game.render(g);
-        if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
-        }
-
-        // The game stats part
-        g.setColor(Color.black);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-        g.setColor(Color.white);
-        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
-
-        if (hpImg != null) {
-            final int hp = game.player.getHp();
-            final int w = hpImg.getWidth(null);
-            for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 10, null);
-            }
-        }
-    }
-
-    @Override
-    public boolean update(final float dt) {
-        // Hopefully the only "black magic" in here
-        if (!pause) {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                pause = true;
-            }
-            if (++updatePhase >= updatePhases.length) {
-                updatePhase = 0;
-            }
-            playerFireTimeout -= dt;
-            return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
-        } else if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            pause = false;
-        }
-        return true;
-    }
-
-    private boolean updateEnemyPos(final float dt) {
-        for (int i = 0; i < game.enemies.size(); ++i) {
-            final IEnemy enemy = game.enemies.get(i);
-            enemy.update(dt);
-            if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.enemies.remove(i);
-                if (--i < -1) break;
-            }
-        }
-        return true;
-    }
-
-    private boolean updateEnemyBulletPos(final float dt) {
-        for (int i = 0; i < game.enemyBullets.size(); ++i) {
-            final IBullet bullet = game.enemyBullets.get(i);
-            bullet.update(dt);
-            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
-        return true;
-    }
-
-    private boolean updatePlayerBulletPos(final float dt) {
-        for (int i = 0; i < game.playerBullets.size(); ++i) {
-            final IBullet bullet = game.playerBullets.get(i);
-            bullet.update(dt);
-            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.playerBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
-        return true;
-    }
-
-    private boolean procPlayerPos(final float dt) {
-        float tmpVal = 0;
-        float tmpPos = game.player.getY();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN)) {
-            if (tmpPos + Player.RADIUS < HEIGHT) tmpVal += DEFAULT_DY;
-        }
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_UP)) {
-            if (tmpPos - Player.RADIUS > 0) tmpVal -= DEFAULT_DY;
-        }
-        game.player.setDy(tmpVal);
-
-        tmpVal = 0;
-        tmpPos = game.player.getX();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT)) {
-            if (tmpPos + Player.RADIUS < GAME_BORDER) tmpVal += DEFAULT_DX;
-        }
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT)) {
-            if (tmpPos - Player.RADIUS > 0) tmpVal -= DEFAULT_DX;
-        }
-        game.player.setDx(tmpVal);
-
-        game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
-
-        game.player.update(dt);
-
-        if (playerFireTimeout <= 0 && scene.keyboard().isKeyDown(KeyEvent.VK_Z)) {
-            final float px = game.player.getX();
-            final float py = game.player.getY();
-            game.addPlayerBullet(new PointBullet(px, py, 5, 0, -DEFAULT_DY * 4.5f));
-            playerFireTimeout = 0.2f;  // 0.2 second cap
-        }
-        return true;
-    }
-
-    private boolean testCollisions(final float dt) {
-        final float px = game.player.getX();
-        final float py = game.player.getY();
-
-        for (int i = 0; i < game.enemyBullets.size(); ++i) {
-            final IBullet bullet = game.enemyBullets.get(i);
-            if (bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (game.player.changeHpBy(-1) <= 0) {
-                    // Goto title scene
-                    scene.switchToScene(1);
-                    return true;
-                }
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
-
-        enemy_loop:
-        for (int i = 0; i < game.enemies.size(); ++i) {
-            final IEnemy enemy = game.enemies.get(i);
-            for (int j = 0; j < game.playerBullets.size(); ++j) {
-                final IBullet bullet = game.playerBullets.get(j);
-                final float r = bullet.getR();
-                if (r < 0) continue;
-                if (enemy.collidesWith(bullet.getX(), bullet.getY(), r)) {
-                    game.enemies.remove(i);
-                    game.playerBullets.remove(j);
-                    if (--i < -1) break enemy_loop;
-                    if (--j < -1) break;
-
-                    // Enemy is killed, do not test collision against the player
-                    continue enemy_loop;
-                }
-            }
-
-            if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (game.player.changeHpBy(-1) <= 0) {
-                    // Goto title scene
-                    scene.switchToScene(1);
-                    return true;
-                }
-                game.enemies.remove(i);
-                if (--i < -1) break;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        // Window size is fixed
-    }
+public final class MainScene extends AbstractGameScene {
 
     @Override
     public void enter() {
-        hpImg = (Image) scene.resources().get("hp.png");
-        pauseImg = (Image) scene.resources().get("pause.png");
+        super.enter();
 
         game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
 
@@ -209,18 +20,16 @@ public final class MainScene extends Scene {
         game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
         game.addEnemy(new DummyEnemy(-10, 50, 8, true));
 
-        pause = false;
         game.player.setHp(5);
-        playerFireTimeout = 0f;
     }
 
     @Override
     public void leave() {
-        game.cleanup();
+        super.leave();
     }
-}
 
-interface Updater {
-
-    public boolean update(float dt);
+    @Override
+    public boolean postUpdate(float dt) {
+        return true;
+    }
 }
