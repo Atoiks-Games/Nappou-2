@@ -7,9 +7,6 @@ public final class DummyEnemy extends AbstractEnemy {
     private static final long serialVersionUID = 56192645221L;
     //This needs to be different for every enemy...
 
-    private static final double PI_OVER_12 = Math.PI / 12;
-
-    private float time;
     private boolean right;
 
     public DummyEnemy(float x, float y, float r, boolean right) {
@@ -19,9 +16,6 @@ public final class DummyEnemy extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        // Placeholder
-        time += dt;
-
     if(right && x > 700){
       right = false;
     }
