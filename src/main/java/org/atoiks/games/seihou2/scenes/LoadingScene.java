@@ -65,7 +65,6 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("life.png");
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
-                    loadImageFromResources("none.png");
 
                     loaded = LoadState.DONE;
                 });
