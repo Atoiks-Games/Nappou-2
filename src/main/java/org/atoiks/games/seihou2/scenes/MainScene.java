@@ -17,6 +17,7 @@ public final class MainScene extends Scene {
 
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
+    public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
 
     private final Game game = new Game(GAME_BORDER / 2, HEIGHT / 6 * 5);
 
@@ -27,6 +28,8 @@ public final class MainScene extends Scene {
 
     private float playerFireTimeout = 0;
     private Image hpImg;
+    private Image pauseImg;
+    private boolean pause;
 
     @Override
     public void render(final Graphics g) {
@@ -34,6 +37,9 @@ public final class MainScene extends Scene {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
         game.render(g);
+        if (pause) {
+            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
+        }
 
         // The game stats part
         g.setColor(Color.black);
@@ -53,11 +59,19 @@ public final class MainScene extends Scene {
     @Override
     public boolean update(final float dt) {
         // Hopefully the only "black magic" in here
-        if (++updatePhase >= updatePhases.length) {
-            updatePhase = 0;
+        if (!pause) {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                pause = true;
+            }
+            if (++updatePhase >= updatePhases.length) {
+                updatePhase = 0;
+            }
+            playerFireTimeout -= dt;
+            return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
+        } else if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+            pause = false;
         }
-        playerFireTimeout -= dt;
-        return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
+        return true;
     }
 
     private boolean updateEnemyPos(final float dt) {
@@ -187,6 +201,7 @@ public final class MainScene extends Scene {
     @Override
     public void enter() {
         hpImg = (Image) scene.resources().get("hp.png");
+        pauseImg = (Image) scene.resources().get("pause.png");
 
         game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
 
@@ -194,6 +209,7 @@ public final class MainScene extends Scene {
         game.addEnemy(new EnemyGroup(0.17f, 5, () -> new PointEnemy(50, 10, 8)));
         game.addEnemy(new DummyEnemy(-10, 50, 8, true));
 
+        pause = false;
         game.player.setHp(5);
         playerFireTimeout = 0f;
     }
