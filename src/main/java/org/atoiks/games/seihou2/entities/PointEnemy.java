@@ -35,12 +35,24 @@ public final class PointEnemy implements IEnemy {
         return y;
     }
 
+    private boolean fireGate = false;
+
     @Override
     public void update(float dt) {
         // Placeholder
-        if ((time += dt) >= 0.25) {
-            time = 0;
-            final double angle = Math.atan2(-(y - game.player.getY()), -(x - game.player.getX()));
+        time += dt;
+
+        final double mult = Math.cos(2 * time) / 2;
+        y += 300 * (mult + 0.5) * dt;
+        x += 300 * (0.5 - mult) * dt;
+
+        if (!fireGate && Math.cos(6 * time) < 0.5) {
+            fireGate = true;
+        }
+
+        if (fireGate && Math.cos(6 * time) > 0.5) {
+            fireGate = false;
+            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle + PI_OVER_12), 720));
             game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle), 720));
             game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle - PI_OVER_12), 720));
