@@ -25,29 +25,9 @@ private Image tutorialImg;
     }
 
     @Override
-    public void render(final Graphics g) {
-        // The bullet-curtain part
-        g.setColor(Color.black);
-        g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+    public void renderBackground(final Graphics g) {
+        super.renderBackground(g);
         g.drawImage(tutorialImg, GAME_BORDER/2 - tutorialImg.getWidth(null)/2, HEIGHT/2 - tutorialImg.getHeight(null)/2, null);
-        game.render(g);
-        if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
-        }
-
-        // The game stats part
-        g.setColor(Color.black);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-        g.setColor(Color.white);
-        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
-
-        if (hpImg != null) {
-            final int hp = game.player.getHp();
-            final int w = hpImg.getWidth(null);
-            for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 10, null);
-            }
-        }
     }
 
     @Override
