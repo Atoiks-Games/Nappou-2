@@ -57,7 +57,6 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     public void renderStats(final Graphics g) {
-
         if (statsImg != null) {
             g.drawImage(statsImg, GAME_BORDER, 0, null);
         }

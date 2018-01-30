@@ -3,10 +3,19 @@ package org.atoiks.games.seihou2.scenes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework.Scene;
 
@@ -66,6 +75,8 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
 
+                    loadMusicFromResources("title.wav");
+
                     loaded = LoadState.DONE;
                 });
                 break;
@@ -80,8 +91,18 @@ public final class LoadingScene extends Scene {
 
     private void loadImageFromResources(String str) {
         try {
-            scene.resources().put(str, ImageIO.read(this.getClass().getResourceAsStream("/" + str)));
+            scene.resources().put(str, ImageIO.read(this.getClass().getResourceAsStream("/image/" + str)));
         } catch (java.io.IOException ex) {
+        }
+    }
+
+    private void loadMusicFromResources(String name) {
+        try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("/music/" + name)))) {
+            final Clip clip = AudioSystem.getClip();
+            clip.open(in);
+            clip.stop();
+            scene.resources().put(name, clip);
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
         }
     }
 }

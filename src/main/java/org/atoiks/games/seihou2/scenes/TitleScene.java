@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework.Scene;
 
 import static org.atoiks.games.seihou2.scenes.MainScene.HEIGHT;
@@ -13,6 +15,7 @@ import static org.atoiks.games.seihou2.scenes.MainScene.WIDTH;
 public final class TitleScene extends Scene {
 
     private Image titleImg;
+    private Clip bgm;
 
 	@Override
 	public void render(Graphics g) {
@@ -37,5 +40,14 @@ public final class TitleScene extends Scene {
     @Override
     public void enter() {
         titleImg = (Image) scene.resources().get("title.png");
+        bgm = (Clip) scene.resources().get("title.wav");
+
+        bgm.start();
+        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
+    public void leave() {
+        bgm.stop();
     }
 }
