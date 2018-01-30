@@ -16,17 +16,21 @@ public final class Player implements IRender, IUpdate, Serializable {
     public static final int COLLISION_RADIUS = 2;
     public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
 
+    public final IShield shield;
+
     private float x, y, dx, dy;
     private float speedScale = 1;
     private int hp = 5;
 
-    public Player(float x, float y) {
+    public Player(float x, float y, IShield shield) {
         this.x = x;
         this.y = y;
+        this.shield = shield;
     }
 
     @Override
     public void render(final Graphics g) {
+        this.shield.render(g);
         g.setColor(Color.cyan);
         g.fillOval((int) (x - RADIUS), (int) (y - RADIUS), RADIUS * 2, RADIUS * 2);
         if (speedScale != 1) {
@@ -37,8 +41,9 @@ public final class Player implements IRender, IUpdate, Serializable {
 
     @Override
     public void update(final float dt) {
-        this.x += this.dx * this.speedScale * dt;
-        this.y += this.dy * this.speedScale * dt;
+        this.shield.update(dt);
+        this.shield.setX(this.x += this.dx * this.speedScale * dt);
+        this.shield.setY(this.y += this.dy * this.speedScale * dt);
     }
     
     public int getHp() {

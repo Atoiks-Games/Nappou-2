@@ -20,8 +20,8 @@ public final class Game implements Serializable, IRender {
 
     private int score;
 
-    public Game(float playerX, float playerY) {
-        this.player = new Player(playerX, playerY);
+    public Game(Player player) {
+        this.player = player;
     }
 
     @Override

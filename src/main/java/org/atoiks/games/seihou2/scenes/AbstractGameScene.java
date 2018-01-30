@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
+import org.atoiks.games.seihou2.entities.shield.TimeBasedShield;
 
 public abstract class AbstractGameScene extends Scene {
 
@@ -18,7 +19,7 @@ public abstract class AbstractGameScene extends Scene {
     public static final float DEFAULT_DY = 300f;
     public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
 
-    protected final Game game = new Game(GAME_BORDER / 2, HEIGHT / 6 * 5);
+    protected final Game game = new Game(new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new TimeBasedShield(2, 35)));
 
     private byte updatePhase = -1;
     private Updater[] updatePhases = new Updater[]{
@@ -176,6 +177,10 @@ public abstract class AbstractGameScene extends Scene {
             game.addPlayerBullet(new PointBullet(px, py, 5, 0, -DEFAULT_DY * 4.5f));
             playerFireTimeout = 0.2f;  // 0.2 second cap
         }
+
+        if (scene.keyboard().isKeyDown(KeyEvent.VK_X)) {
+            game.player.shield.activate();
+        }
         return true;
     }
 
@@ -191,6 +196,11 @@ public abstract class AbstractGameScene extends Scene {
                     scene.switchToScene(1);
                     return true;
                 }
+                game.enemyBullets.remove(i);
+                if (--i < -1) break;
+            }
+
+            if (game.player.shield.isActive() && bullet.collidesWith(game.player.shield.getX(), game.player.shield.getY(), game.player.shield.getR())) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
             }
