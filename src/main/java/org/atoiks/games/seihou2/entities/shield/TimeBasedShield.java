@@ -5,17 +5,17 @@ import java.awt.Graphics;
 
 import org.atoiks.games.seihou2.entities.IShield;
 
-public class TimeBasedShield implements IShield {
+public abstract class TimeBasedShield implements IShield {
 
     private static final long serialVersionUID = 172635916L;
 
-    private final float timeout;
+    protected final float timeout;
+    
+    protected boolean active = false;
+    protected float time = 0;
+    protected float x, y, r;
 
-    private boolean active = false;
-    private float time = 0;
-    private float x, y, r;
-
-    public TimeBasedShield(float timeout, float r) {
+    protected TimeBasedShield(float timeout, float r) {
         this.timeout = timeout;
         this.r = r;
     }

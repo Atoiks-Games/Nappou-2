@@ -16,17 +16,13 @@ public final class Game implements Serializable, IRender {
     public final List<IBullet> playerBullets = new ArrayList<>(16);
     public final List<IEnemy> enemies = new ArrayList<>(32);
 
-    public final Player player;
+    public Player player;
 
     private int score;
 
-    public Game(Player player) {
-        this.player = player;
-    }
-
     @Override
     public void render(Graphics g) {
-        player.render(g);
+        if (player != null) player.render(g);
 
         for (int i = 0; i < enemyBullets.size(); ++i) {
             enemyBullets.get(i).render(g);

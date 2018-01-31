@@ -8,8 +8,8 @@ import org.atoiks.games.framework.IUpdate;
 public interface IShield extends ICollidable, IRender, IUpdate, Serializable {
 
     public float getX();
-    public float getR();
     public float getY();
+    public float getR();
 
     public void setX(float x);
     public void setY(float y);
