@@ -18,6 +18,14 @@ public abstract class AbstractGameScene extends Scene {
     public static final float DEFAULT_DY = 300f;
     public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
 
+    // Conventionally, continue is always the first option,
+    // sceneDest is always one less than the selector{X, Y}
+    private static final int[] selectorX = {388, 434};
+    private static final int[] selectorY = {383, 444};
+    private static final int[] sceneDest = {1};
+
+    private int selector;
+
     protected final Game game = new Game();
 
     private byte updatePhase = -1;
@@ -37,7 +45,7 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public void enter() {
+    public void enter(int prevSceneId) {
         hpImg = (Image) scene.resources().get("hp.png");
         statsImg = (Image) scene.resources().get("stats.png");
         pauseImg = (Image) scene.resources().get("pause.png");
@@ -80,6 +88,8 @@ public abstract class AbstractGameScene extends Scene {
         game.render(g);
         if (pause) {
             g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
+            g.setColor(Color.black);
+            g.drawLine(55, selectorY[selector], selectorX[selector], selectorY[selector]);
         }
 
         // The game stats part
@@ -103,8 +113,21 @@ public abstract class AbstractGameScene extends Scene {
             }
             playerFireTimeout -= dt;
             return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
-        } else if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            pause = false;
+        } else {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+                if (++selector >= selectorX.length) selector = 0;
+            }
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+                if (--selector < 0) selector = selectorX.length - 1;
+            }
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                if (selector == 0) {
+                    pause = false;
+                } else {
+                    scene.switchToScene(sceneDest[selector - 1]);
+                }
+                return true;
+            }
         }
         return true;
     }

@@ -28,10 +28,10 @@ public final class SceneManager {
         }
     }
 
-    public void switchToScene(int id) {
+    public void switchToScene(final int id) {
         if (sceneId >= 0 && sceneId < scenes.length) scenes[sceneId].leave();
+        if (id >= 0 && id < scenes.length) scenes[id].enter(sceneId);
         sceneId = id;
-        if (sceneId >= 0 && sceneId < scenes.length) scenes[sceneId].enter();
         skipCycle = true;
     }
 

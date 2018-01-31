@@ -28,7 +28,7 @@ public abstract class Scene {
         // Does nothing
     }
 
-    public void enter() {
+    public void enter(int previousSceneId) {
         // Does nothing
     }
 }

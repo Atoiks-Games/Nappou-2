@@ -17,5 +17,6 @@ public class App {
             frame.init();
             frame.loop();
         }
+        System.exit(0);
     }
 }
