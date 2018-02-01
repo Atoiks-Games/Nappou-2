@@ -1,7 +1,6 @@
 package org.atoiks.games.seihou2.scenes;
 
 import org.atoiks.games.seihou2.entities.*;
-import org.atoiks.games.seihou2.entities.shield.*;
 import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class MainScene extends AbstractGameScene {
@@ -10,9 +9,7 @@ public final class MainScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        // The Shield should be stored in the resouces map,
-        // (it is selectable)
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new TrackingTimeShield(2, 35));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
 
         game.addEnemyBullet(new PointBullet(GAME_BORDER / 2, -10, 10, 20, 60));
 
@@ -21,6 +18,7 @@ public final class MainScene extends AbstractGameScene {
         game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
 
         game.player.setHp(5);
+        game.setScore(0);
     }
 
     @Override

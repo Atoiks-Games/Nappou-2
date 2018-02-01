@@ -63,6 +63,7 @@ public final class LoadingScene extends Scene {
             case LOADING:
                 break;
             case DONE:
+                loader.shutdown();
                 scene.gotoNextScene();
                 break;
             case WAITING:
@@ -74,6 +75,7 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("stats.png");
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
+                    loadImageFromResources("opt_shield.png");
 
                     loadMusicFromResources("title.wav");
 

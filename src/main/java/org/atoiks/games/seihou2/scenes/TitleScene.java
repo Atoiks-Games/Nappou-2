@@ -9,9 +9,6 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework.Scene;
 
-import static org.atoiks.games.seihou2.scenes.MainScene.HEIGHT;
-import static org.atoiks.games.seihou2.scenes.MainScene.WIDTH;
-
 public final class TitleScene extends Scene {
 
     // Conventionally, last scene is always Quit,
@@ -26,8 +23,6 @@ public final class TitleScene extends Scene {
 
 	@Override
 	public void render(Graphics g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(titleImg, 0, 0, null);
         g.setColor(Color.white);
         g.drawLine(65, selectorY[selector], selectorX[selector], selectorY[selector]);
@@ -63,6 +58,7 @@ public final class TitleScene extends Scene {
         titleImg = (Image) scene.resources().get("title.png");
         bgm = (Clip) scene.resources().get("title.wav");
 
+        bgm.setMicrosecondPosition(0);
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
     }

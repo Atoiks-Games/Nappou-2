@@ -16,6 +16,8 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
+        tutorialImg = (Image) scene.resources().get("z.png");
+
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
         
         game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
@@ -23,7 +25,6 @@ public final class TutorialScene extends AbstractGameScene {
         game.player.setHp(5);
         game.setScore(0);
         waveCounter = 0;
-        tutorialImg = (Image) scene.resources().get("z.png");
     }
 
     @Override
