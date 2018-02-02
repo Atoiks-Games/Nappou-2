@@ -7,13 +7,12 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.IShield;
-import org.atoiks.games.seihou2.entities.shield.FixedTimeShield;
-import org.atoiks.games.seihou2.entities.shield.TrackingTimeShield;
+import org.atoiks.games.seihou2.entities.shield.*;
 
 public final class PlayerOptionScene extends Scene {
 
-    private static final int[] shieldSelX = {272, 272};
-    private static final int[] shieldSelY = {393, 455};
+    private static final int[] shieldSelX = {272, 272, 300};
+    private static final int[] shieldSelY = {393, 455, 540};
 
     private Image shieldOptImg;
     private int shieldSel;
@@ -56,16 +55,15 @@ public final class PlayerOptionScene extends Scene {
 
     @Override
     public void leave() {
-        final IShield shield;
+        scene.resources().put("shield", getShieldFromOption());
+    }
+
+    private IShield getShieldFromOption() {
         switch (shieldSel) {
-            case 0:
             default:
-                shield = new FixedTimeShield(3.5f, 50);
-                break;
-            case 1:
-                shield = new TrackingTimeShield(2f, 35);
-                break;
+            case 0: return new FixedTimeShield(3.5f, 50);
+            case 1: return new TrackingTimeShield(2f, 35);
+            case 2: return new NullShield();
         }
-        scene.resources().put("shield", shield);
     }
 }
