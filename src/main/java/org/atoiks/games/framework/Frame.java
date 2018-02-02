@@ -1,6 +1,8 @@
 package org.atoiks.games.framework;
 
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.Graphics;
 import java.awt.Dimension;
 
@@ -26,8 +28,15 @@ public class Frame extends AbstractFrame<JFrame> {
         super(info.fps, new SceneManager(info.scenes));
         frame = new JFrame(info.titleName);
 
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                Frame.this.close();
+            }
+        });
+
         frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setResizable(info.resizable);
         canvas.setPreferredSize(new Dimension(info.width, info.height));
         frame.pack();
