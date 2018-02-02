@@ -19,8 +19,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework.Scene;
 
-import static org.atoiks.games.seihou2.scenes.MainScene.HEIGHT;
-import static org.atoiks.games.seihou2.scenes.MainScene.WIDTH;
+import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
+import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;
 
 public final class LoadingScene extends Scene {
 

@@ -3,7 +3,7 @@ package org.atoiks.games.seihou2.scenes;
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.enemies.*;
 
-public final class MainScene extends AbstractGameScene {
+public final class LevelOneScene extends AbstractGameScene {
 
     @Override
     public void enter(final int prevSceneId) {
