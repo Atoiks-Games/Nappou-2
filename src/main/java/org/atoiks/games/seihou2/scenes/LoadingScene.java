@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Graphics;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 
@@ -22,6 +23,7 @@ import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
 
 import org.atoiks.games.framework.Scene;
+import org.atoiks.games.seihou2.GameConfig;
 
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;
@@ -80,8 +82,17 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
                     loadImageFromResources("opt_shield.png");
+                    loadImageFromResources("config.png");
 
                     loadMusicFromResources("title.wav");
+
+                    // Load configuration file from "current" directory
+                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
+                        scene.resources().put("game.cfg", (GameConfig) ois.readObject());
+                    } catch (IOException | ClassNotFoundException ex) {
+                        // Supply default configuration
+                        scene.resources().put("game.cfg", new GameConfig());
+                    }
 
                     // Load score file from "current" directory
                     // Format:

@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework.Scene;
+import org.atoiks.games.seihou2.GameConfig;
 
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
@@ -12,6 +15,8 @@ import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
 public final class ScoreScene extends Scene {
 
     private int[][] scoreDat = null;
+
+    private Clip bgm;
 
 	@Override
 	public void render(Graphics g) {
@@ -49,5 +54,16 @@ public final class ScoreScene extends Scene {
     @Override
     public void enter(int previousSceneId) {
         scoreDat = (int[][]) scene.resources().get("score.dat");
+        bgm = (Clip) scene.resources().get("title.wav");
+		
+		if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    @Override
+    public void leave() {
+        bgm.stop();
     }
 }

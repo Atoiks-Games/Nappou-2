@@ -8,14 +8,15 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework.Scene;
+import org.atoiks.games.seihou2.GameConfig;
 
 public final class TitleScene extends Scene {
 
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selector{X, Y}
-    private static final int[] selectorX = {270, 322, 300, 175};
-    private static final int[] selectorY = {293, 357, 410, 502};
-    private static final int[] sceneDest = {2, 4, 3};
+    private static final int[] selectorX = {230, 270, 251, 225, 150};
+    private static final int[] selectorY = {266, 306, 347, 389, 500};
+    private static final int[] sceneDest = {2, 5, 3, 4};
 
     private Image titleImg;
     private Clip bgm;
@@ -58,9 +59,19 @@ public final class TitleScene extends Scene {
         titleImg = (Image) scene.resources().get("title.png");
         bgm = (Clip) scene.resources().get("title.wav");
 
-        bgm.setMicrosecondPosition(0);
-        bgm.start();
-        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+            // ScoreScene and ConfigScene continues to play music
+            switch (prevSceneId) {
+                case 3:
+                case 4:
+                    break;
+                default:
+                    bgm.setMicrosecondPosition(0);
+                    break;
+            }
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     @Override
