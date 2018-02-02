@@ -5,6 +5,10 @@ import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class LevelOneScene extends AbstractGameScene {
 
+    public LevelOneScene() {
+        super(0);
+    }
+
     @Override
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);

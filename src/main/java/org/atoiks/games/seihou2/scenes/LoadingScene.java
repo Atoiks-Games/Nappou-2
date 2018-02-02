@@ -1,11 +1,12 @@
 package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Graphics;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +17,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessageUnpacker;
 
 import org.atoiks.games.framework.Scene;
 
@@ -78,6 +82,31 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("opt_shield.png");
 
                     loadMusicFromResources("title.wav");
+
+                    // Load score file from "current" directory
+                    // Format:
+                    // [ levelNumber
+                    //   [ score1, score2, score3, score4, score5 ]?
+                    // ]
+                    final int[][] scoreData = new int[1][5];
+                    try (final BufferedInputStream in = new BufferedInputStream(new FileInputStream("./score.dat"))) {
+                        final MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(in);
+                        final int lvls = unpacker.unpackArrayHeader();
+                        if (lvls == scoreData.length) {
+                            for (int i = 0; i < lvls; ++i) {
+                                if (unpacker.tryUnpackNil()) continue;
+                                final int n = unpacker.unpackArrayHeader();
+                                if (n != 5) continue;
+                                for (int j = 0; j < n; ++j) {
+                                    scoreData[i][j] = unpacker.unpackInt();
+                                }
+                            }
+                        }
+                    } catch (IOException ex) {
+                        // Ignore
+                    } finally {
+                        scene.resources().put("score.dat", scoreData);
+                    }
 
                     loaded = LoadState.DONE;
                 });

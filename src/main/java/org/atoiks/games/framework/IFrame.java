@@ -10,4 +10,6 @@ public interface IFrame<T> extends AutoCloseable {
 
     public void setSize(int width, int height);
     public void setTitle(String title);
+
+    public SceneManager getSceneManager();
 }

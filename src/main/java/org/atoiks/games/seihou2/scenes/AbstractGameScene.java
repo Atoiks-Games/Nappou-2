@@ -1,5 +1,7 @@
 package org.atoiks.games.seihou2.scenes;
 
+import java.util.Arrays;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
@@ -39,6 +41,12 @@ public abstract class AbstractGameScene extends Scene {
     protected Image pauseImg;
     protected boolean pause;
 
+    public final int sceneId;
+
+    protected AbstractGameScene(int id) {
+        sceneId = id;
+    }
+
     @Override
     public final void resize(int w, int h) {
         // Window size is fixed
@@ -55,7 +63,16 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public void leave() {
+    public void leave() {    
+        if (sceneId >= 0) {
+            final int[][] scoreDat = (int[][]) scene.resources().get("score.dat");
+            final int[] alias = scoreDat[sceneId];
+            final int[] a = Arrays.copyOf(alias, alias.length + 1);
+            a[a.length - 1] = game.getScore();
+            Arrays.sort(a);
+            System.arraycopy(a, 1, alias, 0, a.length - 1);
+        }
+
         game.cleanup();
     } 
 

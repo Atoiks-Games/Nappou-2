@@ -10,6 +10,10 @@ repositories {
     jcenter()
 }
 
+dependencies {
+    compile "org.msgpack:msgpack-core:0.8.14"
+}
+
 task copyLicense {
     outputs.file new File("$buildDir/LICENSE")
     outputs.file new File("$buildDir/README.md")

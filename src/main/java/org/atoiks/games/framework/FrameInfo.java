@@ -1,5 +1,7 @@
 package org.atoiks.games.framework;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.io.Serializable;
 
 public final class FrameInfo implements Serializable {
@@ -13,6 +15,7 @@ public final class FrameInfo implements Serializable {
     int width = 800;
     int height = 600;
     boolean resizable = false;
+    Map<String, Object> res = new HashMap<>();
 
     @Override
     public String toString() {
@@ -59,6 +62,16 @@ public final class FrameInfo implements Serializable {
 
     public FrameInfo setResizable(boolean resizable) {
         this.resizable = resizable;
+        return this;
+    }
+
+    public FrameInfo addResources(Map<String, ? extends Object> res) {
+        this.res.putAll(res);
+        return this;
+    }
+
+    public FrameInfo addResource(String name, Object data) {
+        this.res.put(name, data);
         return this;
     }
 }

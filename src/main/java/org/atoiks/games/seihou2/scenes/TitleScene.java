@@ -13,9 +13,9 @@ public final class TitleScene extends Scene {
 
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selector{X, Y}
-    private static final int[] selectorX = {270, 322, 175};
-    private static final int[] selectorY = {293, 357, 502};
-    private static final int[] sceneDest = {2, 3};
+    private static final int[] selectorX = {270, 322, 300, 175};
+    private static final int[] selectorY = {293, 357, 410, 502};
+    private static final int[] sceneDest = {2, 4, 3};
 
     private Image titleImg;
     private Clip bgm;

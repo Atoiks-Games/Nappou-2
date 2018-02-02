@@ -49,6 +49,11 @@ public abstract class AbstractFrame<T> implements IFrame<T> {
         sceneMgr.switchToScene(-1);
     }
 
+    @Override
+    public SceneManager getSceneManager() {
+        return sceneMgr;
+    }
+
     protected abstract int getWidth();
 
     protected abstract int getHeight();

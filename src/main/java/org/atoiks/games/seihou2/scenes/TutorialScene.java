@@ -12,6 +12,11 @@ public final class TutorialScene extends AbstractGameScene {
     private int waveCounter;
     private Image tutorialImg;
 
+    public TutorialScene() {
+        // -1 scene id means the score is not saved
+        super(-1);
+    }
+
     @Override
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
