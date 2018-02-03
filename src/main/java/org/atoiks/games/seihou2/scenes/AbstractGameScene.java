@@ -105,7 +105,7 @@ public abstract class AbstractGameScene extends Scene {
         if (pause) {
             g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
             g.setColor(Color.black);
-            g.fillRect(45, selectorY[selector], 4, 37);
+            g.drawRect(45, selectorY[selector], 4, 37);
         }
 
         // The game stats part

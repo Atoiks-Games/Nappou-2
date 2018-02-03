@@ -11,8 +11,7 @@ import org.atoiks.games.seihou2.entities.shield.*;
 
 public final class PlayerOptionScene extends Scene {
 
-    private static final int[] shieldSelX = {272, 272, 300};
-    private static final int[] shieldSelY = {393, 455, 540};
+    private static final int[] shieldSelY = {356, 414, 498};
 
     private Image shieldOptImg;
     private int shieldSel;
@@ -21,7 +20,7 @@ public final class PlayerOptionScene extends Scene {
 	public void render(Graphics g) {
         g.drawImage(shieldOptImg, 0, 0, null);
         g.setColor(Color.white);
-        g.drawLine(96, shieldSelY[shieldSel], shieldSelX[shieldSel], shieldSelY[shieldSel]);
+        g.drawRect(90, shieldSelY[shieldSel], 4, 37);
     }
 
 	@Override
@@ -35,10 +34,10 @@ public final class PlayerOptionScene extends Scene {
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++shieldSel >= shieldSelX.length) shieldSel = 0;
+            if (++shieldSel >= shieldSelY.length) shieldSel = 0;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--shieldSel < 0) shieldSel = shieldSelX.length - 1;
+            if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
         }
 		return true;
 	}

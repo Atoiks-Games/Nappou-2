@@ -25,7 +25,7 @@ public final class TitleScene extends Scene {
 	public void render(Graphics g) {
         g.drawImage(titleImg, 0, 0, null);
         g.setColor(Color.white);
-        g.fillRect(61, selectorY[selector], 4, 30);
+        g.drawRect(61, selectorY[selector], 4, 30);
 	}
 
 	@Override

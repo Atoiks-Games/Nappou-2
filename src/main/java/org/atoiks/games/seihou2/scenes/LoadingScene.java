@@ -134,7 +134,7 @@ public final class LoadingScene extends Scene {
 
 	@Override
 	public void resize(int x, int y) {
-		// Ignore, screen size is fixed to 800 x 600
+		// Ignore, screen size is fixed
     }
 
     private InputStream getResourceStreamFrom(final String folder, final String name) {
