@@ -13,9 +13,8 @@ import org.atoiks.games.seihou2.GameConfig;
 public final class TitleScene extends Scene {
 
     // Conventionally, last scene is always Quit,
-    // sceneDest is always one less than the selector{X, Y}
-    private static final int[] selectorX = {230, 270, 251, 225, 150};
-    private static final int[] selectorY = {266, 306, 347, 389, 500};
+    // sceneDest is always one less than the selectorY
+    private static final int[] selectorY = {235, 276, 318, 357, 469};
     private static final int[] sceneDest = {2, 5, 3, 4};
 
     private Image titleImg;
@@ -26,7 +25,7 @@ public final class TitleScene extends Scene {
 	public void render(Graphics g) {
         g.drawImage(titleImg, 0, 0, null);
         g.setColor(Color.white);
-        g.drawLine(65, selectorY[selector], selectorX[selector], selectorY[selector]);
+        g.fillRect(61, selectorY[selector], 4, 30);
 	}
 
 	@Override
@@ -41,10 +40,10 @@ public final class TitleScene extends Scene {
             return false;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++selector >= selectorX.length) selector = 0;
+            if (++selector >= selectorY.length) selector = 0;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--selector < 0) selector = selectorX.length - 1;
+            if (--selector < 0) selector = selectorY.length - 1;
         }
 		return true;
 	}

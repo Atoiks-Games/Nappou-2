@@ -21,9 +21,8 @@ public abstract class AbstractGameScene extends Scene {
     public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
 
     // Conventionally, continue is always the first option,
-    // sceneDest is always one less than the selector{X, Y}
-    private static final int[] selectorX = {388, 434};
-    private static final int[] selectorY = {383, 444};
+    // sceneDest is always one less than the selectorY
+    private static final int[] selectorY = {342, 402};
     private static final int[] sceneDest = {1};
 
     private int selector;
@@ -106,7 +105,7 @@ public abstract class AbstractGameScene extends Scene {
         if (pause) {
             g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
             g.setColor(Color.black);
-            g.drawLine(55, selectorY[selector], selectorX[selector], selectorY[selector]);
+            g.fillRect(45, selectorY[selector], 4, 37);
         }
 
         // The game stats part
@@ -132,10 +131,10 @@ public abstract class AbstractGameScene extends Scene {
             return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
         } else {
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (++selector >= selectorX.length) selector = 0;
+                if (++selector >= selectorY.length) selector = 0;
             }
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-                if (--selector < 0) selector = selectorX.length - 1;
+                if (--selector < 0) selector = selectorY.length - 1;
             }
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                 if (selector == 0) {
