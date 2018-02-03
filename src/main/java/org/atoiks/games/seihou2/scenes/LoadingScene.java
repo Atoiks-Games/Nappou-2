@@ -5,10 +5,12 @@ import java.awt.Image;
 import java.awt.Graphics;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.BufferedInputStream;
 
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -25,16 +27,17 @@ import org.msgpack.core.MessageUnpacker;
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.GameConfig;
 
-import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;
+import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
 
 public final class LoadingScene extends Scene {
 
     private enum LoadState {
-        WAITING, LOADING, DONE
+        WAITING, LOADING, DONE, NO_RES
     }
 
     private static final int RADIUS = 100;
+    private static final String LC_LANG = Locale.getDefault().getLanguage();
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
 
@@ -66,6 +69,8 @@ public final class LoadingScene extends Scene {
 	public boolean update(float dt) {
         time += dt;
         switch (loaded) {
+            case NO_RES:
+                return false;
             case LOADING:
                 break;
             case DONE:
@@ -88,7 +93,8 @@ public final class LoadingScene extends Scene {
 
                     // Load configuration file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
-                        scene.resources().put("game.cfg", (GameConfig) ois.readObject());
+                        final GameConfig cfg = (GameConfig) ois.readObject();
+                        scene.resources().put("game.cfg", cfg == null ? new GameConfig() : cfg);
                     } catch (IOException | ClassNotFoundException ex) {
                         // Supply default configuration
                         scene.resources().put("game.cfg", new GameConfig());
@@ -131,15 +137,38 @@ public final class LoadingScene extends Scene {
 		// Ignore, screen size is fixed to 800 x 600
     }
 
-    private void loadImageFromResources(String str) {
+    private InputStream getResourceStreamFrom(final String folder, final String name) {
+        // Try to find locale specific files
+        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/" + LC_LANG + "/" + name);
+        if (is == null) {
+            // Try to look for english
+            is = this.getClass().getResourceAsStream("/" + folder + "/" + Locale.ENGLISH.getLanguage() + "/" + name);
+        }
+        if (is == null) {
+            is = this.getClass().getResourceAsStream("/" + folder + "/" + name);
+        }
+        return is;
+    }
+
+    private void loadImageFromResources(final String name) {
         try {
-            scene.resources().put(str, ImageIO.read(this.getClass().getResourceAsStream("/image/" + str)));
-        } catch (java.io.IOException ex) {
+            InputStream is = getResourceStreamFrom("image", name);
+            if (is == null) {
+                loaded = LoadState.NO_RES;
+                return;
+            }
+            scene.resources().put(name, ImageIO.read(is));
+        } catch (IOException ex) {
         }
     }
 
-    private void loadMusicFromResources(String name) {
-        try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("/music/" + name)))) {
+    private void loadMusicFromResources(final String name) {
+        InputStream is = getResourceStreamFrom("music", name);
+        if (is == null) {
+            loaded = LoadState.NO_RES;
+            return;
+        }
+        try (final AudioInputStream in = AudioSystem.getAudioInputStream(is)) {
             final Clip clip = AudioSystem.getClip();
             clip.open(in);
             clip.stop();

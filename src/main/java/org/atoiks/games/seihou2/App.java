@@ -1,15 +1,16 @@
 package org.atoiks.games.seihou2;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
 
 import org.atoiks.games.framework.Frame;
 import org.atoiks.games.framework.FrameInfo;
 
 import org.atoiks.games.seihou2.scenes.*;
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
 
 public class App {
 
