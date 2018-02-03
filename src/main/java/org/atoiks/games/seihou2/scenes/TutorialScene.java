@@ -24,9 +24,9 @@ public final class TutorialScene extends AbstractGameScene {
         tutorialImg = (Image) scene.resources().get("z.png");
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
-        
+
         game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
-        
+
         game.player.setHp(5);
         game.setScore(0);
         waveCounter = 0;
@@ -52,10 +52,22 @@ public final class TutorialScene extends AbstractGameScene {
             waveCounter = 1;
         }
 
-        if (game.enemies.isEmpty() && waveCounter == 1) {
+        if (game.enemies.isEmpty() && waveCounter == 1 && game.getScore() < 6) {
             game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
             game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
         }
+
+        if (game.enemies.isEmpty() && waveCounter == 1 && game.getScore() >= 6) {
+              waveCounter = 2;
+              tutorialImg = (Image) scene.resources().get("x.png");
+              game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
+              game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
+        }
+        if (game.enemies.isEmpty() && waveCounter == 2) {
+              //Boss
+        }
+
+
 
         return true;
     }
