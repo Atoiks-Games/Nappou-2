@@ -31,7 +31,7 @@ public class Frame extends AbstractFrame<JFrame> {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
-                Frame.this.close();
+                Frame.this.running = false;
             }
         });
 

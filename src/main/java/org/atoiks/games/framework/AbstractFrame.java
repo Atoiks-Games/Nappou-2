@@ -2,7 +2,7 @@ package org.atoiks.games.framework;
 
 public abstract class AbstractFrame<T> implements IFrame<T> {
 
-    private boolean running = true;
+    protected boolean running = true;
 
     protected SceneManager sceneMgr;
     protected float secsPerUpdate;
@@ -48,7 +48,6 @@ public abstract class AbstractFrame<T> implements IFrame<T> {
 
     public void close() {
         // Ensures leave for Scene gets called
-        running = false;
         sceneMgr.switchToScene(-1);
     }
 
