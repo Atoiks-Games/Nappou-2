@@ -47,28 +47,28 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-        if (game.enemies.isEmpty() && waveCounter == 0) {
-            tutorialImg = null;
-            waveCounter = 1;
+        if (game.enemies.isEmpty()) {
+            switch (waveCounter) {
+                case 0:
+                    tutorialImg = null;
+                    waveCounter = 1;
+                    break;
+                case 1:
+                    if (game.getScore() < 6) {
+                        game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
+                        game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+                    } else {
+                        waveCounter = 2;
+                        tutorialImg = (Image) scene.resources().get("x.png");
+                        game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
+                        game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
+                    }
+                    break;
+                case 2:
+                    // Boss
+                    break;
+            }
         }
-
-        if (game.enemies.isEmpty() && waveCounter == 1 && game.getScore() < 6) {
-            game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
-            game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
-        }
-
-        if (game.enemies.isEmpty() && waveCounter == 1 && game.getScore() >= 6) {
-              waveCounter = 2;
-              tutorialImg = (Image) scene.resources().get("x.png");
-              game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
-              game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
-        }
-        if (game.enemies.isEmpty() && waveCounter == 2) {
-              //Boss
-        }
-
-
-
         return true;
     }
 }
