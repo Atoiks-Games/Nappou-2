@@ -63,6 +63,7 @@ public final class TitleScene extends Scene {
             switch (prevSceneId) {
                 case 3:
                 case 4:
+                case 5:
                     break;
                 default:
                     bgm.setMicrosecondPosition(0);

@@ -5,7 +5,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework.Scene;
+import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.IShield;
 import org.atoiks.games.seihou2.entities.shield.*;
 
@@ -14,6 +17,7 @@ public final class PlayerOptionScene extends Scene {
     private static final int[] shieldSelY = {356, 414, 498};
 
     private Image shieldOptImg;
+    private Clip bgm;
     private int shieldSel;
 
 	@Override
@@ -50,11 +54,19 @@ public final class PlayerOptionScene extends Scene {
     @Override
     public void enter(int previousSceneId) {
         shieldOptImg = (Image) scene.resources().get("opt_shield.png");
+        bgm = (Clip) scene.resources().get("title.wav");
+
+        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     @Override
     public void leave() {
         scene.resources().put("shield", getShieldFromOption());
+
+        bgm.stop();
     }
 
     private IShield getShieldFromOption() {
