@@ -10,11 +10,15 @@ public final class PointEnemy extends AbstractEnemy {
 
     private static final double PI_OVER_12 = Math.PI / 12;
 
+    private final boolean toLeft;
+
     private float time;
     private boolean fireGate;
 
     public PointEnemy(int hp, float x, float y, float r) {
         super(hp, x, y, r);
+        toLeft = x > (750 / 2);
+        fireGate = true;
     }
 
     @Override
@@ -24,7 +28,7 @@ public final class PointEnemy extends AbstractEnemy {
 
         final double mult = Math.cos(2 * time) / 2;
         y += 300 * (mult + 0.5) * dt;
-        x += 300 * (0.5 - mult) * dt;
+        x += (toLeft ? -1 : 1) * 300 * (0.5 - mult) * dt;
 
         if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;

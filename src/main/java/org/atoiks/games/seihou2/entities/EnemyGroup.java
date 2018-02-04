@@ -56,7 +56,8 @@ public final class EnemyGroup extends IEnemy {
     public void update(float dt) {
         while (index < enemies.length && (time += dt) >= delay) {
             time -= delay;
-            game.addEnemy(enemies[index++]);
+            final IEnemy enemy = enemies[index++];
+            if (enemy != null) game.addEnemy(enemy);
         }
     }
 
