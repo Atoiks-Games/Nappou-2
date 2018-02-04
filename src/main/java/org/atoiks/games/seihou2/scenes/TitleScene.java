@@ -52,11 +52,11 @@ public final class TitleScene extends Scene {
 	public void resize(int x, int y) {
 		// Screen size is fixed
     }
-    
+
     @Override
     public void enter(final int prevSceneId) {
         titleImg = (Image) scene.resources().get("title.png");
-        bgm = (Clip) scene.resources().get("title.wav");
+        bgm = (Clip) scene.resources().get("Reboot.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             // ScoreScene and ConfigScene continues to play music

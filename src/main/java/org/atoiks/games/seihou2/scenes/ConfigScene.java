@@ -77,7 +77,7 @@ public final class ConfigScene extends Scene {
 	@Override
 	public void enter(int previousSceneId) {
 		configImg = (Image) scene.resources().get("config.png");
-		bgm = (Clip) scene.resources().get("title.wav");
+		bgm = (Clip) scene.resources().get("Reboot.wav");
 		config = (GameConfig) scene.resources().get("game.cfg");
 	}
 

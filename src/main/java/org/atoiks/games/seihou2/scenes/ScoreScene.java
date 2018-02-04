@@ -50,12 +50,12 @@ public final class ScoreScene extends Scene {
 	public void resize(int x, int y) {
 		// Screen size is fixed
     }
-    
+
     @Override
     public void enter(int previousSceneId) {
         scoreDat = (int[][]) scene.resources().get("score.dat");
-        bgm = (Clip) scene.resources().get("title.wav");
-		
+        bgm = (Clip) scene.resources().get("Reboot.wav");
+
 		if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
