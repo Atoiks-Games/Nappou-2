@@ -16,21 +16,22 @@ public final class TitleScene extends Scene {
     // sceneDest is always one less than the selectorY
     private static final int[] selectorY = {235, 276, 318, 357, 469};
     private static final int[] sceneDest = {2, 5, 3, 4};
+    private static final int OPT_HEIGHT = 30;
 
     private Image titleImg;
     private Clip bgm;
     private int selector;
 
-	@Override
-	public void render(Graphics g) {
+    @Override
+    public void render(Graphics g) {
         g.drawImage(titleImg, 0, 0, null);
         g.setColor(Color.white);
-        g.drawRect(61, selectorY[selector], 4, 30);
-	}
+        g.drawRect(61, selectorY[selector], 4, OPT_HEIGHT);
+    }
 
-	@Override
-	public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+    @Override
+    public boolean update(float dt) {
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
             if (selector < sceneDest.length) {
                 scene.switchToScene(sceneDest[selector]);
                 return true;
@@ -45,12 +46,21 @@ public final class TitleScene extends Scene {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = selectorY.length - 1;
         }
-		return true;
-	}
 
-	@Override
-	public void resize(int x, int y) {
-		// Screen size is fixed
+        final int mouseY = scene.mouse().getLocalY();
+        for (int i = 0; i < selectorY.length; ++i) {
+            final int selBase = selectorY[i];
+            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                selector = i;
+                break;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void resize(int x, int y) {
+        // Screen size is fixed
     }
 
     @Override

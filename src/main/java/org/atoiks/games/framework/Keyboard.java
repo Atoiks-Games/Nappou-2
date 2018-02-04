@@ -4,7 +4,7 @@ import java.util.BitSet;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
-public final class Keyboard extends KeyAdapter {
+public final class Keyboard extends KeyAdapter implements IInputDevice {
 
     private final BitSet keybuf = new BitSet(256);
 
@@ -22,8 +22,8 @@ public final class Keyboard extends KeyAdapter {
         }
     }
 
+    @Override
     public void reset() {
-        this.keybuf.clear();
     }
 
     public boolean isKeyDown(int keycode) {

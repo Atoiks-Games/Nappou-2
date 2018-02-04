@@ -15,6 +15,7 @@ import org.atoiks.games.seihou2.entities.shield.*;
 public final class PlayerOptionScene extends Scene {
 
     private static final int[] shieldSelY = {356, 414, 498};
+    private static final int OPT_HEIGHT = 37;
 
     private Image shieldOptImg;
     private Clip bgm;
@@ -24,7 +25,7 @@ public final class PlayerOptionScene extends Scene {
 	public void render(Graphics g) {
         g.drawImage(shieldOptImg, 0, 0, null);
         g.setColor(Color.white);
-        g.drawRect(90, shieldSelY[shieldSel], 4, 37);
+        g.drawRect(90, shieldSelY[shieldSel], 4, OPT_HEIGHT);
     }
 
 	@Override
@@ -33,7 +34,7 @@ public final class PlayerOptionScene extends Scene {
             scene.switchToScene(1);
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
             scene.gotoNextScene();
             return true;
         }
@@ -42,6 +43,15 @@ public final class PlayerOptionScene extends Scene {
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
             if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
+        }
+
+        final int mouseY = scene.mouse().getLocalY();
+        for (int i = 0; i < shieldSelY.length; ++i) {
+            final int selBase = shieldSelY[i];
+            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                shieldSel = i;
+                break;
+            }
         }
 		return true;
 	}

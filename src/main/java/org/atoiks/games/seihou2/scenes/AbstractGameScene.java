@@ -24,6 +24,7 @@ public abstract class AbstractGameScene extends Scene {
     // sceneDest is always one less than the selectorY
     private static final int[] selectorY = {342, 402};
     private static final int[] sceneDest = {1};
+    private static final int OPT_HEIGHT = 37;
 
     private int selector;
 
@@ -105,7 +106,7 @@ public abstract class AbstractGameScene extends Scene {
         if (pause) {
             g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
             g.setColor(Color.black);
-            g.drawRect(45, selectorY[selector], 4, 37);
+            g.drawRect(45, selectorY[selector], 4, OPT_HEIGHT);
         }
 
         // The game stats part
@@ -130,19 +131,28 @@ public abstract class AbstractGameScene extends Scene {
             playerFireTimeout -= dt;
             return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
         } else {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (++selector >= selectorY.length) selector = 0;
-            }
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-                if (--selector < 0) selector = selectorY.length - 1;
-            }
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
                 if (selector == 0) {
                     pause = false;
                 } else {
                     scene.switchToScene(sceneDest[selector - 1]);
                 }
                 return true;
+            }
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+                if (++selector >= selectorY.length) selector = 0;
+            }
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+                if (--selector < 0) selector = selectorY.length - 1;
+            }
+
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < selectorY.length; ++i) {
+                final int selBase = selectorY[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    selector = i;
+                    break;
+                }
             }
         }
         return true;

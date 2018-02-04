@@ -28,20 +28,26 @@ public class Frame extends AbstractFrame<JFrame> {
         super(info.fps, new SceneManager(info.scenes));
         frame = new JFrame(info.titleName);
 
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                Frame.this.running = false;
-            }
-        });
-
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setResizable(info.resizable);
         canvas.setPreferredSize(new Dimension(info.width, info.height));
         frame.pack();
         frame.setLocationRelativeTo(null);
+
+        // Frame Listeners
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                Frame.this.running = false;
+            }
+        });
         frame.addKeyListener(sceneMgr.keyboard());
+
+        // Canvas Listeners
+        canvas.addMouseListener(sceneMgr.mouse());
+        canvas.addMouseMotionListener(sceneMgr.mouse());
+        canvas.addMouseWheelListener(sceneMgr.mouse());
     }
 
     @Override

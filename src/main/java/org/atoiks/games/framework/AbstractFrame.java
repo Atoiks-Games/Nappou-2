@@ -26,12 +26,17 @@ public abstract class AbstractFrame<T> implements IFrame<T> {
             final double elapsed = now - previous;
             previous = now;
             steps += elapsed;
-
+            
             sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
             while (steps >= secsPerUpdate) {
                 if (!sceneMgr.updateCurrentScene(secsPerUpdate / 1000)) {
                     return;
                 }
+
+                // Reset input devices
+                sceneMgr.keyboard().reset();
+                sceneMgr.mouse().reset();
+
                 if (sceneMgr.shouldSkipCycle()) {
                     // Reset time info
                     previous = System.currentTimeMillis();

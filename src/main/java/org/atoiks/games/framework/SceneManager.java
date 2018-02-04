@@ -8,17 +8,19 @@ public final class SceneManager {
 
     private final Map<String, Object> res = new HashMap<>();
     private final Keyboard kbHandle;
+    private final Mouse mouseHandle;
 
     private Scene[] scenes;
     private int sceneId;
     private boolean skipCycle;
 
     public SceneManager(Scene... scenes) {
-        this(new Keyboard(), scenes);
+        this(new Keyboard(), new Mouse(), scenes);
     }
 
-    public SceneManager(Keyboard kb, Scene... scenes) {
+    public SceneManager(Keyboard kb, Mouse m, Scene... scenes) {
         this.kbHandle = kb;
+        this.mouseHandle = m;
         this.scenes = scenes;
         this.sceneId = -1;
         this.skipCycle = false;
@@ -70,6 +72,10 @@ public final class SceneManager {
 
     public Keyboard keyboard() {
         return kbHandle;
+    }
+
+    public Mouse mouse() {
+        return mouseHandle;
     }
 
     public Map<String, Object> resources() {
