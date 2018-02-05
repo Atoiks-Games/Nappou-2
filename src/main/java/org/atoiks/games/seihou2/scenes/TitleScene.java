@@ -66,7 +66,7 @@ public final class TitleScene extends Scene {
     @Override
     public void enter(final int prevSceneId) {
         titleImg = (Image) scene.resources().get("title.png");
-        bgm = (Clip) scene.resources().get("Reboot.wav");
+        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             // ScoreScene and ConfigScene continues to play music

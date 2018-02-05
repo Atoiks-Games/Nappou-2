@@ -7,9 +7,13 @@ import org.atoiks.games.seihou2.entities.Player;
 import org.atoiks.games.seihou2.entities.shield.*;
 import org.atoiks.games.seihou2.entities.enemies.*;
 
+import javax.sound.sampled.Clip;
+import org.atoiks.games.seihou2.GameConfig;
+
 public final class TutorialScene extends AbstractGameScene {
 
     private int waveCounter;
+    private Clip bgm;
     private Image tutorialImg;
 
     public TutorialScene() {
@@ -22,6 +26,23 @@ public final class TutorialScene extends AbstractGameScene {
         super.enter(prevSceneId);
 
         tutorialImg = (Image) scene.resources().get("z.png");
+
+        bgm = (Clip) scene.resources().get("Awakening.wav");
+
+        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+            // ScoreScene and ConfigScene continues to play music
+            switch (prevSceneId) {
+                case 3:
+                case 4:
+                case 5:
+                    break;
+                default:
+                    bgm.setMicrosecondPosition(0);
+                    break;
+            }
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
 
@@ -42,6 +63,7 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public void leave() {
+        bgm.stop();
         super.leave();
     }
 

@@ -90,7 +90,8 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("opt_shield.png");
                     loadImageFromResources("config.png");
 
-                    loadMusicFromResources("Reboot.wav");
+                    loadMusicFromResources("Enter_The_Void.wav");
+                    loadMusicFromResources("Awakening.wav");
 
                     // Load configuration file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {

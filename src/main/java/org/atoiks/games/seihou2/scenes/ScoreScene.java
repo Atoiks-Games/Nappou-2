@@ -54,7 +54,7 @@ public final class ScoreScene extends Scene {
     @Override
     public void enter(int previousSceneId) {
         scoreDat = (int[][]) scene.resources().get("score.dat");
-        bgm = (Clip) scene.resources().get("Reboot.wav");
+        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
 		if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.start();

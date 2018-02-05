@@ -64,7 +64,7 @@ public final class PlayerOptionScene extends Scene {
     @Override
     public void enter(int previousSceneId) {
         shieldOptImg = (Image) scene.resources().get("opt_shield.png");
-        bgm = (Clip) scene.resources().get("Reboot.wav");
+        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.start();
