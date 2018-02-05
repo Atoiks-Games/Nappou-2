@@ -17,7 +17,7 @@ public final class TutorialScene extends AbstractGameScene {
     private Clip bgm;
     private Image tutorialImg;
     private Image controlsImg;
-    private boolean controlsGone = false;
+    private boolean controlsGone;
 
     public TutorialScene() {
         // -1 scene id means the score is not saved
@@ -43,6 +43,7 @@ public final class TutorialScene extends AbstractGameScene {
 
         game.player.setHp(5);
         game.setScore(0);
+        controlsGone = false;
         waveCounter = 0;
     }
 
