@@ -238,12 +238,13 @@ public abstract class AbstractGameScene extends Scene {
 
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
-            if (bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+            if (!game.player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 if (game.player.changeHpBy(-1) <= 0) {
                     // Goto title scene
                     scene.switchToScene(1);
                     return true;
                 }
+                game.player.activateRespawnShield();
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
             }
@@ -275,12 +276,13 @@ public abstract class AbstractGameScene extends Scene {
                 }
             }
 
-            if (enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+            if (!game.player.isRespawnShieldActive() && enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 if (game.player.changeHpBy(-1) <= 0) {
                     // Goto title scene
                     scene.switchToScene(1);
                     return true;
                 }
+                game.player.activateRespawnShield();
                 if (enemy.changeHp(-1) <= 0) {
                     game.enemies.remove(i);
                     game.changeScore(enemy.getScore());
