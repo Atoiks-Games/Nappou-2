@@ -18,8 +18,8 @@ public final class ScoreScene extends Scene {
 
     private Clip bgm;
 
-	@Override
-	public void render(Graphics g) {
+    @Override
+    public void render(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -35,20 +35,20 @@ public final class ScoreScene extends Scene {
                 g.drawString(str, 30, bh + (j + 1) * 12);
             }
         }
-	}
+    }
 
-	@Override
-	public boolean update(float dt) {
+    @Override
+    public boolean update(float dt) {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE) || scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
             scene.switchToScene(1);
             return true;
         }
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public void resize(int x, int y) {
-		// Screen size is fixed
+    @Override
+    public void resize(int x, int y) {
+        // Screen size is fixed
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class ScoreScene extends Scene {
         scoreDat = (int[][]) scene.resources().get("score.dat");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
-		if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }

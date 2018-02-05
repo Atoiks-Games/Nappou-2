@@ -21,15 +21,15 @@ public final class PlayerOptionScene extends Scene {
     private Clip bgm;
     private int shieldSel;
 
-	@Override
-	public void render(Graphics g) {
+    @Override
+    public void render(Graphics g) {
         g.drawImage(shieldOptImg, 0, 0, null);
         g.setColor(Color.white);
         g.drawRect(90, shieldSelY[shieldSel], 4, OPT_HEIGHT);
     }
 
-	@Override
-	public boolean update(float dt) {
+    @Override
+    public boolean update(float dt) {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
             scene.switchToScene(1);
             return true;
@@ -53,12 +53,12 @@ public final class PlayerOptionScene extends Scene {
                 break;
             }
         }
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public void resize(int x, int y) {
-		// Screen size is fixed
+    @Override
+    public void resize(int x, int y) {
+        // Screen size is fixed
     }
 
     @Override

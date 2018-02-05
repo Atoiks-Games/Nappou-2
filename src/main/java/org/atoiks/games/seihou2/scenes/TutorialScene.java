@@ -4,12 +4,12 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
+import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.Player;
 import org.atoiks.games.seihou2.entities.shield.*;
 import org.atoiks.games.seihou2.entities.enemies.*;
-
-import javax.sound.sampled.Clip;
-import org.atoiks.games.seihou2.GameConfig;
 
 public final class TutorialScene extends AbstractGameScene {
 
@@ -34,23 +34,12 @@ public final class TutorialScene extends AbstractGameScene {
         bgm = (Clip) scene.resources().get("Awakening.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-            // ScoreScene and ConfigScene continues to play music
-            switch (prevSceneId) {
-                case 3:
-                case 4:
-                case 5:
-                    break;
-                default:
-                    bgm.setMicrosecondPosition(0);
-                    break;
-            }
+            bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
-
-        controlsImg = (Image) scene.resources().get("controls.png");
 
         game.player.setHp(5);
         game.setScore(0);
@@ -76,19 +65,16 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-
-      if(!controlsGone && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)){
-        game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
-        controlsGone = true;
-        controlsImg = null;
-        tutorialImg = (Image) scene.resources().get("z.png");
-      }
+        if (!controlsGone && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+            game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
+            controlsGone = true;
+            controlsImg = null;
+        }
 
         if (game.enemies.isEmpty()) {
             switch (waveCounter) {
                 case 0:
-                    tutorialImg = null;
-                    if(controlsGone == true){
+                    if (controlsGone) {
                       waveCounter = 1;
                     }
                     break;

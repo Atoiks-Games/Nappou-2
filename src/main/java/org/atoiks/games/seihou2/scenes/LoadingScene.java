@@ -46,8 +46,8 @@ public final class LoadingScene extends Scene {
     private float time;
     private Image loadingTxt;
 
-	@Override
-	public void render(Graphics g) {
+    @Override
+    public void render(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         g.setColor(Color.white);
@@ -63,10 +63,10 @@ public final class LoadingScene extends Scene {
         if (loadingTxt != null) {
             g.drawImage(loadingTxt, WIDTH - loadingTxt.getWidth(null), HEIGHT - loadingTxt.getHeight(null), null);
         }
-	}
+    }
 
-	@Override
-	public boolean update(float dt) {
+    @Override
+    public boolean update(float dt) {
         time += dt;
         switch (loaded) {
             case NO_RES:
@@ -133,11 +133,11 @@ public final class LoadingScene extends Scene {
                 break;
         }
         return true;
-	}
+    }
 
-	@Override
-	public void resize(int x, int y) {
-		// Ignore, screen size is fixed
+    @Override
+    public void resize(int x, int y) {
+        // Ignore, screen size is fixed
     }
 
     private InputStream getResourceStreamFrom(final String folder, final String name) {
