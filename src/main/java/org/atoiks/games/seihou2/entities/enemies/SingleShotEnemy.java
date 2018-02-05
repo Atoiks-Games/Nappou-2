@@ -19,7 +19,7 @@ public final class SingleShotEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        y += 300 * dt;
+        setY(getY() + 300 * dt);
 
         if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;
@@ -27,6 +27,8 @@ public final class SingleShotEnemy extends AbstractEnemy {
 
         if (fireGate && Math.cos(6 * time) > 0.5) {
             fireGate = false;
+            final float x = getX();
+            final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float)(1000 * Math.sin(angle))));
         }

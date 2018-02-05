@@ -18,9 +18,11 @@ public final class ShieldTesterEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        y += 300 * dt;
+        setY(getY() + 300 * dt);
 
         if (time > 0.001) {
+            final float x = getX();
+            final float y = getY();
             game.addEnemyBullet(new PointBullet(x, y, 2, (x > 375 ? -1 : 1) * 5000, 0));
             time = 0;
         }

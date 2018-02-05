@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
 
+import se.tube42.lib.tweeny.TweenManager;
+
 public abstract class AbstractGameScene extends Scene {
 
     public static final int WIDTH = 900;
@@ -129,6 +131,7 @@ public abstract class AbstractGameScene extends Scene {
                 updatePhase = 0;
             }
             playerFireTimeout -= dt;
+            TweenManager.service((long) (dt * 1000000));
             return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
         } else {
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {

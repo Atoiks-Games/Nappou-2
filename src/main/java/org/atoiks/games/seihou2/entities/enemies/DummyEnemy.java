@@ -16,18 +16,14 @@ public final class DummyEnemy extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        if (right && x > 700) {
+        if (right && getX() > 700) {
             right = false;
         }
-        if (!right && x < 50) {
+        if (!right && getX() < 50) {
             right = true;
         }
 
-        if (right) {
-            x += 100 * dt;
-        } else {
-            x -= 100 *dt;
-        }
+        setX(getX() + (right ? 1 : -1) * 100 * dt);
     }
 
     @Override

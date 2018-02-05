@@ -27,8 +27,8 @@ public final class PointEnemy extends AbstractEnemy {
         time += dt;
 
         final double mult = Math.cos(2 * time) / 2;
-        y += 300 * (mult + 0.5) * dt;
-        x += (toLeft ? -1 : 1) * 300 * (0.5 - mult) * dt;
+        setY((float) (getY() + 300 * (mult + 0.5) * dt));
+        setX((float) (getX() + (toLeft ? -1 : 1) * 300 * (0.5 - mult) * dt));
 
         if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;
@@ -36,6 +36,8 @@ public final class PointEnemy extends AbstractEnemy {
 
         if (fireGate && Math.cos(6 * time) > 0.5) {
             fireGate = false;
+            final float x = getX();
+            final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle + PI_OVER_12), 720));
             game.addEnemyBullet(new Beam(x, y, 2.5f, 45, (float) (angle), 720));

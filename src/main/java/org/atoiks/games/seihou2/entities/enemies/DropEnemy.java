@@ -17,13 +17,13 @@ public final class DropEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        y += 400 * dt;
-        x += 170 * dt;
+        setY(getY() + 400 * dt);
+        setX(getX() + 170 * dt);
 
         if (bullets > 8) {
             if (time > 0.5) bullets = 0;
         } else if (time > 0.05) {
-            game.addEnemyBullet(new PointBullet(x, y, 3, 170, 150));
+            game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, 150));
             ++bullets;
             time = 0;
         }
