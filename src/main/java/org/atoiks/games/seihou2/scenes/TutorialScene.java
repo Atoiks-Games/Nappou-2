@@ -2,6 +2,7 @@ package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import org.atoiks.games.seihou2.entities.Player;
 import org.atoiks.games.seihou2.entities.shield.*;
@@ -15,6 +16,8 @@ public final class TutorialScene extends AbstractGameScene {
     private int waveCounter;
     private Clip bgm;
     private Image tutorialImg;
+    private Image controlsImg;
+    private boolean controlsGone = false;
 
     public TutorialScene() {
         // -1 scene id means the score is not saved
@@ -26,6 +29,7 @@ public final class TutorialScene extends AbstractGameScene {
         super.enter(prevSceneId);
 
         tutorialImg = (Image) scene.resources().get("z.png");
+        controlsImg = (Image) scene.resources().get("controls.png");
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
 
@@ -46,7 +50,7 @@ public final class TutorialScene extends AbstractGameScene {
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
 
-        game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
+        controlsImg = (Image) scene.resources().get("controls.png");
 
         game.player.setHp(5);
         game.setScore(0);
@@ -59,6 +63,9 @@ public final class TutorialScene extends AbstractGameScene {
         if (tutorialImg != null) {
             g.drawImage(tutorialImg, (GAME_BORDER - tutorialImg.getWidth(null)) / 2, (HEIGHT - tutorialImg.getHeight(null)) / 2, null);
         }
+        if (controlsImg != null) {
+            g.drawImage(controlsImg, 0, 0, null);
+        }
     }
 
     @Override
@@ -69,11 +76,21 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
+
+      if(!controlsGone && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)){
+        game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
+        controlsGone = true;
+        controlsImg = null;
+        tutorialImg = (Image) scene.resources().get("z.png");
+      }
+
         if (game.enemies.isEmpty()) {
             switch (waveCounter) {
                 case 0:
                     tutorialImg = null;
-                    waveCounter = 1;
+                    if(controlsGone == true){
+                      waveCounter = 1;
+                    }
                     break;
                 case 1:
                     if (game.getScore() < 6) {

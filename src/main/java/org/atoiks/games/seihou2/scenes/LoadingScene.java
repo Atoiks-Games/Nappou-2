@@ -87,6 +87,7 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
                     loadImageFromResources("x.png");
+                    loadImageFromResources("controls.png");
                     loadImageFromResources("opt_shield.png");
                     loadImageFromResources("config.png");
 
