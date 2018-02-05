@@ -19,6 +19,8 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
     @Override
     public void reset() {
         Arrays.fill(btnbuf, 0);
+        localX = localY = -1;
+        globalX = globalY = -1;
         wheelRot = 0;
     }
 
