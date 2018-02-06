@@ -62,10 +62,10 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public void renderStats(final Graphics g){
-      super.renderStats(g);
-      if (talkImg != null) {
-          g.drawImage(talkImg, 0, HEIGHT - 200, null);
-      }
+        super.renderStats(g);
+        if (talkImg != null) {
+            g.drawImage(talkImg, 0, HEIGHT - 200, null);
+        }
     }
 
     @Override
@@ -101,12 +101,12 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
-                        tutorialImg = null;
-                        talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
-                        disableInput = true;
-                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            waveCounter = 3;
-                        }
+                    tutorialImg = null;
+                    talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
+                    disableInput = true;
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        waveCounter = 3;
+                    }
                     break;
                 case 3:
                     talkImg = null;
