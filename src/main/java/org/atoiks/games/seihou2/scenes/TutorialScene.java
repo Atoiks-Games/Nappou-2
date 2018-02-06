@@ -29,8 +29,8 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        tutorialImg = (Image) scene.resources().get("z.png");
         talkImg = null;
+        tutorialImg = (Image) scene.resources().get("z.png");
         controlsImg = (Image) scene.resources().get("controls.png");
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
@@ -103,12 +103,14 @@ public final class TutorialScene extends AbstractGameScene {
                 case 2:
                         tutorialImg = null;
                         talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
-                        if(scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)){
-                          waveCounter = 3;
+                        disableInput = true;
+                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                            waveCounter = 3;
                         }
                     break;
                 case 3:
                     talkImg = null;
+                    disableInput = false;
                     break;
             }
         }

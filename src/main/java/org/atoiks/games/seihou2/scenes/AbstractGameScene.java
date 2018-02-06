@@ -43,6 +43,7 @@ public abstract class AbstractGameScene extends Scene {
     protected Image statsImg;
     protected Image pauseImg;
     protected boolean pause;
+    protected boolean disableInput;
 
     public final int sceneId;
 
@@ -200,6 +201,8 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     private boolean procPlayerPos(final float dt) {
+        if (disableInput) return true;
+
         float tmpVal = 0;
         float tmpPos = game.player.getY();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN)) {
