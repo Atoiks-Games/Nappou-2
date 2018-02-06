@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.atoiks.games.framework.IRender;
-import org.atoiks.games.seihou2.entities.bullet.IBullet;
+import org.atoiks.games.seihou2.entities.IBullet;
 
 public final class Game implements Serializable, IRender {
 

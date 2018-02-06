@@ -3,6 +3,8 @@ package org.atoiks.games.seihou2.entities.bullet;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import org.atoiks.games.seihou2.entities.IBullet;
+
 public final class Beam implements IBullet {
 
     private static final long serialVersionUID = 4412375L;

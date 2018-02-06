@@ -8,8 +8,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.Player;
+import org.atoiks.games.seihou2.entities.enemy.*;
 import org.atoiks.games.seihou2.entities.shield.*;
-import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class TutorialScene extends AbstractGameScene {
 

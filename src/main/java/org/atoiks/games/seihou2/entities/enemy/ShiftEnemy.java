@@ -1,4 +1,4 @@
-package org.atoiks.games.seihou2.entities.enemies;
+package org.atoiks.games.seihou2.entities.enemy;
 
 import java.awt.Graphics;
 

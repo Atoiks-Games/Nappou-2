@@ -4,8 +4,8 @@ import se.tube42.lib.tweeny.Item;
 import se.tube42.lib.tweeny.TweenEquation;
 
 import org.atoiks.games.seihou2.entities.*;
+import org.atoiks.games.seihou2.entities.enemy.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
-import org.atoiks.games.seihou2.entities.enemies.*;
 
 public final class LevelOneScene extends AbstractGameScene {
 

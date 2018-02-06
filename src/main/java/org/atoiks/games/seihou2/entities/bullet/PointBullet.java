@@ -3,6 +3,8 @@ package org.atoiks.games.seihou2.entities.bullet;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import org.atoiks.games.seihou2.entities.IBullet;
+
 public final class PointBullet implements IBullet {
 
     private static final long serialVersionUID = 3928242215L;
