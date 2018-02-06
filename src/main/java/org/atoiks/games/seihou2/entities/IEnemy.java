@@ -25,6 +25,7 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
 
     public abstract float getX();
     public abstract float getY();
+    public abstract float getR();
 
     public abstract void attachGame(Game game);
 

@@ -49,6 +49,7 @@ public abstract class AbstractEnemy extends IEnemy {
         return this.xyr.get(FIELD_Y);
     }
 
+    @Override
     public final float getR() {
         return this.xyr.get(FIELD_R);        
     }

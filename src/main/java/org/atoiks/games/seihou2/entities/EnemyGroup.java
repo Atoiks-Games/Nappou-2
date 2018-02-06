@@ -42,6 +42,11 @@ public abstract class EnemyGroup extends IEnemy {
     }
 
     @Override
+    public final float getR() {
+        return -1;
+    }
+
+    @Override
     public final void render(Graphics g) {
         // Do nothing (only in charge of sending enemies)
     }

@@ -265,9 +265,9 @@ public abstract class AbstractGameScene extends Scene {
             final IEnemy enemy = game.enemies.get(i);
             for (int j = 0; j < game.playerBullets.size(); ++j) {
                 final IBullet bullet = game.playerBullets.get(j);
-                final float r = bullet.getR();
+                final float r = enemy.getR();
                 if (r < 0) continue;
-                if (enemy.collidesWith(bullet.getX(), bullet.getY(), r)) {
+                if (bullet.collidesWith(enemy.getX(), enemy.getY(), enemy.getR())) {
                     game.playerBullets.remove(j);
                     if (enemy.changeHp(-1) <= 0) {
                         game.enemies.remove(i);

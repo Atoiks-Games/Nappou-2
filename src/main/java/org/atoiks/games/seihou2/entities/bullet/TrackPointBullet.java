@@ -93,11 +93,6 @@ public final class TrackPointBullet implements IBullet {
     public float getY() {
         return y;
     }
-    
-    @Override
-    public float getR() {
-        return r;
-    }
 
     @Override
     public float getDx() {

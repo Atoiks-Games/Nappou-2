@@ -38,11 +38,6 @@ public final class PointBullet implements IBullet {
     }
 
     @Override
-    public float getR() {
-        return this.r;
-    }
-
-    @Override
     public float getX() {
         return this.x;
     }
