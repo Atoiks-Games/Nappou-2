@@ -31,7 +31,7 @@ public final class TitleScene extends Scene {
 
     @Override
     public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
             if (selector < sceneDest.length) {
                 scene.switchToScene(sceneDest[selector]);
                 return true;

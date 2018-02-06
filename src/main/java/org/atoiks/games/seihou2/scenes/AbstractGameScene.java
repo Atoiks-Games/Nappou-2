@@ -137,7 +137,7 @@ public abstract class AbstractGameScene extends Scene {
             TweenManager.service((long) (dt * 1000000));
             return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
         } else {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
                 if (selector == 0) {
                     pause = false;
                 } else {

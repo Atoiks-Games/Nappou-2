@@ -65,6 +65,13 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         return false;
     }
 
+    public boolean isButtonClicked(int btn, int clicks) {
+        if (btn < btnbuf.length) {
+            return btnbuf[btn] == clicks;
+        }
+        return false;
+    }
+
     public int getButtonClicks(int btn) {
         if (btn < btnbuf.length) {
             return Math.max(0, btnbuf[btn]);

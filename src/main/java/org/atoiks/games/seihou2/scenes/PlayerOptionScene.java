@@ -34,7 +34,7 @@ public final class PlayerOptionScene extends Scene {
             scene.switchToScene(1);
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1)) {
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
             scene.gotoNextScene();
             return true;
         }
