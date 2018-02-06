@@ -9,7 +9,6 @@ import org.msgpack.core.MessagePacker;
 
 import org.atoiks.games.framework.Frame;
 import org.atoiks.games.framework.FrameInfo;
-
 import org.atoiks.games.seihou2.scenes.*;
 
 public class App {
