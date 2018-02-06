@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import org.atoiks.games.seihou2.entities.Game;
-import org.atoiks.games.seihou2.entities.IBullet;
 
 public final class TrackPointBullet implements IBullet {
 

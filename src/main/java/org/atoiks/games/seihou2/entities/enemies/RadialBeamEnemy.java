@@ -2,7 +2,7 @@ package org.atoiks.games.seihou2.entities.enemies;
 
 import se.tube42.lib.tweeny.Item;
 
-import org.atoiks.games.seihou2.entities.Beam;
+import org.atoiks.games.seihou2.entities.bullet.Beam;
 
 public final class RadialBeamEnemy extends AbstractEnemy {
 

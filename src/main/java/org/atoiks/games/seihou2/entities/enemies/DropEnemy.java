@@ -1,6 +1,6 @@
 package org.atoiks.games.seihou2.entities.enemies;
 
-import org.atoiks.games.seihou2.entities.PointBullet;
+import org.atoiks.games.seihou2.entities.bullet.PointBullet;
 
 public final class DropEnemy extends AbstractEnemy {
 

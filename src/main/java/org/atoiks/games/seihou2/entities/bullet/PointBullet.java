@@ -1,4 +1,4 @@
-package org.atoiks.games.seihou2.entities;
+package org.atoiks.games.seihou2.entities.bullet;
 
 import java.awt.Color;
 import java.awt.Graphics;

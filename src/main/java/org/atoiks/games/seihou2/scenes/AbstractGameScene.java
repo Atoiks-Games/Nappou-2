@@ -7,10 +7,11 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import se.tube42.lib.tweeny.TweenManager;
+
 import org.atoiks.games.framework.Scene;
 import org.atoiks.games.seihou2.entities.*;
-
-import se.tube42.lib.tweeny.TweenManager;
+import org.atoiks.games.seihou2.entities.bullet.*;
 
 public abstract class AbstractGameScene extends Scene {
 

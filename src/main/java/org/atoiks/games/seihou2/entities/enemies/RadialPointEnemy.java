@@ -1,8 +1,8 @@
 package org.atoiks.games.seihou2.entities.enemies;
 
-import org.atoiks.games.seihou2.entities.PointBullet;
-
 import se.tube42.lib.tweeny.Item;
+
+import org.atoiks.games.seihou2.entities.bullet.PointBullet;
 
 public final class RadialPointEnemy extends AbstractEnemy {
 
