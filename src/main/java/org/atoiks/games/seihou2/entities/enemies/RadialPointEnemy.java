@@ -20,6 +20,8 @@ public final class RadialPointEnemy extends AbstractEnemy {
     private float time;
     private int bulletId;
 
+    private boolean firstRun = true;
+
     public RadialPointEnemy(int hp, int score, Item tweenInfo, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float radius, float speed) {
         super(hp, tweenInfo);
         this.score = score;
@@ -37,6 +39,11 @@ public final class RadialPointEnemy extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
+        if (firstRun) {
+            firstRun = false;
+            return;
+        }
+
         time += dt;
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;

@@ -4,41 +4,37 @@ import se.tube42.lib.tweeny.Item;
 
 import org.atoiks.games.seihou2.entities.Beam;
 
-public final class RadialBeamEnemy extends AbstractEnemy {
+public final class TrackBeamEnemy extends AbstractEnemy {
 
-    private static final long serialVersionUID = 7329566493126725388L;
-
+    private static final long serialVersionUID = -2145973374641410758L;
+    
     private final int score;
-    private final int intervals;
     private final float thickness;
-    private final float length;
+    private final int length;
+    private final float speed;
     private final float fireInterval;
     private final float delay;
-    private final float initialAngle;
-    private final float anglePerInterval;
-    private final float speed;
+    private final float[] angleOffsets;
 
     private float time;
     private int bulletId;
 
     private boolean firstRun = true;
 
-    public RadialBeamEnemy(int hp, int score, Item tweenInfo, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float thickness, int length, float speed) {
+    public TrackBeamEnemy(int hp, int score, Item tweenInfo, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float thickness, int length, float speed) {
         super(hp, tweenInfo);
         this.score = score;
         this.thickness = thickness;
         this.length = length;
-        this.initialAngle = initialAngle;
-        this.anglePerInterval = anglePerInterval;
         this.speed = speed;
-        this.intervals = intervals;
+        this.angleOffsets = angleOffsets;
         this.delay = delay;
         this.fireInterval = fireInterval;
         if (!immediateFire) {
-            bulletId = intervals;
+            bulletId = angleOffsets.length;
         }
     }
-
+    
     @Override
     public void update(float dt) {
         if (firstRun) {
@@ -47,10 +43,13 @@ public final class RadialBeamEnemy extends AbstractEnemy {
         }
 
         time += dt;
-        if (bulletId >= intervals) {
+        if (bulletId >= angleOffsets.length) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            game.addEnemyBullet(new Beam(getX(), getY(), thickness, length, initialAngle + bulletId * anglePerInterval, speed));
+            final float x = getX();
+            final float y = getY();
+            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+            game.addEnemyBullet(new Beam(x, y, thickness, length, (float) (angle + angleOffsets[bulletId]), speed));
             ++bulletId;
             time = 0;
         }
