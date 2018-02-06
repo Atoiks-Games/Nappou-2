@@ -9,7 +9,8 @@ public final class Beam implements IBullet {
 
     private static final long serialVersionUID = 4412375L;
 
-    private float x, y, thickness, length, angle, dmag;
+    private final float angle, dmag, cos, sin;
+    private float x, y, thickness, length;
 
     // Update will fill in these values
     // b1---c2
@@ -23,13 +24,20 @@ public final class Beam implements IBullet {
         this.y = y;
         this.thickness = thickness;
         this.length = length;
-        this.angle = (float) (angle % (2 * Math.PI)); // angle in radians
         this.dmag = dmag;
 
-        // Normalize the angles
-        if (this.angle < 0) {
-            this.angle += 2 * Math.PI;
+        final float rad = normalizeRadians(angle);
+        this.angle = rad;
+        this.cos = (float) Math.cos(rad);
+        this.sin = (float) Math.sin(rad);
+    }
+
+    private static float normalizeRadians(float radians) {
+        radians = (float) (radians % (2 * Math.PI));
+        if (radians < 0) {
+            radians += 2 * Math.PI;
         }
+        return radians;
     }
 
     @Override
@@ -44,9 +52,6 @@ public final class Beam implements IBullet {
         this.y += getDy() * dt;
 
         // Calculate collision boundary and render image
-        final double cos = Math.cos(angle);
-        final double sin = Math.sin(angle);
-
         final double tcos = thickness * cos / 2;
         final double tsin = thickness * sin / 2;
         final double lcos = length * cos;
@@ -81,12 +86,12 @@ public final class Beam implements IBullet {
 
     @Override
     public float getDx() {
-        return (float) (Math.cos(this.angle) * this.dmag);
+        return cos * this.dmag;
     }
 
     @Override
     public float getDy() {
-        return (float) (Math.sin(this.angle) * this.dmag);
+        return sin * this.dmag;
     }
 
     @Override
