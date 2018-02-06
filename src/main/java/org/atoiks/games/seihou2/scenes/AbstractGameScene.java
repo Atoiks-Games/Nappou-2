@@ -18,7 +18,7 @@ public abstract class AbstractGameScene extends Scene {
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
     public static final int GAME_BORDER = 750;
-    
+
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
     public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
@@ -66,7 +66,7 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public void leave() {    
+    public void leave() {
         if (sceneId >= 0) {
             final int[][] scoreDat = (int[][]) scene.resources().get("score.dat");
             final int[] alias = scoreDat[sceneId];
@@ -77,7 +77,7 @@ public abstract class AbstractGameScene extends Scene {
         }
 
         game.cleanup();
-    } 
+    }
 
     public void renderBackground(final Graphics g) {
         g.setColor(Color.black);
@@ -106,11 +106,6 @@ public abstract class AbstractGameScene extends Scene {
         // The bullet-curtain part
         renderBackground(g);
         game.render(g);
-        if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
-            g.setColor(Color.black);
-            g.drawRect(45, selectorY[selector], 4, OPT_HEIGHT);
-        }
 
         // The game stats part
         g.setColor(Color.black);
@@ -119,6 +114,12 @@ public abstract class AbstractGameScene extends Scene {
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         renderStats(g);
+
+        if (pause) {
+            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
+            g.setColor(Color.black);
+            g.drawRect(45, selectorY[selector], 4, OPT_HEIGHT);
+        }
     }
 
     @Override
