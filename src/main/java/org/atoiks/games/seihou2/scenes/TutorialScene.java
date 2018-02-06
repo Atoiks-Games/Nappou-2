@@ -14,11 +14,13 @@ import org.atoiks.games.seihou2.entities.shield.*;
 public final class TutorialScene extends AbstractGameScene {
 
     private int waveCounter;
+    private float time;
     private Clip bgm;
     private Image tutorialImg;
     private Image controlsImg;
     private Image talkImg;
     private boolean controlsGone;
+    private boolean bossMode;
 
     public TutorialScene() {
         // -1 scene id means the score is not saved
@@ -46,6 +48,7 @@ public final class TutorialScene extends AbstractGameScene {
         game.player.setHp(5);
         game.setScore(0);
         controlsGone = false;
+        bossMode = false;
         waveCounter = 0;
     }
 
@@ -82,6 +85,16 @@ public final class TutorialScene extends AbstractGameScene {
             controlsImg = null;
         }
 
+
+        if(bossMode){
+          time ++;
+            if(time%25000 == 0){
+              game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
+              game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+            }
+        }
+
+
         if (game.enemies.isEmpty()) {
             switch (waveCounter) {
                 case 0:
@@ -111,6 +124,7 @@ public final class TutorialScene extends AbstractGameScene {
                 case 3:
                     talkImg = null;
                     disableInput = false;
+                    bossMode = true;
                     break;
             }
         }
