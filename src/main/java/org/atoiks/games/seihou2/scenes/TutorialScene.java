@@ -17,6 +17,7 @@ public final class TutorialScene extends AbstractGameScene {
     private Clip bgm;
     private Image tutorialImg;
     private Image controlsImg;
+    private Image talkImg;
     private boolean controlsGone;
 
     public TutorialScene() {
@@ -29,6 +30,7 @@ public final class TutorialScene extends AbstractGameScene {
         super.enter(prevSceneId);
 
         tutorialImg = (Image) scene.resources().get("z.png");
+        talkImg = null;
         controlsImg = (Image) scene.resources().get("controls.png");
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
@@ -56,6 +58,14 @@ public final class TutorialScene extends AbstractGameScene {
         if (controlsImg != null) {
             g.drawImage(controlsImg, 0, 0, null);
         }
+    }
+
+    @Override
+    public void renderStats(final Graphics g){
+      super.renderStats(g);
+      if (talkImg != null) {
+          g.drawImage(talkImg, 0, HEIGHT - 200, null);
+      }
     }
 
     @Override
@@ -91,7 +101,14 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
-                    // Boss
+                        tutorialImg = null;
+                        talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
+                        if(scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)){
+                          waveCounter = 3;
+                        }
+                    break;
+                case 3:
+                    talkImg = null;
                     break;
             }
         }
