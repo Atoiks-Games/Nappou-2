@@ -173,7 +173,7 @@ public final class LoadingScene extends Scene {
             loaded = LoadState.NO_RES;
             return;
         }
-        try (final AudioInputStream in = AudioSystem.getAudioInputStream(is)) {
+        try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
             final Clip clip = AudioSystem.getClip();
             clip.open(in);
             clip.stop();
