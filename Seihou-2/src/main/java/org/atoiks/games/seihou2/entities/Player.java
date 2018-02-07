@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import org.atoiks.games.framework.IRender;
-import org.atoiks.games.framework.IUpdate;
+import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.framework2d.IUpdate;
 
 public final class Player implements IRender, IUpdate, Serializable {
 

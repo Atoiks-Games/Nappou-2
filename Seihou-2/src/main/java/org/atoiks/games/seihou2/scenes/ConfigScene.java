@@ -7,7 +7,8 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework.Scene;
+import org.atoiks.games.framework2d.Scene;
+
 import org.atoiks.games.seihou2.GameConfig;
 
 public final class ConfigScene extends Scene {

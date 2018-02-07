@@ -24,7 +24,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
 
-import org.atoiks.games.framework.Scene;
+import org.atoiks.games.framework2d.Scene;
+
 import org.atoiks.games.seihou2.GameConfig;
 
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;

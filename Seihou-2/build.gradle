@@ -13,6 +13,7 @@ repositories {
 dependencies {
     compile "se.tube42.tweeny:tweeny:0.3.1"
     compile "org.msgpack:msgpack-core:0.8.14"
+    compile project(':Framework2D')
 }
 
 task copyLicense {

@@ -9,7 +9,8 @@ import java.awt.event.KeyEvent;
 
 import se.tube42.lib.tweeny.TweenManager;
 
-import org.atoiks.games.framework.Scene;
+import org.atoiks.games.framework2d.Scene;
+
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
 

@@ -2,8 +2,8 @@ package org.atoiks.games.seihou2.entities;
 
 import java.io.Serializable;
 
-import org.atoiks.games.framework.IRender;
-import org.atoiks.games.framework.IUpdate;
+import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.framework2d.IUpdate;
 
 public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializable {
 
