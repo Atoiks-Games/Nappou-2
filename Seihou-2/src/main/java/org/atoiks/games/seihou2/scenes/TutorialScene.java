@@ -125,6 +125,7 @@ public final class TutorialScene extends AbstractGameScene {
                     talkImg = null;
                     disableInput = false;
                     bossMode = true;
+                    game.addEnemy(new CAITutorial(100, 375, -10, 20));
                     break;
             }
         }
