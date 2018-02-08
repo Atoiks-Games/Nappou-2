@@ -2,6 +2,7 @@ package org.atoiks.games.seihou2.entities.bullet;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import org.atoiks.games.seihou2.entities.IBullet;
 
@@ -42,8 +43,12 @@ public final class Beam implements IBullet {
 
     @Override
     public void render(final Graphics g) {
-        g.setColor(Color.white);
-        g.fillPolygon(xs, ys, 4);
+        final Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.white);
+        final double angle = 3 * Math.PI / 2 - this.angle;
+        g2d.rotate(-angle, x, y);
+        g2d.fillRect((int) (x - thickness / 2), (int) (y - length), (int) thickness, (int) length);
+        g2d.rotate(angle, x, y);
     }
 
     @Override
