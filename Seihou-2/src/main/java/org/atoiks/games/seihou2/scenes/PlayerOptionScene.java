@@ -1,13 +1,13 @@
 package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.IShield;
@@ -23,10 +23,10 @@ public final class PlayerOptionScene extends Scene {
     private int shieldSel;
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(shieldOptImg, 0, 0, null);
+    public void render(IGraphics g) {
+        g.drawImage(shieldOptImg, 0, 0);
         g.setColor(Color.white);
-        g.drawRect(90, shieldSelY[shieldSel], 4, OPT_HEIGHT);
+        g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
     }
 
     @Override

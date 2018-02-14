@@ -2,7 +2,6 @@ package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Graphics;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +24,7 @@ import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
 
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.GameConfig;
 
@@ -48,21 +48,21 @@ public final class LoadingScene extends Scene {
     private Image loadingTxt;
 
     @Override
-    public void render(Graphics g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+    public void render(IGraphics g) {
+        g.setClearColor(Color.black);
+        g.clearGraphics();
         g.setColor(Color.white);
         for (double i = 0; i < Math.PI * 2; i += Math.PI / 6) {
             final int x = (int) (Math.cos(time + i) * Math.sin(time) * RADIUS) + WIDTH / 2;
             final int y = (int) (Math.sin(time + i) * Math.sin(time) * RADIUS) + HEIGHT / 2;
-            g.drawOval(x - 5, y - 5, 10, 10);
+            g.drawOval(x - 5, y - 5, x + 5, y + 5);
         }
 
         if (loadingTxt == null) {
             loadingTxt = (Image) scene.resources().get("loading.png");
         }
         if (loadingTxt != null) {
-            g.drawImage(loadingTxt, WIDTH - loadingTxt.getWidth(null), HEIGHT - loadingTxt.getHeight(null), null);
+            g.drawImage(loadingTxt, WIDTH - loadingTxt.getWidth(null), HEIGHT - loadingTxt.getHeight(null));
         }
     }
 

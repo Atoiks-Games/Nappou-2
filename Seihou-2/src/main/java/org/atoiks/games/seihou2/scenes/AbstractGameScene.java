@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import se.tube42.lib.tweeny.TweenManager;
 
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
@@ -81,21 +81,21 @@ public abstract class AbstractGameScene extends Scene {
         game.cleanup();
     }
 
-    public void renderBackground(final Graphics g) {
+    public void renderBackground(final IGraphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
     }
 
-    public void renderStats(final Graphics g) {
+    public void renderStats(final IGraphics g) {
         if (statsImg != null) {
-            g.drawImage(statsImg, GAME_BORDER, 0, null);
+            g.drawImage(statsImg, GAME_BORDER, 0);
         }
 
         if (hpImg != null) {
             final int hp = game.player.getHp();
             final int w = hpImg.getWidth(null);
             for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24, null);
+                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
             }
         }
 
@@ -104,7 +104,7 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public final void render(final Graphics g) {
+    public final void render(final IGraphics g) {
         // The bullet-curtain part
         renderBackground(g);
         game.render(g);
@@ -118,9 +118,9 @@ public abstract class AbstractGameScene extends Scene {
         renderStats(g);
 
         if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY, null);
+            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY);
             g.setColor(Color.black);
-            g.drawRect(45, selectorY[selector], 4, OPT_HEIGHT);
+            g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.atoiks.games.seihou2.entities.shield;
 
-import java.awt.Graphics;
+import org.atoiks.games.framework2d.IGraphics;
+
 import org.atoiks.games.seihou2.entities.IShield;
 
 public class NullShield implements IShield {
@@ -18,7 +19,7 @@ public class NullShield implements IShield {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(IGraphics g) {
 		// Do nothing
 	}
 

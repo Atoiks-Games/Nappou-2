@@ -1,7 +1,8 @@
 package org.atoiks.games.seihou2.entities.shield;
 
 import java.awt.Color;
-import java.awt.Graphics;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.IShield;
 
@@ -46,13 +47,11 @@ public abstract class TimeBasedShield implements IShield {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(IGraphics g) {
         if (active) {
             g.setColor(Color.orange);
             // x, y are the center of the shield
-            final float lr = r;
-            final int ld = (int) (lr * 2);
-            g.drawOval((int) (x - lr), (int) (y - lr), ld, ld);
+            g.drawOval(x - r, y - r, x + r, y + r);
         }
     }
 

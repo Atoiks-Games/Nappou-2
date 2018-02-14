@@ -1,6 +1,6 @@
 package org.atoiks.games.seihou2.entities.enemy;
 
-import java.awt.Graphics;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.bullet.Beam;
 import org.atoiks.games.seihou2.entities.bullet.PointBullet;
@@ -87,7 +87,7 @@ public final class CAITutorial extends AbstractEnemy {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(IGraphics g) {
         // Convert to drawImage later on?
         super.render(g);
     }

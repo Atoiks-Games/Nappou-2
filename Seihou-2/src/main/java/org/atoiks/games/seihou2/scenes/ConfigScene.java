@@ -2,12 +2,12 @@ package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.GameConfig;
 
@@ -22,8 +22,8 @@ public final class ConfigScene extends Scene {
     private int selector;
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(configImg, 0, 0, null);
+    public void render(IGraphics g) {
+        g.drawImage(configImg, 0, 0);
         g.setColor(Color.white);
         switch (selector) {
             case 0:

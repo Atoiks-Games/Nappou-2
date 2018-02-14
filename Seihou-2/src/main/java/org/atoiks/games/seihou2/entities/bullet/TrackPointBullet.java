@@ -1,7 +1,8 @@
 package org.atoiks.games.seihou2.entities.bullet;
 
 import java.awt.Color;
-import java.awt.Graphics;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.Game;
 import org.atoiks.games.seihou2.entities.IBullet;
@@ -53,13 +54,11 @@ public final class TrackPointBullet implements IBullet {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(IGraphics g) {
         // Can change this to using textures later
         g.setColor(Color.white);
         // x, y are the center of the bullet
-        final float lr = r;
-        final int ld = (int) (lr * 2);
-        g.drawOval((int) (x - lr), (int) (y - lr), ld, ld);
+        g.drawOval(x - r, y - r, x + r, y + r);
     }
 
     @Override

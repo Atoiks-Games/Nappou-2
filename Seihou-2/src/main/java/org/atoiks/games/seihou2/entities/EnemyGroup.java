@@ -1,9 +1,10 @@
 package org.atoiks.games.seihou2.entities;
 
-import java.awt.Graphics;
 import java.util.stream.Stream;
-import java.util.function.IntFunction;
 import java.util.function.Supplier;
+import java.util.function.IntFunction;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 public abstract class EnemyGroup extends IEnemy {
 
@@ -47,7 +48,7 @@ public abstract class EnemyGroup extends IEnemy {
     }
 
     @Override
-    public final void render(Graphics g) {
+    public final void render(IGraphics g) {
         // Do nothing (only in charge of sending enemies)
     }
 

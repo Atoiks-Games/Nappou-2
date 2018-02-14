@@ -1,12 +1,12 @@
 package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.GameConfig;
 
@@ -20,9 +20,9 @@ public final class ScoreScene extends Scene {
     private Clip bgm;
 
     @Override
-    public void render(Graphics g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+    public void render(IGraphics g) {
+        g.setClearColor(Color.black);
+        g.clearGraphics();
 
         if (scoreDat == null) return;
         g.setColor(Color.white);

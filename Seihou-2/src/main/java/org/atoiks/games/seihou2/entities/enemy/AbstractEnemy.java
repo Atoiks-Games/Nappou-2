@@ -1,9 +1,10 @@
 package org.atoiks.games.seihou2.entities.enemy;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import se.tube42.lib.tweeny.Item;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.Game;
 import org.atoiks.games.seihou2.entities.IEnemy;
@@ -76,12 +77,13 @@ public abstract class AbstractEnemy extends IEnemy {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(IGraphics g) {
         g.setColor(Color.white);
         // x, y are the center of the enemy
-        final float lr = getR();
-        final int ld = (int) (lr * 2);
-        g.drawOval((int) (getX() - lr), (int) (getY() - lr), ld, ld);
+        final float x = getX();
+        final float y = getY();
+        final float r = getR();
+        g.drawOval(x - r, y - r, x + r, y + r);
     }
 
     @Override

@@ -3,10 +3,10 @@ package org.atoiks.games.seihou2.entities;
 import java.io.Serializable;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IUpdate;
+import org.atoiks.games.framework2d.IGraphics;
 
 public final class Player implements IRender, IUpdate, Serializable {
 
@@ -33,17 +33,17 @@ public final class Player implements IRender, IUpdate, Serializable {
     }
 
     @Override
-    public void render(final Graphics g) {
+    public void render(final IGraphics g) {
         this.shield.render(g);
         g.setColor(Color.cyan);
         if (isRespawnShieldActive()) {
-            g.drawOval((int) (x - RADIUS), (int) (y - RADIUS), RADIUS * 2, RADIUS * 2);
+            g.drawOval((int) (x - RADIUS), (int) (y - RADIUS), x + RADIUS, y + RADIUS);
         } else {
-            g.fillOval((int) (x - RADIUS), (int) (y - RADIUS), RADIUS * 2, RADIUS * 2);
+            g.fillOval((int) (x - RADIUS), (int) (y - RADIUS), x + RADIUS, y + RADIUS);
         }
         if (speedScale != 1) {
             g.setColor(Color.red);
-            g.fillOval((int) (x - HINT_COL_RADIUS), (int) (y - HINT_COL_RADIUS), HINT_COL_RADIUS * 2, HINT_COL_RADIUS * 2);
+            g.fillOval((int) (x - HINT_COL_RADIUS), (int) (y - HINT_COL_RADIUS), x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
     }
 

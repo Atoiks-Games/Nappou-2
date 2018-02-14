@@ -1,10 +1,11 @@
 package org.atoiks.games.seihou2.scenes;
 
 import java.awt.Image;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.Player;
@@ -53,21 +54,21 @@ public final class TutorialScene extends AbstractGameScene {
     }
 
     @Override
-    public void renderBackground(final Graphics g) {
+    public void renderBackground(final IGraphics g) {
         super.renderBackground(g);
         if (tutorialImg != null) {
-            g.drawImage(tutorialImg, (GAME_BORDER - tutorialImg.getWidth(null)) / 2, (HEIGHT - tutorialImg.getHeight(null)) / 2, null);
+            g.drawImage(tutorialImg, (GAME_BORDER - tutorialImg.getWidth(null)) / 2, (HEIGHT - tutorialImg.getHeight(null)) / 2);
         }
         if (controlsImg != null) {
-            g.drawImage(controlsImg, 0, 0, null);
+            g.drawImage(controlsImg, 0, 0);
         }
     }
 
     @Override
-    public void renderStats(final Graphics g){
+    public void renderStats(final IGraphics g) {
         super.renderStats(g);
         if (talkImg != null) {
-            g.drawImage(talkImg, 0, HEIGHT - 200, null);
+            g.drawImage(talkImg, 0, HEIGHT - 200);
         }
     }
 

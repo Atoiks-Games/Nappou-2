@@ -1,12 +1,12 @@
 package org.atoiks.games.seihou2.entities;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.IBullet;
 
@@ -23,7 +23,7 @@ public final class Game implements Serializable, IRender {
     private int score;
 
     @Override
-    public void render(Graphics g) {
+    public void render(IGraphics g) {
         if (player != null) player.render(g);
 
         for (int i = 0; i < enemyBullets.size(); ++i) {
