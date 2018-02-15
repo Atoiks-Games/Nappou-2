@@ -104,7 +104,7 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public final void render(final IGraphics g) {
+    public final <T> void render(final IGraphics<T> g) {
         // The bullet-curtain part
         renderBackground(g);
         game.render(g);

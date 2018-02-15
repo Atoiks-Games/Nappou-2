@@ -23,7 +23,7 @@ public final class Game implements Serializable, IRender {
     private int score;
 
     @Override
-    public void render(IGraphics g) {
+    public <T> void render(IGraphics<T> g) {
         if (player != null) player.render(g);
 
         for (int i = 0; i < enemyBullets.size(); ++i) {

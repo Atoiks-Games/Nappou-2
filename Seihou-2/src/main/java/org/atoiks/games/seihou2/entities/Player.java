@@ -33,7 +33,7 @@ public final class Player implements IRender, IUpdate, Serializable {
     }
 
     @Override
-    public void render(final IGraphics g) {
+    public <T> void render(final IGraphics<T> g) {
         this.shield.render(g);
         g.setColor(Color.cyan);
         if (isRespawnShieldActive()) {

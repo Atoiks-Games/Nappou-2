@@ -7,8 +7,9 @@ import java.io.ObjectOutputStream;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 
-import org.atoiks.games.framework2d.Frame;
 import org.atoiks.games.framework2d.FrameInfo;
+import org.atoiks.games.framework2d.swing.Frame;
+
 import org.atoiks.games.seihou2.scenes.*;
 
 public class App {
