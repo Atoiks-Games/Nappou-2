@@ -12,6 +12,7 @@ public final class CAITutorial extends AbstractEnemy {
     private float time;
     private boolean fireGate;
     private int bulletPattern;
+    private int enemyTime;
     private double spiralAngle = 0;
 
     public CAITutorial(int hp, float x, float y, float r) {
@@ -22,6 +23,12 @@ public final class CAITutorial extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
         bulletPattern ++;
+
+        enemyTime++;
+        if(enemyTime%25000 == 0){
+          game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
+          game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+        }
 
         if (getY() <= 150) {
             setY(getY() + 300 * dt);

@@ -86,7 +86,7 @@ public final class TutorialScene extends AbstractGameScene {
             controlsImg = null;
         }
 
-
+/*
         if(bossMode){
           time ++;
             if(time%25000 == 0){
@@ -94,6 +94,7 @@ public final class TutorialScene extends AbstractGameScene {
               game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
             }
         }
+*/
 
 
         if (game.enemies.isEmpty()) {
@@ -125,9 +126,18 @@ public final class TutorialScene extends AbstractGameScene {
                 case 3:
                     talkImg = null;
                     disableInput = false;
-                    bossMode = true;
+                    //bossMode = true;
                     game.addEnemy(new CAITutorial(100, 375, -10, 20));
+                    waveCounter = 4;
                     break;
+
+                case 4:
+                    talkImg = (Image) scene.resources().get("tutorial_postboss_1.png");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        //Go back to main menu
+                    }
+                    break;
+
             }
         }
         return true;

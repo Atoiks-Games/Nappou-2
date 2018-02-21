@@ -92,6 +92,7 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("opt_shield.png");
                     loadImageFromResources("config.png");
                     loadImageFromResources("tutorial_preboss_1.png");
+                    loadImageFromResources("tutorial_postboss_1.png");
 
                     loadMusicFromResources("Enter_The_Void.wav");
                     loadMusicFromResources("Awakening.wav");
