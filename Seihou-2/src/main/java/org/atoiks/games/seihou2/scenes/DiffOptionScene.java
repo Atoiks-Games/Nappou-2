@@ -9,24 +9,27 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.seihou2.Difficulty;
 import org.atoiks.games.seihou2.GameConfig;
 import org.atoiks.games.seihou2.entities.IShield;
 import org.atoiks.games.seihou2.entities.shield.*;
 
-public final class PlayerOptionScene extends Scene {
+public final class DiffOptionScene extends Scene {
 
-    private static final int[] shieldSelY = {356, 414, 498};
+    private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
 
-    private Image shieldOptImg;
+    private Image diffOptImg;
     private Clip bgm;
-    private int shieldSel;
+    private int diffSel;
+    private Difficulty difficulty;
+    private boolean challengeModeLocked;
 
     @Override
     public void render(IGraphics g) {
-        g.drawImage(shieldOptImg, 0, 0);
+        g.drawImage(diffOptImg, 0, 0);
         g.setColor(Color.white);
-        g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
+        g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
 
     @Override
@@ -40,17 +43,20 @@ public final class PlayerOptionScene extends Scene {
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++shieldSel >= shieldSelY.length) shieldSel = 0;
+            ++diffSel;
+            if (diffSel >= diffSelY.length || (challengeModeLocked && diffSel == diffSelY.length - 1)) diffSel = 0;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
+            if (--diffSel < 0) diffSel = diffSelY.length - (challengeModeLocked ? 2 : 1);
         }
 
         final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < shieldSelY.length; ++i) {
-            final int selBase = shieldSelY[i];
+        for (int i = 0; i < diffSelY.length; ++i) {
+            if (challengeModeLocked && i == diffSelY.length - 1) continue;
+
+            final int selBase = diffSelY[i];
             if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                shieldSel = i;
+                diffSel = i;
                 break;
             }
         }
@@ -64,10 +70,14 @@ public final class PlayerOptionScene extends Scene {
 
     @Override
     public void enter(int previousSceneId) {
-        shieldOptImg = (Image) scene.resources().get("opt_shield.png");
+        diffOptImg = (Image) scene.resources().get("opt_diff.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+        difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        challengeModeLocked = cfg.challengeModeLocked;
+
+        if (cfg.bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
@@ -75,17 +85,18 @@ public final class PlayerOptionScene extends Scene {
 
     @Override
     public void leave() {
-        scene.resources().put("shield", getShieldFromOption());
+        scene.resources().put("difficulty", getDiffFromOption());
 
         bgm.stop();
     }
 
-    private IShield getShieldFromOption() {
-        switch (shieldSel) {
-            default:
-            case 0: return new FixedTimeShield(3.5f, 50);
-            case 1: return new TrackingTimeShield(2f, 35);
-            case 2: return new NullShield();
+    private Difficulty getDiffFromOption() {
+        switch (diffSel) {
+            case 0: return Difficulty.EASY;
+            default:    // default is normal
+            case 1: return Difficulty.NORMAL;
+            case 2: return Difficulty.HARD;
+            case 4: return Difficulty.CHALLENGE;
         }
     }
 }

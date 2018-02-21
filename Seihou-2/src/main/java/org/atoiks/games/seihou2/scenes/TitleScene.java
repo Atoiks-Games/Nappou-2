@@ -75,6 +75,7 @@ public final class TitleScene extends Scene {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 default:
                     bgm.setMicrosecondPosition(0);

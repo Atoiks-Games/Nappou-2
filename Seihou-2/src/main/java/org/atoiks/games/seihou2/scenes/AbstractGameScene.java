@@ -11,6 +11,8 @@ import se.tube42.lib.tweeny.TweenManager;
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.seihou2.Difficulty;
+
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
 
@@ -45,6 +47,7 @@ public abstract class AbstractGameScene extends Scene {
     protected Image pauseImg;
     protected boolean pause;
     protected boolean disableInput;
+    protected Difficulty difficulty;
 
     public final int sceneId;
 
@@ -62,6 +65,7 @@ public abstract class AbstractGameScene extends Scene {
         hpImg = (Image) scene.resources().get("hp.png");
         statsImg = (Image) scene.resources().get("stats.png");
         pauseImg = (Image) scene.resources().get("pause.png");
+        difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         playerFireTimeout = 0f;
         pause = false;
