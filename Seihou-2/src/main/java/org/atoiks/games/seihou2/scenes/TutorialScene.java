@@ -134,7 +134,7 @@ public final class TutorialScene extends AbstractGameScene {
                 case 4:
                     talkImg = (Image) scene.resources().get("tutorial_postboss_1.png");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        //Go back to main menu
+                        scene.switchToScene(1);
                     }
                     break;
 
