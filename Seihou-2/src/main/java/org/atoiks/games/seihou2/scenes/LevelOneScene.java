@@ -24,76 +24,68 @@ public final class LevelOneScene extends AbstractGameScene {
         wave = 0;
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
-
-        final float[] offset = { (float) (-Math.PI / 12), 0, (float) (Math.PI / 12) };
-        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-            final Item tweenInfo = new Item(3);
-            tweenInfo.set(0, 30, GAME_BORDER - 30).configure(28000, TweenEquation.QUAD_INOUT);
-            tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-            tweenInfo.setImmediate(2, 8);
-            return new TrackBeamEnemy(4, 1, tweenInfo, 2f, true, 0f, offset, 2.5f, 45, 720);
-        }));
-        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-            final Item tweenInfo = new Item(3);
-            tweenInfo.set(0, 50, GAME_BORDER - 10).configure(28000, TweenEquation.QUAD_INOUT);
-            tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-            tweenInfo.setImmediate(2, 8);
-            return new TrackBeamEnemy(4, 1, tweenInfo, 2f, true, 0f, offset, 2.5f, 45, 720);
-        }));
-        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-            final Item tweenInfo = new Item(3);
-            tweenInfo.set(0, GAME_BORDER - 30, 30).configure(28000, TweenEquation.QUAD_INOUT);
-            tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-            tweenInfo.setImmediate(2, 8);
-            return new TrackBeamEnemy(4, 1, tweenInfo, 2f, true, 0f, offset, 2.5f, 45, 720);
-        }));
-        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-            final Item tweenInfo = new Item(3);
-            tweenInfo.set(0, GAME_BORDER - 10, 50).configure(28000, TweenEquation.QUAD_INOUT);
-            tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-            tweenInfo.setImmediate(2, 8);
-            return new TrackBeamEnemy(4, 1, tweenInfo, 2f, true, 0f, offset, 2.5f, 45, 720);
-        }));
-
         game.player.setHp(5);
         game.setScore(0);
     }
 
     @Override
     public boolean postUpdate(float dt) {
-        time += dt;
-        switch (wave) {
-            case 0:
-                if (time > 2) {
-                    game.addEnemy(EnemyGroup.createImmediateGroup(0.19f, 4, () -> new ShiftEnemy(5, 0, 15, 8)));
-                    time = 0;
-                    ++wave;
-                }
-                break;
-            case 1:
-                if (time > 0.5) {
-                    game.addEnemy(EnemyGroup.createImmediateGroup(0.2f, 8, i -> {
-                        return new DropEnemy(5, GAME_BORDER / 8 * i - 20, 0, 12);
-                    }));
-                    time = 0;
-                    ++wave;
-                }
-                break;
-            case 2:
-            case 3:
-            case 4:
-                if (time > 0.75) {
-                    final float playerX = game.player.getX();
-                    final float playerY = game.player.getY();
+        time ++;
+        float t = time/1000;
+        switch(difficulty){
+          case EASY:
+          switch (wave) {
+              case 0:
+                  if(t == 2){
+                    game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
+                    game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+                  }
+                  if(t == 4){
+                    game.addEnemy(new SingleShotEnemy(1, 200, -10, 8));
+                    game.addEnemy(new SingleShotEnemy(1, 550, -10, 8));
+                  }
+                  if(t == 6){
+                    game.addEnemy(new SingleShotEnemy(1, 150, -10, 8));
+                    game.addEnemy(new SingleShotEnemy(1, 600, -10, 8));
+                  }
+                  if(t == 8){
+                    game.addEnemy(new SingleShotEnemy(1, 100, -10, 8));
+                    game.addEnemy(new SingleShotEnemy(1, 650, -10, 8));
+                  }
+                  if(t == 10){
+                    game.addEnemy(new SingleShotEnemy(1, 50, -10, 8));
+                    game.addEnemy(new SingleShotEnemy(1, 700, -10, 8));
+                  }
+                  if (t == 11){
+                    game.addEnemy(new DropEnemy(1, -10, 10, 8));
+                    game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                  }
+                  if(t == 20){
+                    game.addEnemy(new CircularPathEnemy(1, 375, 300, 8, 1, 1, 1));
+                  }
+                  break;
+              case 1:
+                  if (game.enemies.isEmpty()) {
 
-                    game.addEnemyBullet(new Beam(-9, -9, 4f, 100, (float) Math.atan2(playerY, playerX), 900));
-                    game.addEnemyBullet(new Beam(GAME_BORDER + 9, -9, 4f, 100, (float) Math.atan2(playerY, playerX - GAME_BORDER), 900));
-                    game.addEnemyBullet(new Beam(-9, HEIGHT + 9, 4f, 100, (float) Math.atan2(playerY - HEIGHT, playerX), 900));
-                    game.addEnemyBullet(new Beam(GAME_BORDER + 9, HEIGHT + 9, 4f, 100, (float) Math.atan2(playerY - HEIGHT, playerX - GAME_BORDER), 900));
-                    time = 0;
-                    ++wave;
-                }
-                break;
+                  }
+                  break;
+              case 2:
+                  if (game.enemies.isEmpty()) {
+
+                  }
+                  break;
+              case 3:
+                  if (game.enemies.isEmpty()) {
+
+                  }
+                  break;
+              case 4:
+                  if (game.enemies.isEmpty()) {
+
+                  }
+                  break;
+          }
+            break;
         }
         return true;
     }
