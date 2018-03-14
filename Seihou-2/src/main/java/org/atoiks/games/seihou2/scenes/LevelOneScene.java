@@ -9,7 +9,7 @@ import org.atoiks.games.seihou2.entities.bullet.*;
 
 public final class LevelOneScene extends AbstractGameScene {
 
-    private float time;
+    private int cycles;
     private int wave;
 
     public LevelOneScene() {
@@ -20,7 +20,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        time = 0;
+        cycles = 0;
         wave = 0;
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
@@ -30,61 +30,51 @@ public final class LevelOneScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-        time ++;
-        float t = time/1000;
-        switch(difficulty){
-          case EASY:
-          switch (wave) {
-              case 0:
-                  if(t == 2){
-                    game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
-                    game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
-                  }
-                  if(t == 4){
-                    game.addEnemy(new SingleShotEnemy(1, 200, -10, 8));
-                    game.addEnemy(new SingleShotEnemy(1, 550, -10, 8));
-                  }
-                  if(t == 6){
-                    game.addEnemy(new SingleShotEnemy(1, 150, -10, 8));
-                    game.addEnemy(new SingleShotEnemy(1, 600, -10, 8));
-                  }
-                  if(t == 8){
-                    game.addEnemy(new SingleShotEnemy(1, 100, -10, 8));
-                    game.addEnemy(new SingleShotEnemy(1, 650, -10, 8));
-                  }
-                  if(t == 10){
-                    game.addEnemy(new SingleShotEnemy(1, 50, -10, 8));
-                    game.addEnemy(new SingleShotEnemy(1, 700, -10, 8));
-                  }
-                  if (t == 11){
-                    game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                    game.addEnemy(new DropEnemy(1, 760, 10, 8));
-                  }
-                  if(t == 20){
-                    game.addEnemy(new CircularPathEnemy(1, 375, 300, 8, 1, 1, 1));
-                  }
-                  break;
-              case 1:
-                  if (game.enemies.isEmpty()) {
+        ++cycles;
+        switch (difficulty) {
+            case EASY:
+            switch (wave) {
+                case 0:
+                    switch (cycles) {
+                        case 2000:
+                        case 4000:
+                        case 6000:
+                        case 8000:
+                        case 10000:
+                            final int k = cycles / 1000 * 25;
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            break;
+                        case 11000:
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            break;
+                        case 20000:
+                            game.addEnemy(new CircularPathEnemy(1, 375, 300, 8, 1, 1, 1));
+                            break;
+                    }
+                    break;
+                case 1:
+                    if (game.enemies.isEmpty()) {
 
-                  }
-                  break;
-              case 2:
-                  if (game.enemies.isEmpty()) {
+                    }
+                    break;
+                case 2:
+                    if (game.enemies.isEmpty()) {
 
-                  }
-                  break;
-              case 3:
-                  if (game.enemies.isEmpty()) {
+                    }
+                    break;
+                case 3:
+                    if (game.enemies.isEmpty()) {
 
-                  }
-                  break;
-              case 4:
-                  if (game.enemies.isEmpty()) {
+                    }
+                    break;
+                case 4:
+                    if (game.enemies.isEmpty()) {
 
-                  }
-                  break;
-          }
+                    }
+                    break;
+            }
             break;
         }
         return true;

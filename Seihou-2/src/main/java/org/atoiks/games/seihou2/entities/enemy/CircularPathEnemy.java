@@ -10,7 +10,7 @@ public final class CircularPathEnemy extends AbstractEnemy {
 
     private float time;
     private boolean fireGate;
-    private int t;
+    private int cycles;
 
     public CircularPathEnemy(int hp, float x, float y, float r, float origin, float radius, float direction) {
         super(hp, x, y, r);
@@ -19,15 +19,16 @@ public final class CircularPathEnemy extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        t++;
+        cycles++;
 
-        setY(getY() + (float) (10 * Math.sin(t)));
+        setY(getY() + (float) (10 * Math.sin(cycles)));
 
-        if (!fireGate && Math.cos(6 * time) < 0.5) {
+        final double cos6t = Math.cos(6 * time);
+        if (!fireGate && cos6t < 0.5) {
             fireGate = true;
         }
 
-        if (fireGate && Math.cos(6 * time) > 0.5) {
+        if (fireGate && cos6t > 0.5) {
             fireGate = false;
             final float x = getX();
             final float y = getY();

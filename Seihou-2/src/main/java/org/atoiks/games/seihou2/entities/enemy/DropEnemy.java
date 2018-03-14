@@ -16,31 +16,29 @@ public final class DropEnemy extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        //Never put at x = 375, just don't do it!
-        if(getX() < 375){
-          setY(getY() + 400 * dt);
-          setX(getX() + 170 * dt);
-          if (bullets > 8) {
-              if (time > 0.5) bullets = 0;
-          } else if (time > 0.05) {
-              game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, 150));
-              ++bullets;
-              time = 0;
-          }
+        // Never put at x = 375, just don't do it!
+        if (getX() < 375) {
+            setY(getY() + 400 * dt);
+            setX(getX() + 170 * dt);
+            if (bullets > 8) {
+                if (time > 0.5) bullets = 0;
+            } else if (time > 0.05) {
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, 150));
+                ++bullets;
+                time = 0;
+            }
         }
-        if(getX() > 375){
-          setY(getY() + 400 * dt);
-          setX(getX() - 170 * dt);
-          if (bullets > 8) {
-              if (time > 0.5) bullets = 0;
-          } else if (time > 0.05) {
-              game.addEnemyBullet(new PointBullet(getX(), getY(), 3, -170, 150));
-              ++bullets;
-              time = 0;
-          }
+        if (getX() > 375) {
+            setY(getY() + 400 * dt);
+            setX(getX() - 170 * dt);
+            if (bullets > 8) {
+                if (time > 0.5) bullets = 0;
+            } else if (time > 0.05) {
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, -170, 150));
+                ++bullets;
+                time = 0;
+            }
         }
-
-
     }
 
 	@Override
