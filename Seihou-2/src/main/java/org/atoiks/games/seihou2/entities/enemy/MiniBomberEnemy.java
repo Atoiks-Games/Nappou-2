@@ -25,11 +25,12 @@ public final class MiniBomberEnemy extends AbstractEnemy {
 
         setX(getX() + dir * 300 * dt);
 
-        if (!fireGate && Math.cos(spd * time) < 0.5) {
+        final double cosSpdTime = Math.cos(spd * time);
+        if (!fireGate && cosSpdTime < 0.5) {
             fireGate = true;
         }
 
-        if (fireGate && Math.cos(spd * time) > 0.5) {
+        if (fireGate && cosSpdTime > 0.5) {
             fireGate = false;
             final float x = getX();
             final float y = getY();

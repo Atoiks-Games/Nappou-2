@@ -12,6 +12,11 @@ public final class LevelOneScene extends AbstractGameScene {
     private int cycles;
     private int wave;
 
+    // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
+    private final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
+    private final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 35, 56, 32, 16};
+    private final float[] w1eS = {12, 25, 10, 23, 4, 7, 17, 2, 10, 5, 7, 12, 9, 18, 19, 16, 100, 100, 17, 2};
+
     public LevelOneScene() {
         super(0);
     }
@@ -54,7 +59,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if(cycles > 30000){
+                    if (cycles > 30000) {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
@@ -63,68 +68,32 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 1:
                     switch (cycles) {
-                      case 2000:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                        game.addEnemy(new DropEnemy(1, 50, -10, 8));
-                        game.addEnemy(new DropEnemy(1, 700, -10, 8));
-                      break;
-
-                      case 4000:
-                      game.addEnemy(new MiniBomberEnemy(1, -10, 30, 8, 1, 12));
-                      game.addEnemy(new MiniBomberEnemy(1, 760, 30, 8, -1, 25));
-                      break;
-
-                      case 14000:
-                      game.addEnemy(new MiniBomberEnemy(1, -7, 10, 8, 1, 10));
-                      game.addEnemy(new MiniBomberEnemy(1, 754, 50, 8, -1, 23));
-                      break;
-
-                      case 24000:
-                      game.addEnemy(new MiniBomberEnemy(1, -12, 25, 8, 1, 4));
-                      game.addEnemy(new MiniBomberEnemy(1, 760, 40, 8, -1, 7));
-                      break;
-
-                      case 34000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 32, 8, 1, 17));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 16, 8, -1, 2));
-                      break;
-
-                      case 44000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 50, 8, 1, 10));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 37, 8, -1, 5));
-                      break;
-
-                      case 54000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 15, 8, 1, 7));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 48, 8, -1, 12));
-                      break;
-
-                      case 64000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 76, 8, 1, 9));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 89, 8, -1, 18));
-                      break;
-
-                      case 74000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 98, 8, 1, 19));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 76, 8, -1, 16));
-                      break;
-
-                      case 84000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 35, 8, 1, 100));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 56, 8, -1, 100));
-                      break;
-
-                      case 94000:
-                      game.addEnemy(new MiniBomberEnemy(1, -11, 32, 8, 1, 17));
-                      game.addEnemy(new MiniBomberEnemy(1, 755, 16, 8, -1, 2));
-                      game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 650, -10, 8));
-                      break;
+                        case 2000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 50, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 700, -10, 8));
+                            break;
+                        case 94000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8));   // FALLTHROUGH
+                        case 84000:
+                        case 74000:
+                        case 64000:
+                        case 54000:
+                        case 44000:
+                        case 34000:
+                        case 24000:
+                        case 14000:
+                        case 4000:
+                            final int offset = (cycles - 4000) / 5000;
+                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
+                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
+                            break;
                     }
-                    if(cycles > 94000){
+                    if (cycles > 94000) {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
@@ -133,22 +102,22 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 2:
                     if (game.enemies.isEmpty()) {
-                      //miniboss
+                        // miniboss
                     }
                     break;
                 case 3:
                     if (game.enemies.isEmpty()) {
-                      // wave
+                        // wave
                     }
                     break;
                 case 4:
                     if (game.enemies.isEmpty()) {
-                      // wave
+                        // wave
                     }
                     break;
                 case 5:
-                //boss
-                break;
+                    // boss
+                    break;
             }
             break;
         }
