@@ -50,15 +50,15 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 760, 10, 8));
                             break;
                         case 30000:
-                            game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 1, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 3, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
                     if(cycles > 30000){
-                      if (game.enemies.isEmpty()) {
-                        wave++;
-                        cycles = 0;
-                      }
+                        if (game.enemies.isEmpty()) {
+                            wave++;
+                            cycles = 0;
+                        }
                     }
                     break;
                 case 1:

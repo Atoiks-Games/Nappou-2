@@ -12,22 +12,22 @@ public final class CircularPathEnemy extends AbstractEnemy {
     private boolean fireGate;
     private float cycles;
     private float rad;
-    private float X;
-    private float Y;
+    private float orbitX;
+    private float orbitY;
     private int dir;
     private float mod;
     private int spos;
     private float bs;
 
-    public CircularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedmod, int startpos, float bulletspeed) {
+    public CircularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
         super(hp, x, y, r);
         rad = radius;
-        X = x;
-        Y = y;
+        orbitX = x;
+        orbitY = y;
         dir = direction;
-        mod = speedmod;
-        spos = startpos;
-        bs = bulletspeed;
+        mod = speedMod;
+        spos = startPos % 3;    // spos can only be {0, 1, 2, 3}
+        bs = bulletSpeed;
     }
 
     @Override
@@ -35,28 +35,9 @@ public final class CircularPathEnemy extends AbstractEnemy {
         time += dt;
         cycles++;
 
-        switch(spos){
-          case 1:
-          setY(Y + (float) (dir * rad * Math.sin(mod * cycles/10000)));
-          setX(X + (float) (rad * Math.cos(mod * cycles/10000)));
-          break;
-
-          case 2:
-          setY(Y + (float) (dir * rad * Math.sin((mod * cycles/10000) + Math.PI/2)));
-          setX(X + (float) (rad * Math.cos((mod * cycles/10000)+ Math.PI/2)));
-          break;
-
-          case 3:
-          setY(Y + (float) (dir * rad * Math.sin((mod * cycles/10000) + Math.PI)));
-          setX(X + (float) (rad * Math.cos((mod * cycles/10000)+ Math.PI)));
-          break;
-
-          case 4:
-          setY(Y + (float) (dir * rad * Math.sin((mod * cycles/10000)+ 3*Math.PI/2)));
-          setX(X + (float) (rad * Math.cos((mod * cycles/10000) + 3*Math.PI/2)));
-          break;
-        }
-
+        final double k = mod * cycles / 10000 + spos * Math.PI / 2;
+        setY(orbitY + (float) (dir * rad * Math.sin(k)));
+        setX(orbitX + (float) (rad * Math.cos(k)));
 
         final double cost = Math.cos(bs * time);
         if (!fireGate && cost < 0.01) {
