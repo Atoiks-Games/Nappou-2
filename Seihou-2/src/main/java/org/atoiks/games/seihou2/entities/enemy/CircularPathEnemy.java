@@ -26,7 +26,7 @@ public final class CircularPathEnemy extends AbstractEnemy {
         orbitY = y;
         dir = direction;
         mod = speedMod;
-        spos = startPos % 3;    // spos can only be {0, 1, 2, 3}
+        spos = startPos % 4;    // spos can only be {0, 1, 2, 3}
         bs = bulletSpeed;
     }
 
