@@ -44,7 +44,7 @@ public final class TutorialScene extends AbstractGameScene {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 50));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 2, 50));
 
         game.player.setHp(5);
         game.setScore(0);

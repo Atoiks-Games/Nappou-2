@@ -3,12 +3,12 @@ package org.atoiks.games.seihou2.entities.shield;
 public final class FixedTimeShield extends TimeBasedShield {
 
     private static final long serialVersionUID = 259728713501591561L;
-    
+
     private boolean relocateX = false;
     private boolean relocateY = false;
 
-    public FixedTimeShield(float timeout, float r) {
-        super(timeout, r);
+    public FixedTimeShield(float timeout, float reloadTime, float r) {
+        super(timeout, reloadTime, r);
     }
 
     @Override

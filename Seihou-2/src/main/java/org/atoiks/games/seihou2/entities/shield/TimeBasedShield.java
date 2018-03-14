@@ -10,14 +10,17 @@ public abstract class TimeBasedShield implements IShield {
 
     private static final long serialVersionUID = 172635916L;
 
+    protected final float reloadTime;
     protected final float timeout;
     
     protected boolean active = false;
     protected float time = 0;
     protected float x, y, r;
 
-    protected TimeBasedShield(float timeout, float r) {
+    protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
         this.timeout = timeout;
+        this.reloadTime = reloadTime;
+        this.time = timeout + reloadTime;
         this.r = r;
     }
 
@@ -57,20 +60,23 @@ public abstract class TimeBasedShield implements IShield {
 
     @Override
     public void update(float dt) {
-        if (active && (time += dt) >= timeout) {
+        time += dt;
+        if (active && time >= timeout) {
             deactivate();
         }
     }
     
     @Override
     public void activate() {
-        if (!active) active = true;
+        if (!active && isReady()) {
+            active = true;
+            time = 0;
+        }
     }
     
     @Override
     public void deactivate() {
         active = false;
-        time = 0;
     }
 
     @Override
@@ -92,5 +98,10 @@ public abstract class TimeBasedShield implements IShield {
                 && (Math.abs(y1 - y) < sumRadius);
         }
         return false;
+    }
+
+    @Override
+    public boolean isReady() {
+        return time > timeout + reloadTime;
     }
 }

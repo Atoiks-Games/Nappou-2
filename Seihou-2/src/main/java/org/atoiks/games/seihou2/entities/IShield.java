@@ -17,4 +17,5 @@ public interface IShield extends ICollidable, IRender, IUpdate, Serializable {
     public void activate();
     public void deactivate();
     public boolean isActive();
+    public boolean isReady();
 }

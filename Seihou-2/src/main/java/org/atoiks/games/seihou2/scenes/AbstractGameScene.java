@@ -44,6 +44,7 @@ public abstract class AbstractGameScene extends Scene {
     protected float playerFireTimeout;
     protected Image hpImg;
     protected Image statsImg;
+    protected Image skillImg;
     protected Image pauseImg;
     protected boolean pause;
     protected boolean disableInput;
@@ -64,6 +65,7 @@ public abstract class AbstractGameScene extends Scene {
     public void enter(int prevSceneId) {
         hpImg = (Image) scene.resources().get("hp.png");
         statsImg = (Image) scene.resources().get("stats.png");
+        skillImg = (Image) scene.resources().get("skill_recharged.png");
         pauseImg = (Image) scene.resources().get("pause.png");
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
@@ -105,6 +107,10 @@ public abstract class AbstractGameScene extends Scene {
 
         final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
         g.drawString(str, GAME_BORDER + 5, 72);
+
+        if (game.player.shield.isReady() && skillImg != null) {
+            g.drawImage(skillImg, GAME_BORDER, 80);
+        }
     }
 
     @Override
