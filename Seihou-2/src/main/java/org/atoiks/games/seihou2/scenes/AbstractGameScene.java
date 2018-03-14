@@ -11,6 +11,7 @@ import se.tube42.lib.tweeny.TweenManager;
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.seihou2.ScoreData;
 import org.atoiks.games.seihou2.Difficulty;
 
 import org.atoiks.games.seihou2.entities.*;
@@ -76,8 +77,8 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void leave() {
         if (sceneId >= 0) {
-            final int[][] scoreDat = (int[][]) scene.resources().get("score.dat");
-            final int[] alias = scoreDat[sceneId];
+            final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
+            final int[] alias = scoreDat.data[sceneId][difficulty.ordinal()];
             final int[] a = Arrays.copyOf(alias, alias.length + 1);
             a[a.length - 1] = game.getScore();
             Arrays.sort(a);

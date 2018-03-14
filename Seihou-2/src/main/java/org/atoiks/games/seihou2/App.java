@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
-
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.swing.Frame;
 
@@ -33,15 +30,8 @@ public class App {
             }
 
             // Saves user score
-            try (final MessagePacker packer = MessagePack.newDefaultPacker(new FileOutputStream("./score.dat"))) {
-                final int[][] scoreDat = (int[][]) frame.getSceneManager().resources().get("score.dat");
-                packer.packArrayHeader(scoreDat.length);
-                for (final int[] scoreSet : scoreDat) {
-                    packer.packArrayHeader(scoreSet.length);
-                    for (final int score : scoreSet) {
-                        packer.packInt(score);
-                    }
-                }
+            try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./score.dat"))) {
+                oos.writeObject(frame.getSceneManager().resources().get("score.dat"));
             } catch (IOException ex) {
                 // Oh well... to bad... the user's score does not get saved...
             }

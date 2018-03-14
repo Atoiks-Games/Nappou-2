@@ -8,6 +8,8 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.seihou2.ScoreData;
+import org.atoiks.games.seihou2.Difficulty;
 import org.atoiks.games.seihou2.GameConfig;
 
 import static org.atoiks.games.seihou2.scenes.LevelOneScene.WIDTH;
@@ -15,7 +17,7 @@ import static org.atoiks.games.seihou2.scenes.LevelOneScene.HEIGHT;
 
 public final class ScoreScene extends Scene {
 
-    private int[][] scoreDat = null;
+    private ScoreData score = null;
 
     private Clip bgm;
 
@@ -24,16 +26,20 @@ public final class ScoreScene extends Scene {
         g.setClearColor(Color.black);
         g.clearGraphics();
 
-        if (scoreDat == null) return;
+        if (score == null) return;
         g.setColor(Color.white);
-        for (int i = 0; i < scoreDat.length; ++i) {
+        for (int i = 0; i < score.data.length; ++i) {
             final int bh = 20 + 60 * i;
             g.drawString("Level " + (i + 1), 20, bh);
-            final int[] p = scoreDat[i];
-            for (int j = 0; j < p.length; ++j) {
-                final int offset = p.length - 1 - j;
-                final String str = p[offset] == 0 ? "0" : Integer.toString(p[offset]) + "000";
-                g.drawString(str, 30, bh + (j + 1) * 12);
+            for (Difficulty diff : Difficulty.values()) {
+                final int bw = 60 + diff.ordinal() * 200;
+                final int[] p = score.data[i][diff.ordinal()];
+                g.drawString(diff.toString(), bw, bh + 12);
+                for (int j = 0; j < p.length; ++j) {
+                    final int offset = p.length - 1 - j;
+                    final String str = p[offset] == 0 ? "0" : Integer.toString(p[offset]) + "000";
+                    g.drawString(str, bw + 10, bh + (j + 2) * 12);
+                }
             }
         }
     }
@@ -54,7 +60,7 @@ public final class ScoreScene extends Scene {
 
     @Override
     public void enter(int previousSceneId) {
-        scoreDat = (int[][]) scene.resources().get("score.dat");
+        score = (ScoreData) scene.resources().get("score.dat");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
