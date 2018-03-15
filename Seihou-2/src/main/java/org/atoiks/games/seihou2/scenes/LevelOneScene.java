@@ -14,7 +14,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
-    private final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 35, 56, 32, 16};
+    private final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
     private final float[] w1eS = {12, 25, 10, 23, 4, 7, 17, 2, 10, 5, 7, 12, 9, 18, 19, 16, 100, 100, 17, 2};
 
     public LevelOneScene() {
@@ -107,16 +107,28 @@ public final class LevelOneScene extends AbstractGameScene {
                         game.addEnemy(new MB1(10, 375, -10, 20));
                         game.addEnemy(new MB1(10, 525, -10, 20));
                       break;
-                      case 12000:
+                      case 22000:
                         game.addEnemy(new MB1(10, 300, -10, 20));
                         game.addEnemy(new MB1(10, 450, -10, 20));
                       break;
                     }
+                    if (cycles > 22000) {
+                        if (game.enemies.isEmpty()) {
+                            wave++;
+                            cycles = 0;
+                        }
+                    }
                     break;
                 case 3:
-                    if (game.enemies.isEmpty()) {
-                        // wave
-                    }
+                    switch(cycles){
+                        case 2000:
+                          game.addEnemy(new MB1(10, 375, -10, 20));
+                        break;
+                        case 4000:
+                          game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, (float) 0.25, 1, 100));
+                          game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, (float) 0.25, 3, 100));
+                        break;
+                      }
                     break;
                 case 4:
                     if (game.enemies.isEmpty()) {
