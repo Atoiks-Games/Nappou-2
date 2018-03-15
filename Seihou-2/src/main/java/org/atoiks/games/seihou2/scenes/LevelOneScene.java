@@ -101,8 +101,16 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
-                    if (game.enemies.isEmpty()) {
-                        // miniboss
+                    switch(cycles){
+                      case 2000:
+                        game.addEnemy(new MB1(10, 225, -10, 20));
+                        game.addEnemy(new MB1(10, 375, -10, 20));
+                        game.addEnemy(new MB1(10, 525, -10, 20));
+                      break;
+                      case 12000:
+                        game.addEnemy(new MB1(10, 300, -10, 20));
+                        game.addEnemy(new MB1(10, 450, -10, 20));
+                      break;
                     }
                     break;
                 case 3:
