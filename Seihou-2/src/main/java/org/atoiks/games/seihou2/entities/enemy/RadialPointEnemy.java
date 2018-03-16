@@ -48,8 +48,10 @@ public final class RadialPointEnemy extends AbstractEnemy {
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            final float angle = initialAngle + bulletId * anglePerInterval;
+            float angle = initialAngle + bulletId * anglePerInterval;
             game.addEnemyBullet(new PointBullet(getX(), getY(), radius, (float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle))));
+            bulletId++;
+            time = 0;
         }
     }
 
