@@ -32,7 +32,7 @@ public final class MB1 extends AbstractEnemy {
 
         if (enemyTime % 30000 == 0) {
             for (int i = 0; i < scale.length; ++i) {
-                final double k = scale[i];
+                final double k = scale[i] * PI_DIV_12;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
             }
         }

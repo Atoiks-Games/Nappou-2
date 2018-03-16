@@ -128,11 +128,53 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
+                        case 54000:
+                            game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
+                        break;
+                    }
+                    if (cycles > 54000) {
+                        if (game.enemies.isEmpty()) {
+                            wave++;
+                            cycles = 0;
+                        }
                     }
                     break;
                 case 4:
-                    if (game.enemies.isEmpty()) {
-                        // wave
+                    switch(cycles){
+                      case 2000:
+                        final float[] offset = { (float) (-Math.PI / 12), 0, (float) (Math.PI / 12) };
+                        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                          final Item tweenInfo = new Item(3);
+                          tweenInfo.set(0, 30, GAME_BORDER - 30).configure(28000, TweenEquation.QUAD_INOUT);
+                          tweenInfo.setImmediate(2, 8);
+                          tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                          return new RadialPointEnemy(2, 2, tweenInfo, 200f, true, 0f, 0f, 3, (float) (2*Math.PI)/3, 45, 10);
+                        }));
+                        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                          final Item tweenInfo = new Item(3);
+                          tweenInfo.set(0, 50, GAME_BORDER - 10).configure(28000, TweenEquation.QUAD_INOUT);
+                          tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                          tweenInfo.setImmediate(2, 8);
+                          return new RadialPointEnemy(2, 2, tweenInfo, 200f, true, 0f, (float) (Math.PI)/2, 3, (float) (2*Math.PI)/3, 45, 10);
+                        }));
+                        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                          final Item tweenInfo = new Item(3);
+                          tweenInfo.set(0, GAME_BORDER - 30, 30).configure(28000, TweenEquation.QUAD_INOUT);
+                          tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                          tweenInfo.setImmediate(2, 8);
+                          return new RadialPointEnemy(2, 2, tweenInfo, 200f, true, 0f, (float) Math.PI, 3, (float) (2*Math.PI)/3, 45, 10);
+                        }));
+                        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                          final Item tweenInfo = new Item(3);
+                          tweenInfo.set(0, GAME_BORDER - 10, 50).configure(28000, TweenEquation.QUAD_INOUT);
+                          tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                          tweenInfo.setImmediate(2, 8);
+                          return new RadialPointEnemy(2, 2, tweenInfo, 200f, true, 0f, (float) (3*Math.PI)/2, 3, (float) (2*Math.PI)/3, 45, 10);
+                        }));
+                      break;
                     }
                     break;
                 case 5:
