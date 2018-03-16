@@ -101,16 +101,16 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
-                    switch(cycles){
-                      case 2000:
-                        game.addEnemy(new MB1(10, 225, -10, 20));
-                        game.addEnemy(new MB1(10, 375, -10, 20));
-                        game.addEnemy(new MB1(10, 525, -10, 20));
-                      break;
-                      case 22000:
-                        game.addEnemy(new MB1(10, 300, -10, 20));
-                        game.addEnemy(new MB1(10, 450, -10, 20));
-                      break;
+                    switch (cycles) {
+                        case 2000:
+                            game.addEnemy(new MB1(10, 225, -10, 20));
+                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            game.addEnemy(new MB1(10, 525, -10, 20));
+                            break;
+                        case 22000:
+                            game.addEnemy(new MB1(10, 300, -10, 20));
+                            game.addEnemy(new MB1(10, 450, -10, 20));
+                            break;
                     }
                     if (cycles > 22000) {
                         if (game.enemies.isEmpty()) {
@@ -120,15 +120,15 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 3:
-                    switch(cycles){
+                    switch (cycles) {
                         case 2000:
-                          game.addEnemy(new MB1(10, 375, -10, 20));
-                        break;
+                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            break;
                         case 4000:
-                          game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, (float) 0.25, 1, 100));
-                          game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, (float) 0.25, 3, 100));
-                        break;
-                      }
+                            game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
+                            break;
+                    }
                     break;
                 case 4:
                     if (game.enemies.isEmpty()) {

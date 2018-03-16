@@ -9,10 +9,12 @@ public final class MB1 extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
+    private static final double PI_DIV_12 = Math.PI / 12;
+    private static final int[] scale = new int[]{0, 2, 4, 6, 8, 10, 12};
+
     private float time;
     private int bulletPattern;
     private int enemyTime;
-    private double pi12 = Math.PI/12;
 
     public MB1(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -28,34 +30,24 @@ public final class MB1 extends AbstractEnemy {
         final float y = getY();
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
 
-
-        if(enemyTime%30000 == 0){
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(0)), (float) (1000 * Math.sin(0))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(2*pi12)), (float) (1000 * Math.sin(2*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(4 * pi12)), (float) (1000 * Math.sin(4*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(6*pi12)), (float) (1000 * Math.sin(6*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(8*pi12)), (float) (1000 * Math.sin(8*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(10*pi12)), (float) (1000 * Math.sin(10*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(12*pi12)), (float) (1000 * Math.sin(12*pi12))));
-
+        if (enemyTime % 30000 == 0) {
+            for (int i = 0; i < scale.length; ++i) {
+                final double k = scale[i];
+                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
+            }
         }
 
-        if((enemyTime+15000)%30000 == 0){
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(angle - 6*pi12)), (float) (100 * Math.sin(angle - 6*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (200 * Math.cos(angle - 4*pi12)), (float) (200 * Math.sin(angle - 4*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (300 * Math.cos(angle - 2*pi12)), (float) (300 * Math.sin(angle - 2*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (400 * Math.cos(angle)), (float) (400 * Math.sin(angle))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (300 * Math.cos(angle + 2*pi12)), (float) (300 * Math.sin(angle + 2*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (200 * Math.cos(angle + 4*pi12)), (float) (200 * Math.sin(angle + 4*pi12))));
-            game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(angle + 6*pi12)), (float) (100 * Math.sin(angle + 6*pi12))));
-
+        if ((enemyTime + 15000) % 30000 == 0) {
+            for (int i = 0; i < scale.length; ++i) {
+                final double k = angle - (6 - scale[i]) * PI_DIV_12;
+                final int s = (4 - Math.abs(3 - i)) * 100;
+                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (s * Math.cos(k)), (float) (s * Math.sin(k))));
+            }
         }
 
         if (getY() <= 150) {
             setY(getY() + 300 * dt);
         }
-
-
     }
 
     @Override
