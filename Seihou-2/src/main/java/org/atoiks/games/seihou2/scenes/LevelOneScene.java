@@ -192,12 +192,27 @@ public final class LevelOneScene extends AbstractGameScene {
                       game.addEnemy(new DropEnemy(1, 650, -10, 8));
                       break;
                     }
+                    if (cycles > 54000) {
+                        if (game.enemies.isEmpty()) {
+                            wave++;
+                            cycles = 0;
+                        }
+                   }
                     break;
                 case 5:
-                    // boss
-                    break;
-            }
-            break;
+                  switch (cycles) {
+                      case 2000:
+                          game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                       break;
+                  }
+                       if (cycles > 54000) {
+                         if (game.enemies.isEmpty()) {
+                          //END LV
+                        }
+                  }
+                  break;
+              }
+              break;
         }
         return true;
     }
