@@ -10,7 +10,7 @@ public final class MB1 extends AbstractEnemy {
     private static final long serialVersionUID = 5619264522L;
 
     private static final double PI_DIV_12 = Math.PI / 12;
-    private static final int[] scale = new int[]{0, 2, 4, 6, 8, 10, 12};
+    private static final int[] SCALE = { 0, 2, 4, 6, 8, 10, 12 };
 
     private float time;
     private int bulletPattern;
@@ -31,15 +31,15 @@ public final class MB1 extends AbstractEnemy {
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
 
         if (enemyTime % 30000 == 0) {
-            for (int i = 0; i < scale.length; ++i) {
-                final double k = scale[i] * PI_DIV_12;
+            for (int i = 0; i < SCALE.length; ++i) {
+                final double k = SCALE[i] * PI_DIV_12;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
             }
         }
 
         if ((enemyTime + 15000) % 30000 == 0) {
-            for (int i = 0; i < scale.length; ++i) {
-                final double k = angle - (6 - scale[i]) * PI_DIV_12;
+            for (int i = 0; i < SCALE.length; ++i) {
+                final double k = angle - (6 - SCALE[i]) * PI_DIV_12;
                 final int s = (4 - Math.abs(3 - i)) * 100;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (s * Math.cos(k)), (float) (s * Math.sin(k))));
             }

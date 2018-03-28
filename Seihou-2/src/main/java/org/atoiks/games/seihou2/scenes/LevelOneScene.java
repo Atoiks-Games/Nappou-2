@@ -7,18 +7,20 @@ import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.enemy.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
 
+import static org.atoiks.games.seihou2.Utils.tweenRadialGroupPattern;
+
 public final class LevelOneScene extends AbstractGameScene {
 
     private int cycles;
     private int wave;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
-    private final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
-    private final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
-    private final float[] w1eS = {12, 25, 10, 23, 4, 7, 17, 2, 10, 5, 7, 12, 9, 18, 19, 16, 100, 100, 17, 2};
+    private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
+    private static final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
+    private static final float[] w1eS = {12, 25, 10, 23, 4, 7, 17, 2, 10, 5, 7, 12, 9, 18, 19, 16, 100, 100, 17, 2};
 
-    private final float[] w4eX = { 30, GAME_BORDER - 30, 10, GAME_BORDER - 10 };
-    private final float[] w4eR = { 0, (float) Math.PI, (float) (3 * Math.PI / 2), (float) (3 * Math.PI / 2) };
+    private static final float[] w4eX = { 30, GAME_BORDER - 30, 10, GAME_BORDER - 10 };
+    private static final float[] w4eR = { 0, (float) Math.PI, (float) (3 * Math.PI / 2), (float) (3 * Math.PI / 2) };
 
     public LevelOneScene() {
         super(0);
@@ -149,15 +151,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     final float pi1 = (float) (2 * Math.PI) / 3;
                     switch (cycles) {
                         case 2000:
-                            for (int i = 0; i < w4eR.length; ++i) {
-                                game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                                    final Item tweenInfo = new Item(3);
-                                    tweenInfo.set(0, w4eX[i], w4eX[i ^ 1]).configure(28000, TweenEquation.QUAD_INOUT);
-                                    tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                                    tweenInfo.setImmediate(2, 8);
-                                    return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, w4eR[i], 3, (float) (2 * Math.PI) / 3, 15f, 100f);
-                                }));
-                            }
+                            tweenRadialGroupPattern(game, w4eX, w4eR);
                             break;
                         case 12000:
                         case 22000:
