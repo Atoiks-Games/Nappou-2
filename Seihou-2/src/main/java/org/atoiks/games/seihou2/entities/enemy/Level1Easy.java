@@ -27,7 +27,7 @@ public final class Level1Easy extends AbstractEnemy {
     private static final int[] SCALE = { 0, 2, 4, 6, 8, 10, 12 };
 
     private static final float[] XBOUND = { 30, 750 - 30, 10, 750 - 10 };
-    private static final float[] OFFSET = { 0, (float) Math.PI, 3 * PI_DIV_2, 3 * PI_DIV_2 };
+    private static final float[] OFFSET = { 0, (float) Math.PI, 3 * (float) PI_DIV_2, 3 * (float) PI_DIV_2 };
 
     public Level1Easy(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -82,6 +82,8 @@ public final class Level1Easy extends AbstractEnemy {
     private void bulletPatternMod25000() {
         if (bulletPattern % 25000 != 0) return;
 
+        final float x = getX();
+        final float y = getY();
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
         if (Math.random() >= 0.5) {
             for (int i = 0; i < SCALE.length; ++i) {

@@ -13,7 +13,8 @@ public final class Utils {
     }
 
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
-        for (int i = 0; i < radOffset.length; ++i) {
+        for (int idx = 0; idx < radOffset.length; ++idx) {
+            final int i = idx;  // Lambda captures must be effectively final
             game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
                 final Item tweenInfo = new Item(3);
                 tweenInfo.set(0, xrangeInv[i], xrangeInv[i ^ 1]).configure(28000, TweenEquation.QUAD_INOUT);
