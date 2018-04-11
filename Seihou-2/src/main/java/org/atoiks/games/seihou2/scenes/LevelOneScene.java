@@ -40,6 +40,12 @@ public final class LevelOneScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
+//DEV CHEAT CODE
+if (scene.keyboard().isKeyPressed(KeyEvent.VK_P)) {
+    scene.gotoNextScene();
+}
+
+
         ++cycles;
         switch (difficulty) {
             case EASY:
@@ -183,7 +189,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     if (cycles > 54000) {
                         if (game.enemies.isEmpty()) {
-                            // END LV
+                            scene.gotoNextScene();
                         }
                     }
                     break;
