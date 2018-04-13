@@ -7,15 +7,14 @@ import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.enemy.*;
 import org.atoiks.games.seihou2.entities.bullet.*;
 
+import java.util.Random;
+
 public final class LevelTwoScene extends AbstractGameScene {
 
     private int cycles;
     private int wave;
-
-    // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
-    private final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
-    private final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
-    private final float[] w1eS = {12, 25, 10, 23, 4, 7, 17, 2, 10, 5, 7, 12, 9, 18, 19, 16, 100, 100, 17, 2};
+    
+    private final Random rnd = new Random();
 
     public LevelTwoScene() {
         super(0);
@@ -42,79 +41,21 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 0:
                     switch (cycles) {
                         case 2000:
-                        //fix problems with double
-                        game.addEnemyBullet(new PointBullet( Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet( Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet( Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet( Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        break;
-
                         case 12000:
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        break;
-
                         case 22000:
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        break;
-
                         case 32000:
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-                        game.addEnemyBullet(new PointBullet(Math.random()*750, -10, 4, Math.random()*100, Math.random()*100));
-
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-                        game.addEnemy(new DummyEnemy(1, -10, Math.random()*600, 7, 4, true));
-
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        game.addEnemy(new DummyEnemy(1, 760, Math.random()*600, 7, 4, false));
-                        break;
+                            for (int i = 0; i < 4; ++i) {
+                                game.addEnemyBullet(new PointBullet(rnd.nextFloat() * 750, -10, 4, rnd.nextFloat() * 100, rnd.nextFloat() * 100));
+                                game.addEnemy(new DummyEnemy(1, -10, rnd.nextFloat() * 600, 4, true));
+                                game.addEnemy(new DummyEnemy(1, 760, rnd.nextFloat() * 600, 4, false));
+                            }
+                            break;
                     }
                     if (cycles > 32000) {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
-                       }
+                        }
                     }
                     break;
                 case 1:
@@ -129,7 +70,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                         if (game.enemies.isEmpty()) {
                             //wave++;
                             //cycles = 0;
-                       }
+                        }
                     }
                     break;
                 case 2:
