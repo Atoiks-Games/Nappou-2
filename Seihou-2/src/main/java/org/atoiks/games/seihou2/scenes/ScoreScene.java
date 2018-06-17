@@ -29,7 +29,7 @@ public final class ScoreScene extends Scene {
         if (score == null) return;
         g.setColor(Color.white);
         for (int i = 0; i < score.data.length; ++i) {
-            final int bh = 20 + 60 * i;
+            final int bh = 20 + 90 * i;
             g.drawString("Level " + (i + 1), 20, bh);
             for (Difficulty diff : Difficulty.values()) {
                 final int bw = 60 + diff.ordinal() * 200;
