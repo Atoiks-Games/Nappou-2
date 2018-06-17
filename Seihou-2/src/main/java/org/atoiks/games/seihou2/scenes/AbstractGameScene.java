@@ -38,9 +38,6 @@ public abstract class AbstractGameScene extends Scene {
     protected final Game game = new Game();
 
     private byte updatePhase = -1;
-    private Updater[] updatePhases = new Updater[]{
-        this::updateEnemyBulletPos, this::updateEnemyPos, this::updatePlayerBulletPos, this::testCollisions, this::postUpdate
-    };
 
     protected float playerFireTimeout;
     protected Image hpImg;
@@ -142,12 +139,17 @@ public abstract class AbstractGameScene extends Scene {
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = true;
             }
-            if (++updatePhase >= updatePhases.length) {
-                updatePhase = 0;
-            }
             playerFireTimeout -= dt;
             TweenManager.service((long) (dt * 1000000));
-            return procPlayerPos(dt) && updatePhases[updatePhase].update(dt);
+            if (!procPlayerPos(dt)) return false;
+            switch (++updatePhase) {
+                default: updatePhase = 0;   // FALLTHROUGH!
+                case 0: return updateEnemyBulletPos(dt);
+                case 1: return updateEnemyPos(dt);
+                case 2: return updatePlayerBulletPos(dt);
+                case 3: return testCollisions(dt);
+                case 4: return postUpdate(dt);
+            }
         } else {
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
                 if (selector == 0) {
@@ -315,9 +317,4 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     public abstract boolean postUpdate(float dt);
-}
-
-interface Updater {
-
-    public boolean update(float dt);
 }
