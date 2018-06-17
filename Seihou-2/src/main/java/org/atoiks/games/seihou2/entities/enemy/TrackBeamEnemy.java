@@ -4,7 +4,7 @@ import se.tube42.lib.tweeny.Item;
 
 import org.atoiks.games.seihou2.entities.bullet.Beam;
 
-public final class TrackBeamEnemy extends AbstractEnemy {
+public final class TrackBeamEnemy extends TweenEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
     

@@ -25,7 +25,7 @@ public final class CAITutorial extends AbstractEnemy {
         bulletPattern ++;
 
         enemyTime++;
-        if(enemyTime%25000 == 0){
+        if (enemyTime % 25000 == 0) {
           game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
           game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
         }

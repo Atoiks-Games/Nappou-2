@@ -4,7 +4,7 @@ import se.tube42.lib.tweeny.Item;
 
 import org.atoiks.games.seihou2.entities.bullet.Beam;
 
-public final class RadialBeamEnemy extends AbstractEnemy {
+public final class RadialBeamEnemy extends TweenEnemy {
 
     private static final long serialVersionUID = 7329566493126725388L;
 
