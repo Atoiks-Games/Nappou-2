@@ -38,6 +38,7 @@ public abstract class AbstractGameScene extends Scene {
     protected final Game game = new Game();
 
     private byte updatePhase = -1;
+    private boolean ignoreDamage = false;
 
     protected float playerFireTimeout;
     protected Image hpImg;
@@ -57,6 +58,14 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public final void resize(int w, int h) {
         // Window size is fixed
+    }
+
+    protected final void disableDamage() {
+        ignoreDamage = true;
+    }
+
+    protected final void enableDamage() {
+        ignoreDamage = false;
     }
 
     @Override
@@ -255,6 +264,8 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     private boolean testCollisions(final float dt) {
+        if (ignoreDamage) return true;
+
         final float px = game.player.getX();
         final float py = game.player.getY();
 

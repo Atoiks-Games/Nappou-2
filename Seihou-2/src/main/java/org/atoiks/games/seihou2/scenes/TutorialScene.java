@@ -117,6 +117,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 2:
                     tutorialImg = null;
+                    disableDamage();
                     talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -125,6 +126,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 3:
                     talkImg = null;
+                    enableDamage();
                     disableInput = false;
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(100, 375, -10, 20));
@@ -132,6 +134,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 4:
+                    disableDamage();
                     talkImg = (Image) scene.resources().get("tutorial_postboss_1.png");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
