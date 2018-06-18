@@ -64,9 +64,13 @@ public final class Game implements Serializable, IRender {
         return this.score += delta;
     }
 
-    public void cleanup() {
+    public void clearBullets() {
         enemyBullets.clear();
         playerBullets.clear();
+    }
+
+    public void cleanup() {
+        clearBullets();
         enemies.clear();
     }
 }
