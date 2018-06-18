@@ -24,7 +24,6 @@ public final class Level1Easy extends AbstractEnemy {
     private int enemyTime;
     private double spiralAngle = 0;
     private float initialhp;
-    private float radius;
 
     private static final float PI_DIV_2 = (float) Math.PI / 2;
     private static final float PI_DIV_3 = (float) Math.PI / 3;
@@ -32,7 +31,6 @@ public final class Level1Easy extends AbstractEnemy {
     public Level1Easy(int hp, float x, float y, float r) {
         super(hp, x, y, r);
         initialhp = hp;
-        radius = r;
     }
 
     @Override
