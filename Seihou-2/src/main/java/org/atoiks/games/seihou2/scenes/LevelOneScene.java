@@ -46,6 +46,7 @@ public final class LevelOneScene extends AbstractGameScene {
             return true;
         }
 
+
         ++cycles;
         switch (difficulty) {
             case EASY:
@@ -189,7 +190,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     if (cycles > 54000) {
                         if (game.enemies.isEmpty()) {
-                            scene.gotoNextScene();
+                            //scene.gotoNextScene();
                         }
                     }
                     break;

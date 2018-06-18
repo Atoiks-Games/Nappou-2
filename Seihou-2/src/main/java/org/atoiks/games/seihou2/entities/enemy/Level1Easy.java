@@ -49,72 +49,74 @@ public final class Level1Easy extends AbstractEnemy {
         final float x = getX();
         final float y = getY();
 
-        if (hp >= 2 * initialhp / 3) {
-            if (enemyTime % 30000 == 0) {
-                game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                game.addEnemy(new DropEnemy(1, 650, -10, 8));
-            }
-
-            bulletPatternMod25000();
-        } else if (hp >= initialhp / 3) {
-            bulletPatternMod60000();
-
-            if (bulletPattern % 20000 == 0) {
-                if (Math.random() >= 0.5) {
-                    game.addEnemyBullet(new PointBullet(x, y, 3, 0, 700));
-                }
-                if (Math.random() >= 0.5) {
-                    game.addEnemyBullet(new PointBullet(x + radius, y, 3, 0, 700));
-                }
-                if (Math.random() >= 0.5) {
-                    game.addEnemyBullet(new PointBullet(x - radius, y, 3, 0, 700));
-                }
-            }
-        } else {
-            bulletPatternMod60000();
-            bulletPatternMod25000();
+        if (hp >= 4 * initialhp/5) {
+            attack1();
+        } else if (hp >= 3*initialhp/5) {
+            attack2();
+        } else if (hp >= 2*initialhp/5) {
+            attack3();
+        } else if (hp >= 1*initialhp/5) {
+            attack4();
+        } else{
+            attack5();
         }
     }
 
-    // TODO: Make a better method name
-    private void bulletPatternMod25000() {
-        if (bulletPattern % 25000 != 0) return;
+    private void attack1() {
+      if(enemyTime%1000 == 0){
+        game.addEnemyBullet(new PointBullet(-10, (float) 550 + (float) (50 * Math.sin(10*time)), 3, 1000, 0));
+        game.addEnemyBullet(new PointBullet(760, (float) 50 + (float) (50 * Math.sin(10*time)), 3, -1000, 0));
+      }
+      if(enemyTime%500 == 0){
+        game.addEnemyBullet(new Beam((float)(Math.random())*750, -15, 5, 30, (float) (Math.PI)/2, 1000));
+      }
+    }
+
+    private void attack2() {
+      if(enemyTime%1000 == 0){
+        game.addEnemyBullet(new Beam((float) 375 + (float) (375 * Math.sin(10*time)), -15, 5, 30, (float) (Math.PI)/2, 1000));
 
         final float x = getX();
         final float y = getY();
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        if (Math.random() >= 0.5) {
-            for (int i = 0; i < SCALE.length; ++i) {
-                final double k0 = SCALE[i] * PI_DIV_12;
-                final double k1 = SCALE[i] * -PI_DIV_12;
-                final double k2 = SCALE[i] * PI_DIV_12 + PI_DIV_2;
-                final double k3 = SCALE[i] * -PI_DIV_12 + PI_DIV_2;
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k0)), (float) (1000 * Math.sin(k0))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k1)), (float) (1000 * Math.sin(k1))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (1000 * Math.cos(k2)), (float) (100 * Math.sin(k2))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (1000 * Math.cos(k3)), (float) (100 * Math.sin(k3))));
-            }
-        } else {
-            for (int i = 0; i < SCALE.length; ++i) {
-                final double k0 = SCALE[i] * PI_DIV_12;
-                final double k1 = SCALE[i] * -PI_DIV_12;
-                final double k2 = SCALE[i] * PI_DIV_12 + PI_DIV_2;
-                final double k3 = SCALE[i] * -PI_DIV_12 + PI_DIV_2;
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.tan(Math.cos(k0))), (float) (100 * Math.tan(Math.sin(k0)))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.tan(Math.cos(k1))), (float) (100 * Math.tan(Math.sin(k1)))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.tan(Math.cos(k2))), (float) (100 * Math.tan(Math.sin(k2)))));
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.tan(Math.cos(k3))), (float) (100 * Math.tan(Math.sin(k3)))));
-            }
-        }
+        game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float)(1000 * Math.sin(angle))));
+      }
     }
 
-    // TODO: Make a better method name
-    private void bulletPatternMod60000() {
-        if (bulletPattern % 60000 != 0) return;
+    private void attack3() {
+      if(enemyTime%1000 == 0){
+        game.addEnemyBullet(new Beam(-15, (float)(Math.random())*600, 5, 30, 0, 1000));
+        game.addEnemyBullet(new Beam(765, (float)(Math.random())*600, 5, 30, (float) Math.PI, 1000));
+      }
+      //Save this for NORMAL mode :)
+      /*
+      if(enemyTime%20000 == 0){
+        game.addEnemyBullet(new PointBullet(x, y, 30, -1000*(float)(Math.cos(4*Math.PI/3)), (float) -1000*(float)(Math.sin(4*Math.PI/3))));
+        game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(3*Math.PI/2)), (float) -1000*(float)(Math.sin(3*Math.PI/2))));
+        game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(5*Math.PI/3)), (float) -1000*(float)(Math.sin(5*Math.PI/3))));
+}
+*/
+    }
 
-        tweenRadialGroupPattern(game, XBOUND, OFFSET);
+    private void attack4() {
+      if(enemyTime%1000 == 0){
+        game.addEnemyBullet(new PointBullet((float) 375 + (float) (375 * Math.sin(10*time)), 610, 2, 0, -1000));
+}
+      if(enemyTime%10000 == 0){
+        final float x = getX();
+        final float y = getY();
+        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        game.addEnemyBullet(new Beam(x, y, 2, 30, (float) angle, 1000));
+      }
+    }
+
+    private void attack5() {
+      if(enemyTime%1500 == 0){
+      game.addEnemyBullet(new PointBullet((float) 375 + (float) (375 * Math.sin(10*time)), 610, 2, 0, -1000));
+      game.addEnemyBullet(new PointBullet((float) 375 + -(float) (375 * Math.sin(10*time)), -10, 2, 0, 1000));
+      game.addEnemyBullet(new PointBullet(760,(float) 300 + (float) (300 * Math.sin(10*time)), 2, -1000, 0));
+      game.addEnemyBullet(new PointBullet(-10,(float) 300 + -(float) (300 * Math.sin(10*time)), 2, 1000, 0));
+    }
     }
 
     @Override
