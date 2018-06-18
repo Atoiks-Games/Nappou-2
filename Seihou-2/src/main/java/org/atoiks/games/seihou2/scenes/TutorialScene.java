@@ -116,8 +116,10 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
+                    game.clearBullets();
                     tutorialImg = null;
                     disableDamage();
+                    bgm.stop();
                     talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -125,6 +127,10 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 3:
+                    bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                    bgm.setMicrosecondPosition(0);
+                    bgm.start();
+                    bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     talkImg = null;
                     enableDamage();
                     disableInput = false;
@@ -135,6 +141,8 @@ public final class TutorialScene extends AbstractGameScene {
 
                 case 4:
                     disableDamage();
+                    game.clearBullets();
+                    bgm.stop();
                     talkImg = (Image) scene.resources().get("tutorial_postboss_1.png");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {

@@ -96,6 +96,8 @@ public final class LoadingScene extends Scene {
 
                     loadMusicFromResources("Enter_The_Void.wav");
                     loadMusicFromResources("Awakening.wav");
+                    loadMusicFromResources("Broken_Soul.wav");
+                    loadMusicFromResources("Haunted.wav");
 
                     // Load configuration file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
