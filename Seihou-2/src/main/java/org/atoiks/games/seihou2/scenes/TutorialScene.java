@@ -128,9 +128,11 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 3:
                     bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                    bgm.setMicrosecondPosition(0);
-                    bgm.start();
-                    bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm.setMicrosecondPosition(0);
+                        bgm.start();
+                        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                    }
                     talkImg = null;
                     enableDamage();
                     disableInput = false;
