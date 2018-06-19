@@ -134,7 +134,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
-                       }
+                        }
                     }
                     break;
                 case 2:
@@ -170,7 +170,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
-                        break;
+                            break;
                     }
                     if (cycles > 54000) {
                         if (game.enemies.isEmpty()) {
@@ -213,21 +213,21 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 5:
-                if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                    wave++;
-                    enableDamage();
-                    disableInput = false;
-                    talkImg = null;
-                    cycles = 0;
-                    bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                        bgm.setMicrosecondPosition(0);
-                        bgm.start();
-                        bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                      }
-                      game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                }
-                break;
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        wave++;
+                        enableDamage();
+                        disableInput = false;
+                        talkImg = null;
+                        cycles = 0;
+                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm.setMicrosecondPosition(0);
+                            bgm.start();
+                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        }
+                        game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                    }
+                    break;
                 case 6:
                     if (cycles > 2000) {
                         if (game.enemies.isEmpty()) {
