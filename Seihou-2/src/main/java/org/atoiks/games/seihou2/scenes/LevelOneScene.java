@@ -237,6 +237,8 @@ public final class LevelOneScene extends AbstractGameScene {
                             disableInput = true;
                             game.clearBullets();
                             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                                disableInput = false;
+                                enableDamage();
                                 scene.switchToScene(1);
                             }
                         }
