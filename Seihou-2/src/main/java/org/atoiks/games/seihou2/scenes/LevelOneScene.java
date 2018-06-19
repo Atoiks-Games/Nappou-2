@@ -1,8 +1,12 @@
 package org.atoiks.games.seihou2.scenes;
 
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+
 import se.tube42.lib.tweeny.Item;
 import se.tube42.lib.tweeny.TweenEquation;
 import javax.sound.sampled.Clip;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.seihou2.entities.*;
 import org.atoiks.games.seihou2.entities.enemy.*;
@@ -16,6 +20,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private int cycles;
     private int wave;
     private Clip bgm;
+    private Image talkImg;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
@@ -33,6 +38,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
+        talkImg = null;
         cycles = 0;
         wave = 0;
 
@@ -50,12 +56,20 @@ public final class LevelOneScene extends AbstractGameScene {
     }
 
     @Override
+    public void renderStats(final IGraphics g) {
+        super.renderStats(g);
+        if (talkImg != null) {
+            g.drawImage(talkImg, 0, HEIGHT - 200);
+        }
+    }
+
+    @Override
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
-        if (scene.keyboard().isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
+        /*if (scene.keyboard().isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
             scene.gotoNextScene();
             return true;
-        }
+        */
 
 
         ++cycles;
@@ -190,18 +204,41 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
+                            bgm.stop();
+                            disableDamage();
+                            talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
+                            disableInput = true;
+                            game.clearBullets();
                         }
                     }
                     break;
                 case 5:
-                    switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                            break;
-                    }
-                    if (cycles > 54000) {
+                if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    wave++;
+                    enableDamage();
+                    disableInput = false;
+                    talkImg = null;
+                    cycles = 0;
+                    bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm.setMicrosecondPosition(0);
+                        bgm.start();
+                        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                      }
+                      game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                }
+                break;
+                case 6:
+                    if (cycles > 2000) {
                         if (game.enemies.isEmpty()) {
-                            //scene.gotoNextScene();
+                            bgm.stop();
+                            disableDamage();
+                            talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
+                            disableInput = true;
+                            game.clearBullets();
+                            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                                scene.switchToScene(1);
+                            }
                         }
                     }
                     break;

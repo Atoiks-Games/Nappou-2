@@ -93,11 +93,14 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("config.png");
                     loadImageFromResources("tutorial_preboss_1.png");
                     loadImageFromResources("tutorial_postboss_1.png");
+                    loadImageFromResources("lv1_preboss_1.png");
+                    loadImageFromResources("lv1_postboss_1.png");
 
                     loadMusicFromResources("Enter_The_Void.wav");
                     loadMusicFromResources("Awakening.wav");
                     loadMusicFromResources("Broken_Soul.wav");
                     loadMusicFromResources("Haunted.wav");
+                    loadMusicFromResources("Unlocked.wav");
 
                     // Load configuration file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
