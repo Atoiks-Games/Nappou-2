@@ -1,6 +1,7 @@
 package org.atoiks.games.seihou2.entities.bullet;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -13,12 +14,7 @@ public final class Beam implements IBullet {
     private final float angle, dmag, cos, sin;
     private float x, y, thickness, length;
 
-    // Update will fill in these values
-    // b1---c2
-    // |     |
-    // a0---d3
-    private final int[] xs = new int[4];
-    private final int[] ys = new int[4];
+    private final float[] dest = new float[8];
 
     public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
         this.x = x;
@@ -57,27 +53,20 @@ public final class Beam implements IBullet {
         this.x += getDx() * dt;
         this.y += getDy() * dt;
 
-        // Calculate collision boundary and render image
-        final double tcos = thickness * cos / 2;
-        final double tsin = thickness * sin / 2;
-        final double lcos = length * cos;
-        final double lsin = length * sin;
+        final float angle = (float) (3 * Math.PI / 2 - this.angle);
+        final float t2 = thickness / 2;
+        final float l2 = length / 2;
 
-        // Point a
-        xs[0] = (int) (x - tcos);
-        ys[0] = (int) (y + tsin);
+        final AffineTransform t = AffineTransform.getRotateInstance(-angle, x, y);
 
-        // Point b
-        xs[1] = (int) (x + tcos);
-        ys[1] = (int) (y - tsin);
+        final float[] input = {
+            x - t2, y - l2,
+            x + t2, y - l2,
+            x + t2, y + t2,
+            x - t2, y - t2,
+        };
 
-        // Point c
-        xs[2] = (int) (xs[1] + lcos);
-        ys[2] = (int) (ys[1] + lsin);
-
-        // Point d
-        xs[3] = (int) (xs[0] + lcos);
-        ys[3] = (int) (ys[0] + lsin);
+        t.transform(input, 0, dest, 0, input.length / 2);
     }
 
     @Override
@@ -102,42 +91,26 @@ public final class Beam implements IBullet {
 
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
-        for (int i = 0; i < 4; ++i){
-            if (i == 0) {
-                if (intersectSegmentCircle(xs[3], ys[3], xs[i], ys[i], x1, y1, r1))
-                    return true;
-            } else {
-                if (intersectSegmentCircle(xs[i - 1], ys[i - 1], xs[i], ys[i], x1, y1, r1))
-                    return true;
-            }
-        }
+        // origin0 --- [body0] --- head0 ->
+        // origin1 --- [body1] --- head1 ->
+        // origin2 --- [body2] --- head2 ->
+
+        // Basic testing
+        if (helper(dest[0], dest[1], x1, y1, r1)) return true;
+        if (helper(dest[2], dest[3], x1, y1, r1)) return true;
+        if (helper(dest[4], dest[5], x1, y1, r1)) return true;
+        if (helper(dest[6], dest[7], x1, y1, r1)) return true;
+
+        // Midpoint testing
+        if (helper((dest[0] + dest[2]) / 2, dest[1], x1, y1, r1)) return true;
+        if (helper(dest[2], (dest[1] + dest[3]) / 2, x1, y1, r1)) return true;
+        if (helper((dest[4] + dest[6]) / 2, dest[5], x1, y1, r1)) return true;
+        if (helper(dest[6], (dest[5] + dest[7]) / 2, x1, y1, r1)) return true;
         return false;
     }
 
-    public static boolean intersectSegmentCircle(float startX, float startY, float endX, float endY,
-                                                 float centerX, float centerY, float r) {
-        // Based on https://www.gamedevelopment.blog/collision-detection-circles-rectangles-and-polygons/
-        final float t0X = endX - startX;
-        final float t0Y = endX - startY;
-        final float t1X = centerX - startX;
-        final float t1Y = centerY - startY;
-
-        final float l = (float) Math.hypot(t0X, t0Y);
-        final float u = t1X * t0X / l + t1Y * t0Y / l;
-
-        final float t2X, t2Y;
-        if (u <= 0) {
-            t2X = startX; t2Y = startY;
-        } else if (u >= l) {
-            t2X = endX; t2Y = endY;
-        } else {
-            final float t3X = t0X * u;
-            final float t3Y = t0Y * u;
-            t2X = t3X + startX; t2Y = t3Y + startY;
-        }
-        float x = centerX - t2X;
-        float y = centerY - t2Y;
-        return x * x + y * y <= r * r;
+    private static boolean helper(float x, float y, float cx, float cy, float r) {
+        return Math.hypot(x - cx, y - cy) < r;
     }
 
     @Override
