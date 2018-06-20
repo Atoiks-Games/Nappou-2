@@ -86,26 +86,46 @@ public final class Beam implements IBullet {
 
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
-        // origin0 --- [body0] --- head0 ->
-        // origin1 --- [body1] --- head1 ->
-        // origin2 --- [body2] --- head2 ->
-
-        // Basic testing
-        if (helper(dest[0], dest[1], x1, y1, r1)) return true;
-        if (helper(dest[2], dest[3], x1, y1, r1)) return true;
-        if (helper(dest[4], dest[5], x1, y1, r1)) return true;
-        if (helper(dest[6], dest[7], x1, y1, r1)) return true;
-
-        // Midpoint testing
-        if (helper((dest[0] + dest[2]) / 2, dest[1], x1, y1, r1)) return true;
-        if (helper(dest[2], (dest[1] + dest[3]) / 2, x1, y1, r1)) return true;
-        if (helper((dest[4] + dest[6]) / 2, dest[5], x1, y1, r1)) return true;
-        if (helper(dest[6], (dest[5] + dest[7]) / 2, x1, y1, r1)) return true;
+        final int count = dest.length / 2;
+        for (int i = 0; i < count; ++i) {
+            final int k = 2 * i;
+            if (i == 0) {
+                if (intersectSegmentCircle(dest[6], dest[7], dest[k], dest[k + 1], x1, y1, r1)) {
+                    return true;
+                }
+            } else {
+                if (intersectSegmentCircle(dest[k - 2], dest[k - 1], dest[k], dest[k + 1], x1, y1, r1)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    private static boolean helper(float x, float y, float cx, float cy, float r) {
-        return Math.hypot(x - cx, y - cy) < r;
+    private static boolean intersectSegmentCircle(float startX, float startY, float endX, float endY,
+                                                  float centerX, float centerY, float r) {
+        // Based on https://www.gamedevelopment.blog/collision-detection-circles-rectangles-and-polygons/
+        final float t0X = endX - startX;
+        final float t0Y = endX - startY;
+        final float t1X = centerX - startX;
+        final float t1Y = centerY - startY;
+
+        final float l = (float) Math.hypot(t0X, t0Y);
+        final float u = t1X * t0X / l + t1Y * t0Y / l;
+
+        final float t2X, t2Y;
+        if (u <= 0) {
+            t2X = startX; t2Y = startY;
+        } else if (u >= l) {
+            t2X = endX; t2Y = endY;
+        } else {
+            final float t3X = t0X * u;
+            final float t3Y = t0Y * u;
+            t2X = t3X + startX; t2Y = t3Y + startY;
+        }
+        float x = centerX - t2X;
+        float y = centerY - t2Y;
+        return x * x + y * y <= r * r;
     }
 
     @Override
