@@ -40,12 +40,7 @@ public final class Beam implements IBullet {
     @Override
     public void render(final IGraphics g) {
         g.setColor(Color.white);
-        final float angle = (float) (3 * Math.PI / 2 - this.angle);
-        final float t2 = thickness / 2;
-        final float l2 = length / 2;
-        g.rotate(-angle, x, y);
-        g.fillRect(x - t2, y - l2, x + t2, y + l2);
-        g.rotate(angle, x, y);
+        g.fillPolygon(dest);
     }
 
     @Override
@@ -63,7 +58,7 @@ public final class Beam implements IBullet {
             x - t2, y - l2,
             x + t2, y - l2,
             x + t2, y + t2,
-            x - t2, y - t2,
+            x - t2, y + t2,
         };
 
         t.transform(input, 0, dest, 0, input.length / 2);
