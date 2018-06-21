@@ -1,6 +1,6 @@
-# Seihou 2
+# Nappou 2
 
-The second game in the Seihou series
+The second game in the Nappou series
 
 ## Build Instructions
 
