@@ -13,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         final FrameInfo info = new FrameInfo()
-                .setTitle("Atoiks Games - Seihou 2")
+                .setTitle("Atoiks Games - Nappou 2")
                 .setResizable(false)
                 .setSize(900, 600)
                 .setScenes(new LoadingScene(), new TitleScene(), new TutorialScene(), new ScoreScene(), new ConfigScene(), new DiffOptionScene(), new ShieldOptionScene(), new LevelOneScene(), new LevelTwoScene());
