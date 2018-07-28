@@ -60,27 +60,26 @@ public final class DiffOptionScene extends Scene {
             scene.gotoNextScene();
             return true;
         }
-        // For now only Easy level is playable
-        diffSel = 0;
 
-        // if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-        //     ++diffSel;
-        //     if (diffSel >= diffSelY.length || (challengeModeLocked && diffSel == diffSelY.length - 1)) diffSel = 0;
-        // }
-        // if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-        //     if (--diffSel < 0) diffSel = diffSelY.length - (challengeModeLocked ? 2 : 1);
-        // }
 
-        // final int mouseY = scene.mouse().getLocalY();
-        // for (int i = 0; i < diffSelY.length; ++i) {
-        //     if (challengeModeLocked && i == diffSelY.length - 1) continue;
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+            ++diffSel;
+            if (diffSel >= diffSelY.length || (challengeModeLocked && diffSel == diffSelY.length - 1)) diffSel = 0;
+        }
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+            if (--diffSel < 0) diffSel = diffSelY.length - (challengeModeLocked ? 2 : 1);
+        }
 
-        //     final int selBase = diffSelY[i];
-        //     if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-        //         diffSel = i;
-        //         break;
-        //     }
-        // }
+        final int mouseY = scene.mouse().getLocalY();
+        for (int i = 0; i < diffSelY.length; ++i) {
+            if (challengeModeLocked && i == diffSelY.length - 1) continue;
+
+            final int selBase = diffSelY[i];
+            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                diffSel = i;
+                break;
+            }
+        }
         return true;
     }
 
