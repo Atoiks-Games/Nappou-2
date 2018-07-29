@@ -21,9 +21,11 @@ package org.atoiks.games.nappou2.scenes;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import se.tube42.lib.tweeny.Item;
 import se.tube42.lib.tweeny.TweenEquation;
-import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.*;
@@ -31,6 +33,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
+
 import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 public final class LevelOneScene extends AbstractGameScene {
