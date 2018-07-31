@@ -41,7 +41,7 @@ public final class AltMB1 extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        bulletPattern ++;
+        bulletPattern++;
         enemyTime++;
 
         final float x = getX();
@@ -63,7 +63,8 @@ public final class AltMB1 extends AbstractEnemy {
             }
         }
 
-        setY(getY() + 300 * dt);
+        // reference y directly, first setY since getY was called
+        setY(y + 300 * dt);
     }
 
     @Override

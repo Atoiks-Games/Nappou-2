@@ -26,12 +26,13 @@ public final class AdvancedMiniBomberEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
+    private static final float VERTICAL = 1000 * (float) Math.sin(7 * Math.PI / 16);
+    private static final float HORIZONTAL = 1000 * (float) Math.cos(7 * Math.PI / 16);
+
     private float time;
     private boolean fireGate;
     private int dir;
     private float spd;
-    private double vertical = 1000 * Math.sin(7*Math.PI/16);
-    private double horizontal = 1000 * Math.cos(7*Math.PI/16);
 
     public AdvancedMiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
         super(hp, x, y, r);
@@ -54,8 +55,8 @@ public final class AdvancedMiniBomberEnemy extends AbstractEnemy {
             fireGate = false;
             final float x = getX();
             final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, (float) horizontal, (float) vertical));
-            game.addEnemyBullet(new PointBullet(x, y, 2, -1 * (float) horizontal, (float) vertical));
+            game.addEnemyBullet(new PointBullet(x, y, 2, HORIZONTAL, VERTICAL));
+            game.addEnemyBullet(new PointBullet(x, y, 2, -HORIZONTAL, VERTICAL));
             game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
         }
     }

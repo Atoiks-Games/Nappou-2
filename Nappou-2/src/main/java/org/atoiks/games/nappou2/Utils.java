@@ -38,7 +38,7 @@ public final class Utils {
                 tweenInfo.set(0, xrangeInv[i], xrangeInv[i ^ 1]).configure(28000, TweenEquation.QUAD_INOUT);
                 tweenInfo.set(1, 10, 600 + 40).configure(14000, TweenEquation.LINEAR);
                 tweenInfo.setImmediate(2, 8);
-                return new RadialPointEnemy(2, 2, tweenInfo, 0.50f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
+                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
             }));
         }
     }
