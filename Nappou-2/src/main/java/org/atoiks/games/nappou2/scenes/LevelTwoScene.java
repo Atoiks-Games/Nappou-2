@@ -136,54 +136,54 @@ public final class LevelTwoScene extends AbstractGameScene {
                    }
                     break;
                 case 4:
-                    final float pi1 = (float) (2*Math.PI)/3;
-                    final float pi2 = (float) (3*Math.PI)/2;
-                    switch(cycles){
-                      case 2000:
-                        final float[] offset = { (float) (-Math.PI / 12), 0, (float) (Math.PI / 12) };
-                        game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                          final Item tweenInfo = new Item(3);
-                          tweenInfo.set(0, 30, GAME_BORDER - 30).configure(28000, TweenEquation.QUAD_INOUT);
-                          tweenInfo.setImmediate(2, 8);
-                          tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                          return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, 0f, 3, pi1, 15f, 100f);
-                        }));
-                      game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                        final Item tweenInfo = new Item(3);
-                        tweenInfo.set(0, GAME_BORDER - 30, 30).configure(28000, TweenEquation.QUAD_INOUT);
-                        tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                        tweenInfo.setImmediate(2, 8);
-                        return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) Math.PI, 3, pi1, 15f, 100f);
-                      }));
-                      game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                        final Item tweenInfo = new Item(3);
-                        tweenInfo.set(0, 10, GAME_BORDER - 10).configure(28000, TweenEquation.QUAD_INOUT);
-                        tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                        tweenInfo.setImmediate(2, 8);
-                        return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
-                      }));
-                      game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                        final Item tweenInfo = new Item(3);
-                        tweenInfo.set(0, GAME_BORDER - 10, 10).configure(28000, TweenEquation.QUAD_INOUT);
-                        tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                        tweenInfo.setImmediate(2, 8);
-                        return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
-                      }));
-                      break;
-                      case 12000:
-                      case 22000:
-                      case 33000:
-                      case 42000:
-                      case 52000:
-                      case 63000:
-                      case 72000:
-                      case 82000:
-                      case 93000:
-                      game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                      game.addEnemy(new DropEnemy(1, 650, -10, 8));
-                      break;
+                    final float pi1 = (float) (2 * Math.PI) / 3;
+                    final float pi2 = (float) (3 * Math.PI) / 2;
+                    switch (cycles) {
+                        case 2000:
+                            final float[] offset = { (float) (-Math.PI / 12), 0, (float) (Math.PI / 12) };
+                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                                final Item tweenInfo = new Item(3);
+                                tweenInfo.set(0, 30, GAME_BORDER - 30).configure(28000, TweenEquation.QUAD_INOUT);
+                                tweenInfo.setImmediate(2, 8);
+                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, 0f, 3, pi1, 15f, 100f);
+                            }));
+                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                                final Item tweenInfo = new Item(3);
+                                tweenInfo.set(0, GAME_BORDER - 30, 30).configure(28000, TweenEquation.QUAD_INOUT);
+                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                                tweenInfo.setImmediate(2, 8);
+                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) Math.PI, 3, pi1, 15f, 100f);
+                            }));
+                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                                final Item tweenInfo = new Item(3);
+                                tweenInfo.set(0, 10, GAME_BORDER - 10).configure(28000, TweenEquation.QUAD_INOUT);
+                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                                tweenInfo.setImmediate(2, 8);
+                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
+                            }));
+                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
+                                final Item tweenInfo = new Item(3);
+                                tweenInfo.set(0, GAME_BORDER - 10, 10).configure(28000, TweenEquation.QUAD_INOUT);
+                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
+                                tweenInfo.setImmediate(2, 8);
+                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
+                            }));
+                            break;
+                        case 12000:
+                        case 22000:
+                        case 33000:
+                        case 42000:
+                        case 52000:
+                        case 63000:
+                        case 72000:
+                        case 82000:
+                        case 93000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8));
+                            break;
                     }
                     if (cycles > 54000) {
                         if (game.enemies.isEmpty()) {
@@ -193,19 +193,19 @@ public final class LevelTwoScene extends AbstractGameScene {
                    }
                     break;
                 case 5:
-                  switch (cycles) {
-                      case 2000:
-                          game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                       break;
-                  }
-                       if (cycles > 54000) {
-                         if (game.enemies.isEmpty()) {
+                    switch (cycles) {
+                        case 2000:
+                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                            break;
+                    }
+                    if (cycles > 54000) {
+                        if (game.enemies.isEmpty()) {
                           //END LV
                         }
-                  }
-                  break;
-              }
-              break;
+                    }
+                    break;
+            }
+            break;
         }
         return true;
     }
