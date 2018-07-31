@@ -116,7 +116,7 @@ public final class DiffOptionScene extends Scene {
             default:    // default is normal
             case 1: return Difficulty.NORMAL;
             case 2: return Difficulty.HARD;
-            case 4: return Difficulty.CHALLENGE;
+            case 3: return Difficulty.CHALLENGE;
         }
     }
 }

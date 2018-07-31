@@ -28,6 +28,7 @@ import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -39,6 +40,7 @@ public final class ShieldOptionScene extends Scene {
     private Image shieldOptImg;
     private Clip bgm;
     private int shieldSel;
+    private Difficulty diff;
 
     @Override
     public void render(IGraphics g) {
@@ -57,19 +59,22 @@ public final class ShieldOptionScene extends Scene {
             scene.gotoNextScene();
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++shieldSel >= shieldSelY.length) shieldSel = 0;
-        }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
-        }
 
-        final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < shieldSelY.length; ++i) {
-            final int selBase = shieldSelY[i];
-            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                shieldSel = i;
-                break;
+        if (diff != Difficulty.CHALLENGE) {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+                if (++shieldSel >= shieldSelY.length) shieldSel = 0;
+            }
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+                if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
+            }
+
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < shieldSelY.length; ++i) {
+                final int selBase = shieldSelY[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    shieldSel = i;
+                    break;
+                }
             }
         }
         return true;
@@ -84,10 +89,16 @@ public final class ShieldOptionScene extends Scene {
     public void enter(int previousSceneId) {
         shieldOptImg = (Image) scene.resources().get("opt_shield.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+        diff = (Difficulty) scene.resources().get("difficulty");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+
+        if (diff == Difficulty.CHALLENGE) {
+            // Challenge mode does not allow a lumas
+            shieldSel = shieldSelY.length - 1;
         }
     }
 

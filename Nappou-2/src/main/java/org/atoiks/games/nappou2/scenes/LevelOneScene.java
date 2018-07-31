@@ -33,6 +33,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.Difficulty;
 
 import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
@@ -64,7 +65,7 @@ public final class LevelOneScene extends AbstractGameScene {
         wave = 0;
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
-        game.player.setHp(5);
+        game.player.setHp(difficulty == Difficulty.CHALLENGE ? 1 : 5);
         game.setScore(0);
 
         bgm = (Clip) scene.resources().get("Haunted.wav");
