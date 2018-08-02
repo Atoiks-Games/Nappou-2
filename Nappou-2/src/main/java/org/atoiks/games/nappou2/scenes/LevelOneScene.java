@@ -155,12 +155,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 2:
-                    switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new MB1(10, 225, -10, 20));
-                            game.addEnemy(new MB1(10, 375, -10, 20));
-                            game.addEnemy(new MB1(10, 525, -10, 20));
-                            break;
+                    if (cycles == 2000) {
+                        game.addEnemy(new MB1(10, 225, -10, 20));
+                        game.addEnemy(new MB1(10, 375, -10, 20));
+                        game.addEnemy(new MB1(10, 525, -10, 20));
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         wave++;
@@ -189,10 +187,8 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                    switch (cycles) {
-                        case 2000:
-                            tweenRadialGroupPattern(game, w4eX, w4eR);
-                            break;
+                    if (cycles == 2000) {
+                        tweenRadialGroupPattern(game, w4eX, w4eR);
                     }
                     if (cycles > 54000 && game.enemies.isEmpty()) {
                         wave++;
