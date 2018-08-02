@@ -23,7 +23,8 @@ import org.atoiks.games.framework2d.IGraphics;
 public final class ChargerEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 561492645221L;
-    //This needs to be different for every enemy...
+
+    // This needs to be different for every enemy...
     private float speed;
 
     public ChargerEnemy(int hp, float x, float y, float r, float speed) {
@@ -37,8 +38,8 @@ public final class ChargerEnemy extends AbstractEnemy {
         final float y = getY();
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
 
-        setX(getX() + (float)(speed*Math.cos(angle)*dt));
-        setY(getY() + (float)(speed*Math.sin(angle)*dt));
+        setX(x + speed * (float) Math.cos(angle) * dt);
+        setY(y + speed * (float) Math.sin(angle) * dt);
     }
 
     @Override
