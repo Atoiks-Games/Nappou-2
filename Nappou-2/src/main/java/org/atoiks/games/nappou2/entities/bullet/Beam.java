@@ -104,6 +104,14 @@ public final class Beam implements IBullet {
 
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
+        // if you draw a circle with x, y as center point and length as radius
+        // these two circles collide must collide for the beam to collide with the
+        // other circle
+        final float sumRadius = r1 + length;
+        if (Math.abs(x1 - x) >= sumRadius || Math.abs(y1 - y) >= sumRadius) {
+            return false;
+        }
+
         final int count = dest.length / 2;
         for (int i = 0; i < count; ++i) {
             final int k = 2 * i;
@@ -141,8 +149,8 @@ public final class Beam implements IBullet {
             final float t3Y = t0Y * u;
             t2X = t3X + startX; t2Y = t3Y + startY;
         }
-        float x = centerX - t2X;
-        float y = centerY - t2Y;
+        final float x = centerX - t2X;
+        final float y = centerY - t2Y;
         return x * x + y * y <= r * r;
     }
 
