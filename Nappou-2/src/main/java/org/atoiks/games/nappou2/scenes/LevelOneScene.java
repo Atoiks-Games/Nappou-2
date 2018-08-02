@@ -198,7 +198,6 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                    final float pi1 = (float) (2 * Math.PI) / 3;
                     switch (cycles) {
                         case 2000:
                             tweenRadialGroupPattern(game, w4eX, w4eR);
@@ -396,7 +395,6 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                    final float pi1 = (float) (2 * Math.PI) / 3;
                     switch (cycles) {
                         case 2000:
                             tweenRadialGroupPattern(game, w4eX, w4eR);
