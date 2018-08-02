@@ -25,7 +25,7 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class AltMB1 extends AbstractEnemy {
 
-    private static final long serialVersionUID = 5619264522L;
+    private static final long serialVersionUID = 5689264522L;
 
     private static final double PI_DIV_12 = Math.PI / 12;
     private static final int[] SCALE = { 0, 2, 4, 6, 8, 10, 12 };

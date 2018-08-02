@@ -373,13 +373,23 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
                         case 54000:
+                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
+                            break;
+                        case 104000:
+                            game.addEnemy(new AltMB1(10, 375, -10, 20));
                             game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 54000) {
+                    if (cycles > 104000) {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
@@ -432,7 +442,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.start();
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
-                        game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                        game.addEnemy(new Level1Normal(300, 375, -10, 20));
                     }
                     break;
                 case 6:
