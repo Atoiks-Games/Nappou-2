@@ -300,7 +300,6 @@ public final class LevelOneScene extends AbstractGameScene {
                         }
                     }
                     break;
-                //UP TO HERE IS DONE FOR NORMAL
                 case 1:
                     switch (cycles) {
                         case 2000:

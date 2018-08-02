@@ -136,7 +136,7 @@ public final class Level1Normal extends AbstractEnemy {
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             game.addEnemyBullet(new Beam(x, y, 2, 30, (float) angle, 1000));
-            game.addEnemy(new ChargerEnemy(3, x, y, 5));
+            game.addEnemy(new ChargerEnemy(3, x, y, 10, 100));
         }
     }
 
@@ -146,7 +146,10 @@ public final class Level1Normal extends AbstractEnemy {
             game.addEnemyBullet(new PointBullet(375 - (float) (375 * Math.sin(10 * time)), -10, 2, 0, 1000));
             game.addEnemyBullet(new PointBullet(760, 300 + (float) (300 * Math.sin(10 * time)), 2, -1000, 0));
             game.addEnemyBullet(new PointBullet(-10, 300 - (float) (300 * Math.sin(10 * time)), 2, 1000, 0));
-            game.addEnemy(new ChargerEnemy(1, x, y, 2));
+        }
+
+        if (enemyTime % 15000 == 0) {
+            game.addEnemy(new ChargerEnemy(1, x, y, 5, 500));
         }
     }
 
