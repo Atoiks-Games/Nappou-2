@@ -118,11 +118,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if (cycles > 30000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 30000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 1:
@@ -152,11 +150,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 94000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 94000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 2:
@@ -167,11 +163,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MB1(10, 525, -10, 20));
                             break;
                     }
-                    if (cycles > 2000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 2000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 3:
@@ -190,11 +184,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 54000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 4:
@@ -203,16 +195,14 @@ public final class LevelOneScene extends AbstractGameScene {
                             tweenRadialGroupPattern(game, w4eX, w4eR);
                             break;
                     }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                            bgm.stop();
-                            disableDamage();
-                            talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
-                            disableInput = true;
-                            game.clearBullets();
-                        }
+                    if (cycles > 54000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                        bgm.stop();
+                        disableDamage();
+                        talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
+                        disableInput = true;
+                        game.clearBullets();
                     }
                     break;
                 case 5:
@@ -232,18 +222,16 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles > 2000) {
-                        if (game.enemies.isEmpty()) {
-                            bgm.stop();
-                            disableDamage();
-                            talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
-                            disableInput = true;
-                            game.clearBullets();
-                            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                                disableInput = false;
-                                enableDamage();
-                                scene.switchToScene(1);
-                            }
+                    if (cycles > 2000 && game.enemies.isEmpty()) {
+                        bgm.stop();
+                        disableDamage();
+                        talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
+                        disableInput = true;
+                        game.clearBullets();
+                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                            disableInput = false;
+                            enableDamage();
+                            scene.switchToScene(1);
                         }
                     }
                     break;
@@ -292,11 +280,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
                             break;
                     }
-                    if (cycles > 30000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 30000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 1:
@@ -326,11 +312,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                     }
-                    if (cycles > 94000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 94000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 2:
@@ -354,11 +338,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 22000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 22000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 3:
@@ -387,11 +369,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 104000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
+                    if (cycles > 104000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
                     }
                     break;
                 case 4:
@@ -414,16 +394,14 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 650, -10, 8));
                             break;
                     }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                            bgm.stop();
-                            disableDamage();
-                            talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
-                            disableInput = true;
-                            game.clearBullets();
-                        }
+                    if (cycles > 54000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                        bgm.stop();
+                        disableDamage();
+                        talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
+                        disableInput = true;
+                        game.clearBullets();
                     }
                     break;
                 case 5:
@@ -443,18 +421,16 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles > 2000) {
-                        if (game.enemies.isEmpty()) {
-                            bgm.stop();
-                            disableDamage();
-                            talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
-                            disableInput = true;
-                            game.clearBullets();
-                            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                                disableInput = false;
-                                enableDamage();
-                                scene.switchToScene(1);
-                            }
+                    if (cycles > 2000 && game.enemies.isEmpty()) {
+                        bgm.stop();
+                        disableDamage();
+                        talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
+                        disableInput = true;
+                        game.clearBullets();
+                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                            disableInput = false;
+                            enableDamage();
+                            scene.switchToScene(1);
                         }
                     }
                     break;
