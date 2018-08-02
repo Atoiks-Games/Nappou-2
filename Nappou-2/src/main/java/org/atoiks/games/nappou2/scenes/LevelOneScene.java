@@ -93,7 +93,6 @@ public final class LevelOneScene extends AbstractGameScene {
             return true;
         */
 
-
         ++cycles;
         switch (difficulty) {
             case EASY:
