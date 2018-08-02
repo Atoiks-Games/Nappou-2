@@ -55,13 +55,13 @@ public final class Player implements IRender, IUpdate, Serializable {
         this.shield.render(g);
         g.setColor(Color.cyan);
         if (isRespawnShieldActive()) {
-            g.drawOval((int) (x - RADIUS), (int) (y - RADIUS), x + RADIUS, y + RADIUS);
+            g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
         } else {
-            g.fillOval((int) (x - RADIUS), (int) (y - RADIUS), x + RADIUS, y + RADIUS);
+            g.fillOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
         }
         if (speedScale != 1) {
             g.setColor(Color.red);
-            g.fillOval((int) (x - HINT_COL_RADIUS), (int) (y - HINT_COL_RADIUS), x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
+            g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
     }
 

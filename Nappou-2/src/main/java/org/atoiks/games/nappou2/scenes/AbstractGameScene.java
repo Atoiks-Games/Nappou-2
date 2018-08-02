@@ -287,6 +287,7 @@ public abstract class AbstractGameScene extends Scene {
         final float px = game.player.getX();
         final float py = game.player.getY();
 
+        final boolean respshActive = game.player.isRespawnShieldActive();
         final boolean shieldActive = game.player.shield.isActive();
         final float sx = game.player.shield.getX();
         final float sy = game.player.shield.getY();
@@ -294,18 +295,17 @@ public abstract class AbstractGameScene extends Scene {
 
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
-            if (!game.player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+            if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
+                game.enemyBullets.remove(i);
+                if (--i < -1) break;
+            }
+            if (!respshActive && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 if (game.player.changeHpBy(-1) <= 0) {
                     // Goto title scene
                     scene.switchToScene(1);
                     return true;
                 }
                 game.player.activateRespawnShield();
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-
-            if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
             }
