@@ -42,7 +42,8 @@ public class App {
             // Fallback to using a generic SansSerif font
             local = new Font("SansSerif", Font.PLAIN, 16);
         } finally {
-            SANS_FONT = local;
+            // SANS_FONT is initialized as size 16 plain
+            SANS_FONT = local.deriveFont(Font.PLAIN, 16f);
         }
     }
 
