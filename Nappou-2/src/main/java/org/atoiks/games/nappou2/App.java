@@ -22,12 +22,29 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.swing.Frame;
 
 import org.atoiks.games.nappou2.scenes.*;
 
 public class App {
+
+    public static final Font SANS_FONT;
+
+    static {
+        Font local = null;
+        try {
+            local = Font.createFont(Font.PLAIN, App.class.getResourceAsStream("/Being_Human.ttf"));
+        } catch (IOException | FontFormatException ex) {
+            // Fallback to using a generic SansSerif font
+            local = new Font("SansSerif", Font.PLAIN, 16);
+        } finally {
+            SANS_FONT = local;
+        }
+    }
 
     public static void main(String[] args) {
         final FrameInfo info = new FrameInfo()
