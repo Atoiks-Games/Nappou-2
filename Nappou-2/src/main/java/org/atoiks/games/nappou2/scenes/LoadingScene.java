@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.BufferedInputStream;
 
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -54,7 +53,6 @@ public final class LoadingScene extends Scene {
     }
 
     private static final int RADIUS = 100;
-    private static final String LC_LANG = Locale.getDefault().getLanguage();
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
 
@@ -151,12 +149,7 @@ public final class LoadingScene extends Scene {
     }
 
     private InputStream getResourceStreamFrom(final String folder, final String name) {
-        // Try to find locale specific files
-        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/" + LC_LANG + "/" + name);
-        if (is == null) {
-            // Try to look for english
-            is = this.getClass().getResourceAsStream("/" + folder + "/" + Locale.ENGLISH.getLanguage() + "/" + name);
-        }
+        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/en/" + name);
         if (is == null) {
             is = this.getClass().getResourceAsStream("/" + folder + "/" + name);
         }
