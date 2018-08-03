@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 
@@ -43,6 +44,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
@@ -52,6 +54,8 @@ public final class LoadingScene extends Scene {
         WAITING, LOADING, DONE, NO_RES
     }
 
+    public static final Font LOADING_FONT = SANS_FONT.deriveFont(45f);
+
     private static final int RADIUS = 100;
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
@@ -59,7 +63,6 @@ public final class LoadingScene extends Scene {
     private LoadState loaded = LoadState.WAITING;
 
     private float time;
-    private Image loadingTxt;
 
     @Override
     public void render(IGraphics g) {
@@ -72,12 +75,8 @@ public final class LoadingScene extends Scene {
             g.drawOval(x - 5, y - 5, x + 5, y + 5);
         }
 
-        if (loadingTxt == null) {
-            loadingTxt = (Image) scene.resources().get("loading.png");
-        }
-        if (loadingTxt != null) {
-            g.drawImage(loadingTxt, WIDTH - loadingTxt.getWidth(null), HEIGHT - loadingTxt.getHeight(null));
-        }
+        g.setFont(LOADING_FONT);
+        g.drawString("Loading", WIDTH - 200, HEIGHT - LOADING_FONT.getSize() - 10);
     }
 
     @Override
@@ -95,7 +94,6 @@ public final class LoadingScene extends Scene {
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
-                    loadImageFromResources("loading.png");
                     loadImageFromResources("title.png");
                     loadImageFromResources("hp.png");
                     loadImageFromResources("skill_recharged.png");
