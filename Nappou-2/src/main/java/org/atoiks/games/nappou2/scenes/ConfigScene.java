@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.GameConfig;
 
 public final class ConfigScene extends Scene {
 
-    private static final int MAX_SELECTOR = 1;
+    private static final int MAX_SELECTOR = 2;
 
     private Image configImg;
     private Clip bgm;
@@ -43,11 +43,17 @@ public final class ConfigScene extends Scene {
     public void render(IGraphics g) {
         g.drawImage(configImg, 0, 0);
         g.setColor(Color.white);
-        switch (selector) {
-            case 0:
-                if (config.bgm) g.drawLine(218, 114, 262, 114);
-                else g.drawLine(297, 114, 354, 114);
-                break;
+
+        if (config.bgm) {
+            g.drawLine(560, 90, 604, 90);
+        } else {
+            g.drawLine(720, 90, 780, 90);
+        }
+
+        if (config.challengeMode) {
+            g.drawLine(560, 140, 604, 140);
+        } else {
+            g.drawLine(720, 140, 780, 140);
         }
     }
 
@@ -76,12 +82,18 @@ public final class ConfigScene extends Scene {
                 case 0:
                     config.bgm = !config.bgm;
                     break;
+                case 1:
+                    config.challengeMode = !config.challengeMode;
+                    break;
             }
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
             switch (selector) {
                 case 0:
                     config.bgm = !config.bgm;
+                    break;
+                case 1:
+                    config.challengeMode = !config.challengeMode;
                     break;
             }
         }

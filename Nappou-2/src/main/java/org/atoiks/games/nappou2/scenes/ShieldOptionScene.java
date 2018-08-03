@@ -28,7 +28,6 @@ import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -40,17 +39,28 @@ public final class ShieldOptionScene extends Scene {
     private Image shieldOptImg;
     private Clip bgm;
     private int shieldSel;
-    private Difficulty diff;
+
+    private boolean skipSelection;
 
     @Override
     public void render(IGraphics g) {
-        g.drawImage(shieldOptImg, 0, 0);
-        g.setColor(Color.white);
-        g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
+        if (skipSelection) {
+            g.setClearColor(Color.black);
+            g.clearGraphics();
+        } else {
+            g.drawImage(shieldOptImg, 0, 0);
+            g.setColor(Color.white);
+            g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
+        }
     }
 
     @Override
     public boolean update(float dt) {
+        if (skipSelection) {
+            scene.gotoNextScene();
+            return true;
+        }
+
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
             scene.switchToScene(1);
             return true;
@@ -60,21 +70,19 @@ public final class ShieldOptionScene extends Scene {
             return true;
         }
 
-        if (diff != Difficulty.CHALLENGE) {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (++shieldSel >= shieldSelY.length) shieldSel = 0;
-            }
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-                if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
-            }
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+            if (++shieldSel >= shieldSelY.length) shieldSel = 0;
+        }
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+            if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
+        }
 
-            final int mouseY = scene.mouse().getLocalY();
-            for (int i = 0; i < shieldSelY.length; ++i) {
-                final int selBase = shieldSelY[i];
-                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                    shieldSel = i;
-                    break;
-                }
+        final int mouseY = scene.mouse().getLocalY();
+        for (int i = 0; i < shieldSelY.length; ++i) {
+            final int selBase = shieldSelY[i];
+            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                shieldSel = i;
+                break;
             }
         }
         return true;
@@ -87,18 +95,20 @@ public final class ShieldOptionScene extends Scene {
 
     @Override
     public void enter(int previousSceneId) {
-        shieldOptImg = (Image) scene.resources().get("opt_shield.png");
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
-        diff = (Difficulty) scene.resources().get("difficulty");
-
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        if ((skipSelection = cfg.challengeMode)) {
+            // Challenge mode does not use NullShield
+            // Also, line above is intentional assignment, not test equality
+            shieldSel = shieldSelY.length - 1;
+            return;
         }
 
-        if (diff == Difficulty.CHALLENGE) {
-            // Challenge mode does not allow a lumas
-            shieldSel = shieldSelY.length - 1;
+        shieldOptImg = (Image) scene.resources().get("opt_shield.png");
+        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+
+        if (cfg.bgm) {
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 
@@ -106,7 +116,7 @@ public final class ShieldOptionScene extends Scene {
     public void leave() {
         scene.resources().put("shield", getShieldFromOption());
 
-        bgm.stop();
+        if (bgm != null) bgm.stop();
     }
 
     private IShield getShieldFromOption() {

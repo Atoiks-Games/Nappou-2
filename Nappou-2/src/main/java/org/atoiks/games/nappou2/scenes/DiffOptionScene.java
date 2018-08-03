@@ -41,7 +41,6 @@ public final class DiffOptionScene extends Scene {
     private Clip bgm;
     private int diffSel;
     private Difficulty difficulty;
-    private boolean challengeModeLocked;
 
     @Override
     public void render(IGraphics g) {
@@ -64,16 +63,14 @@ public final class DiffOptionScene extends Scene {
 
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
             ++diffSel;
-            if (diffSel >= diffSelY.length || (challengeModeLocked && diffSel == diffSelY.length - 1)) diffSel = 0;
+            if (diffSel >= diffSelY.length) diffSel = 0;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--diffSel < 0) diffSel = diffSelY.length - (challengeModeLocked ? 2 : 1);
+            if (--diffSel < 0) diffSel = diffSelY.length - 1;
         }
 
         final int mouseY = scene.mouse().getLocalY();
         for (int i = 0; i < diffSelY.length; ++i) {
-            if (challengeModeLocked && i == diffSelY.length - 1) continue;
-
             final int selBase = diffSelY[i];
             if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
                 diffSel = i;
@@ -95,7 +92,6 @@ public final class DiffOptionScene extends Scene {
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
-        challengeModeLocked = cfg.challengeModeLocked;
 
         if (cfg.bgm) {
             bgm.start();

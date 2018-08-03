@@ -25,7 +25,7 @@ import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 
-import org.atoiks.games.nappou2.Difficulty;
+import org.atoiks.games.nappou2.GameConfig;
 
 import java.util.Random;
 
@@ -47,8 +47,10 @@ public final class LevelTwoScene extends AbstractGameScene {
         cycles = 0;
         wave = 0;
 
+        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
-        game.player.setHp(difficulty == Difficulty.CHALLENGE ? 1 : 5);
+        game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
     }
 
