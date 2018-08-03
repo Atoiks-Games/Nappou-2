@@ -96,7 +96,11 @@ public final class LevelOneScene extends AbstractGameScene {
 
         ++cycles;
         switch (difficulty) {
+
             case EASY:
+            break;
+
+            case NORMAL:
             switch (wave) {
                 case 0:
                     switch (cycles) {
@@ -234,7 +238,7 @@ public final class LevelOneScene extends AbstractGameScene {
             }
             break;
 
-            case NORMAL:
+            case HARD:
             switch (wave) {
                 case 0:
                     switch (cycles) {
@@ -431,6 +435,9 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
             }
+            break;
+
+            case INSANE:
             break;
         }
         return true;
