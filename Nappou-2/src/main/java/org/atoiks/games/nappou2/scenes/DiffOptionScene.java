@@ -107,12 +107,10 @@ public final class DiffOptionScene extends Scene {
     }
 
     private Difficulty getDiffFromOption() {
-        switch (diffSel) {
-            case 0: return Difficulty.EASY;
-            default:    // default is normal
-            case 1: return Difficulty.NORMAL;
-            case 2: return Difficulty.HARD;
-            case 3: return Difficulty.CHALLENGE;
+        try {
+            return Difficulty.values()[diffSel];
+        } catch (IndexOutOfBoundsException ex) {
+            return Difficulty.NORMAL;
         }
     }
 }
