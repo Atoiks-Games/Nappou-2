@@ -31,7 +31,8 @@ import org.atoiks.games.nappou2.GameConfig;
 
 public final class ConfigScene extends Scene {
 
-    private static final int MAX_SELECTOR = 2;
+    private static final int[] SELECTOR_Y = { 66, 115 };
+    private static final int OPT_HEIGHT = 24;
 
     private Image configImg;
     private Clip bgm;
@@ -43,6 +44,8 @@ public final class ConfigScene extends Scene {
     public void render(IGraphics g) {
         g.drawImage(configImg, 0, 0);
         g.setColor(Color.white);
+
+        g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
 
         if (config.bgm) {
             g.drawLine(560, 90, 604, 90);
@@ -72,10 +75,10 @@ public final class ConfigScene extends Scene {
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++selector > MAX_SELECTOR) selector = 0;
+            if (++selector > SELECTOR_Y.length) selector = 0;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
-            if (--selector < 0) selector = MAX_SELECTOR - 1;
+            if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
             switch (selector) {
