@@ -37,7 +37,7 @@ public final class LevelTwoScene extends AbstractGameScene {
     private final Random rnd = new Random();
 
     public LevelTwoScene() {
-        super(0);
+        super(1);
     }
 
     @Override
