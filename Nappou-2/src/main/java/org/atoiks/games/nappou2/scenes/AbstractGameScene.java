@@ -64,7 +64,6 @@ public abstract class AbstractGameScene extends Scene {
 
     protected float playerFireTimeout;
     protected Image hpImg;
-    protected Image pauseImg;
     protected boolean pause;
     protected boolean disableInput;
     protected Difficulty difficulty;
@@ -91,7 +90,6 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void enter(int prevSceneId) {
         hpImg = (Image) scene.resources().get("hp.png");
-        pauseImg = (Image) scene.resources().get("pause.png");
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         playerFireTimeout = 0f;
@@ -157,8 +155,14 @@ public abstract class AbstractGameScene extends Scene {
         renderStats(g);
 
         if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY);
+            g.setColor(PAUSE_OVERLAY);
+            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
             g.setColor(Color.black);
+            g.setFont(TitleScene.TITLE_FONT);
+            g.drawString("PAUSE", 274, 202);
+            g.setFont(TitleScene.OPTION_FONT);
+            g.drawString("Continue Game", 52, 373);
+            g.drawString("Return to Title", 52, 433);
             g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
         }
     }
