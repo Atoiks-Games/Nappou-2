@@ -95,8 +95,6 @@ public final class LoadingScene extends Scene {
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
                     loadImageFromResources("hp.png");
-                    loadImageFromResources("skill_recharged.png");
-                    loadImageFromResources("stats.png");
                     loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
                     loadImageFromResources("x.png");
