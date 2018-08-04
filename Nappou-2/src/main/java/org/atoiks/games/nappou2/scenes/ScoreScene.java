@@ -73,6 +73,9 @@ public final class ScoreScene extends Scene {
                 }
             }
         }
+
+        g.drawString("Switch score mode with left and right arrows", 14, 560);
+        g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
     }
 
     @Override
