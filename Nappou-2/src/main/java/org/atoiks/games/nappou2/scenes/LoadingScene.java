@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 
@@ -27,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.BufferedInputStream;
 
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -44,6 +44,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
@@ -53,15 +54,15 @@ public final class LoadingScene extends Scene {
         WAITING, LOADING, DONE, NO_RES
     }
 
+    public static final Font LOADING_FONT = SANS_FONT.deriveFont(45f);
+
     private static final int RADIUS = 100;
-    private static final String LC_LANG = Locale.getDefault().getLanguage();
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
 
     private LoadState loaded = LoadState.WAITING;
 
     private float time;
-    private Image loadingTxt;
 
     @Override
     public void render(IGraphics g) {
@@ -74,12 +75,8 @@ public final class LoadingScene extends Scene {
             g.drawOval(x - 5, y - 5, x + 5, y + 5);
         }
 
-        if (loadingTxt == null) {
-            loadingTxt = (Image) scene.resources().get("loading.png");
-        }
-        if (loadingTxt != null) {
-            g.drawImage(loadingTxt, WIDTH - loadingTxt.getWidth(null), HEIGHT - loadingTxt.getHeight(null));
-        }
+        g.setFont(LOADING_FONT);
+        g.drawString("Loading", WIDTH - 200, HEIGHT - LOADING_FONT.getSize() - 10);
     }
 
     @Override
@@ -97,17 +94,10 @@ public final class LoadingScene extends Scene {
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
-                    loadImageFromResources("loading.png");
-                    loadImageFromResources("title.png");
                     loadImageFromResources("hp.png");
-                    loadImageFromResources("skill_recharged.png");
-                    loadImageFromResources("stats.png");
-                    loadImageFromResources("pause.png");
                     loadImageFromResources("z.png");
                     loadImageFromResources("x.png");
                     loadImageFromResources("controls.png");
-                    loadImageFromResources("opt_diff.png");
-                    loadImageFromResources("opt_shield.png");
                     loadImageFromResources("config.png");
                     loadImageFromResources("tutorial_preboss_1.png");
                     loadImageFromResources("tutorial_postboss_1.png");
@@ -151,12 +141,7 @@ public final class LoadingScene extends Scene {
     }
 
     private InputStream getResourceStreamFrom(final String folder, final String name) {
-        // Try to find locale specific files
-        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/" + LC_LANG + "/" + name);
-        if (is == null) {
-            // Try to look for english
-            is = this.getClass().getResourceAsStream("/" + folder + "/" + Locale.ENGLISH.getLanguage() + "/" + name);
-        }
+        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/en/" + name);
         if (is == null) {
             is = this.getClass().getResourceAsStream("/" + folder + "/" + name);
         }

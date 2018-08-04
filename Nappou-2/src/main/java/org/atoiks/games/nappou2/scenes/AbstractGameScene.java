@@ -20,6 +20,7 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.util.Arrays;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -35,6 +36,8 @@ import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
+
 public abstract class AbstractGameScene extends Scene {
 
     public static final int WIDTH = 900;
@@ -44,6 +47,7 @@ public abstract class AbstractGameScene extends Scene {
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
     public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
+    public static final Color STATS_GREY = new Color(106, 106, 106);
 
     // Conventionally, continue is always the first option,
     // sceneDest is always one less than the selectorY
@@ -60,9 +64,6 @@ public abstract class AbstractGameScene extends Scene {
 
     protected float playerFireTimeout;
     protected Image hpImg;
-    protected Image statsImg;
-    protected Image skillImg;
-    protected Image pauseImg;
     protected boolean pause;
     protected boolean disableInput;
     protected Difficulty difficulty;
@@ -89,9 +90,6 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void enter(int prevSceneId) {
         hpImg = (Image) scene.resources().get("hp.png");
-        statsImg = (Image) scene.resources().get("stats.png");
-        skillImg = (Image) scene.resources().get("skill_recharged.png");
-        pauseImg = (Image) scene.resources().get("pause.png");
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         playerFireTimeout = 0f;
@@ -118,9 +116,13 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     public void renderStats(final IGraphics g) {
-        if (statsImg != null) {
-            g.drawImage(statsImg, GAME_BORDER, 0);
-        }
+        g.setColor(STATS_GREY);
+        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
+
+        g.setColor(Color.white);
+        g.setFont(SANS_FONT);
+        g.drawString("HP Remaining", GAME_BORDER + 2, 16);
+        g.drawString("Score", GAME_BORDER + 2, 58);
 
         if (hpImg != null) {
             final int hp = game.player.getHp();
@@ -131,10 +133,10 @@ public abstract class AbstractGameScene extends Scene {
         }
 
         final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
-        g.drawString(str, GAME_BORDER + 5, 72);
+        g.drawString(str, GAME_BORDER + 5, 74);
 
-        if (game.player.shield.isReady() && skillImg != null) {
-            g.drawImage(skillImg, GAME_BORDER, 80);
+        if (game.player.shield.isReady()) {
+            g.drawString("Lumas Ready", GAME_BORDER + 30, 96);
         }
     }
 
@@ -153,8 +155,14 @@ public abstract class AbstractGameScene extends Scene {
         renderStats(g);
 
         if (pause) {
-            g.drawImage(pauseImg, 0, 0, PAUSE_OVERLAY);
+            g.setColor(PAUSE_OVERLAY);
+            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
             g.setColor(Color.black);
+            g.setFont(TitleScene.TITLE_FONT);
+            g.drawString("PAUSE", 274, 202);
+            g.setFont(TitleScene.OPTION_FONT);
+            g.drawString("Continue Game", 52, 373);
+            g.drawString("Return to Title", 52, 433);
             g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
         }
     }

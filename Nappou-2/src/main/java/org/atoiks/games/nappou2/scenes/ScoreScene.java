@@ -30,6 +30,7 @@ import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
@@ -45,18 +46,21 @@ public final class ScoreScene extends Scene {
         g.clearGraphics();
 
         if (score == null) return;
+
+        g.setFont(SANS_FONT);
         g.setColor(Color.white);
+        final int size = SANS_FONT.getSize();
         for (int i = 0; i < score.data.length; ++i) {
-            final int bh = 20 + 90 * i;
+            final int bh = 20 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
             for (Difficulty diff : Difficulty.values()) {
                 final int bw = 60 + diff.ordinal() * 200;
                 final int[] p = score.data[i][diff.ordinal()];
-                g.drawString(diff.toString(), bw, bh + 12);
+                g.drawString(diff.toString(), bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
                     final String str = p[offset] == 0 ? "0" : Integer.toString(p[offset]) + "000";
-                    g.drawString(str, bw + 10, bh + (j + 2) * 12);
+                    g.drawString(str, bw + 10, bh + (j + 2) * size);
                 }
             }
         }

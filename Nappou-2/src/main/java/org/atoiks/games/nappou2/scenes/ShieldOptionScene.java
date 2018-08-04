@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -33,10 +32,12 @@ import org.atoiks.games.nappou2.entities.shield.*;
 
 public final class ShieldOptionScene extends Scene {
 
+    private static final String[] SHIELD_MSG = {
+        "Bonfire", "Firefly", "None"
+    };
     private static final int[] shieldSelY = {356, 414, 498};
     private static final int OPT_HEIGHT = 37;
 
-    private Image shieldOptImg;
     private Clip bgm;
     private int shieldSel;
 
@@ -44,12 +45,17 @@ public final class ShieldOptionScene extends Scene {
 
     @Override
     public void render(IGraphics g) {
-        if (skipSelection) {
-            g.setClearColor(Color.black);
-            g.clearGraphics();
-        } else {
-            g.drawImage(shieldOptImg, 0, 0);
+        g.setClearColor(Color.black);
+        g.clearGraphics();
+
+        if (!skipSelection) {
             g.setColor(Color.white);
+            g.setFont(TitleScene.TITLE_FONT);
+            g.drawString("Choose Your Shield", 130, 120);
+            g.setFont(TitleScene.OPTION_FONT);
+            for (int i = 0; i < SHIELD_MSG.length; ++i) {
+                g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + TitleScene.OPTION_FONT.getSize());
+            }
             g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
         }
     }
@@ -103,7 +109,6 @@ public final class ShieldOptionScene extends Scene {
             return;
         }
 
-        shieldOptImg = (Image) scene.resources().get("opt_shield.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (cfg.bgm) {

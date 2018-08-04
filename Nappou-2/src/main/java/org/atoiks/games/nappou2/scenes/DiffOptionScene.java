@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -34,18 +33,26 @@ import org.atoiks.games.nappou2.entities.shield.*;
 
 public final class DiffOptionScene extends Scene {
 
+    private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
 
-    private Image diffOptImg;
     private Clip bgm;
     private int diffSel;
     private Difficulty difficulty;
 
     @Override
     public void render(IGraphics g) {
-        g.drawImage(diffOptImg, 0, 0);
+        g.setClearColor(Color.black);
+        g.clearGraphics();
+
         g.setColor(Color.white);
+        g.setFont(TitleScene.TITLE_FONT);
+        g.drawString("Choose Your Difficulty", 80, 120);
+        g.setFont(TitleScene.OPTION_FONT);
+        for (int i = 0; i < DIFFS.length; ++i) {
+            g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + TitleScene.OPTION_FONT.getSize());
+        }
         g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
 
@@ -87,7 +94,6 @@ public final class DiffOptionScene extends Scene {
 
     @Override
     public void enter(int previousSceneId) {
-        diffOptImg = (Image) scene.resources().get("opt_diff.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
