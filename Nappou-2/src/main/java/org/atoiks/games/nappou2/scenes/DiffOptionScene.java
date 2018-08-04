@@ -48,7 +48,7 @@ public final class DiffOptionScene extends Scene {
 
         g.setColor(Color.white);
         g.setFont(TitleScene.TITLE_FONT);
-        g.drawString("Choose your Difficulty", 80, 120);
+        g.drawString("Choose Your Difficulty", 80, 120);
         g.setFont(TitleScene.OPTION_FONT);
         for (int i = 0; i < DIFFS.length; ++i) {
             g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + TitleScene.OPTION_FONT.getSize());
