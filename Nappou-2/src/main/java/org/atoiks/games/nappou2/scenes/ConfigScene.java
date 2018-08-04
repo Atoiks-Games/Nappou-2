@@ -29,10 +29,15 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
+
 public final class ConfigScene extends Scene {
 
+    private static final String[] OPTION_NAMES = {
+        "BGM", "CHALLENGE MODE"
+    };
     private static final int[] SELECTOR_Y = { 66, 115 };
-    private static final int OPT_HEIGHT = 24;
+    private static final int OPT_HEIGHT = 23;
 
     private Image configImg;
     private Clip bgm;
@@ -42,21 +47,33 @@ public final class ConfigScene extends Scene {
 
     @Override
     public void render(IGraphics g) {
-        g.drawImage(configImg, 0, 0);
+        g.setClearColor(Color.black);
+        g.clearGraphics();
         g.setColor(Color.white);
+        g.setFont(TitleScene.OPTION_FONT);
+        for (int i = 0; i < OPTION_NAMES.length; ++i) {
+            final int h = SELECTOR_Y[i] + TitleScene.OPTION_FONT.getSize() - 7;
+            g.drawString(OPTION_NAMES[i], 84, h);
+            g.drawString("ON", 560, h);
+            g.drawString("OFF", 720, h);
+        }
+
+        g.setFont(SANS_FONT);
+        g.drawString("Navigate with arrow keys", 84, 520);
+        g.drawString("Hit Escape to return to title screen", 84, 540);
 
         g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
 
         if (config.bgm) {
-            g.drawLine(560, 90, 604, 90);
+            g.drawLine(560, 91, 588, 91);
         } else {
-            g.drawLine(720, 90, 780, 90);
+            g.drawLine(720, 91, 764, 91);
         }
 
         if (config.challengeMode) {
-            g.drawLine(560, 140, 604, 140);
+            g.drawLine(560, 140, 588, 140);
         } else {
-            g.drawLine(720, 140, 780, 140);
+            g.drawLine(720, 140, 764, 140);
         }
     }
 
