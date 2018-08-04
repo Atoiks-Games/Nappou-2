@@ -98,7 +98,6 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("z.png");
                     loadImageFromResources("x.png");
                     loadImageFromResources("controls.png");
-                    loadImageFromResources("opt_diff.png");
                     loadImageFromResources("opt_shield.png");
                     loadImageFromResources("config.png");
                     loadImageFromResources("tutorial_preboss_1.png");
