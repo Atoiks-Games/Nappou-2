@@ -83,11 +83,9 @@ public final class ScoreScene extends Scene {
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
             plane = (plane + 1) % PLANE_MSG.length;
-            return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
-            return true;
         }
         return true;
     }

@@ -75,7 +75,7 @@ public final class ConfigScene extends Scene {
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++selector > SELECTOR_Y.length) selector = 0;
+            selector = (selector + 1) % SELECTOR_Y.length;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
