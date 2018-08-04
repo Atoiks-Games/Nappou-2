@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2;
 
+import java.util.Arrays;
+
 import java.io.Serializable;
 
 public final class ScoreData implements Serializable {
@@ -28,16 +30,15 @@ public final class ScoreData implements Serializable {
     public static final int DIFFICULTIES = Difficulty.values().length;
     public static final int KEPT_SCORES = 5;
 
-    public int[][][] data = new int[LEVELS][DIFFICULTIES][KEPT_SCORES];
+    public final int[][][][] data = new int[2][LEVELS][DIFFICULTIES][KEPT_SCORES];
 
-    public ScoreData validate() {
-        if (data.length != LEVELS) {
-            final int[][][] newData = new int[LEVELS][DIFFICULTIES][KEPT_SCORES];
-            for (int i = 0; i < data.length; ++i) {
-                newData[i] = data[i];
+    public final void clear() {
+        for (final int[][][] p : data) {
+            for (final int[][] pp : p) {
+                for (final int[] ppp : pp) {
+                    Arrays.fill(ppp, 0);
+                }
             }
-            data = newData;
         }
-        return this;
     }
 }

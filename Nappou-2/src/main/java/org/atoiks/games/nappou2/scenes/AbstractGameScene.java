@@ -32,6 +32,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
+import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
@@ -70,6 +71,8 @@ public abstract class AbstractGameScene extends Scene {
 
     public final int sceneId;
 
+    private boolean challengeMode;
+
     protected AbstractGameScene(int id) {
         sceneId = id;
     }
@@ -90,7 +93,8 @@ public abstract class AbstractGameScene extends Scene {
     @Override
     public void enter(int prevSceneId) {
         hpImg = (Image) scene.resources().get("hp.png");
-        difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
+        difficulty = (Difficulty) scene.resources().get("difficulty");
+        challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
 
         playerFireTimeout = 0f;
         pause = false;
@@ -100,9 +104,9 @@ public abstract class AbstractGameScene extends Scene {
     public void leave() {
         if (sceneId >= 0) {
             final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
-            final int[] alias = scoreDat.data[sceneId][difficulty.ordinal()];
+            final int[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
             final int[] a = Arrays.copyOf(alias, alias.length + 1);
-            a[a.length - 1] = game.getScore();
+            a[a.length - 1] = (challengeMode ? 2 : 1) * game.getScore();
             Arrays.sort(a);
             System.arraycopy(a, 1, alias, 0, a.length - 1);
         }

@@ -122,7 +122,7 @@ public final class LoadingScene extends Scene {
                     // Load score file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./score.dat"))) {
                         final ScoreData data = (ScoreData) ois.readObject();
-                        scene.resources().put("score.dat", data == null ? new ScoreData() : data.validate());
+                        scene.resources().put("score.dat", data == null ? new ScoreData() : data);
                     } catch (IOException | ClassNotFoundException ex) {
                         // Supply default score
                         scene.resources().put("score.dat", new ScoreData());

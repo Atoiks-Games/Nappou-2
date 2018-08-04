@@ -36,7 +36,12 @@ import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
 public final class ScoreScene extends Scene {
 
+    private static final String[] PLANE_MSG = {
+        "Highscore", "Highscore (Challenge Mode)"
+    };
+
     private ScoreData score = null;
+    private int plane = 0;
 
     private Clip bgm;
 
@@ -47,15 +52,19 @@ public final class ScoreScene extends Scene {
 
         if (score == null) return;
 
-        g.setFont(SANS_FONT);
         g.setColor(Color.white);
+        g.setFont(TitleScene.OPTION_FONT);
+        g.drawString(PLANE_MSG[plane], 10, 30);
+
+        g.setFont(SANS_FONT);
         final int size = SANS_FONT.getSize();
-        for (int i = 0; i < score.data.length; ++i) {
-            final int bh = 20 + 8 * size * i;
+        final int[][][] splane = score.data[plane];
+        for (int i = 0; i < splane.length; ++i) {
+            final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
             for (Difficulty diff : Difficulty.values()) {
                 final int bw = 60 + diff.ordinal() * 200;
-                final int[] p = score.data[i][diff.ordinal()];
+                final int[] p = splane[i][diff.ordinal()];
                 g.drawString(diff.toString(), bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
@@ -70,6 +79,14 @@ public final class ScoreScene extends Scene {
     public boolean update(float dt) {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE) || scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
             scene.switchToScene(1);
+            return true;
+        }
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
+            plane = (plane + 1) % PLANE_MSG.length;
+            return true;
+        }
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
+            if (--plane < 0) plane = PLANE_MSG.length - 1;
             return true;
         }
         return true;
