@@ -38,10 +38,17 @@ import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 public final class LevelOneScene extends AbstractGameScene {
 
+    private static final String[] PREBOSS_MSG = new String[] {
+        "Yum! It seems the tides have dragged in some fresh meat! I hope you aren't too salty!"
+    };
+    private static final String[] POSTBOSS_MSG = new String[] {
+        "You're too rotten for my tastes!"
+    };
+
     private int cycles;
     private int wave;
     private Clip bgm;
-    private Image talkImg;
+    private String[] talkMsg;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
@@ -59,7 +66,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        talkImg = null;
+        talkMsg = null;
         cycles = 0;
         wave = 0;
 
@@ -81,8 +88,8 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public void renderStats(final IGraphics g) {
         super.renderStats(g);
-        if (talkImg != null) {
-            g.drawImage(talkImg, 0, HEIGHT - 200);
+        if (talkMsg != null) {
+            drawDialog(g, "Elle:", talkMsg);
         }
     }
 
@@ -200,7 +207,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
+                        talkMsg = PREBOSS_MSG;
                         disableInput = true;
                         game.clearBullets();
                     }
@@ -210,7 +217,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkImg = null;
+                        talkMsg = null;
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -225,7 +232,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
+                        talkMsg = POSTBOSS_MSG;
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -399,7 +406,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkImg = (Image) scene.resources().get("lv1_preboss_1.png");
+                        talkMsg = PREBOSS_MSG;
                         disableInput = true;
                         game.clearBullets();
                     }
@@ -409,7 +416,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkImg = null;
+                        talkMsg = null;
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -424,7 +431,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkImg = (Image) scene.resources().get("lv1_postboss_1.png");
+                        talkMsg = POSTBOSS_MSG;
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {

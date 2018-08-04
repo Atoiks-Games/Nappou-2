@@ -365,5 +365,25 @@ public abstract class AbstractGameScene extends Scene {
         return true;
     }
 
+    public static void drawDialog(IGraphics g, String speaker, String[] msg) {
+        // Draw msgbox border
+        g.setColor(Color.white);
+        g.fillRect(12, HEIGHT - 200, GAME_BORDER - 12, HEIGHT - 12);
+        // Draw grey area
+        g.setColor(Color.gray);
+        g.fillRect(20, HEIGHT - 192, GAME_BORDER - 20, HEIGHT - 20);
+        // Draw name inside msgbox
+        g.setColor(Color.white);
+        g.setFont(TitleScene.OPTION_FONT);
+        g.drawString(speaker, 28, HEIGHT - 162);
+        // Draw message inside msgbox
+        g.setFont(SANS_FONT);
+        for (int i = 0; i < msg.length; ++i) {
+            g.drawString(msg[i], 28, HEIGHT - 142 + i * (SANS_FONT.getSize()) + 10);
+        }
+        // Draw footer
+        g.drawString("Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
+    }
+
     public abstract boolean postUpdate(float dt);
 }

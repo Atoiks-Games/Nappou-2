@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
@@ -30,15 +31,25 @@ import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.*;
 
+import static org.atoiks.games.nappou2.App.SANS_FONT;
+
 public final class TutorialScene extends AbstractGameScene {
+
+    private static final String[][] INFO_MSG = {
+        { "Arrow Keys", "= Move" },
+        { "Shift", "= Focus" },
+        { "Z", "= Shoot" },
+        { "X", "= Shield using Lumas" },
+        { "Escape", "= Pause" },
+        { "Enter", "= Select" }
+    };
 
     private int waveCounter;
     private float time;
     private Clip bgm;
     private Image tutorialImg;
-    private Image controlsImg;
-    private Image talkImg;
-    private boolean controlsGone;
+    private String[] talkMsg;
+    private boolean renderControls;
     private boolean bossMode;
 
     public TutorialScene() {
@@ -50,9 +61,9 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        talkImg = null;
+        talkMsg = null;
         tutorialImg = (Image) scene.resources().get("z.png");
-        controlsImg = (Image) scene.resources().get("controls.png");
+        renderControls = true;
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
 
@@ -66,7 +77,6 @@ public final class TutorialScene extends AbstractGameScene {
 
         game.player.setHp(5);
         game.setScore(0);
-        controlsGone = false;
         bossMode = false;
         waveCounter = 0;
     }
@@ -77,16 +87,30 @@ public final class TutorialScene extends AbstractGameScene {
         if (tutorialImg != null) {
             g.drawImage(tutorialImg, (GAME_BORDER - tutorialImg.getWidth(null)) / 2, (HEIGHT - tutorialImg.getHeight(null)) / 2);
         }
-        if (controlsImg != null) {
-            g.drawImage(controlsImg, 0, 0);
+        if (renderControls) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+
+            g.setColor(Color.white);
+            g.setFont(TitleScene.OPTION_FONT);
+            g.drawString("Controls", 25, 70);
+            g.setFont(SANS_FONT);
+            for (int i = 0; i < INFO_MSG.length; ++i) {
+                final int h = 90 + i * (SANS_FONT.getSize() + 5);
+                g.drawString(INFO_MSG[i][0], 40, h);
+                g.drawString(INFO_MSG[i][1], 120, h);
+            }
+
+            g.drawString("Survive the void", 25, 550);
+            g.drawString("Press Enter to continue", 25, 580);
         }
     }
 
     @Override
     public void renderStats(final IGraphics g) {
         super.renderStats(g);
-        if (talkImg != null) {
-            g.drawImage(talkImg, 0, HEIGHT - 200);
+        if (talkMsg != null) {
+            drawDialog(g, "CAI:", talkMsg);
         }
     }
 
@@ -98,10 +122,9 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-        if (!controlsGone && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (renderControls && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
             game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
-            controlsGone = true;
-            controlsImg = null;
+            renderControls = false;
         }
 
 /*
@@ -118,8 +141,8 @@ public final class TutorialScene extends AbstractGameScene {
         if (game.enemies.isEmpty()) {
             switch (waveCounter) {
                 case 0:
-                    if (controlsGone) {
-                      waveCounter = 1;
+                    if (!renderControls) {
+                        waveCounter = 1;
                     }
                     break;
                 case 1:
@@ -138,7 +161,9 @@ public final class TutorialScene extends AbstractGameScene {
                     tutorialImg = null;
                     disableDamage();
                     bgm.stop();
-                    talkImg = (Image) scene.resources().get("tutorial_preboss_1.png");
+                    talkMsg = new String[] {
+                        "Oh hello there, Didn't expect you to wake up so soon. Why don't I put you back to sleep?"
+                    };
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         waveCounter = 3;
@@ -151,7 +176,7 @@ public final class TutorialScene extends AbstractGameScene {
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
-                    talkImg = null;
+                    talkMsg = null;
                     enableDamage();
                     disableInput = false;
                     //bossMode = true;
@@ -163,7 +188,10 @@ public final class TutorialScene extends AbstractGameScene {
                     disableDamage();
                     game.clearBullets();
                     bgm.stop();
-                    talkImg = (Image) scene.resources().get("tutorial_postboss_1.png");
+                    talkMsg = new String[] {
+                        "I guess it won't be that easy. If you really are determined to escape the void, We will meet again soon.",
+                        "See ya pal!"
+                    };
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         scene.switchToScene(1);
