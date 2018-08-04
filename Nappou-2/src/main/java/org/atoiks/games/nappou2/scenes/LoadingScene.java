@@ -94,7 +94,6 @@ public final class LoadingScene extends Scene {
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
-                    loadImageFromResources("title.png");
                     loadImageFromResources("hp.png");
                     loadImageFromResources("skill_recharged.png");
                     loadImageFromResources("stats.png");
