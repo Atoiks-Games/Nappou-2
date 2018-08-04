@@ -195,6 +195,8 @@ public abstract class AbstractGameScene extends Scene {
                     pause = false;
                 } else {
                     scene.switchToScene(sceneDest[selector - 1]);
+                    // reset selector to 0, otherwise pause in next game brings user to unexpected option
+                    selector = 0;
                 }
                 return true;
             }
