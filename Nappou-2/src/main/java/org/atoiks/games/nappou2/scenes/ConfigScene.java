@@ -93,25 +93,10 @@ public final class ConfigScene extends Scene {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
-            switch (selector) {
-                case 0:
-                    config.bgm = !config.bgm;
-                    break;
-                case 1:
-                    config.challengeMode = !config.challengeMode;
-                    break;
-            }
-        }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
-            switch (selector) {
-                case 0:
-                    config.bgm = !config.bgm;
-                    break;
-                case 1:
-                    config.challengeMode = !config.challengeMode;
-                    break;
-            }
+
+        // Only dealing with boolean values, both right and left keys only need to invert value
+        if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT) || scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
+            setValueAtSelector(!getValueAtSelector());
         }
 
         final int mouseY = scene.mouse().getLocalY();
