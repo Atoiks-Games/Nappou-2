@@ -124,8 +124,8 @@ public final class ConfigScene extends Scene {
         }
 
         // Only update option with mouse if user dblclicked
+        final int mouseX = scene.mouse().getLocalX();
         if (scene.mouse().isButtonClicked(1, 2)) {
-            final int mouseX = scene.mouse().getLocalX();
             for (int i = 0; i < BOOL_SEL_X.length; i += 2) {
                 final int selStart = BOOL_SEL_X[i];
                 final int selEnd   = BOOL_SEL_X[i + 1];
