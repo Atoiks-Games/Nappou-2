@@ -64,14 +64,13 @@ public final class ConfigScene extends Scene {
 
         g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
 
-        {
-            final int offset = 2 * (config.bgm ? 0 : 1);
-            g.drawLine(BOOL_SEL_X[offset], 91, BOOL_SEL_X[offset + 1], 91);
-        }
-        {
-            final int offset = 2 * (config.challengeMode ? 0 : 1);
-            g.drawLine(BOOL_SEL_X[offset], 140, BOOL_SEL_X[offset + 1], 140);
-        }
+        renderBoolValue(g, config.bgm, 91);
+        renderBoolValue(g, config.challengeMode, 140);
+    }
+
+    private void renderBoolValue(final IGraphics g, final boolean value, final float height) {
+        final int offset = 2 * (value ? 0 : 1);
+        g.drawLine(BOOL_SEL_X[offset], height, BOOL_SEL_X[offset + 1], height);
     }
 
     @Override
