@@ -190,6 +190,12 @@ public abstract class AbstractGameScene extends Scene {
                 case 4: return postUpdate(dt);
             }
         } else {
+            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                pause = false;
+                selector = 0;
+                return true;
+            }
+
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
                 if (selector == 0) {
                     pause = false;
