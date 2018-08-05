@@ -60,7 +60,6 @@ public final class ConfigScene extends Scene {
         }
 
         g.setFont(SANS_FONT);
-        g.drawString("Navigate with arrow keys", 84, 520);
         g.drawString("Hit Escape to return to title screen", 84, 540);
 
         g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
