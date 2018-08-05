@@ -125,9 +125,41 @@ public final class ConfigScene extends Scene {
             }
         }
 
-        final int mouseX = scene.mouse().getLocalX();
-
+        // Only update option with mouse if user dblclicked
+        if (scene.mouse().isButtonClicked(1, 2)) {
+            final int mouseX = scene.mouse().getLocalX();
+            for (int i = 0; i < BOOL_SEL_X.length; i += 2) {
+                final int selStart = BOOL_SEL_X[i];
+                final int selEnd   = BOOL_SEL_X[i + 1];
+                if (mouseX > selStart && mouseX < selEnd) {
+                    // Set value to true if i == 0 (offset for ON)
+                    setValueAtSelector(i == 0);
+                    break;
+                }
+            }
+        }
         return true;
+    }
+
+    private boolean getValueAtSelector() {
+        switch (selector) {
+            case 0: return config.bgm;
+            case 1: return config.challengeMode;
+            default: throw new RuntimeException("Unknown selector index " + selector);
+        }
+    }
+
+    private void setValueAtSelector(final boolean newValue) {
+        switch (selector) {
+            case 0:
+                config.bgm = newValue;
+                break;
+            case 1:
+                config.challengeMode = newValue;
+                break;
+            default:
+                throw new RuntimeException("Unknown selector index " + selector);
+        }
     }
 
     @Override
