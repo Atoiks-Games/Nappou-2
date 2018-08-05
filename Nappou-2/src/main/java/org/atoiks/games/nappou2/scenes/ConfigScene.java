@@ -38,6 +38,7 @@ public final class ConfigScene extends Scene {
     };
     private static final int[] SELECTOR_Y = { 66, 115 };
     private static final int OPT_HEIGHT = 23;
+    private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
     private Image configImg;
     private Clip bgm;
@@ -64,16 +65,13 @@ public final class ConfigScene extends Scene {
 
         g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
 
-        if (config.bgm) {
-            g.drawLine(560, 91, 588, 91);
-        } else {
-            g.drawLine(720, 91, 764, 91);
+        {
+            final int offset = 2 * (config.bgm ? 0 : 1);
+            g.drawLine(BOOL_SEL_X[offset], 91, BOOL_SEL_X[offset + 1], 91);
         }
-
-        if (config.challengeMode) {
-            g.drawLine(560, 140, 588, 140);
-        } else {
-            g.drawLine(720, 140, 764, 140);
+        {
+            final int offset = 2 * (config.challengeMode ? 0 : 1);
+            g.drawLine(BOOL_SEL_X[offset], 140, BOOL_SEL_X[offset + 1], 140);
         }
     }
 
@@ -117,6 +115,18 @@ public final class ConfigScene extends Scene {
                     break;
             }
         }
+
+        final int mouseY = scene.mouse().getLocalY();
+        for (int i = 0; i < SELECTOR_Y.length; ++i) {
+            final int selBase = SELECTOR_Y[i];
+            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                selector = i;
+                break;
+            }
+        }
+
+        final int mouseX = scene.mouse().getLocalX();
+
         return true;
     }
 
