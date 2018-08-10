@@ -105,6 +105,119 @@ public final class LevelOneScene extends AbstractGameScene {
         switch (difficulty) {
 
             case EASY:
+            switch (wave) {
+                case 0:
+                    switch (cycles) {
+                        case 2000:
+                        case 6000:
+                        case 10000:
+                            final int k = cycles / 1000 * 25;
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            break;
+                        case 11000:
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            break;
+                    }
+                    if (cycles > 11000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                    }
+                    break;
+                case 1:
+                    switch (cycles) {
+                        case 2000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            break;
+                        case 94000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                        break;
+                        case 84000:
+                        case 74000:
+                        case 64000:
+                        case 54000:
+                        case 44000:
+                        case 34000:
+                        case 24000:
+                        case 14000:
+                        case 4000:
+                            final int offset = (cycles - 4000) / 5000;
+                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
+                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
+                            break;
+                    }
+                    if (cycles > 94000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                    }
+                    break;
+                case 2:
+                    if (cycles == 2000) {
+                        game.addEnemy(new MB1(10, 375, -10, 20));
+                    }
+                    if (cycles > 2000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                    }
+                    break;
+                case 3:
+                   switch (cycles) {
+                        case 2000:
+                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            break;
+                        case 4000:
+                            game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
+                            game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
+                            break;
+                    }
+                    if (cycles > 4000 && game.enemies.isEmpty()) {
+                        wave++;
+                        cycles = 0;
+                    }
+                    break;
+                case 4:
+                        wave++;
+                        cycles = 0;
+                        bgm.stop();
+                        disableDamage();
+                        talkMsg = PREBOSS_MSG;
+                        disableInput = true;
+                        game.clearBullets();
+                    break;
+                case 5:
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        wave++;
+                        enableDamage();
+                        disableInput = false;
+                        talkMsg = null;
+                        cycles = 0;
+                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm.setMicrosecondPosition(0);
+                            bgm.start();
+                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        }
+                        game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                    }
+                    break;
+                case 6:
+                    if (cycles > 2000 && game.enemies.isEmpty()) {
+                        bgm.stop();
+                        disableDamage();
+                        talkMsg = POSTBOSS_MSG;
+                        disableInput = true;
+                        game.clearBullets();
+                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                            disableInput = false;
+                            enableDamage();
+                            scene.switchToScene(1);
+                        }
+                    }
+                    break;
+            }
             break;
 
             case NORMAL:
