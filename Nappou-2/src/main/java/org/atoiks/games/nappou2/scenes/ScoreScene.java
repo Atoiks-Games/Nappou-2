@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
@@ -34,7 +34,7 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
-public final class ScoreScene extends Scene {
+public final class ScoreScene extends GameScene {
 
     private static final String[] PLANE_MSG = {
         "Highscore", "Highscore (Challenge Mode)"
@@ -81,7 +81,7 @@ public final class ScoreScene extends Scene {
     @Override
     public boolean update(float dt) {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE) || scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            scene.switchToScene(1);
+            scene.switchToScene(0);
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {

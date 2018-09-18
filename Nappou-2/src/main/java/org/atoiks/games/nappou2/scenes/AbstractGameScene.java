@@ -27,7 +27,7 @@ import java.awt.event.KeyEvent;
 
 import se.tube42.lib.tweeny.TweenManager;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
@@ -39,7 +39,7 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public abstract class AbstractGameScene extends Scene {
+public abstract class AbstractGameScene extends GameScene {
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
@@ -53,7 +53,7 @@ public abstract class AbstractGameScene extends Scene {
     // Conventionally, continue is always the first option,
     // sceneDest is always one less than the selectorY
     private static final int[] selectorY = {342, 402};
-    private static final int[] sceneDest = {1};
+    private static final int[] sceneDest = {0};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
@@ -91,8 +91,12 @@ public abstract class AbstractGameScene extends Scene {
     }
 
     @Override
-    public void enter(int prevSceneId) {
+    public void init() {
         hpImg = (Image) scene.resources().get("hp.png");
+    }
+
+    @Override
+    public void enter(int prevSceneId) {
         difficulty = (Difficulty) scene.resources().get("difficulty");
         challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
 
@@ -325,7 +329,7 @@ public abstract class AbstractGameScene extends Scene {
             if (!game.player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 if (game.player.changeHpBy(-1) <= 0) {
                     // Goto title scene
-                    scene.switchToScene(1);
+                    scene.switchToScene(0);
                     return true;
                 }
                 game.player.activateRespawnShield();
@@ -358,7 +362,7 @@ public abstract class AbstractGameScene extends Scene {
             if (!game.player.isRespawnShieldActive() && enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 if (game.player.changeHpBy(-1) <= 0) {
                     // Goto title scene
-                    scene.switchToScene(1);
+                    scene.switchToScene(0);
                     return true;
                 }
                 game.player.activateRespawnShield();

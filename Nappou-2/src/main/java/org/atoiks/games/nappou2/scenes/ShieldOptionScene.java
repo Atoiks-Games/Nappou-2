@@ -23,14 +23,14 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
-public final class ShieldOptionScene extends Scene {
+public final class ShieldOptionScene extends GameScene {
 
     private static final String[] SHIELD_MSG = {
         "Bonfire", "Firefly", "None"
@@ -68,7 +68,7 @@ public final class ShieldOptionScene extends Scene {
         }
 
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            scene.switchToScene(1);
+            scene.switchToScene(0);
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
@@ -100,6 +100,11 @@ public final class ShieldOptionScene extends Scene {
     }
 
     @Override
+    public void init() {
+        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+    }
+
+    @Override
     public void enter(int previousSceneId) {
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
         if ((skipSelection = cfg.challengeMode)) {
@@ -108,8 +113,6 @@ public final class ShieldOptionScene extends Scene {
             shieldSel = shieldSelY.length - 1;
             return;
         }
-
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (cfg.bgm) {
             bgm.start();

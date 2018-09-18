@@ -24,14 +24,14 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class ConfigScene extends Scene {
+public final class ConfigScene extends GameScene {
 
     private static final String[] OPTION_NAMES = {
         "BGM", "CHALLENGE MODE"
@@ -84,7 +84,7 @@ public final class ConfigScene extends Scene {
         }
 
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            scene.switchToScene(1);
+            scene.switchToScene(0);
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -151,7 +151,7 @@ public final class ConfigScene extends Scene {
     }
 
     @Override
-    public void enter(int previousSceneId) {
+    public void init() {
         configImg = (Image) scene.resources().get("config.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         config = (GameConfig) scene.resources().get("game.cfg");

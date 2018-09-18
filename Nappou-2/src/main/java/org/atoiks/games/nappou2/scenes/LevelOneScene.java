@@ -63,6 +63,12 @@ public final class LevelOneScene extends AbstractGameScene {
     }
 
     @Override
+    public void init() {
+        super.init();
+        bgm = (Clip) scene.resources().get("Haunted.wav");
+    }
+
+    @Override
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
@@ -75,8 +81,6 @@ public final class LevelOneScene extends AbstractGameScene {
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
-
-        bgm = (Clip) scene.resources().get("Haunted.wav");
 
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
@@ -213,7 +217,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                             disableInput = false;
                             enableDamage();
-                            scene.switchToScene(1);
+                            scene.switchToScene(0);
                         }
                     }
                     break;
@@ -351,7 +355,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                             disableInput = false;
                             enableDamage();
-                            scene.switchToScene(1);
+                            scene.switchToScene(0);
                         }
                     }
                     break;
@@ -550,7 +554,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                             disableInput = false;
                             enableDamage();
-                            scene.switchToScene(1);
+                            scene.switchToScene(0);
                         }
                     }
                     break;

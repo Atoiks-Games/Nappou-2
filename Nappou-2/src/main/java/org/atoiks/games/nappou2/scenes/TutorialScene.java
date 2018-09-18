@@ -194,7 +194,7 @@ public final class TutorialScene extends AbstractGameScene {
                     };
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        scene.switchToScene(1);
+                        scene.switchToScene(0);
                     }
                     break;
 

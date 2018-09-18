@@ -24,14 +24,14 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class TitleScene extends Scene {
+public final class TitleScene extends GameScene {
 
     public static final Font TITLE_FONT = SANS_FONT.deriveFont(80f);
     public static final Font OPTION_FONT = SANS_FONT.deriveFont(30f);
@@ -42,7 +42,7 @@ public final class TitleScene extends Scene {
         "Tutorial", "Story Mode", "Highscore", "Settings", "Quit"
     };
     private static final int[] selectorY = {235, 276, 318, 357, 469};
-    private static final int[] sceneDest = {2, 5, 3, 4};
+    private static final int[] sceneDest = {1, 4, 2, 3};
     private static final int OPT_HEIGHT = 30;
 
     private Clip bgm;
@@ -103,16 +103,19 @@ public final class TitleScene extends Scene {
     }
 
     @Override
-    public void enter(final int prevSceneId) {
+    public void init() {
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+    }
 
+    @Override
+    public void enter(final int prevSceneId) {
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             // ScoreScene and ConfigScene continues to play music
             switch (prevSceneId) {
+                case 2:
                 case 3:
                 case 4:
                 case 5:
-                case 6:
                     break;
                 default:
                     bgm.setMicrosecondPosition(0);

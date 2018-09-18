@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Difficulty;
@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
-public final class DiffOptionScene extends Scene {
+public final class DiffOptionScene extends GameScene {
 
     private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
@@ -59,7 +59,7 @@ public final class DiffOptionScene extends Scene {
     @Override
     public boolean update(float dt) {
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            scene.switchToScene(1);
+            scene.switchToScene(0);
             return true;
         }
         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
@@ -93,8 +93,12 @@ public final class DiffOptionScene extends Scene {
     }
 
     @Override
-    public void enter(int previousSceneId) {
+    public void init() {
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+    }
+
+    @Override
+    public void enter(int previousSceneId) {
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
