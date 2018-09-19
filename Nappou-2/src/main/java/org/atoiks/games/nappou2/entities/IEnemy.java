@@ -64,9 +64,7 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
 
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
-        final float sumRadius = getR() + r1;
-        return (Math.abs(x1 - getX()) < sumRadius)
-            && (Math.abs(y1 - getY()) < sumRadius);
+        return Math.hypot(x1 - getX(), y1 - getY()) < getR() + r1;
     }
 
     @Override

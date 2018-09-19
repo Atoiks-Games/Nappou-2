@@ -58,9 +58,7 @@ public final class TrackPointBullet implements IBullet {
 
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
-        final float sumRadius = r + r1;
-        return (Math.abs(x1 - x) < sumRadius)
-            && (Math.abs(y1 - y) < sumRadius);
+        return Math.hypot(x1 - x, y1 - y) < r + r1;
     }
 
     @Override
