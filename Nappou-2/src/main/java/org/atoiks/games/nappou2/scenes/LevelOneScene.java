@@ -342,7 +342,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.start();
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
-                        game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                        game.addEnemy(new Level1Normal(300, 375, -10, 20));
                     }
                     break;
                 case 6:
@@ -541,7 +541,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.start();
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
-                        game.addEnemy(new Level1Normal(300, 375, -10, 20));
+                        game.addEnemy(new Level1Hard(300, 375, -10, 20));
                     }
                     break;
                 case 6:
