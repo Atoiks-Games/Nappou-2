@@ -49,6 +49,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private int wave;
     private Clip bgm;
     private String[] talkMsg;
+    private int test = 0;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
@@ -562,6 +563,11 @@ public final class LevelOneScene extends AbstractGameScene {
             break;
 
             case INSANE:
+
+            if(test == 0){
+                game.addEnemy(new Level1Insane(300, 375, -10, 20));
+                test++;
+            }
             break;
         }
         return true;
