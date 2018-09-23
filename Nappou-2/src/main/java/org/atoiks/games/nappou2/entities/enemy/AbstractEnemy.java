@@ -46,6 +46,12 @@ public abstract class AbstractEnemy extends IEnemy {
     }
 
     @Override
+    public void drift(float dx, float dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    @Override
     public final float getX() {
         return this.x;
     }

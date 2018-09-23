@@ -237,6 +237,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
             enemy.update(dt);
+            enemy.drift(dt * driftSpeed[0], dt * driftSpeed[1]);
             if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemies.remove(i);
                 if (--i < -1) break;

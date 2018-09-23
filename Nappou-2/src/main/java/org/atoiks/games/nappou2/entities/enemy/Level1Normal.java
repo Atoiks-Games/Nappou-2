@@ -52,6 +52,11 @@ public final class Level1Normal extends AbstractEnemy {
     }
 
     @Override
+    public void drift(float dx, float dy) {
+        // Bosses / Mini bosses do not drift
+    }
+
+    @Override
     public void update(float dt) {
         time += dt;
         bulletPattern++;
