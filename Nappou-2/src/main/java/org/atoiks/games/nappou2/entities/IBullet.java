@@ -29,4 +29,6 @@ public interface IBullet extends ICollidable, IRender, IUpdate, Serializable {
     public float getY();
     public float getDx();
     public float getDy();
+
+    public void translate(float dx, float dy);
 }

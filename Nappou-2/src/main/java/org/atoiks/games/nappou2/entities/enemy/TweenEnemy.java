@@ -56,6 +56,13 @@ public abstract class TweenEnemy extends IEnemy {
         this.game = game;
     }
 
+
+    @Override
+    public void drift(float dx, float dy) {
+        setX(getX() + dx);
+        setY(getY() + dy);
+    }
+
     @Override
     public final float getX() {
         return this.xyr.get(FIELD_X);

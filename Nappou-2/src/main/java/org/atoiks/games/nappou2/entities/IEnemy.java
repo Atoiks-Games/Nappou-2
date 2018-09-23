@@ -47,6 +47,10 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
         return this.hp += delta;
     }
 
+    public void drift(float dx, float dy) {
+        // Default do nothing
+    }
+
     @Override
     public void update(float dt) {
         // Default do nothing
