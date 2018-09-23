@@ -31,33 +31,69 @@ public class Drifter implements IUpdate {
     private float dx;
     private float dy;
 
+    /**
+     * The acceleration factor for the drifting speed.
+     */
     public float dv;
 
+    /**
+     * Set an initial drifting speed.
+     *
+     * @param dx amount of drifting in x
+     * @param dy amount of drifting in y
+     */
     public void setDriftSpeed(float dx, float dy) {
         this.dx = dx;
         this.dy = dy;
     }
 
+    /**
+     * Resets the speed clamping for both x and y components. Same thing as
+     * setting the clamping factor to negative and positive infinity.
+     */
     public void resetSpeedClamp() {
         resetDxClamp();
         resetDyClamp();
     }
 
+    /**
+     * Resets the clamping for the x component.
+     */
     public void resetDxClamp() {
         lowerX = Float.NEGATIVE_INFINITY;
         upperX = Float.POSITIVE_INFINITY;
     }
 
+    /**
+     * Resets the clamping for the y component.
+     */
     public void resetDyClamp() {
         lowerY = Float.NEGATIVE_INFINITY;
         upperY = Float.POSITIVE_INFINITY;
     }
 
+    /**
+     * Sets the clamping factor for both x and y components. Shorthand for
+     * calling {@link this#clampDx(float, float)} and
+     * {@link this#clampDy(float, float)}.
+     *
+     * @param lowerX lower limit of dx
+     * @param upperX upper limit of dx
+     * @param lowerY lower limit of dy
+     * @param upperY upper limit of dy
+     */
     public void clampSpeed(float lowerX, float upperX, float lowerY, float upperY) {
         clampDx(lowerX, upperX);
         clampDy(lowerY, upperY);
     }
 
+    /**
+     * Sets the clamping factor for the x component. Does not update the factor
+     * if the lower limit is greater than the upper limit.
+     *
+     * @param lower lower limit of dx
+     * @param upper upper limit of dx
+     */
     public void clampDx(final float lower, final float upper) {
         if (lower <= upper) {
             this.lowerX = lower;
@@ -65,6 +101,13 @@ public class Drifter implements IUpdate {
         }
     }
 
+    /**
+     * Sets the clamping factor for the y component. Does not update the factor
+     * if the lower limit is greater than the upper limit.
+     *
+     * @param lower lower limit of dy
+     * @param upper upper limit of dy
+     */
     public void clampDy(final float lower, final float upper) {
         if (lower <= upper) {
             this.lowerY = lower;
@@ -72,6 +115,11 @@ public class Drifter implements IUpdate {
         }
     }
 
+    /**
+     * Updates dx and dy based on dv then clamps them
+     *
+     * @param dt time elapsed. used as time multipler for dv
+     */
     @Override
     public void update(final float dt) {
         final float v = dv * dt;
@@ -79,14 +127,30 @@ public class Drifter implements IUpdate {
         dy = clamp(dy + v, lowerY, upperY);
     }
 
+    /**
+     * @return dx
+     */
     public float getDx() {
         return dx;
     }
 
+
+    /**
+     * @return dy
+     */
     public float getDy() {
         return dy;
     }
 
+    /**
+     * Clamps a value within the value range.
+     *
+     * @param val the value being clamped
+     * @param low the lower limit
+     * @param high the upper limit
+     *
+     * @return the clamped value
+     */
     public static float clamp(final float val, final float low, final float high) {
         return val < low ? low : (val > high ? high : val);
     }
