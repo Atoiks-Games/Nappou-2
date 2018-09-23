@@ -56,6 +56,12 @@ public final class Beam implements IBullet {
     }
 
     @Override
+    public void translate(float dx, float dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    @Override
     public void render(final IGraphics g) {
         g.setColor(Color.white);
         g.fillPolygon(dest);

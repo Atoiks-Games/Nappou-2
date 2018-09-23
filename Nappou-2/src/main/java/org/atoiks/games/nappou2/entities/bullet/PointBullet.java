@@ -41,6 +41,12 @@ public final class PointBullet implements IBullet {
     }
 
     @Override
+    public void translate(float dx, float dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    @Override
     public void render(final IGraphics g) {
         // Can change this to using textures later
         g.setColor(Color.white);

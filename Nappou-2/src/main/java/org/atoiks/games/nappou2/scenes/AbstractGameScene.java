@@ -69,6 +69,10 @@ public abstract class AbstractGameScene extends GameScene {
     protected boolean disableInput;
     protected Difficulty difficulty;
 
+    // [0] = dx, [1] = dy
+    // protected final float[] driftSpeed = new float[2];
+    protected final float[] driftSpeed = { -50, -50 };
+
     public final int sceneId;
 
     private boolean challengeMode;
@@ -245,6 +249,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
             bullet.update(dt);
+            bullet.translate(dt * driftSpeed[0], dt * driftSpeed[1]);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
@@ -257,6 +262,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.playerBullets.size(); ++i) {
             final IBullet bullet = game.playerBullets.get(i);
             bullet.update(dt);
+            bullet.translate(dt * driftSpeed[0], dt * driftSpeed[1]);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.playerBullets.remove(i);
                 if (--i < -1) break;
@@ -268,7 +274,7 @@ public abstract class AbstractGameScene extends GameScene {
     private boolean procPlayerPos(final float dt) {
         if (disableInput) return true;
 
-        float tmpVal = 0;
+        float tmpVal = driftSpeed[1];
         float tmpPos = game.player.getY();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN)) {
             if (tmpPos + Player.RADIUS < HEIGHT) tmpVal += DEFAULT_DY;
@@ -278,7 +284,7 @@ public abstract class AbstractGameScene extends GameScene {
         }
         game.player.setDy(tmpVal);
 
-        tmpVal = 0;
+        tmpVal = driftSpeed[0];
         tmpPos = game.player.getX();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT)) {
             if (tmpPos + Player.RADIUS < GAME_BORDER) tmpVal += DEFAULT_DX;
