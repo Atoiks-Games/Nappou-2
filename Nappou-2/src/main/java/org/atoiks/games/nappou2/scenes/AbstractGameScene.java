@@ -278,18 +278,23 @@ public abstract class AbstractGameScene extends GameScene {
     private boolean procPlayerPos(final float dt) {
         if (disableInput) return true;
 
+        // TODO: Simplify this
         float tmpVal = drift.getDy();
         float tmpPos = game.player.getY();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN))   tmpVal += DEFAULT_DY;
         if (scene.keyboard().isKeyDown(KeyEvent.VK_UP))     tmpVal -= DEFAULT_DY;
-        if (tmpPos + Player.RADIUS >= HEIGHT || tmpPos - Player.RADIUS <= 0) tmpVal = 0;
+        if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
+            tmpVal = 0;
+        }
         game.player.setDy(tmpVal);
 
         tmpVal = drift.getDx();
         tmpPos = game.player.getX();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT))  tmpVal += DEFAULT_DX;
         if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT))   tmpVal -= DEFAULT_DX;
-        if (tmpPos + Player.RADIUS >= GAME_BORDER || tmpPos - Player.RADIUS <= 0) tmpVal = 0;
+        if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
+            tmpVal = 0;
+        }
         game.player.setDx(tmpVal);
 
         game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
