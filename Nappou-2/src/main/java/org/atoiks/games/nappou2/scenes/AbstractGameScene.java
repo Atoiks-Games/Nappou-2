@@ -70,8 +70,7 @@ public abstract class AbstractGameScene extends GameScene {
     protected Difficulty difficulty;
 
     // [0] = dx, [1] = dy
-    // protected final float[] driftSpeed = new float[2];
-    protected final float[] driftSpeed = { -50, -50 };
+    protected final float[] driftSpeed = new float[2];
 
     public final int sceneId;
 
@@ -277,22 +276,16 @@ public abstract class AbstractGameScene extends GameScene {
 
         float tmpVal = driftSpeed[1];
         float tmpPos = game.player.getY();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN)) {
-            if (tmpPos + Player.RADIUS < HEIGHT) tmpVal += DEFAULT_DY;
-        }
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_UP)) {
-            if (tmpPos - Player.RADIUS > 0) tmpVal -= DEFAULT_DY;
-        }
+        if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN))   tmpVal += DEFAULT_DY;
+        if (scene.keyboard().isKeyDown(KeyEvent.VK_UP))     tmpVal -= DEFAULT_DY;
+        if (tmpPos + Player.RADIUS >= HEIGHT || tmpPos - Player.RADIUS <= 0) tmpVal = 0;
         game.player.setDy(tmpVal);
 
         tmpVal = driftSpeed[0];
         tmpPos = game.player.getX();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT)) {
-            if (tmpPos + Player.RADIUS < GAME_BORDER) tmpVal += DEFAULT_DX;
-        }
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT)) {
-            if (tmpPos - Player.RADIUS > 0) tmpVal -= DEFAULT_DX;
-        }
+        if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT))  tmpVal += DEFAULT_DX;
+        if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT))   tmpVal -= DEFAULT_DX;
+        if (tmpPos + Player.RADIUS >= GAME_BORDER || tmpPos - Player.RADIUS <= 0) tmpVal = 0;
         game.player.setDx(tmpVal);
 
         game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
