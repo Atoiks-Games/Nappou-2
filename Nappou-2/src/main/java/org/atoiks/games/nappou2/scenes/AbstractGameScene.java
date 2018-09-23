@@ -30,6 +30,7 @@ import se.tube42.lib.tweeny.TweenManager;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
@@ -69,8 +70,7 @@ public abstract class AbstractGameScene extends GameScene {
     protected boolean disableInput;
     protected Difficulty difficulty;
 
-    // [0] = dx, [1] = dy
-    protected final float[] driftSpeed = new float[2];
+    protected final Drifter drift = new Drifter();
 
     public final int sceneId;
 
@@ -189,7 +189,11 @@ public abstract class AbstractGameScene extends GameScene {
             TweenManager.service((long) (dt * 1000000));
             if (!procPlayerPos(dt)) return false;
             switch (++updatePhase) {
-                default: updatePhase = 0;   // FALLTHROUGH!
+                default: {
+                    updatePhase = 0;    // set updatePhase to resonable value
+                    drift.update(dt);   // update drift speed
+                    // FALLTHROUGH!
+                }
                 case 0: return updateEnemyBulletPos(dt);
                 case 1: return updateEnemyPos(dt);
                 case 2: return updatePlayerBulletPos(dt);
@@ -236,7 +240,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
             enemy.update(dt);
-            enemy.drift(dt * driftSpeed[0], dt * driftSpeed[1]);
+            enemy.drift(dt * drift.getDx(), dt * drift.getDy());
             if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemies.remove(i);
                 if (--i < -1) break;
@@ -249,7 +253,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
             bullet.update(dt);
-            bullet.translate(dt * driftSpeed[0], dt * driftSpeed[1]);
+            bullet.translate(dt * drift.getDx(), dt * drift.getDy());
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
@@ -262,7 +266,7 @@ public abstract class AbstractGameScene extends GameScene {
         for (int i = 0; i < game.playerBullets.size(); ++i) {
             final IBullet bullet = game.playerBullets.get(i);
             bullet.update(dt);
-            bullet.translate(dt * driftSpeed[0], dt * driftSpeed[1]);
+            bullet.translate(dt * drift.getDx(), dt * drift.getDy());
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.playerBullets.remove(i);
                 if (--i < -1) break;
@@ -274,14 +278,14 @@ public abstract class AbstractGameScene extends GameScene {
     private boolean procPlayerPos(final float dt) {
         if (disableInput) return true;
 
-        float tmpVal = driftSpeed[1];
+        float tmpVal = drift.getDy();
         float tmpPos = game.player.getY();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN))   tmpVal += DEFAULT_DY;
         if (scene.keyboard().isKeyDown(KeyEvent.VK_UP))     tmpVal -= DEFAULT_DY;
         if (tmpPos + Player.RADIUS >= HEIGHT || tmpPos - Player.RADIUS <= 0) tmpVal = 0;
         game.player.setDy(tmpVal);
 
-        tmpVal = driftSpeed[0];
+        tmpVal = drift.getDx();
         tmpPos = game.player.getX();
         if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT))  tmpVal += DEFAULT_DX;
         if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT))   tmpVal -= DEFAULT_DX;
