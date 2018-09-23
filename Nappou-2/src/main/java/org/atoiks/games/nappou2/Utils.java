@@ -42,4 +42,29 @@ public final class Utils {
             }));
         }
     }
+
+    public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
+                                                 float cx, float cy, float cr) {
+        // Taken from https://stackoverflow.com/a/10392860
+        final float acx = cx - x1;
+        final float acy = cy - y1;
+
+        final float abx = x2 - x1;
+        final float aby = y2 - y1;
+
+        final float ab2 = abx * abx + aby * aby;
+        final float acab = acx * abx + acy * aby;
+        float t = acab / ab2;
+
+        if (t < 0) {
+            t = 0;
+        } else if (t > 1) {
+            t = 1;
+        }
+
+        final float hx = (abx * t) + x1 - cx;
+        final float hy = (aby * t) + y1 - cy;
+
+        return hx * hx + hy * hy <= cr * cr;
+    }
 }
