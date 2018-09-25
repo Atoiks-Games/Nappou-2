@@ -32,9 +32,14 @@ public class Drifter implements IUpdate {
     private float dy;
 
     /**
-     * The acceleration factor for the drifting speed.
+     * The acceleration factor for the drifting speed on x axis
      */
-    public float dv;
+    public float accelX;
+
+    /**
+     * The acceleration factor for the drifting speed on y axis
+     */
+    public float accelY;
 
     /**
      * Set an initial drifting speed.
@@ -122,9 +127,8 @@ public class Drifter implements IUpdate {
      */
     @Override
     public void update(final float dt) {
-        final float v = dv * dt;
-        dx = clamp(dx + v, lowerX, upperX);
-        dy = clamp(dy + v, lowerY, upperY);
+        dx = clamp(dx + accelX * dt, lowerX, upperX);
+        dy = clamp(dy + accelY * dt, lowerY, upperY);
     }
 
     /**
