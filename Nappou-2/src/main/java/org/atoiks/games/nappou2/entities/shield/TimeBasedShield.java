@@ -30,7 +30,7 @@ public abstract class TimeBasedShield implements IShield {
 
     protected final float reloadTime;
     protected final float timeout;
-    
+
     protected boolean active = false;
     protected float time = 0;
     protected float x, y, r;
@@ -83,7 +83,7 @@ public abstract class TimeBasedShield implements IShield {
             deactivate();
         }
     }
-    
+
     @Override
     public void activate() {
         if (!active && isReady()) {
@@ -91,7 +91,7 @@ public abstract class TimeBasedShield implements IShield {
             time = 0;
         }
     }
-    
+
     @Override
     public void deactivate() {
         active = false;

@@ -130,7 +130,7 @@ class LazyEnemyGroup extends EnemyGroup {
         this.limit = limit;
         this.supplier = supplier;
     }
-    
+
     @Override
     public void update(float dt) {
         while (!isDoneSpawning() && (time += dt) >= delay) {

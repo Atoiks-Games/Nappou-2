@@ -25,7 +25,7 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 public final class TrackPointEnemy extends TweenEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
-    
+
     private final int score;
     private final float radius;
     private final float speed;
@@ -50,7 +50,7 @@ public final class TrackPointEnemy extends TweenEnemy {
             bulletId = angleOffsets.length;
         }
     }
-    
+
     @Override
     public void update(float dt) {
         if (firstRun) {

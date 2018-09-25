@@ -45,7 +45,7 @@ public final class Polynomial {
             public float compute(float t) {
                 return 1 - (float) Math.pow(1 - t, order);
             }
-    
+
             @Override
             public String toString() {
                 return order + "-polynomial-out";

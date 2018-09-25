@@ -67,7 +67,7 @@ public abstract class TweenEnemy extends IEnemy {
     public final float getX() {
         return this.xyr.get(FIELD_X);
     }
-    
+
     @Override
     public final float getY() {
         return this.xyr.get(FIELD_Y);
@@ -75,7 +75,7 @@ public abstract class TweenEnemy extends IEnemy {
 
     @Override
     public final float getR() {
-        return this.xyr.get(FIELD_R);        
+        return this.xyr.get(FIELD_R);
     }
 
     public final void setX(float x) {

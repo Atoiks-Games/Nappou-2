@@ -35,7 +35,7 @@ public final class TrackPointBullet implements IBullet {
     private final float scale;
     private final float moveTime;
     private final float delay;
-    
+
     private float x, y, r;
     private float dx, dy;
 
@@ -86,7 +86,7 @@ public final class TrackPointBullet implements IBullet {
     @Override
     public void update(float dt) {
         if (game.player == null) return;
-        
+
         time += dt;
         if (moving) {
             if (time >= moveTime) {

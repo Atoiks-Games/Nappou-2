@@ -68,17 +68,17 @@ public class NullShield implements IShield {
 
     @Override
     public void setY(float y) {
-        // Do nothing		
+        // Do nothing
     }
 
     @Override
     public void activate() {
-        // Do nothing		
+        // Do nothing
     }
 
     @Override
     public void deactivate() {
-        // Do nothing		
+        // Do nothing
     }
 
     @Override

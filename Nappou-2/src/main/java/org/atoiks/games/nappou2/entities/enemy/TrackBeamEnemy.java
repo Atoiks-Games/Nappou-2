@@ -25,7 +25,7 @@ import org.atoiks.games.nappou2.entities.bullet.Beam;
 public final class TrackBeamEnemy extends TweenEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
-    
+
     private final int score;
     private final float thickness;
     private final int length;

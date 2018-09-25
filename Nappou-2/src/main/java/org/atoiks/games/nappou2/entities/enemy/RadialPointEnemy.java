@@ -73,8 +73,8 @@ public final class RadialPointEnemy extends TweenEnemy {
         }
     }
 
-	@Override
-	public int getScore() {
-		return score;
-	}
+    @Override
+    public int getScore() {
+        return score;
+    }
 }

@@ -33,7 +33,7 @@ public final class LevelTwoScene extends AbstractGameScene {
 
     private int cycles;
     private int wave;
-    
+
     private final Random rnd = new Random();
 
     public LevelTwoScene() {

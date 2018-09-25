@@ -104,7 +104,7 @@ public final class Level1Insane extends AbstractEnemy {
     }
 
     private void attack1() {
-        
+
         if (enemyTime % 1000 == 0) {
             game.addEnemyBullet(new PointBullet(-10, 450 + (float) (150 * Math.sin(10 * time)), 3, 1000, 0));
             game.addEnemyBullet(new PointBullet(760, 150 + (float) (150 * Math.sin(10 * time)), 3, -1000, 0));
