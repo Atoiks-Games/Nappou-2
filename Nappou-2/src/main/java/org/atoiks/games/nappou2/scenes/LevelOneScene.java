@@ -50,6 +50,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private Clip bgm;
     private String[] talkMsg;
     private int test = 0;
+    private int phase = 0;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
@@ -72,6 +73,8 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
+
+        drift.clampSpeed(0,0,0,0);
 
         talkMsg = null;
         cycles = 0;
@@ -206,9 +209,39 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
                         game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                        drift.accelY = -20;
+                        drift.accelX = 20;
+                        drift.clampDx(0, 100);
                     }
                     break;
                 case 6:
+                    if (cycles % 200000 == 0){
+                        phase++;
+                        switch (phase){
+                            case 0:
+                            drift.accelY = -20;
+                            drift.accelX = 20;
+                            drift.clampDx(0, 100);
+                            break;
+
+                            case 1:
+                            drift.accelX = -20;
+                            drift.accelY = 20;
+                            drift.clampDy(0,100);
+                            break;
+
+                            case 2:
+                            drift.accelY = -20;
+                            drift.clampDx(-100,0);
+                            break;
+
+                            case 3:
+                            drift.accelX = 20;
+                            drift.clampDy(-100,0);
+                            phase = -1;
+                            break;
+                        }
+                    }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
