@@ -71,8 +71,8 @@ public final class TrackPointEnemy extends TweenEnemy {
         }
     }
 
-	@Override
-	public int getScore() {
-		return score;
-	}
+    @Override
+    public int getScore() {
+        return score;
+    }
 }
