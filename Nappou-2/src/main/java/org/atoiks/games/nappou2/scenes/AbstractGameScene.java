@@ -350,11 +350,17 @@ public abstract class AbstractGameScene extends GameScene {
         enemy_loop:
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
+
+            // If radius is less than zero, it cannot collide with anything, so skip iteration
+            final float er = enemy.getR();
+            if (er < 0) continue;
+
+            final float ex = enemy.getX();
+            final float ey = enemy.getY();
+
             for (int j = 0; j < game.playerBullets.size(); ++j) {
                 final IBullet bullet = game.playerBullets.get(j);
-                final float r = enemy.getR();
-                if (r < 0) continue;
-                if (bullet.collidesWith(enemy.getX(), enemy.getY(), enemy.getR())) {
+                if (bullet.collidesWith(ex, ey, er)) {
                     game.playerBullets.remove(j);
                     if (enemy.changeHp(-1) <= 0) {
                         game.enemies.remove(i);
