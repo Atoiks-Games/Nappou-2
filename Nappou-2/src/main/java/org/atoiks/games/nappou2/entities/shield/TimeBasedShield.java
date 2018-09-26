@@ -111,7 +111,10 @@ public abstract class TimeBasedShield implements IShield {
     @Override
     public boolean collidesWith(float x1, float y1, float r1) {
         if (active) {
-            return Math.hypot(x1 - x, y1 - y) < r + r1;
+            final float dx = x1 - x;
+            final float dy = y1 - y;
+            final float dr = r1 + r;
+            return dx * dx + dy * dy < dr * dr;
         }
         return false;
     }
