@@ -211,7 +211,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         game.addEnemy(new Level1Easy(300, 375, -10, 20));
                         drift.accelY = -20;
                         drift.accelX = 20;
-                        drift.clampDx(0, 100);
+                        drift.clampDx(0, 50);
                     }
                     break;
                 case 6:
@@ -221,23 +221,23 @@ public final class LevelOneScene extends AbstractGameScene {
                             case 0:
                             drift.accelY = -20;
                             drift.accelX = 20;
-                            drift.clampDx(0, 100);
+                            drift.clampDx(0, 50);
                             break;
 
                             case 1:
                             drift.accelX = -20;
                             drift.accelY = 20;
-                            drift.clampDy(0,100);
+                            drift.clampDy(0,50);
                             break;
 
                             case 2:
                             drift.accelY = -20;
-                            drift.clampDx(-100,0);
+                            drift.clampDx(-50,0);
                             break;
 
                             case 3:
                             drift.accelX = 20;
-                            drift.clampDy(-100,0);
+                            drift.clampDy(-50,0);
                             phase = -1;
                             break;
                         }
@@ -377,9 +377,39 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
                         game.addEnemy(new Level1Normal(300, 375, -10, 20));
+                        drift.accelY = -20;
+                        drift.accelX = 20;
+                        drift.clampDx(0, 100);
                     }
                     break;
                 case 6:
+                    if (cycles % 200000 == 0){
+                        phase++;
+                        switch (phase){
+                            case 0:
+                            drift.accelY = -20;
+                            drift.accelX = 20;
+                            drift.clampDx(0, 100);
+                            break;
+
+                            case 1:
+                            drift.accelX = -20;
+                            drift.accelY = 20;
+                            drift.clampDy(0,100);
+                            break;
+
+                            case 2:
+                            drift.accelY = -20;
+                            drift.clampDx(-100,0);
+                            break;
+
+                            case 3:
+                            drift.accelX = 20;
+                            drift.clampDy(-100,0);
+                            phase = -1;
+                            break;
+                        }
+                    }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
@@ -576,9 +606,39 @@ public final class LevelOneScene extends AbstractGameScene {
                             bgm.loop(Clip.LOOP_CONTINUOUSLY);
                         }
                         game.addEnemy(new Level1Hard(300, 375, -10, 20));
+                        drift.accelY = -20;
+                        drift.accelX = 20;
+                        drift.clampDx(0, 200);
                     }
                     break;
                 case 6:
+                    if (cycles % 200000 == 0){
+                        phase++;
+                        switch (phase){
+                            case 0:
+                            drift.accelY = -20;
+                            drift.accelX = 20;
+                            drift.clampDx(0, 200);
+                            break;
+
+                            case 1:
+                            drift.accelX = -20;
+                            drift.accelY = 20;
+                            drift.clampDy(0,200);
+                            break;
+
+                            case 2:
+                            drift.accelY = -20;
+                            drift.clampDx(-200,0);
+                            break;
+
+                            case 3:
+                            drift.accelX = 20;
+                            drift.clampDy(-200,0);
+                            phase = -1;
+                            break;
+                        }
+                    }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
