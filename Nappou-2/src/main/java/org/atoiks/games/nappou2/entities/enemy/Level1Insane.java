@@ -43,7 +43,8 @@ public final class Level1Insane extends AbstractEnemy {
     private int bulletPattern;
     private int enemyTime;
     private double spiralAngle = 0;
-    private float initialhp;
+
+    private final float ratio;
 
     private static final float PI_DIV_2 = (float) Math.PI / 2;
     private static final float PI_DIV_3 = (float) Math.PI / 3;
@@ -51,7 +52,7 @@ public final class Level1Insane extends AbstractEnemy {
 
     public Level1Insane(int hp, float x, float y, float r) {
         super(hp, x, y, r);
-        initialhp = hp;
+        ratio = hp / 5;
     }
 
     @Override
@@ -66,29 +67,27 @@ public final class Level1Insane extends AbstractEnemy {
 
         enemyTime++;
 
-        if (getY() <= 150) {
-            up = false;
-        }
-
-        if (getY() >= 250) {
-            up = true;
-        }
-
-        if (getX() <= 100) {
-            right = true;
-        }
-
-        if (getX() >= 650) {
-            right = false;
-        }
-
-        setX(getX() + (right ? 1 : -1) * 100 * dt);
-        setY(getY() + (up ? -1 : 1) * 100 * dt);
-
         final float x = getX();
         final float y = getY();
 
-        final float ratio = initialhp / 5;
+        if (y <= 150) {
+            up = false;
+        }
+
+        if (y >= 250) {
+            up = true;
+        }
+
+        if (x <= 100) {
+            right = true;
+        }
+
+        if (x >= 650) {
+            right = false;
+        }
+
+        setX(x + (right ? 1 : -1) * 100 * dt);
+        setY(y + (up ? -1 : 1) * 100 * dt);
 
         if (hp >= 4 * ratio) {
             attack1();
