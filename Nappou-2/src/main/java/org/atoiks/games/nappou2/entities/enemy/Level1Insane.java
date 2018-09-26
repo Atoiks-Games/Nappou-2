@@ -122,13 +122,15 @@ public final class Level1Insane extends AbstractEnemy {
 
             final float x = getX();
             final float y = getY();
-            final double angle = Math.atan2(game.player.getY(), game.player.getX() - x);
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(-angle * angle * angle + PI_DIV_3)), (float) -1000*(float)(Math.sin((-angle + PI_DIV_3)%(4*PI_DIV_2)))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, (float) -1000*(float)(Math.cos(-angle * angle * angle)), (float) -1000*(float)(Math.sin(angle))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, (float) -1000*(float)(Math.cos(-angle * angle * angle - PI_DIV_3)), (float) -1000*(float)(Math.sin((-angle - PI_DIV_3)%(4*PI_DIV_2)))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(-angle * angle * angle +  PI_DIV_3 + PI_DIV_6)), (float) -1000*(float)(Math.sin((-angle + PI_DIV_3)%(4*PI_DIV_2)))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, (float) -1000*(float)(Math.cos(-angle * angle * angle + PI_DIV_6)), (float) -1000*(float)(Math.sin(angle))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, (float) -1000*(float)(Math.cos(-angle * angle * angle - PI_DIV_3 + PI_DIV_6)), (float) -1000*(float)(Math.sin((-angle - PI_DIV_3)%(4*PI_DIV_2)))));
+            final float angle = (float) Math.atan2(game.player.getY(), game.player.getX() - x);
+            final float ncube = -angle * angle * angle;
+            final float nksink = -1000 * (float) Math.sin((-angle - PI_DIV_3) % (4 * PI_DIV_2));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_3)), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube - PI_DIV_3)), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_3 + PI_DIV_6)), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube - PI_DIV_3 + PI_DIV_6)), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube)), -1000 * (float)(Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_6)), -1000*(float)(Math.sin(angle))));
 
 
         }
