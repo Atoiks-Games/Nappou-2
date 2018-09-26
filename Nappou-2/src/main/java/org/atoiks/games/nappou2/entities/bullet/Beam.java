@@ -111,17 +111,12 @@ public final class Beam implements IBullet {
     }
 
     @Override
-    public boolean collidesWith(float x1, float y1, float r1) {
-        for (int i = 0; i < dest.length; i += 2) {
-            final float startX = dest[i];
-            final float startY = dest[i + 1];
-            final float endX   = dest[(i + 2) % dest.length];
-            final float endY   = dest[(i + 3) % dest.length];
-            if (intersectSegmentCircle(startX, startY, endX, endY, x1, y1, r1)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean collidesWith(final float x, final float y, final float r) {
+        // Manual loop unrolling
+        return intersectSegmentCircle(dest[0], dest[1], dest[2], dest[3], x, y, r)
+            || intersectSegmentCircle(dest[2], dest[3], dest[4], dest[5], x, y, r)
+            || intersectSegmentCircle(dest[4], dest[5], dest[6], dest[7], x, y, r)
+            || intersectSegmentCircle(dest[6], dest[7], dest[0], dest[1], x, y, r);
     }
 
     @Override
