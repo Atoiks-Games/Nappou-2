@@ -59,8 +59,8 @@ public abstract class TweenEnemy extends IEnemy {
 
     @Override
     public void drift(float dx, float dy) {
-        setX(getX() + dx);
-        setY(getY() + dy);
+        // Tweening does not work well with drifting
+        // Disable for now
     }
 
     @Override
