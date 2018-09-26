@@ -237,10 +237,13 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     private boolean updateEnemyPos(final float dt) {
+        final float driftX = dt * drift.getDx();
+        final float driftY = dt * drift.getDy();
+
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
             enemy.update(dt);
-            enemy.drift(dt * drift.getDx(), dt * drift.getDy());
+            enemy.drift(driftX, driftY);
             if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemies.remove(i);
                 if (--i < -1) break;
@@ -250,10 +253,13 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     private boolean updateEnemyBulletPos(final float dt) {
+        final float driftX = dt * drift.getDx();
+        final float driftY = dt * drift.getDy();
+
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
             bullet.update(dt);
-            bullet.translate(dt * drift.getDx(), dt * drift.getDy());
+            bullet.translate(driftX, driftY);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
                 if (--i < -1) break;
@@ -263,10 +269,13 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     private boolean updatePlayerBulletPos(final float dt) {
+        final float driftX = dt * drift.getDx();
+        final float driftY = dt * drift.getDy();
+
         for (int i = 0; i < game.playerBullets.size(); ++i) {
             final IBullet bullet = game.playerBullets.get(i);
             bullet.update(dt);
-            bullet.translate(dt * drift.getDx(), dt * drift.getDy());
+            bullet.translate(driftX, driftY);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.playerBullets.remove(i);
                 if (--i < -1) break;
