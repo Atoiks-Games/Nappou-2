@@ -37,6 +37,9 @@ public abstract class TweenEnemy extends IEnemy {
 
     protected final Item xyr;
 
+    private float dspX;
+    private float dspY;
+
     protected Game game;
 
     protected TweenEnemy(int hp, float x, float y, float r) {
@@ -59,31 +62,23 @@ public abstract class TweenEnemy extends IEnemy {
 
     @Override
     public void drift(float dx, float dy) {
-        // Tweening does not work well with drifting
-        // Disable for now
+        dspX += dx;
+        dspY += dy;
     }
 
     @Override
     public final float getX() {
-        return this.xyr.get(FIELD_X);
+        return this.xyr.get(FIELD_X) + dspX;
     }
 
     @Override
     public final float getY() {
-        return this.xyr.get(FIELD_Y);
+        return this.xyr.get(FIELD_Y) + dspY;
     }
 
     @Override
     public final float getR() {
         return this.xyr.get(FIELD_R);
-    }
-
-    public final void setX(float x) {
-        this.xyr.setImmediate(FIELD_X, x);
-    }
-
-    public final void setY(float y) {
-        this.xyr.setImmediate(FIELD_Y, y);
     }
 
     public final void setR(float r) {
