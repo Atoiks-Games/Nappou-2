@@ -67,7 +67,6 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public void init() {
         super.init();
-        bgm = (Clip) scene.resources().get("Haunted.wav");
     }
 
     @Override
@@ -86,11 +85,20 @@ public final class LevelOneScene extends AbstractGameScene {
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
+        bgm = (Clip) scene.resources().get("Haunted.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+    }
+
+    @Override
+    public void leave() {
+        super.leave();
+
+        // Stop bgm just in case we forgot
+        bgm.stop();
     }
 
     @Override
@@ -885,10 +893,5 @@ public final class LevelOneScene extends AbstractGameScene {
             break;
         }
         return true;
-    }
-
-    @Override
-    public void leave() {
-        super.leave();
     }
 }
