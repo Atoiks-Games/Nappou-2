@@ -156,7 +156,7 @@ public final class TutorialScene extends AbstractGameScene {
             switch (waveCounter) {
                 case 0:
                     if (!renderControls) {
-                        waveCounter = 1;
+                        ++waveCounter;
                     }
                     break;
                 case 1:
@@ -164,7 +164,7 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
                         game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
                     } else {
-                        waveCounter = 2;
+                        ++waveCounter;
                         tutorialImg = (Image) scene.resources().get("x.png");
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
@@ -178,7 +178,7 @@ public final class TutorialScene extends AbstractGameScene {
                     updateDialogue("CAI", "Oh hello there, Didn't expect you to wake up so soon. Why don't I put you back to sleep?");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        waveCounter = 3;
+                        ++waveCounter;
                     }
                     break;
                 case 3:
@@ -193,9 +193,8 @@ public final class TutorialScene extends AbstractGameScene {
                     disableInput = false;
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(100, 375, -10, 20));
-                    waveCounter = 4;
+                    ++waveCounter;
                     break;
-
                 case 4:
                     disableDamage();
                     game.clearBullets();
@@ -208,7 +207,6 @@ public final class TutorialScene extends AbstractGameScene {
                         scene.switchToScene(0);
                     }
                     break;
-
             }
         }
         return true;
