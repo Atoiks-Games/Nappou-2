@@ -48,7 +48,6 @@ public final class LevelOneScene extends AbstractGameScene {
     private int cycles;
     private int wave;
     private Clip bgm;
-    private String[] talkMsg;
     private int test = 0;
     private int phase = 0;
 
@@ -75,7 +74,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        talkMsg = null;
+        resetDialogue();
         cycles = 0;
         wave = 0;
 
@@ -99,14 +98,6 @@ public final class LevelOneScene extends AbstractGameScene {
 
         // Stop bgm just in case we forgot
         bgm.stop();
-    }
-
-    @Override
-    public void renderStats(final IGraphics g) {
-        super.renderStats(g);
-        if (talkMsg != null) {
-            drawDialog(g, "Elle:", talkMsg);
-        }
     }
 
     @Override
@@ -199,7 +190,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkMsg = PREBOSS_MSG;
+                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                     break;
@@ -208,7 +199,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkMsg = null;
+                        resetDialogue();
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -253,7 +244,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkMsg = POSTBOSS_MSG;
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -366,7 +357,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkMsg = PREBOSS_MSG;
+                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                     }
@@ -376,7 +367,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkMsg = null;
+                        resetDialogue();
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -421,7 +412,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkMsg = POSTBOSS_MSG;
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -595,7 +586,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkMsg = PREBOSS_MSG;
+                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                     }
@@ -605,7 +596,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkMsg = null;
+                        resetDialogue();
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -650,7 +641,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkMsg = POSTBOSS_MSG;
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -824,7 +815,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        talkMsg = PREBOSS_MSG;
+                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                     }
@@ -834,7 +825,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         wave++;
                         enableDamage();
                         disableInput = false;
-                        talkMsg = null;
+                        resetDialogue();
                         cycles = 0;
                         bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -879,7 +870,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 2000 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
-                        talkMsg = POSTBOSS_MSG;
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput = true;
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {

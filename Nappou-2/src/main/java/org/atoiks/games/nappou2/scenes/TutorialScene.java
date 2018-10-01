@@ -51,10 +51,6 @@ public final class TutorialScene extends AbstractGameScene {
     private boolean renderControls;
     private boolean bossMode;
 
-    // Modify these two with resetDialogue or updateDialogue
-    private String speaker;
-    private String[] talkMsg;
-
     public TutorialScene() {
         // -1 scene id means the score is not saved
         super(-1);
@@ -85,16 +81,6 @@ public final class TutorialScene extends AbstractGameScene {
         waveCounter = 0;
     }
 
-    private void resetDialogue() {
-        speaker = null;
-        talkMsg = null;
-    }
-
-    private void updateDialogue(final String speaker, final String... msg) {
-        this.speaker = speaker + ":";
-        this.talkMsg = msg;
-    }
-
     @Override
     public void renderBackground(final IGraphics g) {
         super.renderBackground(g);
@@ -117,14 +103,6 @@ public final class TutorialScene extends AbstractGameScene {
 
             g.drawString("Survive the void", 25, 550);
             g.drawString("Press Enter to continue", 25, 580);
-        }
-    }
-
-    @Override
-    public void renderStats(final IGraphics g) {
-        super.renderStats(g);
-        if (speaker != null) {
-            drawDialog(g, speaker, talkMsg);
         }
     }
 
