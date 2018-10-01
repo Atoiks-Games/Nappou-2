@@ -250,10 +250,9 @@ public final class TutorialScene extends AbstractGameScene {
                     disableDamage();
                     game.clearBullets();
                     bgm.stop();
-                    updateDialogue("CAI",
-                            "I guess it won't be that easy. If you really are determined to escape the void, We will meet again soon.",
-                            "See ya pal!");
                     disableInput = true;
+
+                    updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         scene.switchToScene(0);
                     }
