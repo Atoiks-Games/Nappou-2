@@ -76,6 +76,9 @@ public abstract class AbstractGameScene extends GameScene {
 
     private boolean challengeMode;
 
+    private String dialogSpeaker;
+    private String[] dialogMessage;
+
     protected AbstractGameScene(int id) {
         sceneId = id;
     }
@@ -91,6 +94,16 @@ public abstract class AbstractGameScene extends GameScene {
 
     protected final void enableDamage() {
         ignoreDamage = false;
+    }
+
+    protected final void resetDialogue() {
+        dialogSpeaker = null;
+        dialogMessage = null;
+    }
+
+    protected final void updateDialogue(final String speaker, final String... lines) {
+        this.dialogSpeaker = speaker + ":";
+        this.dialogMessage = lines;
     }
 
     @Override
@@ -148,6 +161,10 @@ public abstract class AbstractGameScene extends GameScene {
 
         if (game.player.shield.isReady()) {
             g.drawString("Lumas Ready", GAME_BORDER + 30, 96);
+        }
+
+        if (dialogSpeaker != null) {
+            drawDialog(g, dialogSpeaker, dialogMessage);
         }
     }
 
