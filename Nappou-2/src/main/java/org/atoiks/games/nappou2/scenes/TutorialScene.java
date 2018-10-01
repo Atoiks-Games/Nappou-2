@@ -48,9 +48,12 @@ public final class TutorialScene extends AbstractGameScene {
     private float time;
     private Clip bgm;
     private Image tutorialImg;
-    private String[] talkMsg;
     private boolean renderControls;
     private boolean bossMode;
+
+    // Modify these two with resetDialogue or updateDialogue
+    private String speaker;
+    private String[] talkMsg;
 
     public TutorialScene() {
         // -1 scene id means the score is not saved
@@ -61,7 +64,8 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        talkMsg = null;
+        resetDialogue();
+
         tutorialImg = (Image) scene.resources().get("z.png");
         renderControls = true;
 
@@ -79,6 +83,16 @@ public final class TutorialScene extends AbstractGameScene {
         game.setScore(0);
         bossMode = false;
         waveCounter = 0;
+    }
+
+    private void resetDialogue() {
+        speaker = null;
+        talkMsg = null;
+    }
+
+    private void updateDialogue(final String speaker, final String... msg) {
+        this.speaker = speaker + ":";
+        this.talkMsg = msg;
     }
 
     @Override
@@ -109,8 +123,8 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public void renderStats(final IGraphics g) {
         super.renderStats(g);
-        if (talkMsg != null) {
-            drawDialog(g, "CAI:", talkMsg);
+        if (speaker != null) {
+            drawDialog(g, speaker, talkMsg);
         }
     }
 
@@ -161,9 +175,7 @@ public final class TutorialScene extends AbstractGameScene {
                     tutorialImg = null;
                     disableDamage();
                     bgm.stop();
-                    talkMsg = new String[] {
-                        "Oh hello there, Didn't expect you to wake up so soon. Why don't I put you back to sleep?"
-                    };
+                    updateDialogue("CAI", "Oh hello there, Didn't expect you to wake up so soon. Why don't I put you back to sleep?");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         waveCounter = 3;
@@ -176,7 +188,7 @@ public final class TutorialScene extends AbstractGameScene {
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
-                    talkMsg = null;
+                    resetDialogue();
                     enableDamage();
                     disableInput = false;
                     //bossMode = true;
@@ -188,10 +200,9 @@ public final class TutorialScene extends AbstractGameScene {
                     disableDamage();
                     game.clearBullets();
                     bgm.stop();
-                    talkMsg = new String[] {
-                        "I guess it won't be that easy. If you really are determined to escape the void, We will meet again soon.",
-                        "See ya pal!"
-                    };
+                    updateDialogue("CAI",
+                            "I guess it won't be that easy. If you really are determined to escape the void, We will meet again soon.",
+                            "See ya pal!");
                     disableInput = true;
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         scene.switchToScene(0);
