@@ -36,7 +36,7 @@ public final class ShieldTesterEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        setY(getY() + 300 * dt);
+        setY(getY() + 600 * dt);
 
         if (time > 0.001) {
             final float x = getX();

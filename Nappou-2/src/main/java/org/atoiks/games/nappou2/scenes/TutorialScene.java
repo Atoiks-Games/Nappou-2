@@ -115,7 +115,7 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         if (renderControls && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
+            //game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
             renderControls = false;
         }
 
@@ -168,7 +168,7 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                    updateDialogue("CAI", "Just kidding, you're just in the void. Which is arguably worse.");
+                    updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
