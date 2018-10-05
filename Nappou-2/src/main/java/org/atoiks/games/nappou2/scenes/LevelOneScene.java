@@ -51,6 +51,9 @@ public final class LevelOneScene extends AbstractGameScene {
     private int test = 0;
     private int phase = 0;
 
+    // loop frame for level
+    private static final int LEVEL_LOOP = 1229110;
+
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
     private static final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
@@ -83,11 +86,12 @@ public final class LevelOneScene extends AbstractGameScene {
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
-
-        bgm = (Clip) scene.resources().get("Haunted.wav");
+        
+        bgm = (Clip) scene.resources().get("Level_One.wav");
         if (cfg.bgm) {
-            bgm.setMicrosecondPosition(0);
+            bgm.setMicrosecondPosition(bgm.getMicrosecondLength()-1000000);
             bgm.start();
+            bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
