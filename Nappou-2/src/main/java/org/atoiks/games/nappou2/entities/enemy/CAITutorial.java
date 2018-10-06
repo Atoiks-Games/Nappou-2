@@ -27,10 +27,7 @@ public final class CAITutorial extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
-    private float time;
-    private boolean fireGate;
     private int bulletPattern;
-    private double spiralAngle = 0;
 
     public CAITutorial(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -38,7 +35,6 @@ public final class CAITutorial extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        time += dt;
         bulletPattern ++;
 
         if (getY() <= 150) {
