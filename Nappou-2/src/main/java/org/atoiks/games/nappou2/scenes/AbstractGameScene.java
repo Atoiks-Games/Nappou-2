@@ -63,11 +63,11 @@ public abstract class AbstractGameScene extends GameScene {
 
     private byte updatePhase = -1;
     private boolean ignoreDamage = false;
+    private boolean disableInput = false;
 
     protected float playerFireTimeout;
     protected Image hpImg;
     protected boolean pause;
-    protected boolean disableInput;
     protected Difficulty difficulty;
 
     protected final Drifter drift = new Drifter();
@@ -96,6 +96,14 @@ public abstract class AbstractGameScene extends GameScene {
         ignoreDamage = false;
     }
 
+    protected final void disableInput() {
+        disableInput = true;
+    }
+
+    protected final void enableInput() {
+        disableInput = false;
+    }
+
     protected final void resetDialogue() {
         dialogSpeaker = null;
         dialogMessage = null;
@@ -118,7 +126,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         playerFireTimeout = 0f;
         pause = false;
-        disableInput = false;
+        enableInput();
         enableDamage();
     }
 
