@@ -30,7 +30,6 @@ public final class CAITutorial extends AbstractEnemy {
     private float time;
     private boolean fireGate;
     private int bulletPattern;
-    //private int enemyTime;
     private double spiralAngle = 0;
 
     public CAITutorial(int hp, float x, float y, float r) {
@@ -41,12 +40,6 @@ public final class CAITutorial extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
         bulletPattern ++;
-
-        //enemyTime++;
-        //if (enemyTime % 25000 == 0) {
-          //game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
-          //game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
-        //}
 
         if (getY() <= 150) {
             setY(getY() + 300 * dt);
@@ -73,16 +66,6 @@ public final class CAITutorial extends AbstractEnemy {
                 game.addEnemyBullet(new Beam(x, y, (float) 5, (float) 100, (float) (angle - Math.PI/6), (float) 750));
             }
         }
-
-        //if (!fireGate && Math.cos(6 * time) < 0.5) {
-        //    fireGate = true;
-        //}
-
-        //if (fireGate && Math.cos(6 * time) > 0.5) {
-        //    fireGate = false;
-        //    final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        //    game.addEnemyBullet(new PointBullet(x, y, 10, (float) (2000 * Math.cos(angle)), (float) (2000 * Math.sin(angle))));
-        //}
     }
 
     @Override
