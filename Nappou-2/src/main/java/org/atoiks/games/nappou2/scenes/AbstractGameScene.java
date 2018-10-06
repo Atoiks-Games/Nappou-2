@@ -118,6 +118,8 @@ public abstract class AbstractGameScene extends GameScene {
 
         playerFireTimeout = 0f;
         pause = false;
+        disableInput = false;
+        enableDamage();
     }
 
     @Override
