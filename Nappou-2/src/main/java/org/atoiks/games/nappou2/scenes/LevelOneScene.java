@@ -241,31 +241,28 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
                             case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 50);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 50);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,50);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,50);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-50,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-50,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-50,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-50,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -412,31 +409,28 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
                             case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 100);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 100);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,100);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,100);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-100,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-100,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-100,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-100,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -644,31 +638,28 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
                             case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 200);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 200);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,200);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,200);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-200,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-200,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-200,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-200,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -876,31 +867,28 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
                             case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 250);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 250);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,250);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,250);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-250,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-250,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-250,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-250,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
