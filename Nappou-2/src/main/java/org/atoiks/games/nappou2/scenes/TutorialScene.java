@@ -115,7 +115,7 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         if (renderControls && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
+            //game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
             renderControls = false;
         }
 
@@ -134,7 +134,7 @@ public final class TutorialScene extends AbstractGameScene {
             switch (waveCounter) {
                 case 0:
                     if (!renderControls) {
-                        waveCounter = 1;
+                        ++waveCounter;
                     }
                     break;
                 case 1:
@@ -142,55 +142,99 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
                         game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
                     } else {
-                        waveCounter = 2;
+                        ++waveCounter;
                         tutorialImg = (Image) scene.resources().get("x.png");
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
                     }
                     break;
+
                 case 2:
                     game.clearBullets();
                     tutorialImg = null;
                     disableDamage();
                     bgm.stop();
-
-                    updateDialogue("CAI",
-                            "Oh hello there, Didn't expect you to wake up so soon. Why don't I put you back to sleep?");
                     disableInput = true;
+
+                    updateDialogue("CAI", "Good morning! You're dead!");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        waveCounter = 3;
+                        ++waveCounter;
                     }
                     break;
                 case 3:
+                    updateDialogue("Player", "What?");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 4:
+                    updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 5:
+                    updateDialogue("Player", "What?!");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 6:
+                    updateDialogue("CAI", "Yep, the humans threw us in just like that.");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 7:
+                    updateDialogue("Player", "Cai, you don't understand, we have to get out of here.");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 8:
+                    updateDialogue("CAI", "Not before you finish your daily combat exercises!");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 9:
+                    updateDialogue("Player", "Cai, now's not that time.");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+                case 10:
+                    updateDialogue("CAI", "There's always time for senseless violence!");
+                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        ++waveCounter;
+                    }
+                    break;
+
+                case 11:
                     bgm = (Clip) scene.resources().get("Unlocked.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
-
                     resetDialogue();
                     enableDamage();
                     disableInput = false;
                     //bossMode = true;
-                    game.addEnemy(new CAITutorial(100, 375, -10, 20));
-                    waveCounter = 4;
+                    game.addEnemy(new CAITutorial(75, 375, -10, 20));
+                    ++waveCounter;
                     break;
-
-                case 4:
+                case 12:
                     disableDamage();
                     game.clearBullets();
                     bgm.stop();
-
-                    updateDialogue("CAI",
-                            "I guess it won't be that easy. If you really are determined to escape the void, We will meet again soon.",
-                            "See ya pal!");
                     disableInput = true;
+
+                    updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
                         scene.switchToScene(0);
                     }
                     break;
-
             }
         }
         return true;
