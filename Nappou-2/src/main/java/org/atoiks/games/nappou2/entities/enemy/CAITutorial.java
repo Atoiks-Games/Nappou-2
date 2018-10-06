@@ -58,7 +58,7 @@ public final class CAITutorial extends AbstractEnemy {
         if (bulletPattern % 10000 == 0) {
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             if (Math.random() >= 0.5) {
-                game.addEnemyBullet(new PointBullet(x, y, 10, (float) (2000 * Math.cos(angle)), (float) (2000 * Math.sin(angle))));
+                game.addEnemyBullet(new PointBullet(x, y, 10, (float) (1000 * Math.cos(angle)), (float) (1000 * Math.sin(angle))));
                 game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle + Math.PI/4), (float) 500));
                 game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle - Math.PI/4), (float) 500));
                 game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle - Math.PI/6), (float) 750));
