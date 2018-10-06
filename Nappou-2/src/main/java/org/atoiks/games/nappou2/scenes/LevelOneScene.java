@@ -42,7 +42,7 @@ public final class LevelOneScene extends AbstractGameScene {
         "Yum! It seems the tides have dragged in some fresh meat! I hope you aren't too salty!"
     };
     private static final String[] POSTBOSS_MSG = new String[] {
-        "You're too rotten for my tastes!"
+        "I just want to go home..."
     };
 
     private int cycles;
@@ -86,7 +86,7 @@ public final class LevelOneScene extends AbstractGameScene {
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
-        
+
         bgm = (Clip) scene.resources().get("Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(bgm.getMicrosecondLength()-1000000);
@@ -190,13 +190,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                        wave++;
-                        cycles = 0;
-                        bgm.stop();
-                        disableDamage();
-                        updateDialogue("Elle", PREBOSS_MSG);
-                        disableInput = true;
-                        game.clearBullets();
+                    wave++;
+                    cycles = 0;
+                    bgm.stop();
+                    disableDamage();
+                    updateDialogue("Elle", PREBOSS_MSG);
+                    disableInput = true;
+                    game.clearBullets();
                     break;
                 case 5:
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
