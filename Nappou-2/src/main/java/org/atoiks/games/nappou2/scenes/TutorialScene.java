@@ -150,11 +150,11 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 2:
-                    game.clearBullets();
                     tutorialImg = null;
                     disableDamage();
+                    disableInput();
+                    game.clearBullets();
                     bgm.stop();
-                    disableInput = true;
 
                     updateDialogue("CAI", "Good morning! You're dead!");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -219,16 +219,16 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     resetDialogue();
                     enableDamage();
-                    disableInput = false;
+                    enableInput();
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(75, 375, -10, 20));
                     ++waveCounter;
                     break;
                 case 12:
                     disableDamage();
+                    disableInput();
                     game.clearBullets();
                     bgm.stop();
-                    disableInput = true;
 
                     updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {

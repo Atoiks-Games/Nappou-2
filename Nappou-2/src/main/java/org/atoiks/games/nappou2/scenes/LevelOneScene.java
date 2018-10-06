@@ -214,7 +214,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     cycles = 0;
                     bgm.stop();
                     disableDamage();
-                    disableInput = true;
+                    disableInput();
                     game.clearBullets();
 
                     displayNextPrebossDialogue();
@@ -224,7 +224,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            disableInput = false;
+                            enableInput();
                             resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
@@ -272,10 +272,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            disableInput = false;
+                            enableInput();
                             enableDamage();
                             scene.switchToScene(0);
                         }
@@ -384,7 +384,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
 
                         displayNextPrebossDialogue();
@@ -395,7 +395,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            disableInput = false;
+                            enableInput();
                             resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
@@ -443,10 +443,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            disableInput = false;
+                            enableInput();
                             enableDamage();
                             scene.switchToScene(0);
                         }
@@ -616,7 +616,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
 
                         displayNextPrebossDialogue();
@@ -627,7 +627,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            disableInput = false;
+                            enableInput();
                             resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
@@ -675,10 +675,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            disableInput = false;
+                            enableInput();
                             enableDamage();
                             scene.switchToScene(0);
                         }
@@ -848,7 +848,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
 
                         displayNextPrebossDialogue();
@@ -859,7 +859,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            disableInput = false;
+                            enableInput();
                             resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
@@ -907,10 +907,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
-                        disableInput = true;
+                        disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            disableInput = false;
+                            enableInput();
                             enableDamage();
                             scene.switchToScene(0);
                         }
