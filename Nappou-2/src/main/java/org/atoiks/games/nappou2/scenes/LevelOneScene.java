@@ -38,18 +38,26 @@ import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 public final class LevelOneScene extends AbstractGameScene {
 
-    private static final String[] PREBOSS_MSG = new String[] {
-        "Yum! It seems the tides have dragged in some fresh meat! I hope you aren't too salty!"
+    private static final String[][] PREBOSS_MSG = {
+        { "Elle", "Why are you here?" },
+        { "Player", "Oh you know, humans." },
+        { "Elle", "I no longer find joy in another's pain." },
+        { "CAI", "Why so moody?" },
+        { "Elle", "..." },
+        { "Player", "Yeah, give me a few centuries and things will be back to normal!" },
+        { "Elle", "You haven't changed at all *Player*" },
+        { "Elle", "You took everything away from me. Do you know how much I suffered?" },
     };
-    private static final String[] POSTBOSS_MSG = new String[] {
-        "You're too rotten for my tastes!"
+    private static final String[] POSTBOSS_MSG = {
+        "I just want to go home..."
     };
 
     private int cycles;
     private int wave;
     private Clip bgm;
-    private int test = 0;
-    private int phase = 0;
+    private int phase;
+
+    private int prebossMsgPhase;
 
     // loop frame for level
     private static final int LEVEL_LOOP = 1229110;
@@ -80,6 +88,9 @@ public final class LevelOneScene extends AbstractGameScene {
         resetDialogue();
         cycles = 0;
         wave = 0;
+        phase = -1;
+
+        prebossMsgPhase = -1;
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
 
@@ -102,6 +113,15 @@ public final class LevelOneScene extends AbstractGameScene {
 
         // Stop bgm just in case we forgot
         bgm.stop();
+    }
+
+    private boolean displayNextPrebossDialogue() {
+        if (++prebossMsgPhase < PREBOSS_MSG.length) {
+            final String[] arr = PREBOSS_MSG[prebossMsgPhase];
+            updateDialogue(arr[0], arr[1]);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -190,59 +210,59 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
-                        wave++;
-                        cycles = 0;
-                        bgm.stop();
-                        disableDamage();
-                        updateDialogue("Elle", PREBOSS_MSG);
-                        disableInput();
-                        game.clearBullets();
+                    wave++;
+                    cycles = 0;
+                    bgm.stop();
+                    disableDamage();
+                    disableInput();
+                    game.clearBullets();
+
+                    displayNextPrebossDialogue();
                     break;
                 case 5:
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        wave++;
-                        enableDamage();
-                        enableInput();
-                        resetDialogue();
-                        cycles = 0;
-                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                            bgm.setMicrosecondPosition(0);
-                            bgm.start();
-                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                        }
-                        game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                        drift.accelY = -20;
-                        drift.accelX = 20;
-                        drift.clampDx(0, 50);
-                    }
-                    break;
-                case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
-                            case 0:
+                        if (!displayNextPrebossDialogue()) {
+                            wave++;
+                            enableDamage();
+                            enableInput();
+                            resetDialogue();
+                            cycles = 0;
+                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                                bgm.setMicrosecondPosition(0);
+                                bgm.start();
+                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                            }
+                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 50);
-                            break;
-
+                        }
+                    }
+                    break;
+                case 6:
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
+                            case 0:
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 50);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,50);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,50);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-50,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-50,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-50,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-50,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -361,56 +381,56 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+
+                        displayNextPrebossDialogue();
                     }
                     break;
                 case 5:
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        wave++;
-                        enableDamage();
-                        enableInput();
-                        resetDialogue();
-                        cycles = 0;
-                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                            bgm.setMicrosecondPosition(0);
-                            bgm.start();
-                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                        }
-                        game.addEnemy(new Level1Normal(300, 375, -10, 20));
-                        drift.accelY = -20;
-                        drift.accelX = 20;
-                        drift.clampDx(0, 100);
-                    }
-                    break;
-                case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
-                            case 0:
+                        if (!displayNextPrebossDialogue()) {
+                            wave++;
+                            enableDamage();
+                            enableInput();
+                            resetDialogue();
+                            cycles = 0;
+                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                                bgm.setMicrosecondPosition(0);
+                                bgm.start();
+                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                            }
+                            game.addEnemy(new Level1Normal(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 100);
-                            break;
-
+                        }
+                    }
+                    break;
+                case 6:
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
+                            case 0:
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 100);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,100);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,100);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-100,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-100,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-100,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-100,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -590,56 +610,56 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+
+                        displayNextPrebossDialogue();
                     }
                     break;
                 case 5:
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        wave++;
-                        enableDamage();
-                        enableInput();
-                        resetDialogue();
-                        cycles = 0;
-                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                            bgm.setMicrosecondPosition(0);
-                            bgm.start();
-                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                        }
-                        game.addEnemy(new Level1Hard(300, 375, -10, 20));
-                        drift.accelY = -20;
-                        drift.accelX = 20;
-                        drift.clampDx(0, 200);
-                    }
-                    break;
-                case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
-                            case 0:
+                        if (!displayNextPrebossDialogue()) {
+                            wave++;
+                            enableDamage();
+                            enableInput();
+                            resetDialogue();
+                            cycles = 0;
+                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                                bgm.setMicrosecondPosition(0);
+                                bgm.start();
+                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                            }
+                            game.addEnemy(new Level1Hard(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 200);
-                            break;
-
+                        }
+                    }
+                    break;
+                case 6:
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
+                            case 0:
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 200);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,200);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,200);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-200,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-200,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-200,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-200,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
@@ -819,56 +839,56 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", PREBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+
+                        displayNextPrebossDialogue();
                     }
                     break;
                 case 5:
                     if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                        wave++;
-                        enableDamage();
-                        enableInput();
-                        resetDialogue();
-                        cycles = 0;
-                        bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                            bgm.setMicrosecondPosition(0);
-                            bgm.start();
-                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        if (!displayNextPrebossDialogue()) {
+                            wave++;
+                            enableDamage();
+                            enableInput();
+                            resetDialogue();
+                            cycles = 0;
+                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                                bgm.setMicrosecondPosition(0);
+                                bgm.start();
+                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                            }
+                            game.addEnemy(new Level1Insane(300, 375, -10, 20));
+                            drift.accelY = -20;
+                            drift.accelX = 20;
+                            drift.clampDx(0, 200);
                         }
-                        game.addEnemy(new Level1Insane(300, 375, -10, 20));
-                        drift.accelY = -20;
-                        drift.accelX = 20;
-                        drift.clampDx(0, 200);
                     }
                     break;
                 case 6:
-                    if (cycles % 200000 == 0){
-                        phase++;
-                        switch (phase){
+                    if (cycles % 200000 == 0) {
+                        switch (++phase) {
+                            default:
+                                phase = 0; // FALLTHROUGH
                             case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 250);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 250);
+                                break;
                             case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,250);
-                            break;
-
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,250);
+                                break;
                             case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-250,0);
-                            break;
-
+                                drift.accelY = -20;
+                                drift.clampDx(-250,0);
+                                break;
                             case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-250,0);
-                            phase = -1;
-                            break;
+                                drift.accelX = 20;
+                                drift.clampDy(-250,0);
+                                break;
                         }
                     }
                     if (cycles > 2000 && game.enemies.isEmpty()) {
