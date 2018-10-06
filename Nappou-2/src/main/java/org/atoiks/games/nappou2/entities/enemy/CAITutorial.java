@@ -47,19 +47,19 @@ public final class CAITutorial extends AbstractEnemy {
         if (bulletPattern % 10000 == 0) {
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             if (Math.random() >= 0.5) {
-                game.addEnemyBullet(new PointBullet(x, y, 10, (float) (1000 * Math.cos(angle)), (float) (1000 * Math.sin(angle))));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle + Math.PI/4), (float) 500));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle - Math.PI/4), (float) 500));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle - Math.PI/6), (float) 750));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle + Math.PI/6), (float) 750));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle - Math.PI/12), (float) 1000));
-                game.addEnemyBullet(new Beam(x, y, (float) 2, (float) 10, (float) (angle + Math.PI/12), (float) 1000));
+                game.addEnemyBullet(new PointBullet(x, y, 10, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle + Math.PI/4), 500));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle - Math.PI/4), 500));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle - Math.PI/6), 750));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle + Math.PI/6), 750));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle - Math.PI/12), 1000));
+                game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle + Math.PI/12), 1000));
             } else {
-                game.addEnemyBullet(new Beam(x, y, (float) 10, (float) 100, (float) (angle), (float) 600));
-                game.addEnemyBullet(new Beam(x, y, (float) 10, (float) 1000, (float) (angle + Math.PI/4), (float) 500));
-                game.addEnemyBullet(new Beam(x, y, (float) 10, (float) 1000, (float) (angle - Math.PI/4), (float) 500));
-                game.addEnemyBullet(new Beam(x, y, (float) 5, (float) 100, (float) (angle + Math.PI/6), (float) 750));
-                game.addEnemyBullet(new Beam(x, y, (float) 5, (float) 100, (float) (angle - Math.PI/6), (float) 750));
+                game.addEnemyBullet(new Beam(x, y, 10, 100, (float) (angle), 600));
+                game.addEnemyBullet(new Beam(x, y, 10, 1000, (float) (angle + Math.PI/4), 500));
+                game.addEnemyBullet(new Beam(x, y, 10, 1000, (float) (angle - Math.PI/4), 500));
+                game.addEnemyBullet(new Beam(x, y, 5, 100, (float) (angle + Math.PI/6), 750));
+                game.addEnemyBullet(new Beam(x, y, 5, 100, (float) (angle - Math.PI/6), 750));
             }
         }
     }
