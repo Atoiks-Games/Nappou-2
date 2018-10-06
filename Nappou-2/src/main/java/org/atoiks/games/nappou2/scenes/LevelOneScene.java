@@ -48,7 +48,7 @@ public final class LevelOneScene extends AbstractGameScene {
         { "Elle", "You haven't changed at all *Player*" },
         { "Elle", "You took everything away from me. Do you know how much I suffered?" },
     };
-    private static final String[] POSTBOSS_MSG = new String[] {
+    private static final String[] POSTBOSS_MSG = {
         "I just want to go home..."
     };
 
