@@ -55,8 +55,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private int cycles;
     private int wave;
     private Clip bgm;
-    private int test = 0;
-    private int phase = 0;
+    private int phase;
 
     private int prebossMsgPhase;
 
@@ -89,6 +88,7 @@ public final class LevelOneScene extends AbstractGameScene {
         resetDialogue();
         cycles = 0;
         wave = 0;
+        phase = -1;
 
         prebossMsgPhase = -1;
 
