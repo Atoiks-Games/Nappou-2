@@ -43,13 +43,11 @@ public final class DropEnemy extends AbstractEnemy {
         setX(getX() + signX * 170 * dt);
         setY(getY() + invSign * 400 * dt);
 
-        if (time > 0.05f) {
-            if (bullets > 8) {
-                bullets = 0;
-            } else {
-                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, signX * 170, invSign * 150));
-                ++bullets;
-            }
+        if (bullets > 8) {
+            if (time > 0.5) bullets = 0;
+        } else if (time > 0.05) {
+            game.addEnemyBullet(new PointBullet(getX(), getY(), 3, signX * 170, invSign * 150));
+            ++bullets;
             time = 0;
         }
     }
