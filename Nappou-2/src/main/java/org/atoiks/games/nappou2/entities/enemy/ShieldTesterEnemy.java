@@ -28,20 +28,25 @@ public final class ShieldTesterEnemy extends AbstractEnemy {
 
     private float time;
 
-    public ShieldTesterEnemy(int hp, float x, float y, float r) {
+    private final boolean inverted;
+
+    public ShieldTesterEnemy(int hp, float x, float y, float r, boolean inverted) {
         super(hp, x, y, r);
+        this.inverted = inverted;
     }
 
     @Override
     public void update(float dt) {
         time += dt;
 
+        final int sign = inverted ? -1 : 1;
+
         setY(getY() + 600 * dt);
 
         if (time > 0.001) {
             final float x = getX();
             final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, (x > 375 ? -1 : 1) * 5000, 0));
+            game.addEnemyBullet(new PointBullet(x, y, 2, sign * (x > 375 ? -1 : 1) * 5000, 0));
             time = 0;
         }
     }

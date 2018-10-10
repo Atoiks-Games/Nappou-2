@@ -181,10 +181,10 @@ public final class LevelTwoScene extends AbstractGameScene {
                         case 72000:
                         case 82000:
                         case 93000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
                     if (cycles > 54000) {

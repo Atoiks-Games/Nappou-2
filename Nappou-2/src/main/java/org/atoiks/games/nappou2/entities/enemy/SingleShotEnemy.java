@@ -29,15 +29,18 @@ public final class SingleShotEnemy extends AbstractEnemy {
     private float time;
     private boolean fireGate;
 
-    public SingleShotEnemy(int hp, float x, float y, float r) {
+    private final boolean inverted;
+
+    public SingleShotEnemy(int hp, float x, float y, float r, boolean inverted) {
         super(hp, x, y, r);
+        this.inverted = inverted;
     }
 
     @Override
     public void update(float dt) {
         time += dt;
 
-        setY(getY() + 300 * dt);
+        setY(getY() + (inverted ? -300 : 300) * dt);
 
         if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;

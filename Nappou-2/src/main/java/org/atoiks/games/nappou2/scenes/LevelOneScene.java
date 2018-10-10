@@ -143,12 +143,12 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 6000:
                         case 10000:
                             final int k = cycles / 1000 * 25;
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 11000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             break;
                     }
                     if (cycles > 11000 && game.enemies.isEmpty()) {
@@ -159,12 +159,12 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 2000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             break;
                         case 94000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                         break;
                         case 84000:
                         case 74000:
@@ -291,12 +291,12 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 8000:
                         case 10000:
                             final int k = cycles / 1000 * 25;
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 11000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             break;
                         case 30000:
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
@@ -311,16 +311,16 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 2000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 50, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 700, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
                             break;
                         case 94000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8));   // FALLTHROUGH
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));   // FALLTHROUGH
                         case 84000:
                         case 74000:
                         case 64000:
@@ -464,15 +464,15 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 9000:
                         case 10000:
                             int k = cycles / 1000 * 25;
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 15000:
                         case 20000:
                         case 25000:
                         case 30000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
@@ -487,8 +487,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 39000:
                         case 40000:
                             k = (cycles - 30000) / 1000 * 25;
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                     }
                     if (cycles > 30000 && game.enemies.isEmpty()) {
@@ -499,16 +499,16 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 2000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 50, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 700, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
                             break;
                         case 94000:  // FALLTHROUGH
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 50, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 700, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
                         case 84000:
                         case 74000:
                         case 64000:
@@ -599,10 +599,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 72000:
                         case 82000:
                         case 93000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
                     if (cycles > 54000 && game.enemies.isEmpty()) {
@@ -693,17 +693,17 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 9000:
                         case 10000:
                             int k = cycles / 1000 * 25;
-                            game.addEnemy(new InverseSingleShotEnemy(1, 300 - k, 610, 8));
-                            game.addEnemy(new InverseSingleShotEnemy(1, 450 + k, 610, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 15000:
                         case 20000:
                         case 25000:
                         case 30000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
@@ -718,17 +718,17 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 39000:
                         case 40000:
                             k = (cycles - 30000) / 1000 * 25;
-                            game.addEnemy(new InverseSingleShotEnemy(1, 300 - k, 610, 8));
-                            game.addEnemy(new InverseSingleShotEnemy(1, 450 + k, 610, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 45000:
                         case 50000:
                         case 55000:
                         case 60000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
@@ -743,17 +743,17 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 69000:
                         case 70000:
                             k = (cycles - 40000) / 1000 * 25;
-                            game.addEnemy(new InverseSingleShotEnemy(1, 300 - k, 610, 8));
-                            game.addEnemy(new InverseSingleShotEnemy(1, 450 + k, 610, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                         case 75000:
                         case 80000:
                         case 85000:
                         case 90000:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8));
+                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
@@ -775,10 +775,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 24000:
                         case 14000:
                         case 4000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new InverseDropEnemy(1, 50, 610, 8));
-                            game.addEnemy(new InverseDropEnemy(1, 700, 610, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 50, 610, 8, true));
+                            game.addEnemy(new DropEnemy(1, 700, 610, 8, true));
                             final int offset = (cycles - 4000) / 5000;
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, 100));
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
@@ -870,10 +870,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 72000:
                         case 82000:
                         case 93000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 100, -10, 8));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8));
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
                     if (cycles > 54000 && game.enemies.isEmpty()) {

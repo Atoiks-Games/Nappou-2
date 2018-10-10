@@ -123,8 +123,8 @@ public final class TutorialScene extends AbstractGameScene {
         if(bossMode){
           time ++;
             if(time%25000 == 0){
-              game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
-              game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+              game.addEnemy(new SingleShotEnemy(1, 250, -10, 8, false));
+              game.addEnemy(new SingleShotEnemy(1, 500, -10, 8, false));
             }
         }
 */
@@ -139,13 +139,13 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 1:
                     if (game.getScore() < 6) {
-                        game.addEnemy(new SingleShotEnemy(1, 250, -10, 8));
-                        game.addEnemy(new SingleShotEnemy(1, 500, -10, 8));
+                        game.addEnemy(new SingleShotEnemy(1, 250, -10, 8, false));
+                        game.addEnemy(new SingleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
                         tutorialImg = (Image) scene.resources().get("x.png");
-                        game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
-                        game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
+                        game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
+                        game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
                     break;
 
