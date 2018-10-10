@@ -22,13 +22,14 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class ShieldTesterEnemy extends AbstractEnemy {
+public final class InverseSingleShotEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
     private float time;
+    private boolean fireGate;
 
-    public ShieldTesterEnemy(int hp, float x, float y, float r) {
+    public InverseSingleShotEnemy(int hp, float x, float y, float r) {
         super(hp, x, y, r);
     }
 
@@ -36,13 +37,18 @@ public final class ShieldTesterEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        setY(getY() + 600 * dt);
+        setY(getY() - 300 * dt);
 
-        if (time > 0.001) {
+        if (!fireGate && Math.cos(6 * time) < 0.5) {
+            fireGate = true;
+        }
+
+        if (fireGate && Math.cos(6 * time) > 0.5) {
+            fireGate = false;
             final float x = getX();
             final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, (x > 375 ? 1 : -1) * 5000, 0));
-            time = 0;
+            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+            game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float)(1000 * Math.sin(angle))));
         }
     }
 

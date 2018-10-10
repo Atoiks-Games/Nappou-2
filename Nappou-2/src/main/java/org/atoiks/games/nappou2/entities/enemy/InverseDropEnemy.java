@@ -18,38 +18,45 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class ShieldTesterEnemy extends AbstractEnemy {
+public final class InverseDropEnemy extends AbstractEnemy {
 
-    private static final long serialVersionUID = 5619264522L;
+    private static final long serialVersionUID = 8326702143654175787L;
 
     private float time;
+    private int bullets;
 
-    public ShieldTesterEnemy(int hp, float x, float y, float r) {
+    public InverseDropEnemy(int hp, float x, float y, float r) {
         super(hp, x, y, r);
     }
 
     @Override
     public void update(float dt) {
         time += dt;
-
-        setY(getY() + 600 * dt);
-
-        if (time > 0.001) {
-            final float x = getX();
-            final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, (x > 375 ? 1 : -1) * 5000, 0));
-            time = 0;
+        // Never put at x = 375, just don't do it!
+        if (getX() < 375) {
+            setY(getY() - 400 * dt);
+            setX(getX() + 170 * dt);
+            if (bullets > 8) {
+                if (time > 0.5) bullets = 0;
+            } else if (time > 0.05) {
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, -150));
+                ++bullets;
+                time = 0;
+            }
         }
-    }
-
-    @Override
-    public void render(IGraphics g) {
-        // Convert to drawImage later on?
-        super.render(g);
+        if (getX() > 375) {
+            setY(getY() - 400 * dt);
+            setX(getX() - 170 * dt);
+            if (bullets > 8) {
+                if (time > 0.5) bullets = 0;
+            } else if (time > 0.05) {
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, -170, -150));
+                ++bullets;
+                time = 0;
+            }
+        }
     }
 
     @Override
