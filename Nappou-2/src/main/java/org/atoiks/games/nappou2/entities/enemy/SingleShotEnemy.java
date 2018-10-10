@@ -29,18 +29,18 @@ public final class SingleShotEnemy extends AbstractEnemy {
     private float time;
     private boolean fireGate;
 
-    private final boolean inverted;
+    private final int invSign;
 
     public SingleShotEnemy(int hp, float x, float y, float r, boolean inverted) {
         super(hp, x, y, r);
-        this.inverted = inverted;
+        this.invSign = inverted ? -1 : 1;
     }
 
     @Override
     public void update(float dt) {
         time += dt;
 
-        setY(getY() + (inverted ? -300 : 300) * dt);
+        setY(getY() + invSign * 300 * dt);
 
         if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;
@@ -51,7 +51,7 @@ public final class SingleShotEnemy extends AbstractEnemy {
             final float x = getX();
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float)(1000 * Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
         }
     }
 
