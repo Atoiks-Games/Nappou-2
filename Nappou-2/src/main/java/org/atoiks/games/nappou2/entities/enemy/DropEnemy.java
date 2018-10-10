@@ -27,32 +27,37 @@ public final class DropEnemy extends AbstractEnemy {
     private float time;
     private int bullets;
 
-    public DropEnemy(int hp, float x, float y, float r) {
+    private final boolean inverted;
+
+    public DropEnemy(int hp, float x, float y, float r, boolean inverted) {
         super(hp, x, y, r);
+        this.inverted = inverted;
     }
 
     @Override
-    public void update(float dt) {
+    public void update(final float dt) {
         time += dt;
+
+        final int sign = inverted ? -1 : 1;
+        setY(getY() + sign * 400 * dt);
+
         // Never put at x = 375, just don't do it!
         if (getX() < 375) {
-            setY(getY() + 400 * dt);
             setX(getX() + 170 * dt);
             if (bullets > 8) {
                 if (time > 0.5) bullets = 0;
             } else if (time > 0.05) {
-                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, 150));
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 170, sign * 150));
                 ++bullets;
                 time = 0;
             }
         }
         if (getX() > 375) {
-            setY(getY() + 400 * dt);
             setX(getX() - 170 * dt);
             if (bullets > 8) {
                 if (time > 0.5) bullets = 0;
             } else if (time > 0.05) {
-                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, -170, 150));
+                game.addEnemyBullet(new PointBullet(getX(), getY(), 3, -170, sign * 150));
                 ++bullets;
                 time = 0;
             }
