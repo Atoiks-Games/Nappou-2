@@ -144,8 +144,8 @@ public final class TutorialScene extends AbstractGameScene {
                     } else {
                         ++waveCounter;
                         tutorialImg = (Image) scene.resources().get("x.png");
-                        game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8));
-                        game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8));
+                        game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
+                        game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
                     break;
 
