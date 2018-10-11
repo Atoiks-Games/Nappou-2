@@ -605,7 +605,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
-                    if (cycles > 54000 && game.enemies.isEmpty()) {
+                    if (cycles > 93000 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -679,6 +679,13 @@ public final class LevelOneScene extends AbstractGameScene {
             break;
 
             case INSANE:
+            //DEV CHEAT CODE
+            //if (scene.keyboard().isKeyPressed(KeyEvent.VK_Q)) {
+            //    disableDamage();
+            //}
+            //if (scene.keyboard().isKeyPressed(KeyEvent.VK_E)) {
+            //    enableDamage();
+            //}
             switch (wave) {
                 case 0:
                     switch (cycles) {
@@ -806,8 +813,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 14000:
                         case 4000:
                             final int offset = (cycles - 4000) / 5000;
-                            game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
-                            game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
+                            game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, 100));
+                            game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                         case 25000:
                         case 45000:
@@ -858,7 +865,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                     }
                     break;
-                case 4://PICKUP HERE
+                case 4:
                     switch (cycles) {
                         case 2000:
                         case 12000:
@@ -871,12 +878,25 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 82000:
                         case 93000:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, 610, 8, true));
+                            game.addEnemy(new DropEnemy(1, 650, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 10, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 740, -10, 8, false));
+                            game.addEnemy(new SingleShotEnemy(1, 450, 610, 8, true));
+                            game.addEnemy(new SingleShotEnemy(1, 300, -10, 8, false));
                             break;
+                        case 25000:
+                            game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
+                            game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
+                            break;
+                        case 75000:
+                            game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
+                            game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
+                            break;
+
                     }
-                    if (cycles > 54000 && game.enemies.isEmpty()) {
+                    if (cycles > 100000 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
