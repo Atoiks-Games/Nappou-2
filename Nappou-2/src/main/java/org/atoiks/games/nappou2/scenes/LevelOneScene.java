@@ -272,8 +272,6 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            enableInput();
-                            enableDamage();
                             scene.switchToScene(0);
                         }
                     }
@@ -440,8 +438,6 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            enableInput();
-                            enableDamage();
                             scene.switchToScene(0);
                         }
                     }
@@ -669,8 +665,6 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            enableInput();
-                            enableDamage();
                             scene.switchToScene(0);
                         }
                     }
@@ -960,8 +954,6 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-                            enableInput();
-                            enableDamage();
                             scene.switchToScene(0);
                         }
                     }
