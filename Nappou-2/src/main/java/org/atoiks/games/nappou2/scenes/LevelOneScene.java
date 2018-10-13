@@ -100,7 +100,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         bgm = (Clip) scene.resources().get("Level_One.wav");
         if (cfg.bgm) {
-            bgm.setMicrosecondPosition(bgm.getMicrosecondLength()-1000000);
+            bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
