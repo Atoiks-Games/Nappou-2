@@ -29,8 +29,6 @@ public final class MB1 extends AbstractEnemy {
     private static final double PI_DIV_12 = Math.PI / 12;
     private static final int[] SCALE = { 0, 2, 4, 6, 8, 10, 12 };
 
-    private float time;
-    private int bulletPattern;
     private int enemyTime;
 
     public MB1(int hp, float x, float y, float r) {
@@ -44,8 +42,6 @@ public final class MB1 extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        time += dt;
-        bulletPattern ++;
         enemyTime++;
 
         final float x = getX();

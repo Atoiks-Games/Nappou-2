@@ -32,10 +32,8 @@ public final class Level1Insane extends AbstractEnemy {
     private final Random rnd = new Random();
 
     private float time;
-    private boolean fireGate;
     private boolean right = true;
     private boolean up = false;
-    private int bulletPattern;
     private int enemyTime;
     private double spiralAngle = 0;
 
@@ -58,8 +56,6 @@ public final class Level1Insane extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        bulletPattern++;
-
         enemyTime++;
 
         final float x = getX();

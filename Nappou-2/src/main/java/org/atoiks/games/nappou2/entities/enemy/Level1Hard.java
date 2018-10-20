@@ -31,9 +31,7 @@ public final class Level1Hard extends AbstractEnemy {
     private final Random rnd = new Random();
 
     private float time;
-    private boolean fireGate;
     private boolean right = true;
-    private int bulletPattern;
     private int enemyTime;
     private double spiralAngle = 0;
     private float initialhp;
@@ -54,8 +52,6 @@ public final class Level1Hard extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        bulletPattern++;
-
         enemyTime++;
 
         final float x = getX();

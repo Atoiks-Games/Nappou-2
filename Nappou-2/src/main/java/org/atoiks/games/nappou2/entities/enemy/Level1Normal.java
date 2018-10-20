@@ -31,14 +31,11 @@ public final class Level1Normal extends AbstractEnemy {
     private final Random rnd = new Random();
 
     private float time;
-    private boolean fireGate;
-    private int bulletPattern;
     private int enemyTime;
     private double spiralAngle = 0;
     private float initialhp;
 
     private static final float PI_DIV_2 = (float) Math.PI / 2;
-    private static final float PI_DIV_3 = (float) Math.PI / 3;
 
     public Level1Normal(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -53,8 +50,6 @@ public final class Level1Normal extends AbstractEnemy {
     @Override
     public void update(float dt) {
         time += dt;
-        bulletPattern++;
-
         enemyTime++;
 
         final float y = getY();
