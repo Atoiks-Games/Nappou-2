@@ -94,36 +94,36 @@ public final class Level1Insane extends AbstractEnemy {
     }
 
     private void attack1() {
-
         if (enemyTime % 1000 == 0) {
-            game.addEnemyBullet(new PointBullet(-10, 450 + (float) (150 * Math.sin(10 * time)), 3, 1000, 0));
-            game.addEnemyBullet(new PointBullet(760, 150 + (float) (150 * Math.sin(10 * time)), 3, -1000, 0));
+            final float sin10t = (float) Math.sin(10 * time);
+            game.addEnemyBullet(new PointBullet(-10, 450 + 150 * sin10t, 3, 1000, 0));
+            game.addEnemyBullet(new PointBullet(760, 150 + 150 * sin10t, 3, -1000, 0));
         }
         if (enemyTime % 500 == 0) {
             game.addEnemyBullet(new Beam(rnd.nextFloat() * 750, -15, 5, 30, PI_DIV_2, 1000));
         }
-
     }
 
     private void attack2() {
-
         if (enemyTime % 1000 == 0) {
-            game.addEnemyBullet(new Beam(375 + (float) (375 * Math.sin(10 * time)), -15, 5, 30, PI_DIV_2, 1000));
-            game.addEnemyBullet(new Beam(375 + (float) (-375 * Math.sin(10 * time)), -15, 5, 30, PI_DIV_2, 1000));
+            final float sin10t = (float) Math.sin(10 * time);
+            game.addEnemyBullet(new Beam(375 + 375 * sin10t, -15, 5, 30, PI_DIV_2, 1000));
+            game.addEnemyBullet(new Beam(375 + -375 * sin10t, -15, 5, 30, PI_DIV_2, 1000));
 
             final float x = getX();
             final float y = getY();
             final float angle = (float) Math.atan2(game.player.getY(), game.player.getX() - x);
             final float ncube = -angle * angle * angle;
             final float nksink = -1000 * (float) Math.sin((-angle - PI_DIV_3) % (4 * PI_DIV_2));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_3)), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube - PI_DIV_3)), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_3 + PI_DIV_6)), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube - PI_DIV_3 + PI_DIV_6)), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube)), -1000 * (float)(Math.sin(angle))));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000*(float)(Math.cos(ncube + PI_DIV_6)), -1000*(float)(Math.sin(angle))));
+            final float nkSinAngle = (float) Math.sin(angle);
 
-
+            // TODO: Possibility of reducing the amount of calculations with trig identities?
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_3), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube - PI_DIV_3), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_3 + PI_DIV_6), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube - PI_DIV_3 + PI_DIV_6), nksink));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube), nkSinAngle));
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_6), nkSinAngle));
         }
     }
 
@@ -135,43 +135,44 @@ public final class Level1Insane extends AbstractEnemy {
 
         if (enemyTime%2000 == 0) {
             spiralAngle += PI_DIV_6;
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000*(float)(Math.cos(spiralAngle + PI_DIV_3)), (float) -1000*(float)(Math.sin(spiralAngle + PI_DIV_3))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(spiralAngle)), (float) -1000*(float)(Math.sin(spiralAngle))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(spiralAngle - PI_DIV_3)), (float) -1000*(float)(Math.sin(spiralAngle - PI_DIV_3))));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle + PI_DIV_3), -1000 * (float)Math.sin(spiralAngle + PI_DIV_3)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle), -1000 * (float)Math.sin(spiralAngle)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle - PI_DIV_3), -1000 * (float)Math.sin(spiralAngle - PI_DIV_3)));
         }
-
     }
 
     private void attack4() {
         if (enemyTime % 7500 == 0) {
-        game.addEnemyBullet(new PointBullet(x, y, 50, (float) -300*(float)(Math.cos(spiralAngle)), (float) -300*(float)(Math.sin(spiralAngle))));
-        game.addEnemyBullet(new PointBullet(x, y, 50, (float) 300*(float)(Math.cos(spiralAngle)), (float) 300*(float)(Math.sin(spiralAngle))));
+            final float cosSpiral = (float) Math.cos(spiralAngle);
+            final float sinSpiral = (float) Math.sin(spiralAngle);
+            game.addEnemyBullet(new PointBullet(x, y, 50,  300 * cosSpiral,  300 * sinSpiral));
+            game.addEnemyBullet(new PointBullet(x, y, 50, -300 * cosSpiral, -300 * sinSpiral));
 
-        spiralAngle += PI_DIV_6;
+            spiralAngle += PI_DIV_6;
         }
         if (enemyTime % 900 == 0) {
-            game.addEnemyBullet(new PointBullet(375 + (float) (375 * Math.sin(10 * time)), 610, 2, 0, -1000));
-
+            game.addEnemyBullet(new PointBullet(375 + 375 * (float) Math.sin(10 * time), 610, 2, 0, -1000));
 
             final float x = getX();
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float) (1000 * Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
         }
     }
 
     private void attack5() {
         if (enemyTime % 1500 == 0) {
-            game.addEnemyBullet(new PointBullet(375 + (float) (375 * Math.sin(10 * time)), 610, 20, 0, -250));
-            game.addEnemyBullet(new PointBullet(375 - (float) (375 * Math.sin(10 * time)), -10, 15, 0, 500));
-            game.addEnemyBullet(new PointBullet(760, 300 + (float) (300 * Math.sin(10 * time)), 10, -1000, 0));
-            game.addEnemyBullet(new PointBullet(-10, 300 - (float) (300 * Math.sin(10 * time)), 5, 2000, 0));
+            final float sin10t = (float) Math.sin(10 * time);
+            game.addEnemyBullet(new PointBullet(375 + 375 * sin10t, 610, 20, 0, -250));
+            game.addEnemyBullet(new PointBullet(375 - 375 * sin10t, -10, 15, 0, 500));
+            game.addEnemyBullet(new PointBullet(760, 300 + 300 * sin10t, 10, -1000, 0));
+            game.addEnemyBullet(new PointBullet(-10, 300 - 300 * sin10t, 5, 2000, 0));
         }
 
         if (enemyTime%20000 == 0) {
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000*(float)(Math.cos(4*PI_DIV_3)), (float) -1000*(float)(Math.sin(4*PI_DIV_3))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(3*PI_DIV_2)), (float) -1000*(float)(Math.sin(3*PI_DIV_2))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(5*PI_DIV_3)), (float) -1000*(float)(Math.sin(5*PI_DIV_3))));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(4 * PI_DIV_3), -1000 * (float) Math.sin(4 * PI_DIV_3)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(3 * PI_DIV_2), -1000 * (float) Math.sin(3 * PI_DIV_2)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(5 * PI_DIV_3), -1000 * (float) Math.sin(5 * PI_DIV_3)));
         }
     }
 
