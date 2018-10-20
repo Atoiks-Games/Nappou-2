@@ -29,7 +29,6 @@ public final class AltMB1 extends AbstractEnemy {
     private static final double PI_DIV_6 = Math.PI / 6;
     private static final int ROTATIONS = 7;
 
-    private float time;
     private int enemyTime;
 
     public AltMB1(int hp, float x, float y, float r) {
@@ -43,7 +42,6 @@ public final class AltMB1 extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        time += dt;
         enemyTime++;
 
         final float x = getX();
