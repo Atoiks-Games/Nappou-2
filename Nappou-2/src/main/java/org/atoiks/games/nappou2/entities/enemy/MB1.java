@@ -63,8 +63,9 @@ public final class MB1 extends AbstractEnemy {
             }
         }
 
-        if (getY() <= 150) {
-            setY(getY() + 300 * dt);
+        // There was no prior setY call, it's safe
+        if (y <= 150) {
+            setY(y + 300 * dt);
         }
     }
 

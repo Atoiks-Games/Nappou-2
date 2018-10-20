@@ -50,9 +50,7 @@ public final class MiniBomberEnemy extends AbstractEnemy {
 
         if (fireGate && cosSpdTime > 0.5) {
             fireGate = false;
-            final float x = getX();
-            final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
+            game.addEnemyBullet(new PointBullet(getX(), getY(), 2, 0, 1000));
         }
     }
 
