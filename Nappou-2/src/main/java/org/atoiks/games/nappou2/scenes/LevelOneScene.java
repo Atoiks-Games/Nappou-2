@@ -237,14 +237,13 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 50);
+                            phase = 0;
                         }
                     }
                     break;
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -403,14 +402,13 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 100);
+                            phase = 0;
                         }
                     }
                     break;
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -630,14 +628,13 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 200);
+                            phase = 0;
                         }
                     }
                     break;
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -919,14 +916,13 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 200);
+                            phase = 0;
                         }
                     }
                     break;
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
