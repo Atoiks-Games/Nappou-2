@@ -66,8 +66,8 @@ public final class TrackBeamEnemy extends TweenEnemy {
         } else if (time > delay) {
             final float x = getX();
             final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new Beam(x, y, thickness, length, (float) (angle + angleOffsets[bulletId]), speed));
+            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
+            game.addEnemyBullet(new Beam(x, y, thickness, length, angle + angleOffsets[bulletId], speed));
             ++bulletId;
             time = 0;
         }

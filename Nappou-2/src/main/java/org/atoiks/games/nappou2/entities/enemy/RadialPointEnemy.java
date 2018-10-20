@@ -67,7 +67,7 @@ public final class RadialPointEnemy extends TweenEnemy {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
             float angle = initialAngle + bulletId * anglePerInterval;
-            game.addEnemyBullet(new PointBullet(getX(), getY(), radius, (float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(getX(), getY(), radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle)));
             bulletId++;
             time = 0;
         }
