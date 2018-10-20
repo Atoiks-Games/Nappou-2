@@ -58,22 +58,22 @@ public final class Level1Hard extends AbstractEnemy {
 
         enemyTime++;
 
-        if (getY() <= 150) {
-            setY(getY() + 300 * dt);
+        final float x = getX();
+        final float y = getY();
+
+        if (y <= 150) {
+            setY(y + 300 * dt);
         }
 
-        if (getX() <= 100) {
+        if (x <= 100) {
             right = true;
         }
 
-        if (getX() >= 650) {
+        if (x >= 650) {
             right = false;
         }
 
-        setX(getX() + (right ? 1 : -1) * 100 * dt);
-
-        final float x = getX();
-        final float y = getY();
+        setX(x + (right ? 1 : -1) * 100 * dt);
 
         final float ratio = initialhp / 5;
 
