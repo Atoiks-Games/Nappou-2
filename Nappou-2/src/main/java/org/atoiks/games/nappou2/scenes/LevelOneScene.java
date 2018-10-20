@@ -88,7 +88,7 @@ public final class LevelOneScene extends AbstractGameScene {
         resetDialogue();
         cycles = 0;
         wave = 0;
-        phase = -1;
+        phase = 0;
 
         prebossMsgPhase = -1;
 
@@ -237,7 +237,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 50);
-                            phase = 0;
                         }
                     }
                     break;
@@ -402,7 +401,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 100);
-                            phase = 0;
                         }
                     }
                     break;
@@ -628,7 +626,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 200);
-                            phase = 0;
                         }
                     }
                     break;
@@ -916,7 +913,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             drift.accelY = -20;
                             drift.accelX = 20;
                             drift.clampDx(0, 200);
-                            phase = 0;
                         }
                     }
                     break;
