@@ -32,7 +32,7 @@ public final class CircularPathEnemy extends AbstractEnemy {
     private float rad;
     private float orbitX;
     private float orbitY;
-    private int dir;
+    private float dir;
     private float mod;
     private int spos;
     private float bs;
@@ -54,8 +54,8 @@ public final class CircularPathEnemy extends AbstractEnemy {
         cycles++;
 
         final double k = mod * cycles / 10000 + spos * Math.PI / 2;
-        setY(orbitY + (float) (dir * rad * Math.sin(k)));
-        setX(orbitX + (float) (rad * Math.cos(k)));
+        setY(orbitY + dir * rad * (float) Math.sin(k));
+        setX(orbitX + rad * (float) Math.cos(k));
 
         final double cost = Math.cos(bs * time);
         if (!fireGate && cost < 0.01) {
@@ -67,7 +67,7 @@ public final class CircularPathEnemy extends AbstractEnemy {
             final float x = getX();
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new PointBullet(x, y, 2, (float) (1000 * Math.cos(angle)), (float)(1000 * Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
         }
     }
 
