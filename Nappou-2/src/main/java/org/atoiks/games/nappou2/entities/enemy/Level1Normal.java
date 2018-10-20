@@ -105,14 +105,6 @@ public final class Level1Normal extends AbstractEnemy {
             game.addEnemyBullet(new Beam(-15, rnd.nextFloat() * 600, 5, 30, 0, 1000));
             game.addEnemyBullet(new Beam(765, rnd.nextFloat() * 600, 5, 30, (float) Math.PI, 1000));
         }
-        //Save this for HARD mode :)
-        /*
-        if (enemyTime%20000 == 0) {
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000*(float)(Math.cos(4*PI_DIV_3)), (float) -1000*(float)(Math.sin(4*PI_DIV_3))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(3*PI_DIV_2)), (float) -1000*(float)(Math.sin(3*PI_DIV_2))));
-            game.addEnemyBullet(new PointBullet(x, y, 30, (float) -1000*(float)(Math.cos(5*PI_DIV_3)), (float) -1000*(float)(Math.sin(5*PI_DIV_3))));
-        }
-        */
     }
 
     private void attack4() {
