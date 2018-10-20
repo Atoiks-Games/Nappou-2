@@ -24,6 +24,8 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.bullet.*;
 
+import static org.atoiks.games.nappou2.TrigConstants.*;
+
 public final class Level1Hard extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264524L;
@@ -34,9 +36,6 @@ public final class Level1Hard extends AbstractEnemy {
     private boolean right = true;
     private int enemyTime;
     private float initialhp;
-
-    private static final float PI_DIV_2 = (float) Math.PI / 2;
-    private static final float PI_DIV_3 = (float) Math.PI / 3;
 
     public Level1Hard(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -116,9 +115,9 @@ public final class Level1Hard extends AbstractEnemy {
         }
 
         if (enemyTime%20000 == 0) {
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(4 * PI_DIV_3), -1000 * (float) Math.sin(4 * PI_DIV_3)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(3 * PI_DIV_2), -1000 * (float) Math.sin(3 * PI_DIV_2)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(5 * PI_DIV_3), -1000 * (float) Math.sin(5 * PI_DIV_3)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_4_PI_DIV_3, -1000 * SIN_4_PI_DIV_3));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_3_PI_DIV_2, -1000 * SIN_3_PI_DIV_2));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_5_PI_DIV_3, -1000 * SIN_5_PI_DIV_3));
         }
 
     }
@@ -144,9 +143,9 @@ public final class Level1Hard extends AbstractEnemy {
         }
 
         if (enemyTime%20000 == 0) {
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(4 * PI_DIV_3), -1000 * (float) Math.sin(4 * PI_DIV_3)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(3 * PI_DIV_2), -1000 * (float) Math.sin(3 * PI_DIV_2)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(5 * PI_DIV_3), -1000 * (float) Math.sin(5 * PI_DIV_3)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_4_PI_DIV_3, -1000 * SIN_4_PI_DIV_3));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_3_PI_DIV_2, -1000 * SIN_3_PI_DIV_2));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_5_PI_DIV_3, -1000 * SIN_5_PI_DIV_3));
         }
     }
 

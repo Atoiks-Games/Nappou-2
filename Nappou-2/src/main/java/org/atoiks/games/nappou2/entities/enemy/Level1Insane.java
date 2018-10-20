@@ -25,6 +25,8 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.bullet.*;
 
+import static org.atoiks.games.nappou2.TrigConstants.*;
+
 public final class Level1Insane extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264524L;
@@ -38,10 +40,6 @@ public final class Level1Insane extends AbstractEnemy {
     private double spiralAngle = 0;
 
     private final float ratio;
-
-    private static final float PI_DIV_2 = (float) Math.PI / 2;
-    private static final float PI_DIV_3 = (float) Math.PI / 3;
-    private static final float PI_DIV_6 = (float) Math.PI / 6;
 
     public Level1Insane(int hp, float x, float y, float r) {
         super(hp, x, y, r);
@@ -117,13 +115,25 @@ public final class Level1Insane extends AbstractEnemy {
             final float nksink = -1000 * (float) Math.sin((-angle - PI_DIV_3) % (4 * PI_DIV_2));
             final float nkSinAngle = (float) Math.sin(angle);
 
-            // TODO: Possibility of reducing the amount of calculations with trig identities?
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_3), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube - PI_DIV_3), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_3 + PI_DIV_6), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube - PI_DIV_3 + PI_DIV_6), nksink));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube), nkSinAngle));
-            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (float) Math.cos(ncube + PI_DIV_6), nkSinAngle));
+            final float sinNcube = (float) Math.sin(ncube);
+            final float cosNcube = (float) Math.cos(ncube);
+
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * cosNcube, nkSinAngle));
+
+            // cos(ncube + PI_DIV_3) = cosNcube * SIN_PI_DIV_6 - sinNcube * SIN_PI_DIV_3
+            game.addEnemyBullet(new PointBullet(x, y, 8, 1000 * (sinNcube * SIN_PI_DIV_3 - cosNcube * SIN_PI_DIV_6), nksink));
+
+            // cos(ncube - PI_DIV_3) = cosNcube * SIN_PI_DIV_6 + sinNcube * SIN_PI_DIV_3
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (cosNcube * SIN_PI_DIV_6 + sinNcube * SIN_PI_DIV_3), nksink));
+
+            // cos(ncube + PI_DIV_2) = -sinNcube
+            game.addEnemyBullet(new PointBullet(x, y, 8, 1000 * sinNcube, nksink));
+
+            // cos(ncube - PI_DIV_6) = cosNcube * SIN_PI_DIV_3 + sinNcube * SIN_PI_DIV_6
+            game.addEnemyBullet(new PointBullet(x, y, 8, -1000 * (cosNcube * SIN_PI_DIV_3 + sinNcube * SIN_PI_DIV_6), nksink));
+
+            // cos(ncube + PI_DIV_6) = cosNcube * SIN_PI_DIV_3 - sinNcube * SIN_PI_DIV_6
+            game.addEnemyBullet(new PointBullet(x, y, 8, 1000 * (sinNcube * SIN_PI_DIV_6 - cosNcube * SIN_PI_DIV_3), nkSinAngle));
         }
     }
 
@@ -135,9 +145,22 @@ public final class Level1Insane extends AbstractEnemy {
 
         if (enemyTime%2000 == 0) {
             spiralAngle += PI_DIV_6;
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle + PI_DIV_3), -1000 * (float)Math.sin(spiralAngle + PI_DIV_3)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle), -1000 * (float)Math.sin(spiralAngle)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float)Math.cos(spiralAngle - PI_DIV_3), -1000 * (float)Math.sin(spiralAngle - PI_DIV_3)));
+            final float cosSpiral = (float) Math.cos(spiralAngle);
+            final float sinSpiral = (float) Math.sin(spiralAngle);
+
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * cosSpiral, -1000 * sinSpiral));
+
+            // cos(spiralAngle + PI_DIV_3) = cosSpiral * SIN_PI_DIV_6 - sinSpiral * SIN_PI_DIV_3
+            // sin(spiralAngle + PI_DIV_3) = sinSpiral * SIN_PI_DIV_6 + cosSpiral * SIN_PI_DIV_3
+            game.addEnemyBullet(new PointBullet(x, y, 30,
+                    1000 * (sinSpiral * SIN_PI_DIV_3 - cosSpiral * SIN_PI_DIV_6),
+                    -1000 * (sinSpiral * SIN_PI_DIV_6 + cosSpiral * SIN_PI_DIV_3)));
+
+            // cos(spiralAngle - PI_DIV_3) = cosSpiral * SIN_PI_DIV_6 + sinSpiral * SIN_PI_DIV_3
+            // sin(spiralAngle - PI_DIV_3) = sinSpiral * SIN_PI_DIV_6 - cosSpiral * SIN_PI_DIV_3
+            game.addEnemyBullet(new PointBullet(x, y, 30,
+                    -1000 * (cosSpiral * SIN_PI_DIV_6 + sinSpiral * SIN_PI_DIV_3),
+                    1000 * (cosSpiral * SIN_PI_DIV_3 - sinSpiral * SIN_PI_DIV_6)));
         }
     }
 
@@ -170,9 +193,9 @@ public final class Level1Insane extends AbstractEnemy {
         }
 
         if (enemyTime%20000 == 0) {
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(4 * PI_DIV_3), -1000 * (float) Math.sin(4 * PI_DIV_3)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(3 * PI_DIV_2), -1000 * (float) Math.sin(3 * PI_DIV_2)));
-            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * (float) Math.cos(5 * PI_DIV_3), -1000 * (float) Math.sin(5 * PI_DIV_3)));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_4_PI_DIV_3, -1000 * SIN_4_PI_DIV_3));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_3_PI_DIV_2, -1000 * SIN_3_PI_DIV_2));
+            game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_5_PI_DIV_3, -1000 * SIN_5_PI_DIV_3));
         }
     }
 
