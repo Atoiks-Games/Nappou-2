@@ -20,15 +20,10 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import java.util.Random;
 
-import se.tube42.lib.tweeny.Item;
-import se.tube42.lib.tweeny.TweenEquation;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
-
-import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 public final class Level1Insane extends AbstractEnemy {
 

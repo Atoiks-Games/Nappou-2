@@ -20,7 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class MB1 extends AbstractEnemy {
