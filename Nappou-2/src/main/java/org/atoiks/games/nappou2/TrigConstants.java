@@ -22,7 +22,7 @@ public final class TrigConstants {
 
     // A mini trig-identity cheatsheet:
     //   sin(a + b) = sin a cos b + cos a sin b
-    //   cos(a + b) = cos a cos b − sin a sin b
+    //   cos(a + b) = cos a cos b - sin a sin b
 
     // pi / k constants
     public static final float PI_DIV_1 = (float) Math.PI;
