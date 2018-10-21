@@ -29,8 +29,9 @@ public final class ShiftEnemy extends AbstractEnemy {
     private float time;
     private int bullets;
 
-    public ShiftEnemy(int hp, float x, float y, float r) {
+    public ShiftEnemy(int hp, float x, float y, float r, float offset) {
         super(hp, x, y, r);
+        this.time = offset;
     }
 
     @Override

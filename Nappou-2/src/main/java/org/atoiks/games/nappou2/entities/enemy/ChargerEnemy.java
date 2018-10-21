@@ -24,22 +24,30 @@ public final class ChargerEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 561492645221L;
 
-    // This needs to be different for every enemy...
     private float speed;
+    private float timer;
+    private double angle = 0;
 
-    public ChargerEnemy(int hp, float x, float y, float r, float speed) {
+    public ChargerEnemy(int hp, float x, float y, float r, float timer, float speed) {
         super(hp, x, y, r);
         this.speed = speed;
+        this.timer = timer;
     }
 
     @Override
     public void update(float dt) {
-        final float x = getX();
-        final float y = getY();
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        if(timer > 0){
+            timer -= 10 * dt;
+        }
 
-        setX(x + speed * (float) Math.cos(angle) * dt);
-        setY(y + speed * (float) Math.sin(angle) * dt);
+        if(timer >= 0){
+            final float x = getX();
+            final float y = getY();
+            angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        }
+
+            setX(x + speed * (float) Math.cos(angle) * dt);
+            setY(y + speed * (float) Math.sin(angle) * dt);
     }
 
     @Override

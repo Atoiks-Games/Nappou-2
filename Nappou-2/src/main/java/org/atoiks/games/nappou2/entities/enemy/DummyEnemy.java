@@ -26,22 +26,31 @@ public final class DummyEnemy extends AbstractEnemy {
     //This needs to be different for every enemy...
 
     private boolean right;
+    private float speed;
+    private int bounce;
+    private int score;
 
-    public DummyEnemy(int hp, float x, float y, float r, boolean right) {
+    public DummyEnemy(int hp, float x, float y, float r, float speed, int bounce, boolean right) {
         super(hp, x, y, r);
         this.right = right;
+        this.speed = speed;
+        this.bounce = bounce;
+        this.score = hp;
     }
 
     @Override
     public void update(float dt) {
-        if (right && getX() > 700) {
-            right = false;
+        if(bounce > 0) {
+            if (right && getX() > 700) {
+                right = false;
+                bounce--;
+            }
+            if (!right && getX() < 50) {
+                right = true;
+                bounce--;
+            }
         }
-        if (!right && getX() < 50) {
-            right = true;
-        }
-
-        setX(getX() + (right ? 1 : -1) * 100 * dt);
+        setX(getX() + (right ? 1 : -1) * speed * dt);
     }
 
     @Override
@@ -52,6 +61,6 @@ public final class DummyEnemy extends AbstractEnemy {
 
     @Override
     public int getScore() {
-        return 0;
+        return score;
     }
 }
