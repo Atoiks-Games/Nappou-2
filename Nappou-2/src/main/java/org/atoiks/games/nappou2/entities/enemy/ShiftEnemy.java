@@ -38,12 +38,12 @@ public final class ShiftEnemy extends AbstractEnemy {
     public void update(float dt) {
         time += dt;
 
-        setX(getX() + 300 * dt);
+        x += 300 * dt;
 
         if (bullets > 5) {
             if (time > 0.5) bullets = 0;
         } else if (time > 0.05) {
-            game.addEnemyBullet(new PointBullet(getX(), getY(), 3, 0, 175));
+            game.addEnemyBullet(new PointBullet(x, y, 3, 0, 175));
             ++bullets;
             time = 0;
         }

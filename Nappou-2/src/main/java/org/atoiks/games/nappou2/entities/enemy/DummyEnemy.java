@@ -40,17 +40,17 @@ public final class DummyEnemy extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        if(bounce > 0) {
-            if (right && getX() > 700) {
+        if (bounce > 0) {
+            if (right && x > 700) {
                 right = false;
                 bounce--;
             }
-            if (!right && getX() < 50) {
+            if (!right && x < 50) {
                 right = true;
                 bounce--;
             }
         }
-        setX(getX() + (right ? 1 : -1) * speed * dt);
+        x += (right ? 1 : -1) * speed * dt;
     }
 
     @Override

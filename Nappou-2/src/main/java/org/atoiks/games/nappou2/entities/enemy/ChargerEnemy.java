@@ -36,18 +36,16 @@ public final class ChargerEnemy extends AbstractEnemy {
 
     @Override
     public void update(float dt) {
-        if(timer > 0){
+        if (timer > 0) {
             timer -= 10 * dt;
         }
 
-        if(timer >= 0){
-            final float x = getX();
-            final float y = getY();
+        if (timer >= 0) {
             angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
         }
 
-            setX(x + speed * (float) Math.cos(angle) * dt);
-            setY(y + speed * (float) Math.sin(angle) * dt);
+        x += speed * (float) Math.cos(angle) * dt;
+        y += speed * (float) Math.sin(angle) * dt;
     }
 
     @Override
