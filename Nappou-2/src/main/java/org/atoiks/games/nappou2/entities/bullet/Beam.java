@@ -69,7 +69,7 @@ public final class Beam implements IBullet {
         this.y += dy * dt;
 
         // If we calculate a beam with (x, y) as (0, 0),
-        // it will be rectangle with diagonal from (0, 0) to (thickness, -length).
+        // it will be rectangle with diagonal from (-halfThickness, 0) to (halfThickness, -length).
         // we rotate it around (0, 0) by angle, which has fixed value,
         // then, we translate it by (x, y)
 
