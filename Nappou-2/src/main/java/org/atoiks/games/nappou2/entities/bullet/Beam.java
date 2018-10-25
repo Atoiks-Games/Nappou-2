@@ -35,7 +35,7 @@ public final class Beam implements IBullet {
 
     private final float dx, dy;
     private float x, y;
-    private float thickness, length;
+    private float halfThickness, length;
 
     private final float[] dest = new float[ARR_SIZE];
     private final AffineTransform mat;
@@ -43,7 +43,7 @@ public final class Beam implements IBullet {
     public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
         this.x = x;
         this.y = y;
-        this.thickness = thickness;
+        this.halfThickness = thickness / 2;
         this.length = length;
 
         this.dx = dmag * (float) Math.cos(angle);
@@ -75,14 +75,14 @@ public final class Beam implements IBullet {
 
         final float len = -length;
         final float[] input = {
-            0        , 0,
-            thickness, 0,
-            thickness, len,
-            0        , len,
+            -halfThickness, 0,
+            halfThickness , 0,
+            halfThickness , len,
+            -halfThickness, len,
         };
-        mat.transform(input, 0, input, 0, ARR_SIZE / 2);
 
         final AffineTransform trans = AffineTransform.getTranslateInstance(x, y);
+        trans.concatenate(mat);
         trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
     }
 
