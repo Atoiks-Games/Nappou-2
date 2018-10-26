@@ -27,11 +27,15 @@ public final class ShiftEnemy extends AbstractEnemy {
     private static final long serialVersionUID = 5619264522L;
 
     private float time;
-    private int bullets;
+    private int bullets = 0;
+    private float offset;
 
-    public ShiftEnemy(int hp, float x, float y, float r, float offset) {
+    public ShiftEnemy(int hp, float x, float y, float r, float offset, boolean alt) {
         super(hp, x, y, r);
-        this.time = offset;
+        this.offset = offset;
+        if(alt){
+            bullets = 6;
+        }
     }
 
     @Override
@@ -41,7 +45,7 @@ public final class ShiftEnemy extends AbstractEnemy {
         x += 300 * dt;
 
         if (bullets > 5) {
-            if (time > 0.5) bullets = 0;
+            if (time > offset) bullets = 0;
         } else if (time > 0.05) {
             game.addEnemyBullet(new PointBullet(x, y, 3, 0, 175));
             ++bullets;

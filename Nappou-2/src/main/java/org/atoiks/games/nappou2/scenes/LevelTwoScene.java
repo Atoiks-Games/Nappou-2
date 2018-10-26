@@ -63,6 +63,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 0:
                     switch (cycles) {
                         case 2000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(2, -10, 20, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 20, 20, 500, 1, false));
                             game.addEnemy(new DummyEnemy(2, -10, 120, 20, 500, 1, true));
@@ -73,6 +74,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(2, 760, 320, 20, 500, 1, false));
                             break;
                         case 12000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(2, -10, 280, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 280, 20, 500, 1, false));
                             game.addEnemy(new DummyEnemy(2, -10, 380, 20, 500, 1, true));
@@ -83,6 +86,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(2, 760, 580, 20, 500, 1, false));
                             break;
                         case 22000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 30, 10, 500, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 30, 10, 500, 1, false));
                             game.addEnemy(new DummyEnemy(1, -10, 70, 10, 500, 1, true));
@@ -93,6 +98,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, 760, 150, 10, 500, 1, false));
                             break;
                         case 32000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 590, 10, 1000, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 590, 10, 1000, 1, false));
                             game.addEnemy(new DummyEnemy(1, -10, 550, 10, 1000, 1, true));
@@ -103,6 +109,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, 760, 470, 10, 1000, 1, false));
                             break;
                         case 60000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 200, 10, 1000, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 200, 10, 1000, 1, false));
                             game.addEnemy(new DummyEnemy(1, -10, 240, 10, 1000, 1, true));
@@ -127,20 +135,22 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 2000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 0, 5, 5, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 0, 5, 5, 500));
                             break;
                         case 12000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 600, 10, 6, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 600, 10, 6, 500));
                             break;
                         case 22000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 300, 15, 7, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 300, 15, 7, 500));
                             break;
                         case 32000:
-                            game.addEnemy(new ChargerEnemy(1, 375, 0, 20, 7, 500));
-                            game.addEnemy(new ChargerEnemy(1, 375, 600, 20, 7, 500));
+                            game.addEnemy(new SingleShotEnemy(5, 375, -10, 15, false));
                             break;
                         }
                     if (cycles > 32000) {
@@ -150,13 +160,21 @@ public final class LevelTwoScene extends AbstractGameScene {
                         }
                     }
                     break;
-                case 2: //todo: make them alternate
+                case 2:
                     switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new ShiftEnemy(1, 0, 300, 5, 0));
+                        case 1000:
+                            game.addEnemy(new DropEnemy(1, 750, -10, 8, false));
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
                             break;
-                        case 8000:
-                            game.addEnemy(new ShiftEnemy(1, 0, 300, 5, 0.25f));
+                        case 10000:
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
+                            break;
+                        case 51000:
+                            game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
+                            break;
+                        case 60000:
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
                         }
                     break;
