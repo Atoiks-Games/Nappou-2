@@ -115,19 +115,8 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         if (renderControls && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
-            //game.addEnemy(new DummyEnemy(1, -10, 50, 8, true));
             renderControls = false;
         }
-
-/*
-        if(bossMode){
-          time ++;
-            if(time%25000 == 0){
-              game.addEnemy(new SingleShotEnemy(1, 250, -10, 8, false));
-              game.addEnemy(new SingleShotEnemy(1, 500, -10, 8, false));
-            }
-        }
-*/
 
 
         if (game.enemies.isEmpty()) {

@@ -63,17 +63,69 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 0:
                     switch (cycles) {
                         case 2000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 20, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 20, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 120, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 120, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 220, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 220, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 320, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 320, 20, 500, 1, false));
+                            break;
                         case 12000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 280, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 280, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 380, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 380, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 480, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 480, 20, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(2, -10, 580, 20, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(2, 760, 580, 20, 500, 1, false));
+                            break;
                         case 22000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 30, 10, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 30, 10, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 70, 10, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 70, 10, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 110, 10, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 110, 10, 500, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 150, 10, 500, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 150, 10, 500, 1, false));
+                            break;
                         case 32000:
-                            for (int i = 0; i < 4; ++i) {
-                                game.addEnemyBullet(new PointBullet(rnd.nextFloat() * 750, -10, 4, rnd.nextFloat() * 100, rnd.nextFloat() * 100));
-                                game.addEnemy(new DummyEnemy(1, -10, rnd.nextFloat() * 600, 4, true));
-                                game.addEnemy(new DummyEnemy(1, 760, rnd.nextFloat() * 600, 4, false));
-                            }
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 590, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 590, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 550, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 550, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 510, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 510, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 470, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 470, 10, 1000, 1, false));
+                            break;
+                        case 60000:
+                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
+                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 200, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 200, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 240, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 240, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 280, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 280, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 320, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 320, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 360, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 360, 10, 1000, 1, false));
+                            game.addEnemy(new DummyEnemy(1, -10, 400, 10, 1000, 1, true));
+                            game.addEnemy(new DummyEnemy(1, 760, 400, 10, 1000, 1, false));
                             break;
                     }
-                    if (cycles > 32000) {
+                    if (cycles > 60000) {
                         if (game.enemies.isEmpty()) {
                             wave++;
                             cycles = 0;
@@ -83,128 +135,48 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 2000:
-                        game.addEnemy(new ShiftEnemy(2, 225, -10, 8));
-                        game.addEnemy(new ShiftEnemy(2, 375, -10, 8));
-                        game.addEnemy(new ShiftEnemy(2, 525, -10, 8));
-                        break;
-                    }
-                    if (cycles > 94000) {
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(new ChargerEnemy(1, 0, 0, 5, 5, 500));
+                            game.addEnemy(new ChargerEnemy(1, 750, 0, 5, 5, 500));
+                            break;
+                        case 12000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(new ChargerEnemy(1, 0, 600, 10, 6, 500));
+                            game.addEnemy(new ChargerEnemy(1, 750, 600, 10, 6, 500));
+                            break;
+                        case 22000:
+                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(new ChargerEnemy(1, 0, 300, 15, 7, 500));
+                            game.addEnemy(new ChargerEnemy(1, 750, 300, 15, 7, 500));
+                            break;
+                        case 32000:
+                            game.addEnemy(new SingleShotEnemy(5, 375, -10, 15, false));
+                            break;
+                        }
+                    if (cycles > 32000) {
                         if (game.enemies.isEmpty()) {
-                            //wave++;
-                            //cycles = 0;
+                            wave++;
+                            cycles = 0;
                         }
                     }
                     break;
                 case 2:
                     switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new MB1(10, 225, -10, 20));
-                            game.addEnemy(new MB1(10, 375, -10, 20));
-                            game.addEnemy(new MB1(10, 525, -10, 20));
+                        case 1000:
+                            game.addEnemy(new DropEnemy(1, 750, -10, 8, false));
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
                             break;
-                        case 22000:
-                            game.addEnemy(new MB1(10, 300, -10, 20));
-                            game.addEnemy(new MB1(10, 450, -10, 20));
+                        case 10000:
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
-                    }
-                    if (cycles > 22000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
+                        case 51000:
+                            game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
+                            break;
+                        case 60000:
+                            game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
+                            break;
                         }
-                    }
-                    break;
-                case 3:
-                   switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new MB1(10, 375, -10, 20));
-                            break;
-                        case 4000:
-                            game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
-                            break;
-                        case 54000:
-                            game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
-                        break;
-                    }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
-                   }
-                    break;
-                case 4:
-                    final float pi1 = (float) (2 * Math.PI) / 3;
-                    final float pi2 = (float) (3 * Math.PI) / 2;
-                    switch (cycles) {
-                        case 2000:
-                            final float[] offset = { (float) (-Math.PI / 12), 0, (float) (Math.PI / 12) };
-                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                                final Item tweenInfo = new Item(3);
-                                tweenInfo.set(0, 30, GAME_BORDER - 30).configure(28000, TweenEquation.QUAD_INOUT);
-                                tweenInfo.setImmediate(2, 8);
-                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, 0f, 3, pi1, 15f, 100f);
-                            }));
-                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                                final Item tweenInfo = new Item(3);
-                                tweenInfo.set(0, GAME_BORDER - 30, 30).configure(28000, TweenEquation.QUAD_INOUT);
-                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                                tweenInfo.setImmediate(2, 8);
-                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) Math.PI, 3, pi1, 15f, 100f);
-                            }));
-                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                                final Item tweenInfo = new Item(3);
-                                tweenInfo.set(0, 10, GAME_BORDER - 10).configure(28000, TweenEquation.QUAD_INOUT);
-                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                                tweenInfo.setImmediate(2, 8);
-                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
-                            }));
-                            game.addEnemy(EnemyGroup.createLazyGroup(0.17f, 5, () -> {
-                                final Item tweenInfo = new Item(3);
-                                tweenInfo.set(0, GAME_BORDER - 10, 10).configure(28000, TweenEquation.QUAD_INOUT);
-                                tweenInfo.set(1, 10, HEIGHT + 40).configure(28000, TweenEquation.LINEAR);
-                                tweenInfo.setImmediate(2, 8);
-                                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0f, (float) pi2, 3, pi1, 15f, 100f);
-                            }));
-                            break;
-                        case 12000:
-                        case 22000:
-                        case 33000:
-                        case 42000:
-                        case 52000:
-                        case 63000:
-                        case 72000:
-                        case 82000:
-                        case 93000:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
-                            break;
-                    }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                            wave++;
-                            cycles = 0;
-                        }
-                   }
-                    break;
-                case 5:
-                    switch (cycles) {
-                        case 2000:
-                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                            break;
-                    }
-                    if (cycles > 54000) {
-                        if (game.enemies.isEmpty()) {
-                          //END LV
-                        }
-                    }
                     break;
             }
             break;
