@@ -169,6 +169,15 @@ public final class LevelTwoScene extends AbstractGameScene {
                         case 10000:
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
+                        case 20000:
+                        case 30000:
+                        case 40000:
+                        case 50000:
+                            game.addEnemy(new StarShotEnemy(1, 600, 0, 5, false));
+                            game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
+                            game.addEnemy(new StarShotEnemy(1, 600, -10, 5, false));
+                            game.addEnemy(new StarShotEnemy(1, 450, -10, 5, false));
+                            break;
                         case 51000:
                             game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
@@ -177,6 +186,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
                         }
+                    break;
+                case 3: //TODO
                     break;
             }
             break;
