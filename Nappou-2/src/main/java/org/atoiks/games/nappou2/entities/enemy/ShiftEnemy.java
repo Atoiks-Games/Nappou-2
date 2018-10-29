@@ -54,12 +54,6 @@ public final class ShiftEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void render(IGraphics g) {
-        // Convert to drawImage later on?
-        super.render(g);
-    }
-
-    @Override
     public int getScore() {
         return 1;
     }
