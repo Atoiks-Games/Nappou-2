@@ -61,10 +61,8 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
         // Default do nothing
     }
 
-    // Note: Even though this method is override-able, you
-    // *should* skinning the enemy using custom renderers.
     @Override
-    public void render(IGraphics g) {
+    public final void render(IGraphics g) {
         compRenderer.render(g, this);
     }
 
