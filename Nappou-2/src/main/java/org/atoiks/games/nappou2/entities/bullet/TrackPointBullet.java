@@ -25,7 +25,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IBullet;
 
-public final class TrackPointBullet implements IBullet {
+public final class TrackPointBullet extends IBullet {
 
     private static final long serialVersionUID = -1696891011951230605L;
 
@@ -81,7 +81,7 @@ public final class TrackPointBullet implements IBullet {
     @Override
     public void render(IGraphics g) {
         // Can change this to using textures later
-        g.setColor(Color.white);
+        g.setColor(color);
         // x, y are the center of the bullet
         g.drawOval(x - r, y - r, x + r, y + r);
     }

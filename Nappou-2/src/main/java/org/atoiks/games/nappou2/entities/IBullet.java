@@ -20,15 +20,19 @@ package org.atoiks.games.nappou2.entities;
 
 import java.io.Serializable;
 
+import java.awt.Color;
+
 import org.atoiks.games.framework2d.IUpdate;
 import org.atoiks.games.framework2d.IRender;
 
-public interface IBullet extends ICollidable, IRender, IUpdate, Serializable {
+public abstract class IBullet implements ICollidable, IRender, IUpdate, Serializable {
 
-    public float getX();
-    public float getY();
-    public float getDx();
-    public float getDy();
+    public Color color = Color.white;
 
-    public void translate(float dx, float dy);
+    public abstract float getX();
+    public abstract float getY();
+    public abstract float getDx();
+    public abstract float getDy();
+
+    public abstract void translate(float dx, float dy);
 }
