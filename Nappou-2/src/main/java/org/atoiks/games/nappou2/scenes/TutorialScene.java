@@ -39,7 +39,7 @@ public final class TutorialScene extends AbstractGameScene {
         { "Arrow Keys", "= Move" },
         { "Shift", "= Focus" },
         { "Z", "= Shoot" },
-        { "X", "= Shield using Lumas" },
+        { "X", "= Activate shield" },
         { "Escape", "= Pause" },
         { "Enter", "= Select" }
     };

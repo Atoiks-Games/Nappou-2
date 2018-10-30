@@ -170,7 +170,7 @@ public abstract class AbstractGameScene extends GameScene {
         g.drawString(str, GAME_BORDER + 5, 74);
 
         if (game.player.shield.isReady()) {
-            g.drawString("Lumas Ready", GAME_BORDER + 30, 96);
+            g.drawString("Shield Ready", GAME_BORDER + 30, 96);
         }
 
         if (dialogSpeaker != null) {
