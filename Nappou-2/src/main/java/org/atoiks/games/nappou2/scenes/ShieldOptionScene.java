@@ -83,12 +83,14 @@ public final class ShieldOptionScene extends GameScene {
             if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
         }
 
-        final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < shieldSelY.length; ++i) {
-            final int selBase = shieldSelY[i];
-            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                shieldSel = i;
-                break;
+        if (scene.mouse().positionChanged()) {
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < shieldSelY.length; ++i) {
+                final int selBase = shieldSelY[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    shieldSel = i;
+                    break;
+                }
             }
         }
         return true;
