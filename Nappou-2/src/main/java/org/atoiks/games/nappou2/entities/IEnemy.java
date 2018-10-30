@@ -28,7 +28,7 @@ import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IUpdate;
 
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
-import org.atoiks.games.nappou2.graphics.DefaultEnemyRenderer;
+import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
 
 public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializable {
 
@@ -38,7 +38,7 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
 
     protected int hp;
 
-    public IEnemyRenderer compRenderer = DefaultEnemyRenderer.INSTANCE;
+    public IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
 
     protected IEnemy(int hp) {
         this.hp = hp;

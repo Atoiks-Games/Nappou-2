@@ -24,16 +24,18 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IEnemy;
 
-public final class DefaultEnemyRenderer implements IEnemyRenderer {
+public final class ColorEnemyRenderer implements IEnemyRenderer {
 
-    public static final DefaultEnemyRenderer INSTANCE = new DefaultEnemyRenderer();
+    public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
 
-    private DefaultEnemyRenderer() {
-        //
+    private Color color;
+
+    public ColorEnemyRenderer(Color color) {
+        this.color = color;
     }
 
     public void render(IGraphics g, IEnemy obj) {
-        g.setColor(Color.white);
+        g.setColor(color);
         // x, y are the center of the enemy
         final float x = obj.getX();
         final float y = obj.getY();
