@@ -76,12 +76,14 @@ public final class DiffOptionScene extends GameScene {
             if (--diffSel < 0) diffSel = diffSelY.length - 1;
         }
 
-        final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < diffSelY.length; ++i) {
-            final int selBase = diffSelY[i];
-            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                diffSel = i;
-                break;
+        if (scene.mouse().positionChanged()) {
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < diffSelY.length; ++i) {
+                final int selBase = diffSelY[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    diffSel = i;
+                    break;
+                }
             }
         }
         return true;

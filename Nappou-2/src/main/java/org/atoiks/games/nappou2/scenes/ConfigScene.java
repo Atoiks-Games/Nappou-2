@@ -99,12 +99,14 @@ public final class ConfigScene extends GameScene {
             setValueAtSelector(!getValueAtSelector());
         }
 
-        final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < SELECTOR_Y.length; ++i) {
-            final int selBase = SELECTOR_Y[i];
-            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                selector = i;
-                break;
+        if (scene.mouse().positionChanged()) {
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < SELECTOR_Y.length; ++i) {
+                final int selBase = SELECTOR_Y[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    selector = i;
+                    break;
+                }
             }
         }
 
