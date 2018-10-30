@@ -86,12 +86,14 @@ public final class TitleScene extends GameScene {
             if (--selector < 0) selector = selectorY.length - 1;
         }
 
-        final int mouseY = scene.mouse().getLocalY();
-        for (int i = 0; i < selectorY.length; ++i) {
-            final int selBase = selectorY[i];
-            if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                selector = i;
-                break;
+        if (scene.mouse().positionChanged()) {
+            final int mouseY = scene.mouse().getLocalY();
+            for (int i = 0; i < selectorY.length; ++i) {
+                final int selBase = selectorY[i];
+                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
+                    selector = i;
+                    break;
+                }
             }
         }
         return true;
