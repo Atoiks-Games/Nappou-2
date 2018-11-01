@@ -61,7 +61,6 @@ public abstract class AbstractGameScene extends GameScene {
 
     protected final Game game = new Game();
 
-    private byte updatePhase = -1;
     private boolean ignoreDamage = false;
     private boolean disableInput = false;
 
@@ -213,20 +212,14 @@ public abstract class AbstractGameScene extends GameScene {
                 pause = true;
             }
             playerFireTimeout -= dt;
-            TweenManager.service((long) (dt * 1000000));
-            if (!procPlayerPos(dt)) return false;
-            switch (++updatePhase) {
-                default: {
-                    updatePhase = 0;    // set updatePhase to resonable value
-                    drift.update(dt);   // update drift speed
-                    // FALLTHROUGH!
-                }
-                case 0: return updateEnemyBulletPos(dt);
-                case 1: return updateEnemyPos(dt);
-                case 2: return updatePlayerBulletPos(dt);
-                case 3: return testCollisions(dt);
-                case 4: return postUpdate(dt);
-            }
+
+            // TweenManager uses milliseconds, dt is seconds
+            TweenManager.service((long) (dt * 1000));
+
+            drift.update(dt);
+            return updateEnemyBulletPos(dt) && updateEnemyPos(dt)
+                && updatePlayerBulletPos(dt) && procPlayerPos(dt)
+                && testCollisions(dt) && postUpdate(dt);
         } else {
             if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
