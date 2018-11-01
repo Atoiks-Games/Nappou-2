@@ -280,7 +280,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
-            bullet.update(dt);
+            bullet.update(dt / 6);
             bullet.translate(driftX, driftY);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
