@@ -163,49 +163,49 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             break;
-                        case 564 / 6 * 5:
+                        case 470:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             break;
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
                             final int offset = (cycles / 5 - 4) / 5;
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 564 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 470 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 2:
-                    if (cycles == 12 / 6 * 5) {
+                    if (cycles == 10) {
                         game.addEnemy(new MB1(10, 375, -10, 20));
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 3:
                    switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new MB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
+                        case 20:
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 24 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 20 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
@@ -242,7 +242,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 1200 / 6 * 5 == 0) {
+                    if (cycles % 1000 == 0) {
                         switch (++phase) {
                             case 0:
                                 drift.accelY = -20;
@@ -264,7 +264,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -282,98 +282,98 @@ public final class LevelOneScene extends AbstractGameScene {
             switch (wave) {
                 case 0:
                     switch (cycles) {
-                        case 12 / 6 * 5:
-                        case 24 / 6 * 5:
-                        case 36 / 6 * 5:
-                        case 48 / 6 * 5:
-                        case 60 / 6 * 5:
+                        case 10:
+                        case 20:
+                        case 30:
+                        case 40:
+                        case 50:
                             final int k = cycles * 5;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
-                        case 66 / 6 * 5:
+                        case 55:
                             game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             break;
-                        case 180 / 6 * 5:
+                        case 150:
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if (cycles > 180 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 150 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 1:
                     switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
                             break;
-                        case 564 / 6 * 5:
+                        case 470:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 650, -10, 8, false));   // FALLTHROUGH
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
                             final int offset = (cycles / 5 - 4) / 5;
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 564 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 470 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 2:
-                    if (cycles == 12 / 6 * 5) {
+                    if (cycles == 10) {
                         game.addEnemy(new MB1(10, 225, -10, 20));
                         game.addEnemy(new MB1(10, 375, -10, 20));
                         game.addEnemy(new MB1(10, 525, -10, 20));
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 3:
                    switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new MB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
+                        case 20:
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
-                        case 324 / 6 * 5:
+                        case 270:
                             game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 324 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 270 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 4:
-                    if (cycles == 12 / 6 * 5) {
+                    if (cycles == 10) {
                         tweenRadialGroupPattern(game, w4eX, w4eR);
                     }
-                    if (cycles > 324 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 270 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -406,7 +406,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 1200 / 6 * 5 == 0) {
+                    if (cycles % 1000 == 0) {
                         switch (++phase) {
                             case 0:
                                 drift.accelY = -20;
@@ -428,7 +428,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -446,117 +446,119 @@ public final class LevelOneScene extends AbstractGameScene {
             switch (wave) {
                 case 0:
                     switch (cycles) {
-                        case 6 / 6 * 5:
-                        case 12 / 6 * 5:
-                        case 18 / 6 * 5:
-                        case 24 / 6 * 5:
-                        case 30 / 6 * 5:
-                        case 36 / 6 * 5:
-                        case 42 / 6 * 5:
-                        case 48 / 6 * 5:
-                        case 54 / 6 * 5:
-                        case 60 / 6 * 5:
+                        case 5:
+                        case 10:
+                        case 15:
+                        case 20:
+                        case 25:
+                        case 30:
+                        case 35:
+                        case 40:
+                        case 45:
+                        case 50:
                             int k = cycles * 5;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
-                        case 90 / 6 * 5:
-                        case 120 / 6 * 5:
-                        case 150 / 6 * 5:
-                        case 180 / 6 * 5:
+                        case 75:
+                        case 100:
+                        case 125:
+                        case 150:
                             game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
-                        case 186 / 6 * 5:
-                        case 192 / 6 * 5:
-                        case 198 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 210 / 6 * 5:
-                        case 216 / 6 * 5:
-                        case 222 / 6 * 5:
-                        case 228 / 6 * 5:
-                        case 234 / 6 * 5:
-                        case 240 / 6 * 5:
+                        case 155:
+                        case 160:
+                        case 165:
+                        case 170:
+                        case 175:
+                        case 180:
+                        case 185:
+                        case 190:
+                        case 195:
+                        case 200:
                             k = (cycles / 5 - 30) * 25;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                     }
-                    if (cycles > 180 / 6 * 5 && game.enemies.isEmpty()) {
+                    // XXX: Was > 150 intentional?
+                    if (cycles > 150 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 1:
                     switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
                             break;
-                        case 564 / 6 * 5: // FALLTHROUGH
+                        case 470: // FALLTHROUGH
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
                             final int offset = (cycles / 5 - 4) / 5;
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, 100));
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                     }
-                    if (cycles > 564 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 470 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 2:
                     switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new MB1(10, 225, -10, 20));
                             game.addEnemy(new MB1(10, 525, -10, 20));
                             game.addEnemy(new MB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
                             final int offset = (cycles / 5 - 4) / 5;
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 132 / 6 * 5 && game.enemies.isEmpty()) {
+                    // XXX: Was > 110 intentional?
+                    if (cycles > 110 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 3:
                    switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
+                        case 20:
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
-                        case 324 / 6 * 5:
+                        case 270:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
@@ -565,7 +567,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
-                        case 624 / 6 * 5:
+                        case 520:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             game.addEnemy(new CircularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
@@ -573,32 +575,32 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 624 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 520 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 4:
                     switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             tweenRadialGroupPattern(game, w4eX, w4eR);
                             break;
-                        case 72 / 6 * 5:
-                        case 132 / 6 * 5:
-                        case 198 / 6 * 5:
-                        case 252 / 6 * 5:
-                        case 312 / 6 * 5:
-                        case 378 / 6 * 5:
-                        case 432 / 6 * 5:
-                        case 492 / 6 * 5:
-                        case 558 / 6 * 5:
+                        case 60:
+                        case 110:
+                        case 165:
+                        case 210:
+                        case 260:
+                        case 315:
+                        case 360:
+                        case 410:
+                        case 465:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
-                    if (cycles > 558 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 465 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -631,7 +633,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 1200 / 6 * 5 == 0) {
+                    if (cycles % 1000 == 0) {
                         switch (++phase) {
                             case 0:
                                 drift.accelY = -20;
@@ -653,7 +655,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -678,99 +680,99 @@ public final class LevelOneScene extends AbstractGameScene {
             switch (wave) {
                 case 0:
                     switch (cycles) {
-                        case 6 / 6 * 5:
-                        case 12 / 6 * 5:
-                        case 18 / 6 * 5:
-                        case 24 / 6 * 5:
-                        case 30 / 6 * 5:
-                        case 36 / 6 * 5:
-                        case 42 / 6 * 5:
-                        case 48 / 6 * 5:
-                        case 54 / 6 * 5:
-                        case 60 / 6 * 5:
+                        case 5:
+                        case 10:
+                        case 15:
+                        case 20:
+                        case 25:
+                        case 30:
+                        case 35:
+                        case 40:
+                        case 45:
+                        case 50:
                             int k = cycles * 5;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
-                        case 90 / 6 * 5:
-                        case 120 / 6 * 5:
-                        case 150 / 6 * 5:
-                        case 180 / 6 * 5:
+                        case 75:
+                        case 100:
+                        case 125:
+                        case 150:
                             game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
-                        case 186 / 6 * 5:
-                        case 192 / 6 * 5:
-                        case 198 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 210 / 6 * 5:
-                        case 216 / 6 * 5:
-                        case 222 / 6 * 5:
-                        case 228 / 6 * 5:
-                        case 234 / 6 * 5:
-                        case 240 / 6 * 5:
+                        case 155:
+                        case 160:
+                        case 165:
+                        case 170:
+                        case 175:
+                        case 180:
+                        case 185:
+                        case 190:
+                        case 195:
+                        case 200:
                             k = (cycles / 5 - 30) * 25;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
-                        case 270 / 6 * 5:
-                        case 300 / 6 * 5:
-                        case 330 / 6 * 5:
-                        case 360 / 6 * 5:
+                        case 225:
+                        case 250:
+                        case 275:
+                        case 300:
                             game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
-                        case 366 / 6 * 5:
-                        case 372 / 6 * 5:
-                        case 378 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 390 / 6 * 5:
-                        case 396 / 6 * 5:
-                        case 402 / 6 * 5:
-                        case 408 / 6 * 5:
-                        case 414 / 6 * 5:
-                        case 420 / 6 * 5:
+                        case 305:
+                        case 310:
+                        case 315:
+                        case 320:
+                        case 325:
+                        case 330:
+                        case 335:
+                        case 340:
+                        case 345:
+                        case 350:
                             k = (cycles / 5 - 40) * 25;
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
-                        case 450 / 6 * 5:
-                        case 480 / 6 * 5:
-                        case 510 / 6 * 5:
-                        case 540 / 6 * 5:
+                        case 375:
+                        case 400:
+                        case 425:
+                        case 450:
                             game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             game.addEnemy(new CircularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if (cycles > 540 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 450 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 1:
                     switch (cycles) {
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
-                        case 564 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
+                        case 470:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 50, 610, 8, true));
@@ -780,55 +782,56 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                     }
-                    if (cycles > 564 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 470 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 2:
                     switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new MB1(10, 225, -10, 20));
                             game.addEnemy(new MB1(10, 525, -10, 20));
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
-                        case 84 / 6 * 5:
-                        case 144 / 6 * 5:
-                        case 204 / 6 * 5:
-                        case 264 / 6 * 5:
-                        case 324 / 6 * 5:
-                        case 384 / 6 * 5:
-                        case 444 / 6 * 5:
-                        case 504 / 6 * 5:
+                        case 20:
+                        case 70:
+                        case 120:
+                        case 170:
+                        case 220:
+                        case 270:
+                        case 320:
+                        case 370:
+                        case 420:
                             final int offset = (cycles / 5 - 4) / 5;
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, 100));
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
-                        case 150 / 6 * 5:
-                        case 270 / 6 * 5:
-                        case 390 / 6 * 5:
-                        case 510 / 6 * 5:
+                        case 125:
+                        case 225:
+                        case 325:
+                        case 425:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             break;
                     }
-                    if (cycles > 132 / 6 * 5 && game.enemies.isEmpty()) {
+                    // XXX: Was > 110 intentional?
+                    if (cycles > 110 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 3:
                    switch (cycles) {
-                        case 12 / 6 * 5:
+                        case 10:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             break;
-                        case 24 / 6 * 5:
+                        case 20:
                             game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(new AltMB1(10, 225, -10, 20));
                             game.addEnemy(new AltMB1(10, 525, -10, 20));
                             break;
-                        case 324 / 6 * 5:
+                        case 270:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             game.addEnemy(new AltMB1(10, 225, -10, 20));
                             game.addEnemy(new AltMB1(10, 525, -10, 20));
@@ -839,7 +842,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
-                        case 624 / 6 * 5:
+                        case 520:
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             game.addEnemy(new AltMB1(10, 225, -10, 20));
                             game.addEnemy(new AltMB1(10, 525, -10, 20));
@@ -849,23 +852,23 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 624 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 520 && game.enemies.isEmpty()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 4:
                     switch (cycles) {
-                        case 12 / 6 * 5:
-                        case 72 / 6 * 5:
-                        case 132 / 6 * 5:
-                        case 198 / 6 * 5:
-                        case 252 / 6 * 5:
-                        case 312 / 6 * 5:
-                        case 378 / 6 * 5:
-                        case 432 / 6 * 5:
-                        case 492 / 6 * 5:
-                        case 558 / 6 * 5:
+                        case 10:
+                        case 60:
+                        case 110:
+                        case 165:
+                        case 210:
+                        case 260:
+                        case 315:
+                        case 360:
+                        case 410:
+                        case 465:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, 610, 8, true));
@@ -875,11 +878,11 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new SingleShotEnemy(1, 450, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 300, -10, 8, false));
                             break;
-                        case 150 / 6 * 5:
+                        case 125:
                             game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
                             game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
                             break;
-                        case 450 / 6 * 5:
+                        case 375:
                             game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
                             game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
                             break;
@@ -917,7 +920,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 6:
-                    if (cycles % 1200 / 6 * 5 == 0) {
+                    if (cycles % 1000 == 0) {
                         switch (++phase) {
                             case 0:
                                 drift.accelY = -20;
@@ -939,7 +942,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 12 / 6 * 5 && game.enemies.isEmpty()) {
+                    if (cycles > 10 && game.enemies.isEmpty()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
