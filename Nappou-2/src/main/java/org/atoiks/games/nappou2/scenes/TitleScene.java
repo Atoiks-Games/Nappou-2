@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -70,7 +71,7 @@ public final class TitleScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || Input.isMouseButtonClicked(1, 2)) {
             if (selector < sceneDest.length) {
                 scene.switchToScene(sceneDest[selector]);
                 return true;
@@ -79,15 +80,15 @@ public final class TitleScene extends GameScene {
             // Quit was chosen
             return false;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             if (++selector >= selectorY.length) selector = 0;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = selectorY.length - 1;
         }
 
-        if (scene.mouse().positionChanged()) {
-            final int mouseY = scene.mouse().getLocalY();
+        if (Input.mouseMoved()) {
+            final int mouseY = Input.getLocalY();
             for (int i = 0; i < selectorY.length; ++i) {
                 final int selBase = selectorY[i];
                 if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {

@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -80,14 +81,14 @@ public final class ScoreScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE) || scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             scene.switchToScene(0);
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
+        if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
             plane = (plane + 1) % PLANE_MSG.length;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (Input.isKeyPressed(KeyEvent.VK_LEFT)) {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
         }
         return true;

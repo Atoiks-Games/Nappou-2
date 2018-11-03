@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 
 import se.tube42.lib.tweeny.TweenManager;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -208,7 +209,7 @@ public abstract class AbstractGameScene extends GameScene {
     public boolean update(final float dt) {
         // Hopefully the only "black magic" in here
         if (!pause) {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = true;
             }
             playerFireTimeout -= dt;
@@ -221,13 +222,13 @@ public abstract class AbstractGameScene extends GameScene {
                 && updatePlayerBulletPos(dt) && procPlayerPos(dt)
                 && testCollisions(dt) && postUpdate(dt);
         } else {
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
                 selector = 0;
                 return true;
             }
 
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
+            if (Input.isKeyPressed(KeyEvent.VK_ENTER) || Input.isMouseButtonClicked(1, 2)) {
                 if (selector == 0) {
                     pause = false;
                 } else {
@@ -237,15 +238,15 @@ public abstract class AbstractGameScene extends GameScene {
                 }
                 return true;
             }
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+            if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
                 if (++selector >= selectorY.length) selector = 0;
             }
-            if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+            if (Input.isKeyPressed(KeyEvent.VK_UP)) {
                 if (--selector < 0) selector = selectorY.length - 1;
             }
 
-            if (scene.mouse().positionChanged()) {
-                final int mouseY = scene.mouse().getLocalY();
+            if (Input.mouseMoved()) {
+                final int mouseY = Input.getLocalY();
                 for (int i = 0; i < selectorY.length; ++i) {
                     final int selBase = selectorY[i];
                     if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
@@ -312,8 +313,8 @@ public abstract class AbstractGameScene extends GameScene {
         // TODO: Simplify this
         float tmpVal = drift.getDy();
         float tmpPos = game.player.getY();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_DOWN))   tmpVal += DEFAULT_DY;
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_UP))     tmpVal -= DEFAULT_DY;
+        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpVal += DEFAULT_DY;
+        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpVal -= DEFAULT_DY;
         if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
@@ -321,25 +322,25 @@ public abstract class AbstractGameScene extends GameScene {
 
         tmpVal = drift.getDx();
         tmpPos = game.player.getX();
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_RIGHT))  tmpVal += DEFAULT_DX;
-        if (scene.keyboard().isKeyDown(KeyEvent.VK_LEFT))   tmpVal -= DEFAULT_DX;
+        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpVal += DEFAULT_DX;
+        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpVal -= DEFAULT_DX;
         if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
         game.player.setDx(tmpVal);
 
-        game.player.setSpeedScale(scene.keyboard().isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        game.player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
 
         game.player.update(dt);
 
-        if (playerFireTimeout <= 0 && scene.keyboard().isKeyDown(KeyEvent.VK_Z)) {
+        if (playerFireTimeout <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
             final float px = game.player.getX();
             final float py = game.player.getY();
             game.addPlayerBullet(new PointBullet(px, py, 5, 0, -DEFAULT_DY * 4.5f));
             playerFireTimeout = 0.2f;  // 0.2 second cap
         }
 
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_X)) {
+        if (Input.isKeyPressed(KeyEvent.VK_X)) {
             game.player.shield.activate();
         }
         return true;

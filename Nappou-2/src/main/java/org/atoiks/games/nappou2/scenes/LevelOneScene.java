@@ -26,6 +26,7 @@ import javax.sound.sampled.Clip;
 import se.tube42.lib.tweeny.Item;
 import se.tube42.lib.tweeny.TweenEquation;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.*;
@@ -127,7 +128,7 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
-        if (scene.keyboard().isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
+        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
             scene.gotoNextScene();
             return true;
         }
@@ -220,7 +221,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     displayNextPrebossDialogue();
                     break;
                 case 5:
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
@@ -269,7 +270,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
-                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             scene.switchToScene(0);
                         }
                     }
@@ -384,7 +385,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 5:
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
@@ -433,7 +434,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
-                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             scene.switchToScene(0);
                         }
                     }
@@ -609,7 +610,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 5:
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
@@ -658,7 +659,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
-                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             scene.switchToScene(0);
                         }
                     }
@@ -668,10 +669,10 @@ public final class LevelOneScene extends AbstractGameScene {
 
             case INSANE:
             //DEV CHEAT CODE
-            //if (scene.keyboard().isKeyPressed(KeyEvent.VK_Q)) {
+            //if (Input.isKeyPressed(KeyEvent.VK_Q)) {
             //    disableDamage();
             //}
-            //if (scene.keyboard().isKeyPressed(KeyEvent.VK_E)) {
+            //if (Input.isKeyPressed(KeyEvent.VK_E)) {
             //    enableDamage();
             //}
             switch (wave) {
@@ -896,7 +897,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 5:
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
@@ -945,7 +946,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
-                        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             scene.switchToScene(0);
                         }
                     }
