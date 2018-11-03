@@ -205,6 +205,8 @@ public abstract class AbstractGameScene extends GameScene {
         }
     }
 
+    private byte k = 0;
+
     @Override
     public boolean update(final float dt) {
         // Hopefully the only "black magic" in here
@@ -218,9 +220,15 @@ public abstract class AbstractGameScene extends GameScene {
             TweenManager.service((long) (dt * 1000));
 
             drift.update(dt);
-            return updateEnemyBulletPos(dt) && updateEnemyPos(dt)
+            if (updateEnemyBulletPos(dt) && updateEnemyPos(dt)
                 && updatePlayerBulletPos(dt) && procPlayerPos(dt)
-                && testCollisions(dt) && postUpdate(dt);
+                && testCollisions(dt)) {
+
+                // Temporary hack...
+                return (++k % 6 == 0) ? postUpdate(dt) : true;
+            }
+            // Reaching here means one of the updates returned false
+            return false;
         } else {
             if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
