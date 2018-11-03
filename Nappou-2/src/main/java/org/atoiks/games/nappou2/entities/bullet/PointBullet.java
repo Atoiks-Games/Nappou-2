@@ -24,7 +24,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
-public final class PointBullet implements IBullet {
+public final class PointBullet extends IBullet {
 
     private static final long serialVersionUID = 3928242215L;
 
@@ -49,7 +49,7 @@ public final class PointBullet implements IBullet {
     @Override
     public void render(final IGraphics g) {
         // Can change this to using textures later
-        g.setColor(Color.white);
+        g.setColor(color);
         // x, y are the center of the bullet
         g.drawOval(x - r, y - r, x + r, y + r);
     }

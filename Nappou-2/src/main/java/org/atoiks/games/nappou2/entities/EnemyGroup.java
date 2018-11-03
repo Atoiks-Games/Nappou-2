@@ -24,6 +24,8 @@ import java.util.function.IntFunction;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.graphics.NullEnemyRenderer;
+
 public abstract class EnemyGroup extends IEnemy {
 
     private static final long serialVersionUID = 823469624677L;
@@ -32,6 +34,7 @@ public abstract class EnemyGroup extends IEnemy {
 
     /* Package */ EnemyGroup() {
         super(0);
+        this.compRenderer = NullEnemyRenderer.INSTANCE;
     }
 
     @Override
@@ -63,11 +66,6 @@ public abstract class EnemyGroup extends IEnemy {
     @Override
     public final float getR() {
         return -1;
-    }
-
-    @Override
-    public final void render(IGraphics g) {
-        // Do nothing (only in charge of sending enemies)
     }
 
     @Override
