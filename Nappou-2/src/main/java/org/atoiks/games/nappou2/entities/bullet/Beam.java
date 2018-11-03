@@ -28,7 +28,7 @@ import org.atoiks.games.nappou2.entities.IBullet;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 import static org.atoiks.games.nappou2.TrigConstants.*;
 
-public final class Beam implements IBullet {
+public final class Beam extends IBullet {
 
     private static final long serialVersionUID = 4412375L;
     private static final int ARR_SIZE = 8;
@@ -59,7 +59,7 @@ public final class Beam implements IBullet {
 
     @Override
     public void render(final IGraphics g) {
-        g.setColor(Color.white);
+        g.setColor(color);
         g.fillPolygon(dest);
     }
 

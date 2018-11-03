@@ -16,23 +16,28 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.graphics;
 
-import java.io.Serializable;
+import java.awt.Image;
 
-import java.awt.Color;
+import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.framework2d.IUpdate;
-import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.nappou2.entities.IEnemy;
 
-public abstract class IBullet implements ICollidable, IRender, IUpdate, Serializable {
+public final class ImageEnemyRenderer implements IEnemyRenderer {
 
-    public Color color = Color.white;
+    private final Image image;
 
-    public abstract float getX();
-    public abstract float getY();
-    public abstract float getDx();
-    public abstract float getDy();
+    public ImageEnemyRenderer(final Image image) {
+        this.image = image;
+    }
 
-    public abstract void translate(float dx, float dy);
+    public void render(IGraphics g, IEnemy obj) {
+        // x, y are the center of the enemy
+        final float x = obj.getX();
+        final float y = obj.getY();
+        final float r = obj.getR();
+        // Draw the image over the square occupied by the enemy
+        g.drawImage(image, x - r, y - r, x + r, y + r);
+    }
 }

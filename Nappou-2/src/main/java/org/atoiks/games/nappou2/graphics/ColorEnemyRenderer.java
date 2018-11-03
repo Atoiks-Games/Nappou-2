@@ -16,23 +16,30 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
-
-import java.io.Serializable;
+package org.atoiks.games.nappou2.graphics;
 
 import java.awt.Color;
 
-import org.atoiks.games.framework2d.IUpdate;
-import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.framework2d.IGraphics;
 
-public abstract class IBullet implements ICollidable, IRender, IUpdate, Serializable {
+import org.atoiks.games.nappou2.entities.IEnemy;
 
-    public Color color = Color.white;
+public final class ColorEnemyRenderer implements IEnemyRenderer {
 
-    public abstract float getX();
-    public abstract float getY();
-    public abstract float getDx();
-    public abstract float getDy();
+    public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
 
-    public abstract void translate(float dx, float dy);
+    private Color color;
+
+    public ColorEnemyRenderer(Color color) {
+        this.color = color;
+    }
+
+    public void render(IGraphics g, IEnemy obj) {
+        g.setColor(color);
+        // x, y are the center of the enemy
+        final float x = obj.getX();
+        final float y = obj.getY();
+        final float r = obj.getR();
+        g.drawOval(x - r, y - r, x + r, y + r);
+    }
 }

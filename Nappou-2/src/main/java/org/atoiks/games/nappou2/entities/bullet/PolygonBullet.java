@@ -26,7 +26,7 @@ import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-public final class PolygonBullet implements IBullet {
+public final class PolygonBullet extends IBullet {
 
     private static final long serialVersionUID = 2983462354L;
 
@@ -52,7 +52,7 @@ public final class PolygonBullet implements IBullet {
 
     @Override
     public void render(final IGraphics g) {
-        g.setColor(Color.white);
+        g.setColor(color);
         g.drawPolygon(coords);
     }
 
