@@ -220,15 +220,10 @@ public abstract class AbstractGameScene extends GameScene {
             TweenManager.service((long) (dt * 1000));
 
             drift.update(dt);
-            if (updateEnemyBulletPos(dt) && updateEnemyPos(dt)
-                && updatePlayerBulletPos(dt) && procPlayerPos(dt)
-                && testCollisions(dt)) {
 
-                // Temporary hack...
-                return (++k % 6 == 0) ? postUpdate(dt) : true;
-            }
-            // Reaching here means one of the updates returned false
-            return false;
+            return updateEnemyBulletPos(dt) && updateEnemyPos(dt)
+                && updatePlayerBulletPos(dt) && procPlayerPos(dt)
+                && testCollisions(dt) && postUpdate(dt);
         } else {
             if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
