@@ -73,7 +73,7 @@ public final class Level1Easy extends AbstractEnemy {
     }
 
     private void attack1() {
-        if (enemyTime % 1000 == 0) {
+        if (enemyTime % 6 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new PointBullet(-10, 575 + 25 * sin10t, 3, 1000, 0));
             game.addEnemyBullet(new PointBullet(760, 25 + 25 * sin10t, 3, -1000, 0));
