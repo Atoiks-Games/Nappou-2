@@ -73,18 +73,19 @@ public final class Level1Normal extends AbstractEnemy {
     }
 
     private void attack1() {
-        if (enemyTime % 6 == 0) {
+        if (enemyTime % 5 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new PointBullet(-10, 550 + 50 * sin10t, 3, 1000, 0));
             game.addEnemyBullet(new PointBullet(760, 50 + 50 * sin10t, 3, -1000, 0));
         }
-        if (enemyTime % 3 == 0) {
+        // XXX: 500 / 1000 * 5 = 2.5
+        if (enemyTime % 2 == 0) {
             game.addEnemyBullet(new Beam(rnd.nextFloat() * 750, -15, 5, 30, PI_DIV_2, 1000));
         }
     }
 
     private void attack2() {
-        if (enemyTime % 6 == 0) {
+        if (enemyTime % 5 == 0) {
             game.addEnemyBullet(new Beam(375 + 375 * (float) Math.sin(10 * time), -15, 5, 30, PI_DIV_2, 1000));
 
             final float x = getX();
@@ -95,17 +96,17 @@ public final class Level1Normal extends AbstractEnemy {
     }
 
     private void attack3() {
-        if (enemyTime % 6 == 0) {
+        if (enemyTime % 5 == 0) {
             game.addEnemyBullet(new Beam(-15, rnd.nextFloat() * 600, 5, 30, 0, 1000));
             game.addEnemyBullet(new Beam(765, rnd.nextFloat() * 600, 5, 30, (float) Math.PI, 1000));
         }
     }
 
     private void attack4() {
-        if (enemyTime % 6 == 0) {
+        if (enemyTime % 5 == 0) {
             game.addEnemyBullet(new PointBullet(375 + 375 * (float) Math.sin(10 * time), 610, 2, 0, -1000));
         }
-        if (enemyTime % 60 == 0) {
+        if (enemyTime % 50 == 0) {
             final float x = getX();
             final float y = getY();
             final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
@@ -114,6 +115,7 @@ public final class Level1Normal extends AbstractEnemy {
     }
 
     private void attack5() {
+        // XXX: 1500 / 1000 * 5 = 7.5
         if (enemyTime % 7 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new PointBullet(375 + 375 * sin10t, 610, 2, 0, -1000));

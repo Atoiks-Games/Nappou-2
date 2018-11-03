@@ -219,11 +219,15 @@ public abstract class AbstractGameScene extends GameScene {
             // TweenManager uses milliseconds, dt is seconds
             TweenManager.service((long) (dt * 1000));
 
-            drift.update(dt);
+            // This is the magic number that makes all of this work!
+            // it is 5 because the update sequence used to be split
+            // between phases 0 to 4 (which adds up to 5 phases)
+            final float dtDiv5 = dt / 5;
+            drift.update(dtDiv5);
 
-            return updateEnemyBulletPos(dt) && updateEnemyPos(dt)
-                && updatePlayerBulletPos(dt) && procPlayerPos(dt)
-                && testCollisions(dt) && postUpdate(dt);
+            return procPlayerPos(dt) && updateEnemyBulletPos(dtDiv5)
+                && updateEnemyPos(dtDiv5) && updatePlayerBulletPos(dtDiv5)
+                && testCollisions() && postUpdate(dtDiv5);
         } else {
             if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
@@ -268,7 +272,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         for (int i = 0; i < game.enemies.size(); ++i) {
             final IEnemy enemy = game.enemies.get(i);
-            enemy.update(dt / 6);
+            enemy.update(dt);
             enemy.drift(driftX, driftY);
             if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemies.remove(i);
@@ -284,7 +288,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         for (int i = 0; i < game.enemyBullets.size(); ++i) {
             final IBullet bullet = game.enemyBullets.get(i);
-            bullet.update(dt / 6);
+            bullet.update(dt);
             bullet.translate(driftX, driftY);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.enemyBullets.remove(i);
@@ -300,7 +304,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         for (int i = 0; i < game.playerBullets.size(); ++i) {
             final IBullet bullet = game.playerBullets.get(i);
-            bullet.update(dt / 6);
+            bullet.update(dt);
             bullet.translate(driftX, driftY);
             if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
                 game.playerBullets.remove(i);
@@ -349,7 +353,7 @@ public abstract class AbstractGameScene extends GameScene {
         return true;
     }
 
-    private boolean testCollisions(final float dt) {
+    private boolean testCollisions() {
         if (ignoreDamage) return true;
 
         final float px = game.player.getX();
