@@ -88,7 +88,7 @@ public final class LevelOneScene extends AbstractGameScene {
         resetDialogue();
         cycles = 0;
         wave = 0;
-        phase = -1;
+        phase = 0;
 
         prebossMsgPhase = -1;
 
@@ -100,7 +100,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         bgm = (Clip) scene.resources().get("Level_One.wav");
         if (cfg.bgm) {
-            bgm.setMicrosecondPosition(bgm.getMicrosecondLength()-1000000);
+            bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -127,10 +127,10 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
-        /*if (scene.keyboard().isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
+        if (scene.keyboard().isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
             scene.gotoNextScene();
             return true;
-        */
+        }
 
         ++cycles;
         switch (difficulty) {
@@ -243,8 +243,6 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -409,8 +407,6 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -636,8 +632,6 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;
@@ -925,8 +919,6 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 6:
                     if (cycles % 200000 == 0) {
                         switch (++phase) {
-                            default:
-                                phase = 0; // FALLTHROUGH
                             case 0:
                                 drift.accelY = -20;
                                 drift.accelX = 20;

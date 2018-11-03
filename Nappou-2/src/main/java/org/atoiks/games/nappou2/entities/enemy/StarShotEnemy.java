@@ -22,35 +22,39 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MiniBomberEnemy extends AbstractEnemy {
+public final class StarShotEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
     private float time;
     private boolean fireGate;
-    private int dir;
-    private float spd;
 
-    public MiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
+    private final int invSign;
+
+    public StarShotEnemy(int hp, float x, float y, float r, boolean inverted) {
         super(hp, x, y, r);
-        dir = direction;
-        spd = speed;
+        this.invSign = inverted ? -1 : 1;
     }
 
     @Override
     public void update(float dt) {
         time += dt;
 
-        setX(getX() + dir * 300 * dt);
+        setY(getY() + invSign * 300 * dt);
 
-        final double cosSpdTime = Math.cos(spd * time);
-        if (!fireGate && cosSpdTime < 0.5) {
+        if (!fireGate && Math.cos(6 * time) < 0.5) {
             fireGate = true;
         }
 
-        if (fireGate && cosSpdTime > 0.5) {
+        if (fireGate && Math.cos(6 * time) > 0.5) {
             fireGate = false;
-            game.addEnemyBullet(new PointBullet(getX(), getY(), 2, 0, 1000));
+            final float x = getX();
+            final float y = getY();
+            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle + Math.PI / 2), 1000 * (float) Math.sin(angle + Math.PI / 2)));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle + Math.PI), 1000 * (float) Math.sin(angle + Math.PI)));
+            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle - Math.PI / 2), 1000 * (float) Math.sin(angle - Math.PI / 2)));
         }
     }
 

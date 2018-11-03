@@ -26,35 +26,29 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
+import static org.atoiks.games.nappou2.TrigConstants.*;
 
 public final class Beam implements IBullet {
 
     private static final long serialVersionUID = 4412375L;
+    private static final int ARR_SIZE = 8;
 
-    private final float angle, dmag, cos, sin;
-    private float x, y, thickness, length;
+    private final float dx, dy;
+    private float x, y;
+    private float halfThickness, length;
 
-    private final float[] dest = new float[8];
+    private final float[] dest = new float[ARR_SIZE];
+    private final AffineTransform mat;
 
     public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
         this.x = x;
         this.y = y;
-        this.thickness = thickness;
+        this.halfThickness = thickness / 2;
         this.length = length;
-        this.dmag = dmag;
 
-        final float rad = normalizeRadians(angle);
-        this.angle = rad;
-        this.cos = (float) Math.cos(rad);
-        this.sin = (float) Math.sin(rad);
-    }
-
-    private static float normalizeRadians(float radians) {
-        radians = (float) (radians % (2 * Math.PI));
-        if (radians < 0) {
-            radians += 2 * Math.PI;
-        }
-        return radians;
+        this.dx = dmag * (float) Math.cos(angle);
+        this.dy = dmag * (float) Math.sin(angle);
+        this.mat = AffineTransform.getRotateInstance(angle - 3 * PI_DIV_2);
     }
 
     @Override
@@ -71,23 +65,25 @@ public final class Beam implements IBullet {
 
     @Override
     public void update(final float dt) {
-        this.x += getDx() * dt;
-        this.y += getDy() * dt;
+        this.x += dx * dt;
+        this.y += dy * dt;
 
-        final float angle = (float) (3 * Math.PI / 2 - this.angle);
-        final float t2 = thickness / 2;
-        final float l2 = length / 2;
+        // If we calculate a beam with (x, y) as (0, 0),
+        // it will be rectangle with diagonal from (-halfThickness, 0) to (halfThickness, -length).
+        // we rotate it around (0, 0) by angle, which has fixed value,
+        // then, we translate it by (x, y)
 
-        final AffineTransform t = AffineTransform.getRotateInstance(-angle, x, y);
-
+        final float len = -length;
         final float[] input = {
-            x - t2, y - l2,
-            x + t2, y - l2,
-            x + t2, y + t2,
-            x - t2, y + t2,
+            -halfThickness, 0,
+            halfThickness , 0,
+            halfThickness , len,
+            -halfThickness, len,
         };
 
-        t.transform(input, 0, dest, 0, input.length / 2);
+        final AffineTransform trans = AffineTransform.getTranslateInstance(x, y);
+        trans.concatenate(mat);
+        trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
     }
 
     @Override
@@ -102,12 +98,12 @@ public final class Beam implements IBullet {
 
     @Override
     public float getDx() {
-        return cos * this.dmag;
+        return this.dx;
     }
 
     @Override
     public float getDy() {
-        return sin * this.dmag;
+        return this.dy;
     }
 
     @Override
@@ -121,13 +117,13 @@ public final class Beam implements IBullet {
 
     @Override
     public boolean isOutOfScreen(final int w, final int h) {
-        if (angle == 0) return x > w;
-        if (angle > 0 && angle < Math.PI / 2) return x > w && y > h;
-        if (angle == Math.PI / 2) return y > h;
-        if (angle > Math.PI / 2) return y > h && x < 0;
-        if (angle == Math.PI) return x < 0;
-        if (angle > Math.PI && angle < Math.PI * 3 / 2) return x < 0 && y < 0;
-        if (angle == Math.PI * 3 / 2) return y < 0;
-        return y < 0 && x > w;
+        return isPtOutOfScreen(dest[0], dest[1], w, h)
+            && isPtOutOfScreen(dest[2], dest[3], w, h)
+            && isPtOutOfScreen(dest[4], dest[5], w, h)
+            && isPtOutOfScreen(dest[6], dest[7], w, h);
+    }
+
+    private static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
+        return !(x > 0 && y > 0 && x < w && y < h);
     }
 }

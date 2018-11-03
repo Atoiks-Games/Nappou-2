@@ -65,7 +65,7 @@ public final class TrackPointEnemy extends TweenEnemy {
             final float x = getX();
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(new PointBullet(x, y, radius,  (float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle))));
+            game.addEnemyBullet(new PointBullet(x, y, radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle)));
             ++bulletId;
             time = 0;
         }
