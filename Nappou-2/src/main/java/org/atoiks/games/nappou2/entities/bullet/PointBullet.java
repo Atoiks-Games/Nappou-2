@@ -24,7 +24,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
-import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
+import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public final class PointBullet extends IBullet {
 
@@ -84,16 +84,7 @@ public final class PointBullet extends IBullet {
 
     @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
-        // Only perform accurate collision if two both circles collide as
-        // squares.
-        if (centerSquareCollision(x, y, r, x1, y1, r1)) {
-            // Accurate collision checks distance between the circles.
-            final float dx = x1 - x;
-            final float dy = y1 - y;
-            final float dr = r1 + r;
-            return dx * dx + dy * dy < dr * dr;
-        }
-        return false;
+        return fastCircleCollision(x, y, r, x1, y1, r1);
     }
 
     @Override
