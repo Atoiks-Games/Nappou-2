@@ -67,4 +67,22 @@ public final class Utils {
 
         return hx * hx + hy * hy <= cr * cr;
     }
+
+    public static boolean centerSquareCollision(float x1, float y1, float h1,
+                                                float x2, float y2, float h2) {
+        // +------+
+        // |      | x, y = the center
+        // |      | h    = side length / 2 = apothem
+        // +------+
+        //
+        // squares do not rotate just check distance between
+
+        // return x1 - h1 < x2 + h2
+        //     && x1 + h1 > x2 - h2
+        //     && y1 - h1 < y2 + h2
+        //     && y1 + h1 > y2 - h1;
+        final float dist = h1 + h2;
+        return Math.abs(x1 - x2) < dist
+            && Math.abs(y1 - y2) < dist;
+    }
 }
