@@ -30,6 +30,8 @@ import org.atoiks.games.framework2d.IUpdate;
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
 import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
 
+import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
+
 public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializable {
 
     private static final long serialVersionUID = 8123472652L;
@@ -67,11 +69,20 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
     }
 
     @Override
-    public boolean collidesWith(float x1, float y1, float r1) {
-        final float dx = x1 - getX();
-        final float dy = y1 - getY();
-        final float dr = r1 + getR();
-        return dx * dx + dy * dy < dr * dr;
+    public boolean collidesWith(final float x1, final float y1, final float r1) {
+        final float x = getX();
+        final float y = getY();
+        final float r = getR();
+        // Only perform accurate collision if two both circles collide as
+        // squares.
+        if (centerSquareCollision(x, y, r, x1, y1, r1)) {
+            // Accurate collision checks distance between the circles.
+            final float dx = x1 - x;
+            final float dy = y1 - y;
+            final float dr = r1 + r;
+            return dx * dx + dy * dy < dr * dr;
+        }
+        return false;
     }
 
     @Override
