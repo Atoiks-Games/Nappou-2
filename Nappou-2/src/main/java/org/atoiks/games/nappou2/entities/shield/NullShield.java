@@ -27,16 +27,6 @@ public class NullShield implements IShield {
     private static final long serialVersionUID = -6024720306180805901L;
 
     @Override
-    public boolean collidesWith(float x, float y, float r) {
-        return false;
-    }
-
-    @Override
-    public boolean isOutOfScreen(int width, int height) {
-        return false;
-    }
-
-    @Override
     public void render(IGraphics g) {
         // Do nothing
     }

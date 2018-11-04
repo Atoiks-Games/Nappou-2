@@ -103,23 +103,6 @@ public abstract class TimeBasedShield implements IShield {
     }
 
     @Override
-    public boolean isOutOfScreen(int width, int height) {
-        // Being out of screen does not qualify it for deallocation
-        return false;
-    }
-
-    @Override
-    public boolean collidesWith(float x1, float y1, float r1) {
-        if (active) {
-            final float dx = x1 - x;
-            final float dy = y1 - y;
-            final float dr = r1 + r;
-            return dx * dx + dy * dy < dr * dr;
-        }
-        return false;
-    }
-
-    @Override
     public boolean isReady() {
         return time > timeout + reloadTime;
     }
