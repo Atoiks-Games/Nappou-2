@@ -354,8 +354,6 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     private boolean testCollisions() {
-        if (ignoreDamage) return true;
-
         final float px = game.player.getX();
         final float py = game.player.getY();
 
@@ -375,10 +373,12 @@ public abstract class AbstractGameScene extends GameScene {
             }
 
             if (!game.player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (game.player.changeHpBy(-1) <= 0) {
-                    // Goto title scene
-                    scene.switchToScene(0);
-                    return true;
+                if (!ignoreDamage) {
+                    if (game.player.changeHpBy(-1) <= 0) {
+                        // Goto title scene
+                        scene.switchToScene(0);
+                        return true;
+                    }
                 }
                 game.player.activateRespawnShield();
                 game.enemyBullets.remove(i);
@@ -414,10 +414,12 @@ public abstract class AbstractGameScene extends GameScene {
             }
 
             if (!game.player.isRespawnShieldActive() && enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (game.player.changeHpBy(-1) <= 0) {
-                    // Goto title scene
-                    scene.switchToScene(0);
-                    return true;
+                if (!ignoreDamage) {
+                    if (game.player.changeHpBy(-1) <= 0) {
+                        // Goto title scene
+                        scene.switchToScene(0);
+                        return true;
+                    }
                 }
                 game.player.activateRespawnShield();
                 if (enemy.changeHp(-1) <= 0) {
