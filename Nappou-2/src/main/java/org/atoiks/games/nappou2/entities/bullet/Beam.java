@@ -25,6 +25,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
+import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 import static org.atoiks.games.nappou2.TrigConstants.*;
 
@@ -107,12 +108,20 @@ public final class Beam extends IBullet {
     }
 
     @Override
-    public boolean collidesWith(final float x, final float y, final float r) {
-        // Manual loop unrolling
-        return intersectSegmentCircle(dest[0], dest[1], dest[2], dest[3], x, y, r)
-            || intersectSegmentCircle(dest[2], dest[3], dest[4], dest[5], x, y, r)
-            || intersectSegmentCircle(dest[4], dest[5], dest[6], dest[7], x, y, r)
-            || intersectSegmentCircle(dest[6], dest[7], dest[0], dest[1], x, y, r);
+    public boolean collidesWith(final float x1, final float y1, final float r1) {
+        // Only perform accurate collision if the square formed by center
+        // point (x, y) with apothem collides with the circle also
+        // approximated as a square with the apothem being its radius.
+        final float apothem = Math.max(halfThickness, length * 2) / 2;
+        if (centerSquareCollision(x, y, apothem, x1, y1, r1)) {
+            // Accurate collision checks if any of the sides intersect with
+            // the circle.
+            return intersectSegmentCircle(dest[0], dest[1], dest[2], dest[3], x1, y1, r1)
+                || intersectSegmentCircle(dest[2], dest[3], dest[4], dest[5], x1, y1, r1)
+                || intersectSegmentCircle(dest[4], dest[5], dest[6], dest[7], x1, y1, r1)
+                || intersectSegmentCircle(dest[6], dest[7], dest[0], dest[1], x1, y1, r1);
+        }
+        return false;
     }
 
     @Override
