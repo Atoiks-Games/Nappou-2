@@ -20,10 +20,14 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import java.awt.Color;
 
+import java.util.Arrays;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
+import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
+import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 public final class PolygonBullet extends IBullet {
@@ -36,18 +40,45 @@ public final class PolygonBullet extends IBullet {
     private final float[] coords;
     private float dx, dy;
 
+    private float boundX, boundY, boundR;
+
     public PolygonBullet(float[] coords, float dx, float dy) {
-        this.coords = coords;
         this.dx = dx;
         this.dy = dy;
+
+        final float[] copy = Arrays.copyOf(coords, coords.length);
+        this.coords = copy;
+
+        // Reshape the bounding box here
+        float x1 = Float.POSITIVE_INFINITY;
+        float y1 = Float.POSITIVE_INFINITY;
+        float x2 = Float.NEGATIVE_INFINITY;
+        float y2 = Float.NEGATIVE_INFINITY;
+        for (int i = 0; i < coords.length; i += 2) {
+            final float x = coords[i];
+            final float y = coords[i + 1];
+            if (x < x1) x1 = x;
+            if (x > x2) x2 = x;
+            if (y < y1) y1 = y;
+            if (y > y2) y2 = y;
+        }
+
+        // boundX boundY is center of bounding box
+        boundX = (x1 + x2) / 2;
+        boundY = (y1 + y2) / 2;
+        // + 4 just in case for some reason the shape is actually not contained
+        // properly within the bounding box
+        boundR = Math.max(x2 - x1, y2 - y1) / 2 + 4;
     }
 
     @Override
     public void translate(float dx, float dy) {
         for (int i = 0; i < coords.length; i += 2) {
-            coords[i + 0] += dx;
+            coords[i] += dx;
             coords[i + 1] += dy;
         }
+        boundX += dx;
+        boundY += dy;
     }
 
     @Override
@@ -82,14 +113,16 @@ public final class PolygonBullet extends IBullet {
     }
 
     @Override
-    public boolean collidesWith(float x1, float y1, float r1) {
-        for (int i = 0; i < coords.length; i += 2) {
-            final float startX = coords[i];
-            final float startY = coords[i + 1];
-            final float endX   = coords[(i + 2) % coords.length];
-            final float endY   = coords[(i + 3) % coords.length];
-            if (intersectSegmentCircle(startX, startY, endX, endY, x1, y1, r1)) {
-                return true;
+    public boolean collidesWith(final float x1, final float y1, final float r1) {
+        if (centerSquareCollision(boundX, boundY, boundR, x1, y1, r1)) {
+            for (int i = 0; i < coords.length; i += 2) {
+                final float startX = coords[i];
+                final float startY = coords[i + 1];
+                final float endX   = coords[(i + 2) % coords.length];
+                final float endY   = coords[(i + 3) % coords.length];
+                if (intersectSegmentCircle(startX, startY, endX, endY, x1, y1, r1)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -98,17 +131,10 @@ public final class PolygonBullet extends IBullet {
     @Override
     public boolean isOutOfScreen(final int w, final int h) {
         for (int i = 0; i < coords.length; i += 2) {
-            if (pointIsOutOfScreen(coords[i], coords[i + 1])) {
+            if (isPtOutOfScreen(coords[i], coords[i + 1], w, h)) {
                 return true;
             }
         }
         return false;
-    }
-
-    private static boolean pointIsOutOfScreen(float x, float y) {
-        return (x < -SCREEN_EDGE_BUFFER)
-            || (x > SCREEN_EDGE_BUFFER)
-            || (y < -SCREEN_EDGE_BUFFER)
-            || (y > SCREEN_EDGE_BUFFER);
     }
 }

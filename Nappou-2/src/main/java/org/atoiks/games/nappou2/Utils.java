@@ -98,4 +98,8 @@ public final class Utils {
         }
         return false;
     }
+
+    public static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
+        return !(x > 0 && y > 0 && x < w && y < h);
+    }
 }

@@ -25,6 +25,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
+import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 import static org.atoiks.games.nappou2.TrigConstants.*;
@@ -130,9 +131,5 @@ public final class Beam extends IBullet {
             && isPtOutOfScreen(dest[2], dest[3], w, h)
             && isPtOutOfScreen(dest[4], dest[5], w, h)
             && isPtOutOfScreen(dest[6], dest[7], w, h);
-    }
-
-    private static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
-        return !(x > 0 && y > 0 && x < w && y < h);
     }
 }
