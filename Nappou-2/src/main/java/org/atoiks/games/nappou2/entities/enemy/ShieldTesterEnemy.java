@@ -41,10 +41,10 @@ public final class ShieldTesterEnemy extends AbstractEnemy {
 
         setY(getY() + 600 * dt);
 
-        if (time > 0.001) {
+        if (time > 0.0001) {
             final float x = getX();
             final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, invSign * (x > 375 ? -1 : 1) * 5000, 0));
+            game.addEnemyBullet(new PointBullet(x, y, 2, invSign * (x > 375 ? -1 : 1) * 2510, 600));
             time = 0;
         }
     }

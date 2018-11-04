@@ -211,7 +211,7 @@ public final class TutorialScene extends AbstractGameScene {
                     enableDamage();
                     enableInput();
                     //bossMode = true;
-                    game.addEnemy(new CAITutorial(75, 375, -10, 20));
+                    game.addEnemy(new CAITutorial(50, 375, -10, 20));
                     ++waveCounter;
                     break;
                 case 12:

@@ -52,6 +52,7 @@ public class App {
                 .setTitle("Atoiks Games - Nappou 2")
                 .setResizable(false)
                 .setSize(900, 600)
+                .setFps(120.0f)
                 .setLoader(new LoadingScene())
                 .setGameScenes(new TitleScene(), new TutorialScene(), new ScoreScene(), new ConfigScene(), new DiffOptionScene(), new ShieldOptionScene(), new LevelOneScene(), new LevelTwoScene());
         final Frame frame = new Frame(info);
