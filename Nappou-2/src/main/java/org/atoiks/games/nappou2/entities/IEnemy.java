@@ -27,6 +27,9 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IUpdate;
 
+import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
+import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
+
 public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializable {
 
     private static final long serialVersionUID = 8123472652L;
@@ -34,6 +37,8 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
     protected static final int SCREEN_EDGE_BUFFER = 16;
 
     protected int hp;
+
+    public IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
 
     protected IEnemy(int hp) {
         this.hp = hp;
@@ -57,13 +62,8 @@ public abstract class IEnemy implements ICollidable, IRender, IUpdate, Serializa
     }
 
     @Override
-    public void render(IGraphics g) {
-        g.setColor(Color.white);
-        // x, y are the center of the enemy
-        final float x = getX();
-        final float y = getY();
-        final float r = getR();
-        g.drawOval(x - r, y - r, x + r, y + r);
+    public final void render(IGraphics g) {
+        compRenderer.render(g, this);
     }
 
     @Override

@@ -16,23 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.graphics;
 
-import java.io.Serializable;
+import org.atoiks.games.framework2d.IGraphics;
 
-import java.awt.Color;
+import org.atoiks.games.nappou2.entities.IEnemy;
 
-import org.atoiks.games.framework2d.IUpdate;
-import org.atoiks.games.framework2d.IRender;
+public interface IEnemyRenderer {
 
-public abstract class IBullet implements ICollidable, IRender, IUpdate, Serializable {
-
-    public Color color = Color.white;
-
-    public abstract float getX();
-    public abstract float getY();
-    public abstract float getDx();
-    public abstract float getDy();
-
-    public abstract void translate(float dx, float dy);
+    public void render(IGraphics g, IEnemy enemy);
 }
