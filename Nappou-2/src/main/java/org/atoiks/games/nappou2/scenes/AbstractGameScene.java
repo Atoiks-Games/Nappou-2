@@ -205,8 +205,6 @@ public abstract class AbstractGameScene extends GameScene {
         }
     }
 
-    private byte k = 0;
-
     @Override
     public boolean update(final float dt) {
         // Hopefully the only "black magic" in here
