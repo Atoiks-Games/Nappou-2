@@ -48,14 +48,14 @@ public final class AltMB1 extends AbstractEnemy {
         final float y = getY();
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
 
-        if (enemyTime % 50 == 0) {
+        if (enemyTime % 200 == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {
                 final double k = i * PI_DIV_6;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
             }
         }
 
-        if ((enemyTime + 25) % 50 == 0) {
+        if ((enemyTime + 100) % 200 == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {
                 final int offset = 3 - i;
                 final double k = angle - offset * PI_DIV_6;
