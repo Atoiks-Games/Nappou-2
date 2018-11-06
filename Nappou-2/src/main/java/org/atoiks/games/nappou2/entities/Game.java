@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IGraphics;
@@ -33,6 +34,10 @@ public final class Game implements Serializable, IRender {
     private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
     private final LinkedList<IBullet> playerBullets = new LinkedList<>();
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
+
+    // Workaround for enemies that add other enemies
+    // in their update method (see addEnemy method)
+    private ListIterator<IEnemy> enemyIterator;
 
     public Player player;
 
@@ -70,7 +75,14 @@ public final class Game implements Serializable, IRender {
     }
 
     public void addEnemy(final IEnemy enemy) {
-        enemies.add(enemy);
+        if (enemyIterator == null) {
+            enemies.add(enemy);
+        } else {
+            // Add to iterator instead of the linkedlist:
+            // prevents ConcurrentModificationException
+            enemyIterator.add(enemy);
+            enemyIterator.previous();
+        }
         enemy.attachGame(this);
     }
 
@@ -101,15 +113,20 @@ public final class Game implements Serializable, IRender {
     }
 
     public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        for (final Iterator<IEnemy> it = enemies.iterator(); it.hasNext(); ) {
-            final IEnemy enemy = it.next();
+        // About to iterate through the enemies list,
+        // save the iterator for addEnemy
+        for (enemyIterator = enemies.listIterator(); enemyIterator.hasNext(); ) {
+            final IEnemy enemy = enemyIterator.next();
             enemy.update(dt);
             enemy.drift(dx, dy);
             if (enemy.isOutOfScreen(gameWidth, gameHeight)) {
-                it.remove();
+                enemyIterator.remove();
                 continue;
             }
         }
+
+        // Restore to null so addEnemy adds directly to the linked list
+        enemyIterator = null;
     }
 
     public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
