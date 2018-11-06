@@ -88,12 +88,10 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     protected final void disableDamage() {
-        // ignoreDamage = true;
         game.player.setIgnoreHpChange(true);
     }
 
     protected final void enableDamage() {
-        // ignoreDamage = false;
         game.player.setIgnoreHpChange(false);
     }
 
