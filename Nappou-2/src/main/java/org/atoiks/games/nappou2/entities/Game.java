@@ -21,7 +21,7 @@ package org.atoiks.games.nappou2.entities;
 import java.io.Serializable;
 
 import java.util.Iterator;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IGraphics;
@@ -32,9 +32,10 @@ public final class Game implements Serializable, IRender {
 
     private static final long serialVersionUID = 62102375L;
 
-    private final ArrayList<IBullet> enemyBullets = new ArrayList<>(64);
-    private final ArrayList<IBullet> playerBullets = new ArrayList<>(16);
-    private final ArrayList<IEnemy> enemies = new ArrayList<>(32);
+
+    private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
+    private final LinkedList<IBullet> playerBullets = new LinkedList<>();
+    private final LinkedList<IEnemy> enemies = new LinkedList<>();
 
     public Player player;
 
