@@ -26,8 +26,6 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IBullet;
-
 public final class Game implements Serializable, IRender {
 
     private static final long serialVersionUID = 62102375L;
