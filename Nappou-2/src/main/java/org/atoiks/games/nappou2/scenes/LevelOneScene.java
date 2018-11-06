@@ -152,7 +152,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
                             break;
                     }
-                    if (cycles > 440 && game.enemies.isEmpty()) {
+                    if (cycles > 440 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -181,7 +181,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 1880 && game.enemies.isEmpty()) {
+                    if (cycles > 1880 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -190,7 +190,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles == 40) {
                         game.addEnemy(new MB1(10, 375, -10, 20));
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -205,7 +205,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 80 && game.enemies.isEmpty()) {
+                    if (cycles > 80 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -264,7 +264,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -300,7 +300,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if (cycles > 600 && game.enemies.isEmpty()) {
+                    if (cycles > 600 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -332,7 +332,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 1880 && game.enemies.isEmpty()) {
+                    if (cycles > 1880 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -343,7 +343,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         game.addEnemy(new MB1(10, 375, -10, 20));
                         game.addEnemy(new MB1(10, 525, -10, 20));
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -364,7 +364,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 680 && game.enemies.isEmpty()) {
+                    if (cycles > 680 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -373,7 +373,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles == 40) {
                         tweenRadialGroupPattern(game, w4eX, w4eR);
                     }
-                    if (cycles > 680 && game.enemies.isEmpty()) {
+                    if (cycles > 680 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -428,7 +428,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -484,7 +484,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
                             break;
                     }
-                    if (cycles > 800 && game.enemies.isEmpty()) {
+                    if (cycles > 800 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -516,7 +516,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                     }
-                    if (cycles > 1880 && game.enemies.isEmpty()) {
+                    if (cycles > 1880 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -542,7 +542,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
                     }
-                    if (cycles > 1680 && game.enemies.isEmpty()) {
+                    if (cycles > 1680 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -573,7 +573,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 2080 && game.enemies.isEmpty()) {
+                    if (cycles > 2080 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -598,7 +598,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new DropEnemy(1, 650, -10, 8, false));
                             break;
                     }
-                    if (cycles > 1840 && game.enemies.isEmpty()) {
+                    if (cycles > 1840 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -653,7 +653,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);
@@ -669,9 +669,9 @@ public final class LevelOneScene extends AbstractGameScene {
 
             case INSANE:
             //DEV CHEAT CODE
-            //if (Input.isKeyPressed(KeyEvent.VK_Q)) {
+            // if (Input.isKeyPressed(KeyEvent.VK_Q)) {
             //    disableDamage();
-            //}
+            // }
             //if (Input.isKeyPressed(KeyEvent.VK_E)) {
             //    enableDamage();
             //}
@@ -754,7 +754,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                             break;
                     }
-                    if (cycles > 1800 && game.enemies.isEmpty()) {
+                    if (cycles > 1800 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -780,7 +780,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new AdvancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
                             break;
                     }
-                    if (cycles > 940 && game.enemies.isEmpty()) {
+                    if (cycles > 940 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -812,7 +812,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new AltMB1(10, 375, -10, 20));
                             break;
                     }
-                    if (cycles > 1300 && game.enemies.isEmpty()) {
+                    if (cycles > 1300 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -849,7 +849,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new CircularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                     }
-                    if (cycles > 2080 && game.enemies.isEmpty()) {
+                    if (cycles > 2080 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
@@ -884,7 +884,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
                             break;
                     }
-                    if (cycles > 1840 && game.enemies.isEmpty()) {
+                    if (cycles > 1840 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                         bgm.stop();
@@ -939,7 +939,7 @@ public final class LevelOneScene extends AbstractGameScene {
                                 break;
                         }
                     }
-                    if (cycles > 40 && game.enemies.isEmpty()) {
+                    if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
                         updateDialogue("Elle", POSTBOSS_MSG);

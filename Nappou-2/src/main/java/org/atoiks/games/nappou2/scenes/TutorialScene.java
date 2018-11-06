@@ -120,7 +120,7 @@ public final class TutorialScene extends AbstractGameScene {
         }
 
 
-        if (game.enemies.isEmpty()) {
+        if (game.noMoreEnemies()) {
             switch (waveCounter) {
                 case 0:
                     if (!renderControls) {

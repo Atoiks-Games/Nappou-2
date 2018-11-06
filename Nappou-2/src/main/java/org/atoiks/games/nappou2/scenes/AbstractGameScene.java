@@ -62,7 +62,6 @@ public abstract class AbstractGameScene extends GameScene {
 
     protected final Game game = new Game();
 
-    private boolean ignoreDamage = false;
     private boolean disableInput = false;
 
     protected float playerFireTimeout;
@@ -89,11 +88,13 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     protected final void disableDamage() {
-        ignoreDamage = true;
+        // ignoreDamage = true;
+        game.player.setIgnoreHpChange(true);
     }
 
     protected final void enableDamage() {
-        ignoreDamage = false;
+        // ignoreDamage = false;
+        game.player.setIgnoreHpChange(false);
     }
 
     protected final void disableInput() {
@@ -117,6 +118,7 @@ public abstract class AbstractGameScene extends GameScene {
     @Override
     public void init() {
         hpImg = (Image) scene.resources().get("hp.png");
+        game.clipGameBorder(GAME_BORDER, HEIGHT);
     }
 
     @Override
@@ -127,7 +129,6 @@ public abstract class AbstractGameScene extends GameScene {
         playerFireTimeout = 0f;
         pause = false;
         enableInput();
-        enableDamage();
     }
 
     @Override
@@ -223,9 +224,17 @@ public abstract class AbstractGameScene extends GameScene {
             final float dtDiv5 = dt / 5;
             drift.update(dtDiv5);
 
-            return procPlayerPos(dt) && updateEnemyBulletPos(dtDiv5)
-                && updateEnemyPos(dtDiv5) && updatePlayerBulletPos(dtDiv5)
-                && testCollisions() && postUpdate(dtDiv5);
+            if (!procPlayerPos(dt)) return false;
+
+            final float driftX = dtDiv5 * drift.getDx();
+            final float driftY = dtDiv5 * drift.getDy();
+            game.updateEnemyPosition(dtDiv5, driftX, driftY);
+            game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
+            game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
+
+            // testCollisions() returns true if a scene change is requested
+            // which means we return as soon as it happens (hence || not &&)
+            return testCollisions() || postUpdate(dtDiv5);
         } else {
             if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = false;
@@ -259,54 +268,6 @@ public abstract class AbstractGameScene extends GameScene {
                         break;
                     }
                 }
-            }
-        }
-        return true;
-    }
-
-    private boolean updateEnemyPos(final float dt) {
-        final float driftX = dt * drift.getDx();
-        final float driftY = dt * drift.getDy();
-
-        for (int i = 0; i < game.enemies.size(); ++i) {
-            final IEnemy enemy = game.enemies.get(i);
-            enemy.update(dt);
-            enemy.drift(driftX, driftY);
-            if (enemy.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.enemies.remove(i);
-                if (--i < -1) break;
-            }
-        }
-        return true;
-    }
-
-    private boolean updateEnemyBulletPos(final float dt) {
-        final float driftX = dt * drift.getDx();
-        final float driftY = dt * drift.getDy();
-
-        for (int i = 0; i < game.enemyBullets.size(); ++i) {
-            final IBullet bullet = game.enemyBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(driftX, driftY);
-            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
-        return true;
-    }
-
-    private boolean updatePlayerBulletPos(final float dt) {
-        final float driftX = dt * drift.getDx();
-        final float driftY = dt * drift.getDy();
-
-        for (int i = 0; i < game.playerBullets.size(); ++i) {
-            final IBullet bullet = game.playerBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(driftX, driftY);
-            if (bullet.isOutOfScreen(GAME_BORDER, HEIGHT)) {
-                game.playerBullets.remove(i);
-                if (--i < -1) break;
             }
         }
         return true;
@@ -352,83 +313,12 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     private boolean testCollisions() {
-        final float px = game.player.getX();
-        final float py = game.player.getY();
-
-        final boolean shieldActive = game.player.shield.isActive();
-        final float sx = game.player.shield.getX();
-        final float sy = game.player.shield.getY();
-        final float sr = game.player.shield.getR();
-
-        for (int i = 0; i < game.enemyBullets.size(); ++i) {
-            final IBullet bullet = game.enemyBullets.get(i);
-
-            if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-                // bullet is already destroyed, start collision testing for next bullet
-                continue;
-            }
-
-            if (!game.player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (!ignoreDamage) {
-                    if (game.player.changeHpBy(-1) <= 0) {
-                        // Goto title scene
-                        scene.switchToScene(0);
-                        return true;
-                    }
-                }
-                game.player.activateRespawnShield();
-                game.enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
+        game.performCollisionCheck();
+        if (game.player.getHp() <= 0) {
+            scene.switchToScene(0);
+            return true;
         }
-
-        enemy_loop:
-        for (int i = 0; i < game.enemies.size(); ++i) {
-            final IEnemy enemy = game.enemies.get(i);
-
-            // If radius is less than zero, it cannot collide with anything, so skip iteration
-            final float er = enemy.getR();
-            if (er < 0) continue;
-
-            final float ex = enemy.getX();
-            final float ey = enemy.getY();
-
-            for (int j = 0; j < game.playerBullets.size(); ++j) {
-                final IBullet bullet = game.playerBullets.get(j);
-                if (bullet.collidesWith(ex, ey, er)) {
-                    game.playerBullets.remove(j);
-                    if (enemy.changeHp(-1) <= 0) {
-                        game.enemies.remove(i);
-                        game.changeScore(enemy.getScore());
-                        if (--i < -1) break enemy_loop;
-                    }
-                    if (--j < -1) break;
-
-                    // Enemy is killed, do not test collision against the player
-                    continue enemy_loop;
-                }
-            }
-
-            if (!game.player.isRespawnShieldActive() && enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                if (!ignoreDamage) {
-                    if (game.player.changeHpBy(-1) <= 0) {
-                        // Goto title scene
-                        scene.switchToScene(0);
-                        return true;
-                    }
-                }
-                game.player.activateRespawnShield();
-                if (enemy.changeHp(-1) <= 0) {
-                    game.enemies.remove(i);
-                    game.changeScore(enemy.getScore());
-                    if (--i < -1) break;
-                }
-            }
-        }
-
-        return true;
+        return false;
     }
 
     public static void drawDialog(IGraphics g, String speaker, String[] msg) {

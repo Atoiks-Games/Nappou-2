@@ -126,7 +126,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             break;
                     }
                     if (cycles > 600) {
-                        if (game.enemies.isEmpty()) {
+                        if (game.noMoreEnemies()) {
                             wave++;
                             cycles = 0;
                         }
@@ -154,7 +154,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             break;
                         }
                     if (cycles > 310) {
-                        if (game.enemies.isEmpty()) {
+                        if (game.noMoreEnemies()) {
                             wave++;
                             cycles = 0;
                         }

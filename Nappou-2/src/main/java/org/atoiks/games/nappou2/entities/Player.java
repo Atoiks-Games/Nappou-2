@@ -44,6 +44,8 @@ public final class Player implements IRender, IUpdate, Serializable {
     private int hp = 5;
     private float respawnShieldTime = RESPAWN_SHIELD_OFF;
 
+    private boolean ignoreHpChange;
+
     public Player(float x, float y, IShield shield) {
         this.x = x;
         this.y = y;
@@ -97,7 +99,14 @@ public final class Player implements IRender, IUpdate, Serializable {
     }
 
     public int changeHpBy(int delta) {
-        return this.hp += delta;
+        if (!ignoreHpChange) {
+            this.hp += delta;
+        }
+        return this.hp;
+    }
+
+    public void setIgnoreHpChange(boolean flag) {
+        ignoreHpChange = flag;
     }
 
     public void setSpeedScale(float scale) {
