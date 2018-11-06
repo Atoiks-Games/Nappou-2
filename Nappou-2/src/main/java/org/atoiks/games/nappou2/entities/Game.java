@@ -30,7 +30,6 @@ public final class Game implements Serializable, IRender {
 
     private static final long serialVersionUID = 62102375L;
 
-
     private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
     private final LinkedList<IBullet> playerBullets = new LinkedList<>();
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
