@@ -222,7 +222,7 @@ public abstract class AbstractGameScene extends GameScene {
             final float dtDiv5 = dt / 5;
             drift.update(dtDiv5);
 
-            if (!procPlayerPos(dt)) return false;
+            procPlayerPos(dt);
 
             final float driftX = dtDiv5 * drift.getDx();
             final float driftY = dtDiv5 * drift.getDy();
@@ -271,8 +271,8 @@ public abstract class AbstractGameScene extends GameScene {
         return true;
     }
 
-    private boolean procPlayerPos(final float dt) {
-        if (disableInput) return true;
+    private void procPlayerPos(final float dt) {
+        if (disableInput) return;
 
         // TODO: Simplify this
         float tmpVal = drift.getDy();
@@ -307,7 +307,6 @@ public abstract class AbstractGameScene extends GameScene {
         if (Input.isKeyPressed(KeyEvent.VK_X)) {
             game.player.shield.activate();
         }
-        return true;
     }
 
     private boolean testCollisions() {
