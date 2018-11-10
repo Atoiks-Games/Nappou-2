@@ -53,7 +53,7 @@ public final class CircularPathEnemy extends AbstractEnemy {
         time += dt;
         cycles++;
 
-        final double k = mod * cycles / 10000 + spos * Math.PI / 2;
+        final double k = mod * cycles / 50 + spos * Math.PI / 2;
         setY(orbitY + dir * rad * (float) Math.sin(k));
         setX(orbitX + rad * (float) Math.cos(k));
 

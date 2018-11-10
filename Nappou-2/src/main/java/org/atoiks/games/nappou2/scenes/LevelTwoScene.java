@@ -62,7 +62,7 @@ public final class LevelTwoScene extends AbstractGameScene {
             switch (wave) {
                 case 0:
                     switch (cycles) {
-                        case 2000:
+                        case 20:
                             game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(2, -10, 20, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 20, 20, 500, 1, false));
@@ -73,7 +73,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(2, -10, 320, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 320, 20, 500, 1, false));
                             break;
-                        case 12000:
+                        case 120:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(2, -10, 280, 20, 500, 1, true));
@@ -85,7 +85,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(2, -10, 580, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 580, 20, 500, 1, false));
                             break;
-                        case 22000:
+                        case 220:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 30, 10, 500, 1, true));
@@ -97,7 +97,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, -10, 150, 10, 500, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 150, 10, 500, 1, false));
                             break;
-                        case 32000:
+                        case 320:
                             game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 590, 10, 1000, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 590, 10, 1000, 1, false));
@@ -108,7 +108,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, -10, 470, 10, 1000, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 470, 10, 1000, 1, false));
                             break;
-                        case 60000:
+                        case 600:
                             game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
                             game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 200, 10, 1000, 1, true));
@@ -125,8 +125,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, 760, 400, 10, 1000, 1, false));
                             break;
                     }
-                    if (cycles > 60000) {
-                        if (game.enemies.isEmpty()) {
+                    if (cycles > 600) {
+                        if (game.noMoreEnemies()) {
                             wave++;
                             cycles = 0;
                         }
@@ -134,27 +134,27 @@ public final class LevelTwoScene extends AbstractGameScene {
                     break;
                 case 1:
                     switch (cycles) {
-                        case 2000:
+                        case 20:
                             game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 0, 5, 5, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 0, 5, 5, 500));
                             break;
-                        case 12000:
+                        case 120:
                             game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 600, 10, 6, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 600, 10, 6, 500));
                             break;
-                        case 22000:
+                        case 220:
                             game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 300, 15, 7, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 300, 15, 7, 500));
                             break;
-                        case 32000:
+                        case 310:
                             game.addEnemy(new SingleShotEnemy(5, 375, -10, 15, false));
                             break;
                         }
-                    if (cycles > 32000) {
-                        if (game.enemies.isEmpty()) {
+                    if (cycles > 310) {
+                        if (game.noMoreEnemies()) {
                             wave++;
                             cycles = 0;
                         }
@@ -162,32 +162,70 @@ public final class LevelTwoScene extends AbstractGameScene {
                     break;
                 case 2:
                     switch (cycles) {
-                        case 1000:
+                        case 10:
                             game.addEnemy(new DropEnemy(1, 750, -10, 8, false));
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
                             break;
-                        case 10000:
+                        case 100:
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
-                        case 20000:
-                        case 30000:
-                        case 40000:
-                        case 50000:
+                        case 200:
+                        case 300:
+                        case 400:
+                        case 500:
                             game.addEnemy(new StarShotEnemy(1, 600, 0, 5, false));
                             game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
                             game.addEnemy(new StarShotEnemy(1, 600, -10, 5, false));
                             game.addEnemy(new StarShotEnemy(1, 450, -10, 5, false));
                             break;
-                        case 51000:
+                        case 510:
                             game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
                             break;
-                        case 60000:
+                        case 600:
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
                         }
+                    if (cycles > 600) {
+                        if (game.noMoreEnemies()) {
+                            wave++;
+                            cycles = 0;
+                        }
+                    }
                     break;
-                case 3: //TODO
+                case 3:
+                switch (cycles) {
+                    case 10:
+                        game.addEnemy(new LeapEnemy(1, 375, 600, 8, 75, 1, 0.25f, 2, 1, 5));
+                        break;
+                    case 510:
+                        game.addEnemy(new LeapEnemy(1, 300, 600, 9, 75, -1, 0.25f, 4, 1, 4));
+                        game.addEnemy(new LeapEnemy(1, 450, 600, 9, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(new StarShotEnemy(1, 300, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
+                        break;
+                    case 1010:
+                        game.addEnemy(new LeapEnemy(1, 200, 600, 10, 75, -1, 0.25f, 4, 2, 3));
+                        game.addEnemy(new LeapEnemy(1, 350, 600, 10, 75, 1, 0.25f, 2, 0.5f, 7));
+                        game.addEnemy(new LeapEnemy(1, 400, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(new LeapEnemy(1, 550, 600, 10, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(new StarShotEnemy(1, 350, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 400, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 550, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 200, 0, 5, false));
+                        break;
+                    case 1510:
+                        game.addEnemy(new LeapEnemy(1, 150, 600, 8, 75, -1, 0.25f, 4, 2, 0.75f));
+                        game.addEnemy(new LeapEnemy(1, 276, 600, 9, 75, -1, 0.25f, 4, 0.5f, 4.5f));
+                        game.addEnemy(new LeapEnemy(1, 367, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(new LeapEnemy(1, 675, 600, 8, 75, 1, 0.25f, 2, 0.345f, 1.3f));
+                        game.addEnemy(new LeapEnemy(1, 293, 600, 9, 75, 1, 0.25f, 2, 0.23f, 0.5f));
+                        game.addEnemy(new LeapEnemy(1, 700, 600, 10, 75, 1, 0.25f, 2, 5, 7));
+                        game.addEnemy(new LeapEnemy(1, 100, 600, 12, 75, -1, 0.25f, 4, 3, 10));
+                        game.addEnemy(new LeapEnemy(1, 545, 600, 12, 75, 1, 0.25f, 2, 1, 6.25f));
+                        break;
+                    }
+
                     break;
             }
             break;

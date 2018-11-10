@@ -85,18 +85,18 @@ public final class Level1Hard extends AbstractEnemy {
     }
 
     private void attack1() {
-        if (enemyTime % 1000 == 0) {
+        if (enemyTime % 5 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new PointBullet(-10, 500 + 100 * sin10t, 3, 1000, 0));
             game.addEnemyBullet(new PointBullet(760, 100 + 100 * sin10t, 3, -1000, 0));
         }
-        if (enemyTime % 500 == 0) {
+        if (enemyTime % 10 == 0) {
             game.addEnemyBullet(new Beam(rnd.nextFloat() * 750, -15, 5, 30, PI_DIV_2, 1000));
         }
     }
 
     private void attack2() {
-        if (enemyTime % 1000 == 0) {
+        if (enemyTime % 20 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new Beam(375 + 375 * sin10t, -15, 5, 30, PI_DIV_2, 1000));
             game.addEnemyBullet(new Beam(375 - 375 * sin10t, -15, 5, 30, PI_DIV_2, 1000));
@@ -109,12 +109,12 @@ public final class Level1Hard extends AbstractEnemy {
     }
 
     private void attack3() {
-        if (enemyTime % 1000 == 0) {
+        if (enemyTime % 20 == 0) {
             game.addEnemyBullet(new Beam(-15, rnd.nextFloat() * 600, 5, 30, 0, 1000));
             game.addEnemyBullet(new Beam(765, rnd.nextFloat() * 600, 5, 30, (float) Math.PI, 1000));
         }
 
-        if (enemyTime%20000 == 0) {
+        if (enemyTime % 400 == 0) {
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_4_PI_DIV_3, -1000 * SIN_4_PI_DIV_3));
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_3_PI_DIV_2, -1000 * SIN_3_PI_DIV_2));
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_5_PI_DIV_3, -1000 * SIN_5_PI_DIV_3));
@@ -123,7 +123,7 @@ public final class Level1Hard extends AbstractEnemy {
     }
 
     private void attack4() {
-        if (enemyTime % 1000 == 0) {
+        if (enemyTime % 20 == 0) {
             game.addEnemyBullet(new PointBullet(375 + 375 * (float) Math.sin(10 * time), 610, 2, 0, -1000));
 
             final float x = getX();
@@ -134,7 +134,7 @@ public final class Level1Hard extends AbstractEnemy {
     }
 
     private void attack5() {
-        if (enemyTime % 1500 == 0) {
+        if (enemyTime % 30 == 0) {
             final float sin10t = (float) Math.sin(10 * time);
             game.addEnemyBullet(new PointBullet(375 + 375 * sin10t, 610, 2, 0, -1000));
             game.addEnemyBullet(new PointBullet(375 - 375 * sin10t, -10, 2, 0, 1000));
@@ -142,7 +142,7 @@ public final class Level1Hard extends AbstractEnemy {
             game.addEnemyBullet(new PointBullet(-10, 300 - 300 * sin10t, 2, 1000, 0));
         }
 
-        if (enemyTime%20000 == 0) {
+        if (enemyTime % 400 == 0) {
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_4_PI_DIV_3, -1000 * SIN_4_PI_DIV_3));
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_3_PI_DIV_2, -1000 * SIN_3_PI_DIV_2));
             game.addEnemyBullet(new PointBullet(x, y, 30, -1000 * COS_5_PI_DIV_3, -1000 * SIN_5_PI_DIV_3));

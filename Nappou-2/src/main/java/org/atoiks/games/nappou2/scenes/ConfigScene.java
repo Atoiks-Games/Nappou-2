@@ -24,10 +24,12 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -39,6 +41,8 @@ public final class ConfigScene extends GameScene {
     private static final int[] SELECTOR_Y = { 66, 115 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
+
+    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Image configImg;
     private Clip bgm;
@@ -75,6 +79,8 @@ public final class ConfigScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
+        mouseRightBtn.update(dt);
+
         if (config.bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -83,24 +89,24 @@ public final class ConfigScene extends GameScene {
             bgm.setMicrosecondPosition(0);
         }
 
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             scene.switchToScene(0);
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             selector = (selector + 1) % SELECTOR_Y.length;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
 
         // Only dealing with boolean values, both right and left keys only need to invert value
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_RIGHT) || scene.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (Input.isKeyPressed(KeyEvent.VK_RIGHT) || Input.isKeyPressed(KeyEvent.VK_LEFT)) {
             setValueAtSelector(!getValueAtSelector());
         }
 
-        if (scene.mouse().positionChanged()) {
-            final int mouseY = scene.mouse().getLocalY();
+        if (Input.mouseMoved()) {
+            final int mouseY = Input.getLocalY();
             for (int i = 0; i < SELECTOR_Y.length; ++i) {
                 final int selBase = SELECTOR_Y[i];
                 if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
@@ -111,8 +117,8 @@ public final class ConfigScene extends GameScene {
         }
 
         // Only update option with mouse if user dblclicked
-        final int mouseX = scene.mouse().getLocalX();
-        if (scene.mouse().isButtonClicked(1, 2)) {
+        final int mouseX = Input.getLocalX();
+        if (mouseRightBtn.doubleClicked()) {
             for (int i = 0; i < BOOL_SEL_X.length; i += 2) {
                 final int selStart = BOOL_SEL_X[i];
                 final int selEnd   = BOOL_SEL_X[i + 1];
@@ -157,6 +163,11 @@ public final class ConfigScene extends GameScene {
         configImg = (Image) scene.resources().get("config.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         config = (GameConfig) scene.resources().get("game.cfg");
+    }
+
+    @Override
+    public void enter(int from) {
+        mouseRightBtn.reset();
     }
 
     @Override

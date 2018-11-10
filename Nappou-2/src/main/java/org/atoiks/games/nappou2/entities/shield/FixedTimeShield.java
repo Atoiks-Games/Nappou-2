@@ -32,7 +32,6 @@ public final class FixedTimeShield extends TimeBasedShield {
     @Override
     public void activate() {
         if (!active) {
-            super.activate();
             relocateX = relocateY = true;
         }
     }
@@ -42,6 +41,7 @@ public final class FixedTimeShield extends TimeBasedShield {
         if (relocateX) {
             super.setX(x);
             relocateX = false;
+            tryActivateShieldWhenReady();
         }
     }
 
@@ -50,6 +50,15 @@ public final class FixedTimeShield extends TimeBasedShield {
         if (relocateY) {
             super.setY(y);
             relocateY = false;
+            tryActivateShieldWhenReady();
+        }
+    }
+
+    private void tryActivateShieldWhenReady() {
+        // only activate shield when both x, y
+        // components have been relocated
+        if (!relocateX && !relocateY) {
+            super.activate();
         }
     }
 }

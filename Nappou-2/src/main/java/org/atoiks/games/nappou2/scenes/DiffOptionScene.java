@@ -23,11 +23,14 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
+
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -36,6 +39,8 @@ public final class DiffOptionScene extends GameScene {
     private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
+
+    private MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int diffSel;
@@ -58,26 +63,28 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        mouseRightBtn.update(dt);
+
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             scene.switchToScene(0);
             return true;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             scene.gotoNextScene();
             return true;
         }
 
 
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             ++diffSel;
             if (diffSel >= diffSelY.length) diffSel = 0;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
             if (--diffSel < 0) diffSel = diffSelY.length - 1;
         }
 
-        if (scene.mouse().positionChanged()) {
-            final int mouseY = scene.mouse().getLocalY();
+        if (Input.mouseMoved()) {
+            final int mouseY = Input.getLocalY();
             for (int i = 0; i < diffSelY.length; ++i) {
                 final int selBase = diffSelY[i];
                 if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
@@ -101,6 +108,8 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public void enter(int previousSceneId) {
+        mouseRightBtn.reset();
+
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");

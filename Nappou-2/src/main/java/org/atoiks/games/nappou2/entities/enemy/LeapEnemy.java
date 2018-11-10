@@ -22,31 +22,42 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class ShieldTesterEnemy extends AbstractEnemy {
+public final class LeapEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
     private float time;
+    private boolean fireGate;
+    private float cycles;
+    private float rad;
+    private float orbitX;
+    private float orbitY;
+    private float dir;
+    private float mod;
+    private int spos;
+    private float stx;
+    private float sty;
 
-    private final int invSign;
-
-    public ShieldTesterEnemy(int hp, float x, float y, float r, boolean inverted) {
+    public LeapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
         super(hp, x, y, r);
-        this.invSign = inverted ? -1 : 1;
+        rad = radius;
+        orbitX = x;
+        orbitY = y;
+        dir = direction;
+        mod = speedMod;
+        spos = startPos % 4;    // spos can only be {0, 1, 2, 3}
+        stx = stretchx;
+        sty = stretchy;
     }
 
     @Override
     public void update(float dt) {
         time += dt;
+        cycles++;
 
-        setY(getY() + 600 * dt);
-
-        if (time > 0.0001) {
-            final float x = getX();
-            final float y = getY();
-            game.addEnemyBullet(new PointBullet(x, y, 2, invSign * (x > 375 ? -1 : 1) * 2510, 600));
-            time = 0;
-        }
+        final double k = mod * cycles / 50 + spos * Math.PI / 2;
+        setY(orbitY + dir * rad * sty * (float) Math.sin(k));
+        setX(orbitX + rad * stx * (float) Math.cos(k));
     }
 
     @Override

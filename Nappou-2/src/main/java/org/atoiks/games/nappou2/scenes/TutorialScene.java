@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
@@ -114,12 +115,12 @@ public final class TutorialScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-        if (renderControls && scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
         }
 
 
-        if (game.enemies.isEmpty()) {
+        if (game.noMoreEnemies()) {
             switch (waveCounter) {
                 case 0:
                     if (!renderControls) {
@@ -146,55 +147,55 @@ public final class TutorialScene extends AbstractGameScene {
                     bgm.stop();
 
                     updateDialogue("CAI", "Good morning! You're dead!");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 3:
                     updateDialogue("Player", "What?");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 4:
                     updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 5:
                     updateDialogue("Player", "What?!");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 6:
                     updateDialogue("CAI", "Yep, the humans threw us in just like that.");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 7:
                     updateDialogue("Player", "Cai, you don't understand, we have to get out of here.");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 8:
                     updateDialogue("CAI", "Not before you finish your daily combat exercises!");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 9:
                     updateDialogue("Player", "Cai, now's not that time.");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 10:
                     updateDialogue("CAI", "There's always time for senseless violence!");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
@@ -210,7 +211,7 @@ public final class TutorialScene extends AbstractGameScene {
                     enableDamage();
                     enableInput();
                     //bossMode = true;
-                    game.addEnemy(new CAITutorial(75, 375, -10, 20));
+                    game.addEnemy(new CAITutorial(50, 375, -10, 20));
                     ++waveCounter;
                     break;
                 case 12:
@@ -220,7 +221,7 @@ public final class TutorialScene extends AbstractGameScene {
                     bgm.stop();
 
                     updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
-                    if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER)) {
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         scene.switchToScene(0);
                     }
                     break;

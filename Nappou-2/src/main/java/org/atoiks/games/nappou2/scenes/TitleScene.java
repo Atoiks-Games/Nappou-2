@@ -24,10 +24,12 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -44,6 +46,8 @@ public final class TitleScene extends GameScene {
     private static final int[] selectorY = {235, 276, 318, 357, 469};
     private static final int[] sceneDest = {1, 4, 2, 3};
     private static final int OPT_HEIGHT = 30;
+
+    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int selector;
@@ -70,7 +74,9 @@ public final class TitleScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_ENTER) || scene.mouse().isButtonClicked(1, 2)) {
+        mouseRightBtn.update(dt);
+
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             if (selector < sceneDest.length) {
                 scene.switchToScene(sceneDest[selector]);
                 return true;
@@ -79,15 +85,15 @@ public final class TitleScene extends GameScene {
             // Quit was chosen
             return false;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             if (++selector >= selectorY.length) selector = 0;
         }
-        if (scene.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
             if (--selector < 0) selector = selectorY.length - 1;
         }
 
-        if (scene.mouse().positionChanged()) {
-            final int mouseY = scene.mouse().getLocalY();
+        if (Input.mouseMoved()) {
+            final int mouseY = Input.getLocalY();
             for (int i = 0; i < selectorY.length; ++i) {
                 final int selBase = selectorY[i];
                 if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
@@ -111,6 +117,8 @@ public final class TitleScene extends GameScene {
 
     @Override
     public void enter(final int prevSceneId) {
+        mouseRightBtn.reset();
+
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             // ScoreScene and ConfigScene continues to play music
             switch (prevSceneId) {
