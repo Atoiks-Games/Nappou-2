@@ -132,6 +132,13 @@ public final class LevelOneScene extends AbstractGameScene {
             scene.gotoNextScene();
             return true;
         }
+        //DEV CHEAT CODE
+         if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
+            disableDamage();
+         }
+        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_E)) {
+            enableDamage();
+        }
 
         ++cycles;
         switch (difficulty) {
@@ -668,13 +675,6 @@ public final class LevelOneScene extends AbstractGameScene {
             break;
 
             case INSANE:
-            //DEV CHEAT CODE
-            // if (Input.isKeyPressed(KeyEvent.VK_Q)) {
-            //    disableDamage();
-            // }
-            //if (Input.isKeyPressed(KeyEvent.VK_E)) {
-            //    enableDamage();
-            //}
             switch (wave) {
                 case 0:
                     switch (cycles) {
@@ -874,14 +874,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new SingleShotEnemy(1, 740, -10, 8, false));
                             game.addEnemy(new SingleShotEnemy(1, 450, 610, 8, true));
                             game.addEnemy(new SingleShotEnemy(1, 300, -10, 8, false));
-                            break;
-                        case 500:
-                            game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
-                            game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
-                            break;
-                        case 1500:
-                            game.addEnemy(new ShieldTesterEnemy(20, 300, -10, 8, true));
-                            game.addEnemy(new ShieldTesterEnemy(20, 450, -10, 8, true));
                             break;
                     }
                     if (cycles > 1840 && game.noMoreEnemies()) {
