@@ -186,8 +186,46 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
                             break;
                         }
+                    if (cycles > 600) {
+                        if (game.noMoreEnemies()) {
+                            wave++;
+                            cycles = 0;
+                        }
+                    }
                     break;
-                case 3: //TODO
+                case 3:
+                switch (cycles) {
+                    case 10:
+                        game.addEnemy(new LeapEnemy(1, 375, 600, 8, 75, 1, 0.25f, 2, 1, 5));
+                        break;
+                    case 510:
+                        game.addEnemy(new LeapEnemy(1, 300, 600, 9, 75, -1, 0.25f, 4, 1, 4));
+                        game.addEnemy(new LeapEnemy(1, 450, 600, 9, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(new StarShotEnemy(1, 300, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
+                        break;
+                    case 1010:
+                        game.addEnemy(new LeapEnemy(1, 200, 600, 10, 75, -1, 0.25f, 4, 2, 3));
+                        game.addEnemy(new LeapEnemy(1, 350, 600, 10, 75, 1, 0.25f, 2, 0.5f, 7));
+                        game.addEnemy(new LeapEnemy(1, 400, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(new LeapEnemy(1, 550, 600, 10, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(new StarShotEnemy(1, 350, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 400, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 550, 0, 5, false));
+                        game.addEnemy(new StarShotEnemy(1, 200, 0, 5, false));
+                        break;
+                    case 1510:
+                        game.addEnemy(new LeapEnemy(1, 150, 600, 8, 75, -1, 0.25f, 4, 2, 0.75f));
+                        game.addEnemy(new LeapEnemy(1, 276, 600, 9, 75, -1, 0.25f, 4, 0.5f, 4.5f));
+                        game.addEnemy(new LeapEnemy(1, 367, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(new LeapEnemy(1, 675, 600, 8, 75, 1, 0.25f, 2, 0.345f, 1.3f));
+                        game.addEnemy(new LeapEnemy(1, 293, 600, 9, 75, 1, 0.25f, 2, 0.23f, 0.5f));
+                        game.addEnemy(new LeapEnemy(1, 700, 600, 10, 75, 1, 0.25f, 2, 5, 7));
+                        game.addEnemy(new LeapEnemy(1, 100, 600, 12, 75, -1, 0.25f, 4, 3, 10));
+                        game.addEnemy(new LeapEnemy(1, 545, 600, 12, 75, 1, 0.25f, 2, 1, 6.25f));
+                        break;
+                    }
+
                     break;
             }
             break;
