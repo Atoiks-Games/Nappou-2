@@ -29,6 +29,7 @@ import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -45,6 +46,8 @@ public final class TitleScene extends GameScene {
     private static final int[] selectorY = {235, 276, 318, 357, 469};
     private static final int[] sceneDest = {1, 4, 2, 3};
     private static final int OPT_HEIGHT = 30;
+
+    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int selector;
@@ -71,7 +74,9 @@ public final class TitleScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || Input.isMouseButtonClicked(1, 2)) {
+        mouseRightBtn.update(dt);
+
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             if (selector < sceneDest.length) {
                 scene.switchToScene(sceneDest[selector]);
                 return true;
@@ -112,6 +117,8 @@ public final class TitleScene extends GameScene {
 
     @Override
     public void enter(final int prevSceneId) {
+        mouseRightBtn.reset();
+
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             // ScoreScene and ConfigScene continues to play music
             switch (prevSceneId) {

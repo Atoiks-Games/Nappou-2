@@ -29,6 +29,8 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
+
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -37,6 +39,8 @@ public final class DiffOptionScene extends GameScene {
     private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
+
+    private MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int diffSel;
@@ -59,11 +63,13 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
+        mouseRightBtn.update(dt);
+
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             scene.switchToScene(0);
             return true;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || Input.isMouseButtonClicked(1, 2)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             scene.gotoNextScene();
             return true;
         }
@@ -102,6 +108,8 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public void enter(int previousSceneId) {
+        mouseRightBtn.reset();
+
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");

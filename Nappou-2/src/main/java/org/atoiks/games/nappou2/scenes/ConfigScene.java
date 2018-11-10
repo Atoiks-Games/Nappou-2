@@ -29,6 +29,7 @@ import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -40,6 +41,8 @@ public final class ConfigScene extends GameScene {
     private static final int[] SELECTOR_Y = { 66, 115 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
+
+    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Image configImg;
     private Clip bgm;
@@ -76,6 +79,8 @@ public final class ConfigScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
+        mouseRightBtn.update(dt);
+
         if (config.bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -113,7 +118,7 @@ public final class ConfigScene extends GameScene {
 
         // Only update option with mouse if user dblclicked
         final int mouseX = Input.getLocalX();
-        if (Input.isMouseButtonClicked(1, 2)) {
+        if (mouseRightBtn.doubleClicked()) {
             for (int i = 0; i < BOOL_SEL_X.length; i += 2) {
                 final int selStart = BOOL_SEL_X[i];
                 final int selEnd   = BOOL_SEL_X[i + 1];
@@ -158,6 +163,11 @@ public final class ConfigScene extends GameScene {
         configImg = (Image) scene.resources().get("config.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         config = (GameConfig) scene.resources().get("game.cfg");
+    }
+
+    @Override
+    public void enter(int from) {
+        mouseRightBtn.reset();
     }
 
     @Override

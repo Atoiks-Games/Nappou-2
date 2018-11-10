@@ -28,6 +28,8 @@ import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.MouseClickHandler;
+
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -38,6 +40,8 @@ public final class ShieldOptionScene extends GameScene {
     };
     private static final int[] shieldSelY = {356, 414, 498};
     private static final int OPT_HEIGHT = 37;
+
+    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int shieldSel;
@@ -63,6 +67,8 @@ public final class ShieldOptionScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
+        mouseRightBtn.update(dt);
+
         if (skipSelection) {
             scene.gotoNextScene();
             return true;
@@ -72,7 +78,7 @@ public final class ShieldOptionScene extends GameScene {
             scene.switchToScene(0);
             return true;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || Input.isMouseButtonClicked(1, 2)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             scene.gotoNextScene();
             return true;
         }
@@ -109,6 +115,8 @@ public final class ShieldOptionScene extends GameScene {
 
     @Override
     public void enter(int previousSceneId) {
+        mouseRightBtn.reset();
+
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
         if ((skipSelection = cfg.challengeMode)) {
             // Challenge mode does not use NullShield
