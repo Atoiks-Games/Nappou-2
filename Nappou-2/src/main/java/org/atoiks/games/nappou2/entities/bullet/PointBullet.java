@@ -26,18 +26,23 @@ import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public final class PointBullet extends IBullet {
+public class PointBullet extends IBullet {
 
     private static final long serialVersionUID = 3928242215L;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
-    private float x, y, r, dx, dy;
+    protected float x, y, r;
+    protected float dx, dy;
 
-    public PointBullet(float x, float y, float r, float dx, float dy) {
+    protected PointBullet(float x, float y, float r) {
         this.x = x;
         this.y = y;
         this.r = r;
+    }
+
+    public PointBullet(float x, float y, float r, float dx, float dy) {
+        this(x, y, r);
         this.dx = dx;
         this.dy = dy;
     }
