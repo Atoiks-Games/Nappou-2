@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
-
 import java.util.Arrays;
 
 import org.atoiks.games.framework2d.IGraphics;
