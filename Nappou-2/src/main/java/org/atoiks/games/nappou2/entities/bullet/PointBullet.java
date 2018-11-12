@@ -76,16 +76,6 @@ public class PointBullet extends IBullet {
     }
 
     @Override
-    public float getDx() {
-        return this.dx;
-    }
-
-    @Override
-    public float getDy() {
-        return this.dy;
-    }
-
-    @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
         return fastCircleCollision(x, y, r, x1, y1, r1);
     }

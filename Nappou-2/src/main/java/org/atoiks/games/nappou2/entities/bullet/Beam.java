@@ -98,16 +98,6 @@ public final class Beam extends IBullet {
     }
 
     @Override
-    public float getDx() {
-        return this.dx;
-    }
-
-    @Override
-    public float getDy() {
-        return this.dy;
-    }
-
-    @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
         // Only perform accurate collision if the square formed by center
         // point (x, y) with apothem collides with the circle also
