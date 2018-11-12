@@ -18,16 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
-
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.IBullet;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
-
-public final class TrackPointBullet extends IBullet {
+public final class TrackPointBullet extends PointBullet {
 
     private static final long serialVersionUID = -1696891011951230605L;
 
@@ -38,16 +31,12 @@ public final class TrackPointBullet extends IBullet {
     private final float moveTime;
     private final float delay;
 
-    private float x, y, r;
-    private float dx, dy;
-
     private float time;
     private boolean moving;
 
     public TrackPointBullet(float x, float y, float r, Game game, float pathScale, float moveTime, float delay) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
+        super(x, y, r);
+
         this.game = game;
         this.scale = pathScale;
         this.moveTime = moveTime;
@@ -56,33 +45,6 @@ public final class TrackPointBullet extends IBullet {
         // These values force endpoints to be calculated
         time = delay;
         moving = false;
-    }
-
-    @Override
-    public void translate(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
-    }
-
-    @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
-        return fastCircleCollision(x, y, r, x1, y1, r1);
-    }
-
-    @Override
-    public boolean isOutOfScreen(final int w, final int h) {
-        return (x + r < -SCREEN_EDGE_BUFFER)
-            || (x - r > w + SCREEN_EDGE_BUFFER)
-            || (y + r < -SCREEN_EDGE_BUFFER)
-            || (y - r > h + SCREEN_EDGE_BUFFER);
-    }
-
-    @Override
-    public void render(IGraphics g) {
-        // Can change this to using textures later
-        g.setColor(color);
-        // x, y are the center of the bullet
-        g.drawOval(x - r, y - r, x + r, y + r);
     }
 
     @Override
@@ -95,8 +57,7 @@ public final class TrackPointBullet extends IBullet {
                 moving = false;
                 time = 0;
             } else {
-                x += dx * dt;
-                y += dy * dt;
+                super.update(dt);
             }
         } else if (time >= delay) {
             // Re-calculate endpoints
@@ -105,25 +66,5 @@ public final class TrackPointBullet extends IBullet {
             moving = true;
             time = 0;
         }
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public float getDx() {
-        return dx;
-    }
-
-    @Override
-    public float getDy() {
-        return dy;
     }
 }

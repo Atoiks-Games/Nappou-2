@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import org.atoiks.games.framework2d.IGraphics;
@@ -96,16 +95,6 @@ public final class Beam extends IBullet {
     @Override
     public float getY() {
         return this.y;
-    }
-
-    @Override
-    public float getDx() {
-        return this.dx;
-    }
-
-    @Override
-    public float getDy() {
-        return this.dy;
     }
 
     @Override

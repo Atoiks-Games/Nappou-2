@@ -31,8 +31,6 @@ public abstract class IBullet implements ICollidable, IRender, IUpdate, Serializ
 
     public abstract float getX();
     public abstract float getY();
-    public abstract float getDx();
-    public abstract float getDy();
 
     public abstract void translate(float dx, float dy);
 }
