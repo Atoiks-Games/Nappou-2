@@ -18,8 +18,16 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+
+import javax.sound.sampled.Clip;
+
 import se.tube42.lib.tweeny.Item;
 import se.tube42.lib.tweeny.TweenEquation;
+
+import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -27,12 +35,33 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
+
 import java.util.Random;
 
 public final class LevelTwoScene extends AbstractGameScene {
-
+    private static final String[][] PREBOSS_MSG = {
+        { "Elle", "Why are you here?" },
+        { "Player", "Oh you know, humans." },
+        { "Elle", "I no longer find joy in another's pain." },
+        { "CAI", "Why so moody?" },
+        { "Elle", "..." },
+        { "Player", "Yeah, give me a few centuries and things will be back to normal!" },
+        { "Elle", "You haven't changed at all *Player*" },
+        { "Elle", "You took everything away from me. Do you know how much I suffered?" },
+    };
+    private static final String[] POSTBOSS_MSG = {
+        "I just want to go home..."
+    };
     private int cycles;
     private int wave;
+    private Clip bgm;
+    private int phase;
+
+    private int prebossMsgPhase;
+
+    // loop frame for level
+    private static final int LEVEL_LOOP = 1229110;
 
     private final Random rnd = new Random();
 
@@ -44,14 +73,37 @@ public final class LevelTwoScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
+        drift.clampSpeed(0,0,0,0);
+
+        resetDialogue();
         cycles = 0;
         wave = 0;
+        phase = 0;
+
+        prebossMsgPhase = -1;
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
+
+        bgm = (Clip) scene.resources().get("Level_One.wav");
+        if (cfg.bgm) {
+            bgm.setMicrosecondPosition(0);
+            bgm.start();
+            bgm.setLoopPoints(LEVEL_LOOP, -1);
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    private boolean displayNextPrebossDialogue() {
+        if (++prebossMsgPhase < PREBOSS_MSG.length) {
+            final String[] arr = PREBOSS_MSG[prebossMsgPhase];
+            updateDialogue(arr[0], arr[1]);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -225,7 +277,77 @@ public final class LevelTwoScene extends AbstractGameScene {
                         game.addEnemy(new LeapEnemy(1, 545, 600, 12, 75, 1, 0.25f, 2, 1, 6.25f));
                         break;
                     }
+                    if (cycles > 1510) {
+                        if (game.noMoreEnemies()) {
+                            wave++;
+                            cycles = 0;
+                        }
+                    }
+                    break;
+                case 4:
+                    wave++;
+                    cycles = 0;
+                    bgm.stop();
+                    disableDamage();
+                    disableInput();
+                    game.clearBullets();
 
+                    displayNextPrebossDialogue();
+                    break;
+                case 5:
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (!displayNextPrebossDialogue()) {
+                            wave++;
+                            enableDamage();
+                            enableInput();
+                            resetDialogue();
+                            cycles = 0;
+                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                                bgm.setMicrosecondPosition(0);
+                                bgm.start();
+                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                            }
+                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
+                            drift.accelY = -20;
+                            drift.accelX = 20;
+                            drift.clampDx(0, 50);
+                        }
+                    }
+                    break;
+                case 6:
+                    if (cycles % 4000 == 0) {
+                        switch (++phase) {
+                            case 0:
+                                drift.accelY = -20;
+                                drift.accelX = 20;
+                                drift.clampDx(0, 50);
+                                break;
+                            case 1:
+                                drift.accelX = -20;
+                                drift.accelY = 20;
+                                drift.clampDy(0,50);
+                                break;
+                            case 2:
+                                drift.accelY = -20;
+                                drift.clampDx(-50,0);
+                                break;
+                            case 3:
+                                drift.accelX = 20;
+                                drift.clampDy(-50,0);
+                                break;
+                        }
+                    }
+                    if (cycles > 40 && game.noMoreEnemies()) {
+                        bgm.stop();
+                        disableDamage();
+                        updateDialogue("Elle", POSTBOSS_MSG);
+                        disableInput();
+                        game.clearBullets();
+                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                            scene.gotoNextScene();
+                        }
+                    }
                     break;
             }
             break;
