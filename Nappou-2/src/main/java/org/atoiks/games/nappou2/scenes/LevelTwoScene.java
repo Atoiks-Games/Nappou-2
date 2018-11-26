@@ -50,7 +50,7 @@ public final class LevelTwoScene extends AbstractGameScene {
         { "Player", "Yeah, I remember. Once I fight the humans, everything will be back to normal." },
         { "Cryo", "YOU POWER HUNGRY IDIOT!!!!" },
         { "Pyro", "I concur." },
-        {"Player", "Alright, I am sorry! Is that what you wanted?"},
+        {"Player", "Alright, I'm sorry! Is that what you wanted?"},
         {"Pyro", "Apology..."},
         {"Cryo", "DENIED!!!"},
     };
