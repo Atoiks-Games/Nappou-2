@@ -41,24 +41,31 @@ import java.util.Random;
 
 public final class LevelTwoScene extends AbstractGameScene {
     private static final String[][] PREBOSS_MSG = {
-        { "Elle", "Why are you here?" },
-        { "Player", "Oh you know, humans." },
-        { "Elle", "I no longer find joy in another's pain." },
-        { "CAI", "Why so moody?" },
-        { "Elle", "..." },
-        { "Player", "Yeah, give me a few centuries and things will be back to normal!" },
-        { "Elle", "You haven't changed at all *Player*" },
-        { "Elle", "You took everything away from me. Do you know how much I suffered?" },
+
+        { "Cryo", "*Player*?! What are you doing here?!?!" },
+        { "Pyro", "Clearly the humans betrayed her like she betrayed us. Do you even remember us, traitor?" },
+        { "CAI", "Nope. Not at all." },
+        { "Cryo", "WE HAVE BEEN TRAPPED HERE FOR YEARS BECAUSE OF YOU TWO!!!!" },
+        { "CAI", "Oh right, you are the one that yells." },
+        { "Player", "Yeah, I remember. Once I fight the humans, everything will be back to normal." },
+        { "Cryo", "YOU POWER HUNGRY IDIOT!!!!" },
+        { "Pyro", "I concur." },
+        {"Player", "Alright, I am sorry! Is that what you wanted?"},
+        {"Pyro", "Apology..."},
+        {"Cryo", "DENIED!!!"},
     };
-    private static final String[] POSTBOSS_MSG = {
-        "I just want to go home..."
+    private static final String[][] POSTBOSS_MSG = {
+
+        { "Cryo", "IS THAT ALL YOU DO?!?! SHOOT AT ANYTHING THAT MOVES?!?!" },
+        { "CAI", "Pretty much!" },
+        { "Pyro", "Come brother, they are not worth our time." },
     };
     private int cycles;
     private int wave;
     private Clip bgm;
     private int phase;
 
-    private int prebossMsgPhase;
+    private int msgPhase;
 
     // loop frame for level
     private static final int LEVEL_LOOP = 1229110;
@@ -80,7 +87,7 @@ public final class LevelTwoScene extends AbstractGameScene {
         wave = 0;
         phase = 0;
 
-        prebossMsgPhase = -1;
+        msgPhase = -1;
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
 
@@ -97,9 +104,9 @@ public final class LevelTwoScene extends AbstractGameScene {
         }
     }
 
-    private boolean displayNextPrebossDialogue() {
-        if (++prebossMsgPhase < PREBOSS_MSG.length) {
-            final String[] arr = PREBOSS_MSG[prebossMsgPhase];
+    private boolean displayNextDialogue(String[][] s) {
+        if (++msgPhase < s.length) {
+            final String[] arr = s[msgPhase];
             updateDialogue(arr[0], arr[1]);
             return true;
         }
@@ -292,11 +299,11 @@ public final class LevelTwoScene extends AbstractGameScene {
                     disableInput();
                     game.clearBullets();
 
-                    displayNextPrebossDialogue();
+                    displayNextDialogue(PREBOSS_MSG);
                     break;
                 case 5:
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        if (!displayNextPrebossDialogue()) {
+                        if (!displayNextDialogue(PREBOSS_MSG)) {
                             wave++;
                             enableDamage();
                             enableInput();
@@ -308,43 +315,24 @@ public final class LevelTwoScene extends AbstractGameScene {
                                 bgm.start();
                                 bgm.loop(Clip.LOOP_CONTINUOUSLY);
                             }
-                            game.addEnemy(new Level1Easy(300, 375, -10, 20));
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 50);
+                            game.addEnemy(new Level1Easy(10, 375, -10, 20));
                         }
                     }
                     break;
                 case 6:
-                    if (cycles % 4000 == 0) {
-                        switch (++phase) {
-                            case 0:
-                                drift.accelY = -20;
-                                drift.accelX = 20;
-                                drift.clampDx(0, 50);
-                                break;
-                            case 1:
-                                drift.accelX = -20;
-                                drift.accelY = 20;
-                                drift.clampDy(0,50);
-                                break;
-                            case 2:
-                                drift.accelY = -20;
-                                drift.clampDx(-50,0);
-                                break;
-                            case 3:
-                                drift.accelX = 20;
-                                drift.clampDy(-50,0);
-                                break;
-                        }
-                    }
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", POSTBOSS_MSG);
+                        msgPhase = -1;
+                        displayNextDialogue(POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
-                        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                        wave++;
+                    }
+                    break;
+                case 7:
+                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                        if (!displayNextDialogue(POSTBOSS_MSG)) {
                             scene.gotoNextScene();
                         }
                     }
