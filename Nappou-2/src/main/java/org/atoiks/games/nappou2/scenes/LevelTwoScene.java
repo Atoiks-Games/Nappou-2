@@ -315,7 +315,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                                 bgm.start();
                                 bgm.loop(Clip.LOOP_CONTINUOUSLY);
                             }
-                            game.addEnemy(new Level1Easy(10, 375, -10, 20));
+                            game.addEnemy(new Level2Easy1(12, 500, -10, 20));
+                            game.addEnemy(new Level2Easy2(12, 250, -10, 20));
                         }
                     }
                     break;
