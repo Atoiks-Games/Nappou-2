@@ -334,7 +334,9 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 7:
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextDialogue(POSTBOSS_MSG)) {
-                            scene.gotoNextScene();
+                            // scene.gotoNextScene();
+                            scene.switchToScene(0);
+                            return true;
                         }
                     }
                     break;
