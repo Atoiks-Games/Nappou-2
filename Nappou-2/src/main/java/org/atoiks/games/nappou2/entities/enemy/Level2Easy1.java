@@ -75,13 +75,8 @@ public final class Level2Easy1 extends AbstractEnemy {
     }
 
     private void attack1() {
-        if (enemyTime % 5 == 0) {
-            final float sin10t = (float) Math.sin(10 * time);
-            game.addEnemyBullet(new PointBullet(-10, 575 + 25 * sin10t, 3, 1000, 0));
-            game.addEnemyBullet(new PointBullet(760, 25 + 25 * sin10t, 3, -1000, 0));
-        }
-        if (enemyTime % 20 == 0) {
-            game.addEnemyBullet(new Beam(rnd.nextFloat() * 750, -15, 5, 30, PI_DIV_2, 1000));
+        if (enemyTime % 200 == 0) {
+            game.addEnemyBullet(new WiggleBullet(x, y, 2, 0, 200, true, 100, 40));
         }
     }
 
