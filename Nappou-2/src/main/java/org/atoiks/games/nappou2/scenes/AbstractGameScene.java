@@ -248,13 +248,14 @@ public abstract class AbstractGameScene extends GameScene {
             }
 
             if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
-                if (selector == 0) {
-                    pause = false;
-                } else {
-                    scene.switchToScene(sceneDest[selector - 1]);
+                if (selector != 0) {
                     // reset selector to 0, otherwise pause in next game brings user to unexpected option
                     selector = 0;
+                    return scene.switchToScene(sceneDest[selector - 1]);
                 }
+
+                // selector is 0, which means we continue (unpause) the game
+                pause = false;
                 return true;
             }
             if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -319,8 +320,7 @@ public abstract class AbstractGameScene extends GameScene {
     private boolean testCollisions() {
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            scene.switchToScene(0);
-            return true;
+            return scene.switchToScene(0);
         }
         return false;
     }

@@ -89,8 +89,7 @@ public final class LoadingScene extends Scene {
                 break;
             case DONE:
                 loader.shutdown();
-                scene.gotoNextScene();
-                break;
+                return scene.gotoNextScene();
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {

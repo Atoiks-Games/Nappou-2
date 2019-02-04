@@ -90,8 +90,7 @@ public final class ConfigScene extends GameScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            scene.switchToScene(0);
-            return true;
+            return scene.switchToScene(0);
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             selector = (selector + 1) % SELECTOR_Y.length;

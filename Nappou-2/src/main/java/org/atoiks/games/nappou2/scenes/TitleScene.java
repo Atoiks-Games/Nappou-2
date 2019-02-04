@@ -78,8 +78,7 @@ public final class TitleScene extends GameScene {
 
         if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
             if (selector < sceneDest.length) {
-                scene.switchToScene(sceneDest[selector]);
-                return true;
+                return scene.switchToScene(sceneDest[selector]);
             }
 
             // Quit was chosen

@@ -129,8 +129,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
         if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-            scene.gotoNextScene();
-            return true;
+            return scene.gotoNextScene();
         }
         //DEV CHEAT CODE
          if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
@@ -278,7 +277,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            scene.gotoNextScene();
+                            return scene.gotoNextScene();
                         }
                     }
                     break;
@@ -442,7 +441,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            scene.gotoNextScene();
+                            return scene.gotoNextScene();
                         }
                     }
                     break;
@@ -667,7 +666,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            scene.gotoNextScene();
+                            return scene.gotoNextScene();
                         }
                     }
                     break;
@@ -938,7 +937,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            scene.gotoNextScene();
+                            return scene.gotoNextScene();
                         }
                     }
                     break;

@@ -66,12 +66,10 @@ public final class DiffOptionScene extends GameScene {
         mouseRightBtn.update(dt);
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            scene.switchToScene(0);
-            return true;
+            return scene.switchToScene(0);
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
-            scene.gotoNextScene();
-            return true;
+            return scene.gotoNextScene();
         }
 
 

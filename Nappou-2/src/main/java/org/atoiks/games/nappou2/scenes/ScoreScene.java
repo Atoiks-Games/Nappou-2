@@ -82,8 +82,7 @@ public final class ScoreScene extends GameScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            scene.switchToScene(0);
-            return true;
+            return scene.switchToScene(0);
         }
         if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
             plane = (plane + 1) % PLANE_MSG.length;
