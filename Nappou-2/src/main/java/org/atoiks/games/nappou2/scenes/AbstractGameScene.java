@@ -131,6 +131,7 @@ public abstract class AbstractGameScene extends GameScene {
 
         playerFireTimeout = 0f;
         pause = false;
+        selector = 0;
         enableInput();
     }
 
@@ -249,8 +250,6 @@ public abstract class AbstractGameScene extends GameScene {
 
             if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
                 if (selector != 0) {
-                    // reset selector to 0, otherwise pause in next game brings user to unexpected option
-                    selector = 0;
                     return scene.switchToScene(sceneDest[selector - 1]);
                 }
 
