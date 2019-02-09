@@ -31,9 +31,6 @@ import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.MouseClickHandler;
 
-import org.atoiks.games.nappou2.entities.IShield;
-import org.atoiks.games.nappou2.entities.shield.*;
-
 public final class DiffOptionScene extends GameScene {
 
     private static final Difficulty[] DIFFS = Difficulty.values();
