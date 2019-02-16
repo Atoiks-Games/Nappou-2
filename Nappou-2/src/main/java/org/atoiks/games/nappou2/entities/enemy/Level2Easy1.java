@@ -90,10 +90,13 @@ public final class Level2Easy1 extends AbstractEnemy {
             final float x = getX();
             final float y = getY();
             final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle), true, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle), false, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle), true, -800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle), false, -800, 20));
+
+            final float cosK = 1000 * (float) Math.cos(angle);
+            final float sinK = 1000 * (float) Math.sin(angle);
+            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
+            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
+            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
+            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
         }
     }
 
