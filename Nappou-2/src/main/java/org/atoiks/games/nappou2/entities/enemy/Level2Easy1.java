@@ -87,49 +87,27 @@ public final class Level2Easy1 extends AbstractEnemy {
 
     private void attack2() {
         if (enemyTime % 200 == 0) {
-            final float x = getX();
-            final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            final float cosK = 1000 * (float) Math.cos(angle);
-            final float sinK = 1000 * (float) Math.sin(angle);
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
+            wiggleBulletPattern(0);
         }
         if (enemyTime % 200 == 10) {
-            final float x = getX();
-            final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            final float cosK = 1000 * (float) Math.cos(angle + 10);
-            final float sinK = 1000 * (float) Math.sin(angle + 10);
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
+            wiggleBulletPattern(10);
         }
         if (enemyTime % 200 == 20) {
-            final float x = getX();
-            final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            final float cosK = 1000 * (float) Math.cos(angle + 30);
-            final float sinK = 1000 * (float) Math.sin(angle + 30);
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
+            wiggleBulletPattern(30);
         }
         if (enemyTime % 200 == 30) {
-            final float x = getX();
-            final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            final float cosK = 1000 * (float) Math.cos(angle + 60);
-            final float sinK = 1000 * (float) Math.sin(angle + 60);
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
-            game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
+            wiggleBulletPattern(60);
         }
+    }
+
+    private void wiggleBulletPattern(final int angleOffset) {
+        final double angle = angleOffset + Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        final float cosK = 1000 * (float) Math.cos(angle);
+        final float sinK = 1000 * (float) Math.sin(angle);
+        game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, 800, 20));
+        game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, 800, 20));
+        game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, true, -800, 20));
+        game.addEnemyBullet(new WiggleBullet(x, y, 10, cosK, sinK, false, -800, 20));
     }
 
     private void attack3() {
