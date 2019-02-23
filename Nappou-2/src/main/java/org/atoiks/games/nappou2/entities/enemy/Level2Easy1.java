@@ -22,7 +22,7 @@ import java.util.Random;
 
 import org.atoiks.games.nappou2.entities.bullet.*;
 
-public final class Level2Easy1 extends AbstractEnemy {
+public final class Level2Easy1 extends ManualEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 

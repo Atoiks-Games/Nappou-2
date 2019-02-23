@@ -21,7 +21,7 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.nappou2.entities.bullet.Beam;
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class CAITutorial extends AbstractEnemy {
+public final class CAITutorial extends ManualEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 

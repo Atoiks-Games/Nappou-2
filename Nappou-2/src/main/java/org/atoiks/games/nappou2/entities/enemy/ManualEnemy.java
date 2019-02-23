@@ -18,62 +18,52 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import se.tube42.lib.tweeny.Item;
-
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 
-public abstract class TweenEnemy extends AbstractEnemy {
+public abstract class ManualEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 7192746L;
 
-    public static final int FIELD_X = 0;
-    public static final int FIELD_Y = 1;
-    public static final int FIELD_R = 2;
+    protected float x, y, r;
 
-    protected final Item xyr;
-
-    private float dspX;
-    private float dspY;
-
-    protected TweenEnemy(int hp, float x, float y, float r) {
-        this(hp, new Item(3));
-        this.xyr.setImmediate(FIELD_X, x);
-        this.xyr.setImmediate(FIELD_Y, y);
-        this.xyr.setImmediate(FIELD_R, r);
-    }
-
-    protected TweenEnemy(int hp, Item tween) {
+    protected ManualEnemy(int hp, float x, float y, float r) {
         super(hp);
-        this.xyr = tween;
+        this.x = x;
+        this.y = y;
+        this.r = r;
     }
 
     @Override
     public void drift(float dx, float dy) {
-        dspX += dx;
-        dspY += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
     @Override
     public final float getX() {
-        return this.xyr.get(FIELD_X) + dspX;
+        return this.x;
     }
 
     @Override
     public final float getY() {
-        return this.xyr.get(FIELD_Y) + dspY;
+        return this.y;
     }
 
     @Override
     public final float getR() {
-        return this.xyr.get(FIELD_R);
+        return this.r;
+    }
+
+    public final void setX(float x) {
+        this.x = x;
+    }
+
+    public final void setY(float y) {
+        this.y = y;
     }
 
     public final void setR(float r) {
-        this.xyr.setImmediate(FIELD_R, r);
-    }
-
-    public Item tween() {
-        return xyr;
+        this.r = r;
     }
 }

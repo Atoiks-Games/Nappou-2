@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class DropEnemy extends AbstractEnemy {
+public final class DropEnemy extends ManualEnemy {
 
     private static final long serialVersionUID = 8326702143654175787L;
 

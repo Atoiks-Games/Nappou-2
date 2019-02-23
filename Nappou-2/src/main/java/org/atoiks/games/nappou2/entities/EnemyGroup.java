@@ -22,18 +22,15 @@ import java.util.stream.Stream;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
+import org.atoiks.games.framework2d.IGraphics;
+
 import org.atoiks.games.nappou2.graphics.NullEnemyRenderer;
 
-public abstract class EnemyGroup extends IEnemy {
+public abstract class EnemyGroup implements IEnemy {
 
     private static final long serialVersionUID = 823469624677L;
 
     protected Game game;
-
-    /* Package */ EnemyGroup() {
-        super(0);
-        this.compRenderer = NullEnemyRenderer.INSTANCE;
-    }
 
     @Override
     public final boolean isDead() {
@@ -44,6 +41,16 @@ public abstract class EnemyGroup extends IEnemy {
     @Override
     public final int changeHp(int delta) {
         return 1;
+    }
+
+    @Override
+    public final void drift(float dx, float dy) {
+        // do nothing
+    }
+
+    @Override
+    public final void render(IGraphics g) {
+        // do nothing
     }
 
     @Override

@@ -18,59 +18,63 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
+import org.atoiks.games.framework2d.IGraphics;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 
-public abstract class AbstractEnemy extends IEnemy {
+import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
+import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
 
-    private static final long serialVersionUID = 7192746L;
+import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-    protected float x, y, r;
+/* package */ abstract class AbstractEnemy implements IEnemy {
+
+    private static final long serialVersionUID = 8123472652L;
+
+    private static final int SCREEN_EDGE_BUFFER = 16;
+
+    protected int hp;
 
     protected Game game;
 
-    protected AbstractEnemy(int hp, float x, float y, float r) {
-        super(hp);
-        this.x = x;
-        this.y = y;
-        this.r = r;
+    public IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
+
+    protected AbstractEnemy(int hp) {
+        this.hp = hp;
+    }
+
+    public boolean isDead() {
+        return hp <= 0;
+    }
+
+    public int changeHp(int delta) {
+        return this.hp += delta;
+    }
+
+    @Override
+    public final void render(IGraphics g) {
+        compRenderer.render(g, this);
+    }
+
+    @Override
+    public boolean collidesWith(final float x1, final float y1, final float r1) {
+        return fastCircleCollision(getX(), getY(), getR(), x1, y1, r1);
+    }
+
+    @Override
+    public boolean isOutOfScreen(final int w, final int h) {
+        final float x = getX();
+        final float y = getY();
+        final float r = getR();
+        return (x + r < -SCREEN_EDGE_BUFFER)
+            || (x - r > w + SCREEN_EDGE_BUFFER)
+            || (y + r < -SCREEN_EDGE_BUFFER)
+            || (y - r > h + SCREEN_EDGE_BUFFER);
     }
 
     @Override
     public final void attachGame(Game game) {
         this.game = game;
-    }
-
-    @Override
-    public void drift(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
-    }
-
-    @Override
-    public final float getX() {
-        return this.x;
-    }
-
-    @Override
-    public final float getY() {
-        return this.y;
-    }
-
-    @Override
-    public final float getR() {
-        return this.r;
-    }
-
-    public final void setX(float x) {
-        this.x = x;
-    }
-
-    public final void setY(float y) {
-        this.y = y;
-    }
-
-    public final void setR(float r) {
-        this.r = r;
     }
 }

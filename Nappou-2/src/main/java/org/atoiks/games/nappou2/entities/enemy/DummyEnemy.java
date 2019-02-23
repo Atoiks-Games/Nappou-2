@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-public final class DummyEnemy extends AbstractEnemy {
+public final class DummyEnemy extends ManualEnemy {
 
     private static final long serialVersionUID = 56192645221L;
     //This needs to be different for every enemy...

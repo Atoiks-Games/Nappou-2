@@ -24,7 +24,7 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import static org.atoiks.games.nappou2.TrigConstants.*;
 
-public final class Level1Hard extends AbstractEnemy {
+public final class Level1Hard extends ManualEnemy {
 
     private static final long serialVersionUID = 5619264524L;
 
