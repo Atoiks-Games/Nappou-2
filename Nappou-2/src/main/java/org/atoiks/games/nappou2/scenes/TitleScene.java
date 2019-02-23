@@ -59,7 +59,7 @@ public final class TitleScene extends GameScene {
 
         g.setColor(Color.white);
         g.setFont(TITLE_FONT);
-        g.drawString("Nappou 2", 319, 178);
+        g.drawString("Void Walker", 260, 178);
 
         g.setFont(OPTION_FONT);
         for (int i = 0; i < OPT_MSG.length; ++i) {
@@ -67,7 +67,9 @@ public final class TitleScene extends GameScene {
         }
 
         g.setFont(SANS_FONT);
-        g.drawString("Made with love by Atoiks Games", 600, 560);
+        g.drawString("      Made with love by Atoiks Games", 602, 540);
+        g.drawString("In association with Harvard Game Devs", 600, 560);
+
 
         g.drawRect(61, selectorY[selector], 65, selectorY[selector] + OPT_HEIGHT);
     }

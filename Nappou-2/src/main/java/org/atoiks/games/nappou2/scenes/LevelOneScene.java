@@ -123,16 +123,16 @@ public final class LevelOneScene extends AbstractGameScene {
     @Override
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
-        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-            return scene.gotoNextScene();
-        }
+        //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
+        //    return scene.gotoNextScene();
+        //}
         //DEV CHEAT CODE
-         if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
-            disableDamage();
-         }
-        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_E)) {
-            enableDamage();
-        }
+        //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
+        //    disableDamage();
+        // }
+        //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_E)) {
+        //    enableDamage();
+        //}
 
         ++cycles;
         switch (difficulty) {
@@ -272,7 +272,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            return scene.gotoNextScene();
+                            return scene.switchToScene(0);
                         }
                     }
                     break;
@@ -436,7 +436,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            return scene.gotoNextScene();
+                            return scene.switchToScene(0);
                         }
                     }
                     break;
@@ -661,7 +661,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            return scene.gotoNextScene();
+                            return scene.switchToScene(0);
                         }
                     }
                     break;
@@ -932,7 +932,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                            return scene.gotoNextScene();
+                            return scene.switchToScene(0);
                         }
                     }
                     break;
