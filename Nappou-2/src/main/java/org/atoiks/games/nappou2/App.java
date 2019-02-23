@@ -49,7 +49,7 @@ public class App {
 
     public static void main(String[] args) {
         final FrameInfo info = new FrameInfo()
-                .setTitle("Atoiks Games - Nappou 2")
+                .setTitle("Atoiks Games - Void Walker")
                 .setResizable(false)
                 .setSize(900, 600)
                 .setFps(120.0f)
