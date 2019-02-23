@@ -28,7 +28,7 @@ import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-public class PolygonBullet extends IBullet {
+public class PolygonBullet extends AbstractBullet {
 
     private static final long serialVersionUID = 2983462354L;
 
@@ -36,14 +36,22 @@ public class PolygonBullet extends IBullet {
 
     // Stored as x1, y1, ..., xn, yn pairs
     protected final float[] coords;
-    protected float dx, dy;
 
     protected float boundX, boundY, boundR;
 
     protected PolygonBullet(final float[] coords) {
-        final float[] copy = Arrays.copyOf(coords, coords.length);
-        this.coords = copy;
+        // Note: assume the passed in array will be modified
+        this.coords = coords;
+        this.shapeBoundingBox();
+    }
 
+    public PolygonBullet(final float[] coords, float dx, float dy) {
+        this(coords);
+        this.dx = dx;
+        this.dy = dy;
+    }
+
+    private void shapeBoundingBox() {
         // Reshape the bounding box here
         float x1 = Float.POSITIVE_INFINITY;
         float y1 = Float.POSITIVE_INFINITY;
@@ -64,13 +72,6 @@ public class PolygonBullet extends IBullet {
         // + 4 just in case for some reason the shape is actually not contained
         // properly within the bounding box
         boundR = Math.max(x2 - x1, y2 - y1) / 2 + 4;
-    }
-
-    public PolygonBullet(final float[] coords, float dx, float dy) {
-        this(coords);
-
-        this.dx = dx;
-        this.dy = dy;
     }
 
     @Override

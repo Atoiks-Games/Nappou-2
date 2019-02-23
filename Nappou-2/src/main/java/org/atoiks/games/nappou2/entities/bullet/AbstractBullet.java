@@ -16,22 +16,30 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.bullet;
 
 import java.io.Serializable;
 
 import java.awt.Color;
 
-import org.atoiks.games.framework2d.IUpdate;
-import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.nappou2.entities.IBullet;
 
-public interface IBullet extends ICollidable, IRender, IUpdate, Serializable {
+/* package */ abstract class AbstractBullet implements IBullet {
 
-    public void setColor(Color newColor);
-    public Color getColor();
+    private static final long serialVersionUID = 12837435231L;
 
-    public float getX();
-    public float getY();
+    protected Color color = Color.white;
 
-    public void translate(float dx, float dy);
+    protected float dx;
+    protected float dy;
+
+    @Override
+    public final void setColor(Color newColor) {
+        this.color = newColor;
+    }
+
+    @Override
+    public final Color getColor() {
+        return this.color;
+    }
 }

@@ -29,12 +29,11 @@ import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 import static org.atoiks.games.nappou2.TrigConstants.*;
 
-public final class Beam extends IBullet {
+public final class Beam extends AbstractBullet {
 
     private static final long serialVersionUID = 4412375L;
     private static final int ARR_SIZE = 8;
 
-    private final float dx, dy;
     private float x, y;
     private float halfThickness, length;
 

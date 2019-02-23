@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class WiggleBullet extends PointBullet {

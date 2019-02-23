@@ -18,20 +18,21 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
+import java.awt.Color;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class PointBullet extends IBullet {
+public class PointBullet extends AbstractBullet {
 
     private static final long serialVersionUID = 3928242215L;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
     protected float x, y, r;
-    protected float dx, dy;
 
     protected PointBullet(float x, float y, float r) {
         this.x = x;
