@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import java.util.Random;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.entities.bullet.*;
 
 import static org.atoiks.games.nappou2.TrigConstants.*;

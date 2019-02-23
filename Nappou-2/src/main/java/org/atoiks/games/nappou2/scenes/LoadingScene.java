@@ -20,7 +20,6 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Image;
 
 import java.io.IOException;
 import java.io.InputStream;

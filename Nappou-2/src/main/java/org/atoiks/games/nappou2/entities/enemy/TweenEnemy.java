@@ -18,11 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import java.awt.Color;
-
 import se.tube42.lib.tweeny.Item;
-
-import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;

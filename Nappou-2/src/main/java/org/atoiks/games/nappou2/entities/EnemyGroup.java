@@ -22,8 +22,6 @@ import java.util.stream.Stream;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.graphics.NullEnemyRenderer;
 
 public abstract class EnemyGroup extends IEnemy {

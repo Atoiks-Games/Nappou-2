@@ -119,7 +119,6 @@ public final class TutorialScene extends AbstractGameScene {
             renderControls = false;
         }
 
-
         if (game.noMoreEnemies()) {
             switch (waveCounter) {
                 case 0:

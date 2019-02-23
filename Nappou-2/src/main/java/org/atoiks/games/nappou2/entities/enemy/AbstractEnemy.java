@@ -18,10 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import java.awt.Color;
-
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 

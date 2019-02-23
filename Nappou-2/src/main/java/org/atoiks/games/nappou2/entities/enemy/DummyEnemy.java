@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 public final class DummyEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 56192645221L;

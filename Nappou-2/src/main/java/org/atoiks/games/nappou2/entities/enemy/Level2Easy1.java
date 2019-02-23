@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import java.util.Random;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.entities.bullet.*;
 
 public final class Level2Easy1 extends AbstractEnemy {
