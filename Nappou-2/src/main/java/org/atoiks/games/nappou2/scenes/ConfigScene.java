@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -44,7 +43,6 @@ public final class ConfigScene extends GameScene {
 
     private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
-    private Image configImg;
     private Clip bgm;
     private GameConfig config;
 
@@ -159,7 +157,6 @@ public final class ConfigScene extends GameScene {
 
     @Override
     public void init() {
-        configImg = (Image) scene.resources().get("config.png");
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         config = (GameConfig) scene.resources().get("game.cfg");
     }
