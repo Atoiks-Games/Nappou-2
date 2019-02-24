@@ -135,12 +135,15 @@ public abstract class AbstractGameScene extends GameScene {
 
     @Override
     public void leave() {
-        if (sceneId >= 0) {
+        if (sceneId >= 0 && !pause) {
+            // Since score saving requires user to input their name,
+            // no more *auto score-saving* when you hit *Return to menu*
+            // the `!pause` part of the condition checks this!
+
             final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
             final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
             final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
             a[a.length - 1] = new ScoreData.Pair(null, (challengeMode ? 2 : 1) * game.getScore());
-            // Arrays.sort(a, Comparator.nullsFirst(Comparator.naturalOrder()));
             Arrays.sort(a, NULLS_FIRST_CMP);
             System.arraycopy(a, 1, alias, 0, a.length - 1);
         }
@@ -247,6 +250,7 @@ public abstract class AbstractGameScene extends GameScene {
 
             if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                 if (selector != 0) {
+                    // XXX: do not unpause! (see leave handling score saves)
                     return scene.switchToScene(sceneDest[selector - 1]);
                 }
 
