@@ -33,7 +33,7 @@ public final class ScoreData implements Serializable {
 
     public final int[][][][] data = new int[2][LEVELS][DIFFICULTIES][KEPT_SCORES];
 
-    public final void clear() {
+    public void clear() {
         for (final int[][][] p : data) {
             for (final int[][] pp : p) {
                 for (final int[] ppp : pp) {
