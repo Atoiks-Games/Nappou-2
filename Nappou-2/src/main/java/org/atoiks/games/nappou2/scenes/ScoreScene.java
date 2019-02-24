@@ -75,14 +75,18 @@ public final class ScoreScene extends GameScene {
             }
         }
 
-        g.drawString("Switch score mode with left and right arrows", 14, 560);
-        g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
+        g.drawString("Switch score mode with left and right arrows", 14, 540);
+        g.drawString("Hit Enter to clear current visible highscore", 14, 560);
+        g.drawString("Hit Escape to return to title screen", 14, 580);
     }
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             return scene.switchToScene(0);
+        }
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+            score.clear(plane);
         }
         if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
             plane = (plane + 1) % PLANE_MSG.length;

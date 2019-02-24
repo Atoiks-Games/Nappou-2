@@ -42,4 +42,13 @@ public final class ScoreData implements Serializable {
             }
         }
     }
+
+    public void clear(int plane) {
+        final int[][][] p = data[plane];
+        for (final int[][] pp : p) {
+            for (final int[] ppp : pp) {
+                Arrays.fill(ppp, 0);
+            }
+        }
+    }
 }
