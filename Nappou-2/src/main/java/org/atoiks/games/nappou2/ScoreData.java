@@ -26,7 +26,8 @@ public final class ScoreData implements Serializable {
 
     private static final long serialVersionUID = -912732385246734L;
 
-    public static final int LEVELS = 2;
+    // Only keep level 1 for now?
+    public static final int LEVELS = 1;
     public static final int DIFFICULTIES = Difficulty.values().length;
     public static final int KEPT_SCORES = 5;
 
