@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 public final class ScoreData implements Serializable {
 
-    private static final long serialVersionUID = -912732385246734L;
+    private static final long serialVersionUID = -912732385246733L;
 
     public static class Pair implements Serializable, Comparable<Pair> {
 
