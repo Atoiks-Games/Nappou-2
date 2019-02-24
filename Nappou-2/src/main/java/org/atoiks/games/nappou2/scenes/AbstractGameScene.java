@@ -140,15 +140,34 @@ public abstract class AbstractGameScene extends GameScene {
             // no more *auto score-saving* when you hit *Return to menu*
             // the `!pause` part of the condition checks this!
 
+            // Also, names must be 26 chars. Pad space if necessary!
             final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
+            final String name = restrictString((String) scene.resources().get("score.name"), 26);
             final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
             final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
-            a[a.length - 1] = new ScoreData.Pair(null, (challengeMode ? 2 : 1) * game.getScore());
+            a[a.length - 1] = new ScoreData.Pair(name, (challengeMode ? 2 : 1) * game.getScore());
             Arrays.sort(a, NULLS_FIRST_CMP);
             System.arraycopy(a, 1, alias, 0, a.length - 1);
         }
 
         game.cleanup();
+    }
+
+    private String restrictString(final String str, final int width) {
+        if (str == null || str.isEmpty()) {
+            return String.valueOf(new char[width]);
+        }
+
+        final int strlen = str.length();
+        if (strlen == width) {
+            return str;
+        }
+        if (strlen > width) {
+            return str.substring(0, width);
+        }
+
+        // strlen < width
+        return str + String.valueOf(new char[width - strlen]);
     }
 
     public void renderBackground(final IGraphics g) {

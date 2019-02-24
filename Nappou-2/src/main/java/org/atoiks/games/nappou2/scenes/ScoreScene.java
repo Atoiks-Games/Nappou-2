@@ -43,8 +43,11 @@ public final class ScoreScene extends GameScene {
 
     private ScoreData score = null;
     private int plane = 0;
+    private boolean showName = true;
 
     private Clip bgm;
+
+    private int ticks = 0;
 
     @Override
     public void render(IGraphics g) {
@@ -71,14 +74,15 @@ public final class ScoreScene extends GameScene {
                     final int offset = p.length - 1 - j;
                     final ScoreData.Pair pair = p[offset];
 
-                    final String str;
-                    if (pair == null) {
-                        str = "";
-                    } else {
-                        str = (pair.name == null ? "" : pair.name)
-                            + (pair.score == 0 ? "0" : pair.score + "000");
+                    if (pair != null) {
+                        final String str;
+                        if (showName) {
+                            str = pair.name == null ? "" : pair.name;
+                        } else {
+                            str = pair.score == 0 ? "0" : pair.score + "000";
+                        }
+                        g.drawString(str, bw + 10, bh + (j + 2) * size);
                     }
-                    g.drawString(str, bw + 10, bh + (j + 2) * size);
                 }
             }
         }
@@ -90,6 +94,11 @@ public final class ScoreScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
+        if (++ticks % 225 == 0) {
+            ticks = 0;
+            showName = !showName;
+        }
+
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             return scene.switchToScene(0);
         }
@@ -119,6 +128,9 @@ public final class ScoreScene extends GameScene {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        ticks = 0;
+        showName = true;
     }
 
     @Override
