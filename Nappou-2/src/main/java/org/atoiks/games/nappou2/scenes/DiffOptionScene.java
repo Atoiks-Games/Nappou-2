@@ -29,15 +29,12 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.MouseClickHandler;
 
 public final class DiffOptionScene extends GameScene {
 
     private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
-
-    private MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private int diffSel;
@@ -60,15 +57,12 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        mouseRightBtn.update(dt);
-
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             return scene.switchToScene(0);
         }
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             return scene.gotoNextScene();
         }
-
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             ++diffSel;
@@ -76,17 +70,6 @@ public final class DiffOptionScene extends GameScene {
         }
         if (Input.isKeyPressed(KeyEvent.VK_UP)) {
             if (--diffSel < 0) diffSel = diffSelY.length - 1;
-        }
-
-        if (Input.mouseMoved()) {
-            final int mouseY = Input.getLocalY();
-            for (int i = 0; i < diffSelY.length; ++i) {
-                final int selBase = diffSelY[i];
-                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                    diffSel = i;
-                    break;
-                }
-            }
         }
         return true;
     }
@@ -103,8 +86,6 @@ public final class DiffOptionScene extends GameScene {
 
     @Override
     public void enter(int previousSceneId) {
-        mouseRightBtn.reset();
-
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
