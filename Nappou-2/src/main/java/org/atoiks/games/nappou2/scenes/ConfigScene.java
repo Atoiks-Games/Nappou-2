@@ -28,7 +28,6 @@ import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.MouseClickHandler;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -40,8 +39,6 @@ public final class ConfigScene extends GameScene {
     private static final int[] SELECTOR_Y = { 66, 115 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
-
-    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private Clip bgm;
     private GameConfig config;
@@ -77,8 +74,6 @@ public final class ConfigScene extends GameScene {
 
     @Override
     public boolean update(float dt) {
-        mouseRightBtn.update(dt);
-
         if (config.bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -100,31 +95,6 @@ public final class ConfigScene extends GameScene {
         // Only dealing with boolean values, both right and left keys only need to invert value
         if (Input.isKeyPressed(KeyEvent.VK_RIGHT) || Input.isKeyPressed(KeyEvent.VK_LEFT)) {
             setValueAtSelector(!getValueAtSelector());
-        }
-
-        if (Input.mouseMoved()) {
-            final int mouseY = Input.getLocalY();
-            for (int i = 0; i < SELECTOR_Y.length; ++i) {
-                final int selBase = SELECTOR_Y[i];
-                if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                    selector = i;
-                    break;
-                }
-            }
-        }
-
-        // Only update option with mouse if user dblclicked
-        final int mouseX = Input.getLocalX();
-        if (mouseRightBtn.doubleClicked()) {
-            for (int i = 0; i < BOOL_SEL_X.length; i += 2) {
-                final int selStart = BOOL_SEL_X[i];
-                final int selEnd   = BOOL_SEL_X[i + 1];
-                if (mouseX > selStart && mouseX < selEnd) {
-                    // Set value to true if i == 0 (offset for ON)
-                    setValueAtSelector(i == 0);
-                    break;
-                }
-            }
         }
         return true;
     }
@@ -159,11 +129,6 @@ public final class ConfigScene extends GameScene {
     public void init() {
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
         config = (GameConfig) scene.resources().get("game.cfg");
-    }
-
-    @Override
-    public void enter(int from) {
-        mouseRightBtn.reset();
     }
 
     @Override

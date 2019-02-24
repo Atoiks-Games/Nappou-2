@@ -34,7 +34,6 @@ import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.MouseClickHandler;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
@@ -57,8 +56,6 @@ public abstract class AbstractGameScene extends GameScene {
     private static final int[] selectorY = {342, 402};
     private static final int[] sceneDest = {0};
     private static final int OPT_HEIGHT = 37;
-
-    private final MouseClickHandler mouseRightBtn = new MouseClickHandler(1, 0.5f);
 
     private int selector;
 
@@ -123,8 +120,6 @@ public abstract class AbstractGameScene extends GameScene {
 
     @Override
     public void enter(int prevSceneId) {
-        mouseRightBtn.reset();
-
         difficulty = (Difficulty) scene.resources().get("difficulty");
         challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
 
@@ -211,8 +206,6 @@ public abstract class AbstractGameScene extends GameScene {
 
     @Override
     public boolean update(final float dt) {
-        mouseRightBtn.update(dt);
-
         // Hopefully the only "black magic" in here
         if (!pause) {
             if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
@@ -247,7 +240,7 @@ public abstract class AbstractGameScene extends GameScene {
                 return true;
             }
 
-            if (Input.isKeyPressed(KeyEvent.VK_ENTER) || mouseRightBtn.doubleClicked()) {
+            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                 if (selector != 0) {
                     return scene.switchToScene(sceneDest[selector - 1]);
                 }
@@ -261,17 +254,6 @@ public abstract class AbstractGameScene extends GameScene {
             }
             if (Input.isKeyPressed(KeyEvent.VK_UP)) {
                 if (--selector < 0) selector = selectorY.length - 1;
-            }
-
-            if (Input.mouseMoved()) {
-                final int mouseY = Input.getLocalY();
-                for (int i = 0; i < selectorY.length; ++i) {
-                    final int selBase = selectorY[i];
-                    if (mouseY > selBase && mouseY < (selBase + OPT_HEIGHT)) {
-                        selector = i;
-                        break;
-                    }
-                }
             }
         }
         return true;
