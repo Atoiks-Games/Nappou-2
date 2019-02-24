@@ -19,6 +19,7 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -56,6 +57,9 @@ public abstract class AbstractGameScene extends GameScene {
     private static final int[] selectorY = {342, 402};
     private static final int[] sceneDest = {0};
     private static final int OPT_HEIGHT = 37;
+
+    private static final Comparator<ScoreData.Pair> NULLS_FIRST_CMP =
+            Comparator.nullsFirst(Comparator.naturalOrder());
 
     private int selector;
 
@@ -133,10 +137,11 @@ public abstract class AbstractGameScene extends GameScene {
     public void leave() {
         if (sceneId >= 0) {
             final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
-            final int[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
-            final int[] a = Arrays.copyOf(alias, alias.length + 1);
-            a[a.length - 1] = (challengeMode ? 2 : 1) * game.getScore();
-            Arrays.sort(a);
+            final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
+            final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
+            a[a.length - 1] = new ScoreData.Pair(null, (challengeMode ? 2 : 1) * game.getScore());
+            // Arrays.sort(a, Comparator.nullsFirst(Comparator.naturalOrder()));
+            Arrays.sort(a, NULLS_FIRST_CMP);
             System.arraycopy(a, 1, alias, 0, a.length - 1);
         }
 

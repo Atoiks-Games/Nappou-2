@@ -59,17 +59,25 @@ public final class ScoreScene extends GameScene {
 
         g.setFont(SANS_FONT);
         final int size = SANS_FONT.getSize();
-        final int[][][] splane = score.data[plane];
+        final ScoreData.Pair[][][] splane = score.data[plane];
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
             for (Difficulty diff : Difficulty.values()) {
                 final int bw = 60 + diff.ordinal() * 200;
-                final int[] p = splane[i][diff.ordinal()];
+                final ScoreData.Pair[] p = splane[i][diff.ordinal()];
                 g.drawString(diff.toString(), bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
-                    final String str = p[offset] == 0 ? "0" : Integer.toString(p[offset]) + "000";
+                    final ScoreData.Pair pair = p[offset];
+
+                    final String str;
+                    if (pair == null) {
+                        str = "";
+                    } else {
+                        str = (pair.name == null ? "" : pair.name)
+                            + (pair.score == 0 ? "0" : pair.score + "000");
+                    }
                     g.drawString(str, bw + 10, bh + (j + 2) * size);
                 }
             }
