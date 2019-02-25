@@ -54,7 +54,7 @@ public class App {
                 .setSize(900, 600)
                 .setFps(120.0f)
                 .setLoader(new LoadingScene())
-                .setGameScenes(new PromptNameScene(), new TitleScene(), new TutorialScene(),
+                .setGameScenes(new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
                         new ScoreScene(), new ConfigScene(), new DiffOptionScene(), new ShieldOptionScene(),
                         new LevelOneScene(), new LevelTwoScene());
         final Frame frame = new Frame(info);

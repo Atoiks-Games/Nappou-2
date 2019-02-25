@@ -34,7 +34,7 @@ import org.atoiks.games.nappou2.Difficulty;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class PromptNameScene extends GameScene {
+public final class SaveHighscoreScene extends GameScene {
 
     private static final int WRAP_LENGTH = 13;
     private static final int BANK_LENGTH = WRAP_LENGTH * 5;
