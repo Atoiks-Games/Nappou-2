@@ -272,6 +272,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                            // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
+                            scene.resources().put("prompt.trans", 1);
                             return scene.switchToScene(0);
                         }
                     }
@@ -436,6 +438,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                            // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
+                            scene.resources().put("prompt.trans", 1);
                             return scene.switchToScene(0);
                         }
                     }
@@ -661,6 +665,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                            // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
+                            scene.resources().put("prompt.trans", 1);
                             return scene.switchToScene(0);
                         }
                     }
@@ -932,6 +938,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                            // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
+                            scene.resources().put("prompt.trans", 1);
                             return scene.switchToScene(0);
                         }
                     }

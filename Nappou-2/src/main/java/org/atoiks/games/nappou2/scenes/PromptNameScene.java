@@ -21,9 +21,16 @@ package org.atoiks.games.nappou2.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.nappou2.ScoreData;
+import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.Difficulty;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
@@ -42,6 +49,9 @@ public final class PromptNameScene extends GameScene {
         "{", "}", "|", "~", "^", "#", "$", "%", "&", "*", "\u2610", "BS", "DONE",
     };
 
+    private static final Comparator<ScoreData.Pair> NULLS_FIRST_CMP =
+            Comparator.nullsFirst(Comparator.naturalOrder());
+
     static {
         // sanity check!
         if (BANK_LENGTH != CHAR_BANK.length) {
@@ -57,8 +67,7 @@ public final class PromptNameScene extends GameScene {
 
     @Override
     public void enter(int from) {
-        // transition = (int) scene.resources().get("prompt.trans");
-        transition = 1;
+        transition = (int) scene.resources().get("prompt.trans");
 
         currentIdx = 0;
         currentStr = "";
@@ -117,9 +126,24 @@ public final class PromptNameScene extends GameScene {
                     }
                     break;
                 case BANK_LENGTH - 1: // Done
-                    scene.resources().put("prompt.name", currentStr);
-                    // return scene.switchToScene(transition);
-                    return false;
+                    // We will save the score here!
+                    // Names must be 26 chars. Pad space if necessary!
+                    final boolean challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
+                    final int levelId = (int) scene.resources().get("level.id");
+                    final int levelScore = (int) scene.resources().get("level.score");
+                    final int levelDiff = ((Difficulty) scene.resources().get("difficulty")).ordinal();
+
+                    final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
+                    final String name = restrictString(currentStr, 26);
+
+                    final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][levelId][levelDiff];
+                    final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
+                    a[a.length - 1] = new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore);
+                    Arrays.sort(a, NULLS_FIRST_CMP);
+                    System.arraycopy(a, 1, alias, 0, a.length - 1);
+
+                    // Then transition to correct scene
+                    return scene.switchToScene(transition);
                 default:
                     currentStr += CHAR_BANK[currentIdx];
                     break;
@@ -127,6 +151,23 @@ public final class PromptNameScene extends GameScene {
         }
 
         return true;
+    }
+
+    private static String restrictString(final String str, final int width) {
+        if (str == null || str.isEmpty()) {
+            return String.valueOf(new char[width]);
+        }
+
+        final int strlen = str.length();
+        if (strlen == width) {
+            return str;
+        }
+        if (strlen > width) {
+            return str.substring(0, width);
+        }
+
+        // strlen < width
+        return str + String.valueOf(new char[width - strlen]);
     }
 
     @Override

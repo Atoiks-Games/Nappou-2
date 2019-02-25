@@ -88,7 +88,8 @@ public final class LoadingScene extends Scene {
                 break;
             case DONE:
                 loader.shutdown();
-                return scene.gotoNextScene();
+                // Title is remapped to 1!
+                return scene.switchToScene(1);
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
