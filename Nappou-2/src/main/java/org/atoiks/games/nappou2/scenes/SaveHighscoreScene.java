@@ -36,6 +36,8 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 
 public final class SaveHighscoreScene extends GameScene {
 
+    private static final int NAME_LENGTH_CAP = 26;
+
     private static final int WRAP_LENGTH = 13;
     private static final int BANK_LENGTH = WRAP_LENGTH * 5;
 
@@ -51,6 +53,9 @@ public final class SaveHighscoreScene extends GameScene {
 
     private static final Comparator<ScoreData.Pair> NULLS_FIRST_CMP =
             Comparator.nullsFirst(Comparator.naturalOrder());
+
+    private static final String NAME_LENGTH_CAP_MSG =
+            "Names over " + NAME_LENGTH_CAP + " characters will be truncated";
 
     static {
         // sanity check!
@@ -86,8 +91,8 @@ public final class SaveHighscoreScene extends GameScene {
         g.drawString(currentStr, 275, 350);
 
         g.setFont(SANS_FONT);
-        if (currentStr.length() > 26) {
-            g.drawString("Names over 26 characters will be truncated", 14, 580);
+        if (currentStr.length() > NAME_LENGTH_CAP) {
+            g.drawString(NAME_LENGTH_CAP_MSG, 14, 580);
         }
         for (int i = 0; i < BANK_LENGTH; ++i) {
             g.setColor(i == currentIdx ? Color.yellow : Color.white);
@@ -127,14 +132,14 @@ public final class SaveHighscoreScene extends GameScene {
                     break;
                 case BANK_LENGTH - 1: // Done
                     // We will save the score here!
-                    // Names must be 26 chars. Pad space if necessary!
                     final boolean challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
                     final int levelId = (int) scene.resources().get("level.id");
                     final int levelScore = (int) scene.resources().get("level.score");
                     final int levelDiff = ((Difficulty) scene.resources().get("difficulty")).ordinal();
 
                     final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
-                    final String name = restrictString(currentStr, 26);
+                    final String name = currentStr.length() > NAME_LENGTH_CAP
+                            ? currentStr.substring(0, NAME_LENGTH_CAP) : currentStr;
 
                     final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][levelId][levelDiff];
                     final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
@@ -151,23 +156,6 @@ public final class SaveHighscoreScene extends GameScene {
         }
 
         return true;
-    }
-
-    private static String restrictString(final String str, final int width) {
-        if (str == null || str.isEmpty()) {
-            return String.valueOf(new char[width]);
-        }
-
-        final int strlen = str.length();
-        if (strlen == width) {
-            return str;
-        }
-        if (strlen > width) {
-            return str.substring(0, width);
-        }
-
-        // strlen < width
-        return str + String.valueOf(new char[width - strlen]);
     }
 
     @Override
