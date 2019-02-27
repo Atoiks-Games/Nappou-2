@@ -40,10 +40,10 @@ public final class TitleScene extends GameScene {
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selectorY
     private static final String[] OPT_MSG = {
-        "Tutorial", "Story Mode", "Highscore", "Settings", "Quit"
+        "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
     };
-    private static final int[] selectorY = {232, 270, 308, 346, 469};
-    private static final int[] sceneDest = {1, 4, 2, 3};
+    private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
+    private static final int[] sceneDest = {1, 4, 2, 3, 0};
     private static final int OPT_HEIGHT = 30;
 
     private Clip bgm;
