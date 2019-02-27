@@ -43,7 +43,7 @@ public final class TitleScene extends GameScene {
         "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
     };
     private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
-    private static final int[] sceneDest = {1, 4, 2, 3, 0};
+    private static final int[] sceneDest = {1, 5, 2, 3, 4};
     private static final int OPT_HEIGHT = 30;
 
     private Clip bgm;
