@@ -24,7 +24,6 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
@@ -35,7 +34,7 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
-public final class ScoreScene extends GameScene {
+public final class ScoreScene extends CenteringScene {
 
     private static final String[] PLANE_MSG = {
         "Highscore", "Highscore (Challenge Mode)"
@@ -50,6 +49,7 @@ public final class ScoreScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         if (score == null) return;
 
@@ -91,11 +91,6 @@ public final class ScoreScene extends GameScene {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override

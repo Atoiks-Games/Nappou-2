@@ -27,7 +27,6 @@ import java.awt.event.KeyEvent;
 import se.tube42.lib.tweeny.TweenManager;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Drifter;
@@ -40,7 +39,7 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public abstract class AbstractGameScene extends GameScene {
+public abstract class AbstractGameScene extends CenteringScene {
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
@@ -79,11 +78,6 @@ public abstract class AbstractGameScene extends GameScene {
 
     protected AbstractGameScene(int id) {
         sceneId = id;
-    }
-
-    @Override
-    public final void resize(int w, int h) {
-        // Window size is fixed
     }
 
     protected final void disableDamage() {
@@ -178,7 +172,10 @@ public abstract class AbstractGameScene extends GameScene {
     }
 
     @Override
-    public final <T> void render(final IGraphics<T> g) {
+    public final void render(final IGraphics g) {
+        // setup aspect ratio
+        super.render(g);
+
         // The bullet-curtain part
         renderBackground(g);
         game.render(g);
@@ -202,6 +199,9 @@ public abstract class AbstractGameScene extends GameScene {
             g.drawString("Return to Title", 52, 433);
             g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
         }
+
+        g.setColor(Color.black);
+        drawLeftBlinder(g);
     }
 
     @Override
