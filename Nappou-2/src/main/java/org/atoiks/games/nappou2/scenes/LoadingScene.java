@@ -42,6 +42,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.SoundEffect;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
@@ -160,11 +161,10 @@ public final class LoadingScene extends Scene {
             return;
         }
         try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
-            final Clip clip = AudioSystem.getClip(null);
-            clip.open(in);
-            clip.stop();
+            final Clip clip = SoundEffect.getFromAudioInputStream(in).makeClip();
             scene.resources().put(name, clip);
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+            ex.printStackTrace();
         }
     }
 }
