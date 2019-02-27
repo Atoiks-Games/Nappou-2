@@ -34,9 +34,9 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 public final class ConfigScene extends GameScene {
 
     private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE"
+        "BGM", "CHALLENGE MODE", "FULLSCREEN"
     };
-    private static final int[] SELECTOR_Y = { 66, 115 };
+    private static final int[] SELECTOR_Y = { 66, 115, 164 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
@@ -65,6 +65,7 @@ public final class ConfigScene extends GameScene {
 
         renderBoolValue(g, config.bgm, 91);
         renderBoolValue(g, config.challengeMode, 140);
+        renderBoolValue(g, config.fullscreen, 189);
     }
 
     private void renderBoolValue(final IGraphics g, final boolean value, final float height) {
@@ -103,6 +104,7 @@ public final class ConfigScene extends GameScene {
         switch (selector) {
             case 0: return config.bgm;
             case 1: return config.challengeMode;
+            case 2: return config.fullscreen;
             default: throw new RuntimeException("Unknown selector index " + selector);
         }
     }
@@ -114,6 +116,9 @@ public final class ConfigScene extends GameScene {
                 break;
             case 1:
                 config.challengeMode = newValue;
+                break;
+            case 2:
+                scene.frame().setFullScreen(config.fullscreen = newValue);
                 break;
             default:
                 throw new RuntimeException("Unknown selector index " + selector);
