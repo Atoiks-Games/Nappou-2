@@ -61,6 +61,7 @@ public final class LoadingScene extends Scene {
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
 
     private LoadState loaded = LoadState.WAITING;
+    private boolean enterFullscreen = false;
 
     private float time;
 
@@ -89,6 +90,8 @@ public final class LoadingScene extends Scene {
                 break;
             case DONE:
                 loader.shutdown();
+                // Now entering fullscreen if user wanted it.
+                scene.frame().setFullScreen(enterFullscreen);
                 return scene.gotoNextScene();
             case WAITING:
                 loaded = LoadState.LOADING;
@@ -108,6 +111,10 @@ public final class LoadingScene extends Scene {
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
                         final GameConfig cfg = (GameConfig) ois.readObject();
                         scene.resources().put("game.cfg", cfg == null ? new GameConfig() : cfg);
+                        if (cfg != null) {
+                            // Check if user wanted fullscreen mode
+                            enterFullscreen = cfg.fullscreen;
+                        }
                     } catch (IOException | ClassNotFoundException ex) {
                         // Supply default configuration
                         scene.resources().put("game.cfg", new GameConfig());
