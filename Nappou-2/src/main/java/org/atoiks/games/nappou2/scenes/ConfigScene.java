@@ -24,14 +24,13 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class ConfigScene extends GameScene {
+public final class ConfigScene extends CenteringScene {
 
     private static final String[] OPTION_NAMES = {
         "BGM", "CHALLENGE MODE", "FULLSCREEN"
@@ -44,11 +43,16 @@ public final class ConfigScene extends GameScene {
     private GameConfig config;
 
     private int selector;
+    private float scaleFactor;
+    private float transX;
+    private float transY;
 
     @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
+
         g.setColor(Color.white);
         g.setFont(TitleScene.OPTION_FONT);
         for (int i = 0; i < OPTION_NAMES.length; ++i) {
@@ -123,11 +127,6 @@ public final class ConfigScene extends GameScene {
             default:
                 throw new RuntimeException("Unknown selector index " + selector);
         }
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override
