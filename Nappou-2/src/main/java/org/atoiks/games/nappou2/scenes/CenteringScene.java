@@ -33,8 +33,13 @@ public abstract class CenteringScene extends GameScene {
         g.translate(transX, transY);
     }
 
+    protected final void drawLeftBlinder(IGraphics g) {
+        g.scale(1 / scaleFactor, 1 / scaleFactor);
+        g.fillRect(-2 * transX, 0, 0, scene.frame().getHeight());
+    }
+
     @Override
-    public void resize(final int x, final int y) {
+    public final void resize(final int x, final int y) {
         // original size is 900 by 600
         // we only scale the screen (and leave borders on the side)
         final float scaleRatioX = x / 900.0f;
@@ -45,7 +50,7 @@ public abstract class CenteringScene extends GameScene {
         this.scaleFactor = scaleBy;
 
         // Add appropriate padding
-        this.transX = (x - 900.0f * scaleBy) / 2;
-        this.transY = (y - 600.0f * scaleBy) / 2;
+        this.transX = (x - 900.0f * scaleBy) / 3;
+        this.transY = (y - 600.0f * scaleBy) / 3;
     }
 }
