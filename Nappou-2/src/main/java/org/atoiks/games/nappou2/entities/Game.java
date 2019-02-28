@@ -22,10 +22,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-import org.atoiks.games.framework2d.IRender;
 import org.atoiks.games.framework2d.IGraphics;
 
-public final class Game implements Serializable, IRender {
+public final class Game implements Serializable {
 
     private static final long serialVersionUID = 62102375L;
 
@@ -40,8 +39,7 @@ public final class Game implements Serializable, IRender {
     private int gameWidth = Integer.MAX_VALUE;
     private int gameHeight = Integer.MAX_VALUE;
 
-    @Override
-    public <T> void render(IGraphics<T> g) {
+    public void render(IGraphics g) {
         if (player != null) player.render(g);
 
         final int szEnemyBullets = enemyBullets.size();

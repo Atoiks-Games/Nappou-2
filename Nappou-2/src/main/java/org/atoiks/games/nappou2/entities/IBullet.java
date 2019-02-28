@@ -22,10 +22,9 @@ import java.io.Serializable;
 
 import java.awt.Color;
 
-import org.atoiks.games.framework2d.IUpdate;
-import org.atoiks.games.framework2d.IRender;
+import org.atoiks.games.framework2d.IGraphics;
 
-public interface IBullet extends ICollidable, IRender, IUpdate, Serializable {
+public interface IBullet extends ICollidable, Serializable {
 
     public void setColor(Color newColor);
     public Color getColor();
@@ -34,4 +33,7 @@ public interface IBullet extends ICollidable, IRender, IUpdate, Serializable {
     public float getY();
 
     public void translate(float dx, float dy);
+
+    public void update(float dt);
+    public void render(IGraphics g);
 }

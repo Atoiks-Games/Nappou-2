@@ -20,10 +20,9 @@ package org.atoiks.games.nappou2.entities;
 
 import java.io.Serializable;
 
-import org.atoiks.games.framework2d.IRender;
-import org.atoiks.games.framework2d.IUpdate;
+import org.atoiks.games.framework2d.IGraphics;
 
-public interface IShield extends IRender, IUpdate, Serializable {
+public interface IShield extends Serializable {
 
     public float getX();
     public float getY();
@@ -36,4 +35,7 @@ public interface IShield extends IRender, IUpdate, Serializable {
     public void deactivate();
     public boolean isActive();
     public boolean isReady();
+
+    public void update(float dt);
+    public void render(IGraphics g);
 }
