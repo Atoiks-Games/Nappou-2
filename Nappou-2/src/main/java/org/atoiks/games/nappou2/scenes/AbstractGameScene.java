@@ -200,8 +200,8 @@ public abstract class AbstractGameScene extends CenteringScene {
             g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
         }
 
-        g.setColor(Color.black);
-        drawLeftBlinder(g);
+        g.setColor(STATS_GREY);
+        drawSideBlinder(g);
     }
 
     @Override

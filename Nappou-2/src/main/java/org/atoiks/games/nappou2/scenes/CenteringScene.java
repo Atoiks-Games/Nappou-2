@@ -29,13 +29,13 @@ public abstract class CenteringScene extends GameScene {
 
     @Override
     public void render(IGraphics g) {
-        g.scale(scaleFactor, scaleFactor);
         g.translate(transX, transY);
+        g.scale(scaleFactor, scaleFactor);
     }
 
-    protected final void drawLeftBlinder(IGraphics g) {
-        g.scale(1 / scaleFactor, 1 / scaleFactor);
-        g.fillRect(-2 * transX, 0, 0, scene.frame().getHeight());
+    protected final void drawSideBlinder(IGraphics g) {
+        g.fillRect(-transX, 0, 0, 600);
+        g.fillRect(900, 0, 900 + transX, 600);
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class CenteringScene extends GameScene {
         this.scaleFactor = scaleBy;
 
         // Add appropriate padding
-        this.transX = (x - 900.0f * scaleBy) / 3;
-        this.transY = (y - 600.0f * scaleBy) / 3;
+        this.transX = (x - 900.0f * scaleBy) / 2;
+        this.transY = (y - 600.0f * scaleBy) / 2;
     }
 }
