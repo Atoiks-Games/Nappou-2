@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
@@ -34,7 +33,7 @@ import org.atoiks.games.nappou2.Difficulty;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class SaveHighscoreScene extends GameScene {
+public final class SaveHighscoreScene extends CenteringScene {
 
     private static final int NAME_LENGTH_CAP = 26;
 
@@ -82,6 +81,7 @@ public final class SaveHighscoreScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         g.setColor(Color.white);
         g.setFont(TitleScene.TITLE_FONT);
@@ -156,10 +156,5 @@ public final class SaveHighscoreScene extends GameScene {
         }
 
         return true;
-    }
-
-    @Override
-    public void resize(int w, int h) {
-        //
     }
 }
