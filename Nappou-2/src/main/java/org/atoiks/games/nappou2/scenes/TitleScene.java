@@ -25,14 +25,13 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class TitleScene extends GameScene {
+public final class TitleScene extends CenteringScene {
 
     public static final Font TITLE_FONT = SANS_FONT.deriveFont(80f);
     public static final Font OPTION_FONT = SANS_FONT.deriveFont(30f);
@@ -53,6 +52,7 @@ public final class TitleScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         g.setColor(Color.white);
         g.setFont(TITLE_FONT);
@@ -88,11 +88,6 @@ public final class TitleScene extends GameScene {
             if (--selector < 0) selector = selectorY.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override

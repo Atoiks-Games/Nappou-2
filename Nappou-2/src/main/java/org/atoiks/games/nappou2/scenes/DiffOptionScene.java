@@ -24,13 +24,12 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
-public final class DiffOptionScene extends GameScene {
+public final class DiffOptionScene extends CenteringScene {
 
     private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
@@ -44,6 +43,7 @@ public final class DiffOptionScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         g.setColor(Color.white);
         g.setFont(TitleScene.TITLE_FONT);
@@ -72,11 +72,6 @@ public final class DiffOptionScene extends GameScene {
             if (--diffSel < 0) diffSel = diffSelY.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override

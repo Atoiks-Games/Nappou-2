@@ -24,7 +24,6 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
@@ -32,7 +31,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
-public final class ShieldOptionScene extends GameScene {
+public final class ShieldOptionScene extends CenteringScene {
 
     private static final String[] SHIELD_MSG = {
         "Bonfire", "Firefly", "None"
@@ -49,6 +48,7 @@ public final class ShieldOptionScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         if (!skipSelection) {
             g.setColor(Color.white);
@@ -82,11 +82,6 @@ public final class ShieldOptionScene extends GameScene {
             if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override

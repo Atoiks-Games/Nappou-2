@@ -27,4 +27,5 @@ public final class GameConfig implements Serializable {
     // Default values = default settings
     public boolean bgm = true;
     public boolean challengeMode = false;
+    public boolean fullscreen = false;
 }

@@ -42,6 +42,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.SoundEffect;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
@@ -60,6 +61,7 @@ public final class LoadingScene extends Scene {
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
 
     private LoadState loaded = LoadState.WAITING;
+    private boolean enterFullscreen = false;
 
     private float time;
 
@@ -88,6 +90,8 @@ public final class LoadingScene extends Scene {
                 break;
             case DONE:
                 loader.shutdown();
+                // Now entering fullscreen if user wanted it.
+                scene.frame().setFullScreen(enterFullscreen);
                 // Title is remapped to 1!
                 return scene.switchToScene(1);
             case WAITING:
@@ -108,6 +112,10 @@ public final class LoadingScene extends Scene {
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
                         final GameConfig cfg = (GameConfig) ois.readObject();
                         scene.resources().put("game.cfg", cfg == null ? new GameConfig() : cfg);
+                        if (cfg != null) {
+                            // Check if user wanted fullscreen mode
+                            enterFullscreen = cfg.fullscreen;
+                        }
                     } catch (IOException | ClassNotFoundException ex) {
                         // Supply default configuration
                         scene.resources().put("game.cfg", new GameConfig());
@@ -173,11 +181,10 @@ public final class LoadingScene extends Scene {
             return;
         }
         try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
-            final Clip clip = AudioSystem.getClip(null);
-            clip.open(in);
-            clip.stop();
+            final Clip clip = SoundEffect.getFromAudioInputStream(in).makeClip();
             scene.resources().put(name, clip);
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+            ex.printStackTrace();
         }
     }
 }
