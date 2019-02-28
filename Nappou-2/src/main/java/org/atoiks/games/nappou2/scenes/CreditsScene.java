@@ -24,14 +24,13 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.GameScene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-public final class CreditsScene extends GameScene {
+public final class CreditsScene extends CenteringScene {
 
     private Clip bgm;
 
@@ -39,6 +38,7 @@ public final class CreditsScene extends GameScene {
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
+        super.render(g);
 
         g.setColor(Color.white);
         g.setFont(TitleScene.OPTION_FONT);
@@ -54,11 +54,6 @@ public final class CreditsScene extends GameScene {
             return scene.switchToScene(0);
         }
         return true;
-    }
-
-    @Override
-    public void resize(int x, int y) {
-        // Screen size is fixed
     }
 
     @Override
