@@ -39,10 +39,10 @@ public final class TitleScene extends CenteringScene {
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selectorY
     private static final String[] OPT_MSG = {
-        "Tutorial", "Story Mode", "Highscore", "Settings", "Quit"
+        "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
     };
-    private static final int[] selectorY = {235, 276, 318, 357, 469};
-    private static final int[] sceneDest = {2, 5, 3, 4};
+    private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
+    private static final int[] sceneDest = {2, 6, 3, 5, 4};
     private static final int OPT_HEIGHT = 30;
 
     private Clip bgm;
