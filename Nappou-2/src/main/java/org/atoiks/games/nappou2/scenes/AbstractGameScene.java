@@ -286,7 +286,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     private boolean testCollisions() {
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            return scene.switchToScene(0);
+            return scene.switchToScene(1);
         }
         return false;
     }
