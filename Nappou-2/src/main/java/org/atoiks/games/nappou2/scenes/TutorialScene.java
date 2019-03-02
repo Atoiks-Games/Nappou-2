@@ -139,7 +139,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 2:
-                    tutorialImg = null;
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     disableDamage();
                     disableInput();
                     game.clearBullets();
@@ -151,48 +151,56 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 3:
-                    updateDialogue("Player", "What?");
+                    tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    updateDialogue("LUMA", "What?");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 4:
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 5:
-                    updateDialogue("Player", "What?!");
+                    tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    updateDialogue("LUMA", "What?!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 6:
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     updateDialogue("CAI", "Yep, the humans threw us in just like that.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 7:
-                    updateDialogue("Player", "Cai, you don't understand, we have to get out of here.");
+                    tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    updateDialogue("LUMA", "Cai, you don't understand, we have to get out of here.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 8:
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     updateDialogue("CAI", "Not before you finish your daily combat exercises!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 9:
-                    updateDialogue("Player", "Cai, now's not that time.");
+                    tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    updateDialogue("LUMA", "Cai, now's not that time.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
                 case 10:
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     updateDialogue("CAI", "There's always time for senseless violence!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -200,6 +208,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 11:
+                    tutorialImg = null;
                     bgm = (Clip) scene.resources().get("Unlocked.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                         bgm.setMicrosecondPosition(0);
@@ -219,9 +228,11 @@ public final class TutorialScene extends AbstractGameScene {
                     game.clearBullets();
                     bgm.stop();
 
+                    tutorialImg = (Image) scene.resources().get("CAI.png");
                     updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        return scene.switchToScene(0);
+                        tutorialImg = null;
+                        return scene.switchToScene(1);
                     }
                     break;
             }
