@@ -327,7 +327,9 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 7:
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextDialogue(POSTBOSS_MSG)) {
-                            // return scene.gotoNextScene();
+                            // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
+                            // scene.resources().put("prompt.trans", /* whatever the next scene id should be... */);
+                            scene.resources().put("prompt.trans", 1);
                             return scene.switchToScene(0);
                         }
                     }

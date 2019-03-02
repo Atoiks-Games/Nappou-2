@@ -18,9 +18,7 @@
 
 package org.atoiks.games.nappou2;
 
-import org.atoiks.games.framework2d.IUpdate;
-
-public class Drifter implements IUpdate {
+public class Drifter {
 
     private float lowerX = Float.NEGATIVE_INFINITY;
     private float upperX = Float.POSITIVE_INFINITY;
@@ -125,7 +123,6 @@ public class Drifter implements IUpdate {
      *
      * @param dt time elapsed. used as time multipler for dv
      */
-    @Override
     public void update(final float dt) {
         dx = clamp(dx + accelX * dt, lowerX, upperX);
         dy = clamp(dy + accelY * dt, lowerY, upperY);

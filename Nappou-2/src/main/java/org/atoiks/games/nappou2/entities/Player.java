@@ -22,11 +22,9 @@ import java.io.Serializable;
 
 import java.awt.Color;
 
-import org.atoiks.games.framework2d.IRender;
-import org.atoiks.games.framework2d.IUpdate;
 import org.atoiks.games.framework2d.IGraphics;
 
-public final class Player implements IRender, IUpdate, Serializable {
+public final class Player implements Serializable {
 
     private static final long serialVersionUID = 293042L;
 
@@ -52,8 +50,7 @@ public final class Player implements IRender, IUpdate, Serializable {
         this.shield = shield;
     }
 
-    @Override
-    public <T> void render(final IGraphics<T> g) {
+    public void render(final IGraphics g) {
         this.shield.render(g);
         g.setColor(Color.cyan);
         if (isRespawnShieldActive()) {
@@ -67,7 +64,6 @@ public final class Player implements IRender, IUpdate, Serializable {
         }
     }
 
-    @Override
     public void update(final float dt) {
         this.shield.update(dt);
         this.shield.setX(this.x += this.dx * this.speedScale * dt);

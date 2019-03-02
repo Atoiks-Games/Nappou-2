@@ -69,7 +69,7 @@ public final class ShieldOptionScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene(0);
+            return scene.switchToScene(1);
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             return scene.gotoNextScene();

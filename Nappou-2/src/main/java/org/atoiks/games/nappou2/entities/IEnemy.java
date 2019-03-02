@@ -20,12 +20,11 @@ package org.atoiks.games.nappou2.entities;
 
 import java.io.Serializable;
 
-import org.atoiks.games.framework2d.IRender;
-import org.atoiks.games.framework2d.IUpdate;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-public interface IEnemy extends ICollidable, IRender, IUpdate, Serializable {
+public interface IEnemy extends ICollidable, Serializable {
 
     public boolean isDead();
     public int changeHp(int delta);
@@ -38,4 +37,7 @@ public interface IEnemy extends ICollidable, IRender, IUpdate, Serializable {
     public int getScore();
 
     public void attachGame(Game game);
+
+    public void update(float dt);
+    public void render(IGraphics g);
 }

@@ -42,8 +42,11 @@ public final class ScoreScene extends CenteringScene {
 
     private ScoreData score = null;
     private int plane = 0;
+    private boolean showName = true;
 
     private Clip bgm;
+
+    private int ticks = 0;
 
     @Override
     public void render(IGraphics g) {
@@ -59,30 +62,48 @@ public final class ScoreScene extends CenteringScene {
 
         g.setFont(SANS_FONT);
         final int size = SANS_FONT.getSize();
-        final int[][][] splane = score.data[plane];
+        final ScoreData.Pair[][][] splane = score.data[plane];
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
             for (Difficulty diff : Difficulty.values()) {
                 final int bw = 60 + diff.ordinal() * 200;
-                final int[] p = splane[i][diff.ordinal()];
+                final ScoreData.Pair[] p = splane[i][diff.ordinal()];
                 g.drawString(diff.toString(), bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
-                    final String str = p[offset] == 0 ? "0" : Integer.toString(p[offset]) + "000";
-                    g.drawString(str, bw + 10, bh + (j + 2) * size);
+                    final ScoreData.Pair pair = p[offset];
+
+                    if (pair != null) {
+                        final String str;
+                        if (showName) {
+                            str = pair.name == null ? "" : pair.name;
+                        } else {
+                            str = pair.score == 0 ? "0" : pair.score + "000";
+                        }
+                        g.drawString(str, bw + 10, bh + (j + 2) * size);
+                    }
                 }
             }
         }
 
-        g.drawString("Switch score mode with left and right arrows", 14, 560);
+        g.drawString("Switch score mode with left and right arrows", 14, 540);
+        g.drawString("Hit C to clear current visible highscore", 14, 560);
         g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
     }
 
     @Override
     public boolean update(float dt) {
+        if (++ticks % 225 == 0) {
+            ticks = 0;
+            showName = !showName;
+        }
+
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene(0);
+            return scene.switchToScene(1);
+        }
+        if (Input.isKeyPressed(KeyEvent.VK_C)) {
+            score.clear(plane);
         }
         if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
             plane = (plane + 1) % PLANE_MSG.length;
@@ -102,6 +123,9 @@ public final class ScoreScene extends CenteringScene {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        ticks = 0;
+        showName = true;
     }
 
     @Override

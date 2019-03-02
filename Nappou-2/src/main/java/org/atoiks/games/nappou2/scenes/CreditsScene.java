@@ -51,7 +51,7 @@ public final class CreditsScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene(0);
+            return scene.switchToScene(1);
         }
         return true;
     }

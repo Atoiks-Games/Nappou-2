@@ -92,7 +92,8 @@ public final class LoadingScene extends Scene {
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
                 scene.frame().setFullScreen(enterFullscreen);
-                return scene.gotoNextScene();
+                // Title is remapped to 1!
+                return scene.switchToScene(1);
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
@@ -123,7 +124,19 @@ public final class LoadingScene extends Scene {
                     // Load score file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./score.dat"))) {
                         final ScoreData data = (ScoreData) ois.readObject();
-                        scene.resources().put("score.dat", data == null ? new ScoreData() : data);
+
+                        ScoreData sanitized;
+                        if (data == null) {
+                            // if we cannot find the old score, supply blank score
+                            sanitized = new ScoreData();
+                        } else if (data.data[0].length != ScoreData.LEVELS) {
+                            // amount of levels is changed, assume old score is wrong
+                            sanitized = new ScoreData();
+                        } else {
+                            // keep old score, it is probably valid
+                            sanitized = data;
+                        }
+                        scene.resources().put("score.dat", sanitized);
                     } catch (IOException | ClassNotFoundException ex) {
                         // Supply default score
                         scene.resources().put("score.dat", new ScoreData());
