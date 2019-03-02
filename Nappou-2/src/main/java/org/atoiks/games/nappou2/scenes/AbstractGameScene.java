@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.util.Arrays;
-
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -30,9 +28,7 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Drifter;
-import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
-import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
@@ -53,7 +49,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     // Conventionally, continue is always the first option,
     // sceneDest is always one less than the selectorY
     private static final int[] selectorY = {342, 402};
-    private static final int[] sceneDest = {0};
+    private static final int[] sceneDest = {1};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
@@ -70,8 +66,6 @@ public abstract class AbstractGameScene extends CenteringScene {
     protected final Drifter drift = new Drifter();
 
     public final int sceneId;
-
-    private boolean challengeMode;
 
     private String dialogSpeaker;
     private String[] dialogMessage;
@@ -115,7 +109,6 @@ public abstract class AbstractGameScene extends CenteringScene {
     @Override
     public void enter(int prevSceneId) {
         difficulty = (Difficulty) scene.resources().get("difficulty");
-        challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
 
         playerFireTimeout = 0f;
         pause = false;
@@ -125,15 +118,8 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void leave() {
-        if (sceneId >= 0) {
-            final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
-            final int[] alias = scoreDat.data[challengeMode ? 1 : 0][sceneId][difficulty.ordinal()];
-            final int[] a = Arrays.copyOf(alias, alias.length + 1);
-            a[a.length - 1] = (challengeMode ? 2 : 1) * game.getScore();
-            Arrays.sort(a);
-            System.arraycopy(a, 1, alias, 0, a.length - 1);
-        }
-
+        scene.resources().put("level.id", sceneId);
+        scene.resources().put("level.score", game.getScore());
         game.cleanup();
     }
 
