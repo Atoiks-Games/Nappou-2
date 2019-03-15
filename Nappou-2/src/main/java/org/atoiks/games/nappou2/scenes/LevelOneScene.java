@@ -36,11 +36,11 @@ public final class LevelOneScene extends AbstractGameScene {
 
     private static final String[][] PREBOSS_MSG = {
         { "Elle", "Why are you here?" },
-        { "Player", "Oh you know, humans." },
+        { "LUMA", "Oh you know, humans." },
         { "Elle", "I no longer find joy in another's pain." },
         { "CAI", "Why so moody?" },
         { "Elle", "..." },
-        { "Player", "Yeah, give me a few centuries and things will be back to normal!" },
+        { "LUMA", "Yeah, give me a few centuries and things will be back to normal!" },
         { "Elle", "You haven't changed at all *Player*" },
         { "Elle", "You took everything away from me. Do you know how much I suffered?" },
     };
