@@ -232,6 +232,8 @@ public final class TutorialScene extends AbstractGameScene {
                     updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         tutorialImg = null;
+                        // Score in tutorial does not get saved
+                        // Jump to title scene directly
                         return scene.switchToScene(1);
                     }
                     break;
