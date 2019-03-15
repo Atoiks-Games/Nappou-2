@@ -18,11 +18,13 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -35,14 +37,16 @@ import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 public final class LevelOneScene extends AbstractGameScene {
 
     private static final String[][] PREBOSS_MSG = {
-        { "Elle", "Why are you here?" },
-        { "LUMA", "Oh you know, humans." },
-        { "Elle", "I no longer find joy in another's pain." },
-        { "CAI", "Why so moody?" },
-        { "Elle", "..." },
-        { "LUMA", "Yeah, give me a few centuries and things will be back to normal!" },
-        { "Elle", "You haven't changed at all *Player*" },
-        { "Elle", "You took everything away from me. Do you know how much I suffered?" },
+        // img-name, speaker-name, message
+        // if img-name is null, it reuses previous image!
+        { "ELLE.png", "Elle", "Why are you here?" },
+        { "LUMA.png", "LUMA", "Oh you know, humans." },
+        { "ELLE.png", "Elle", "I no longer find joy in another's pain." },
+        { "CAI.png",  "CAI", "Why so moody?" },
+        { "ELLE.png", "Elle", "..." },
+        { "LUMA.png", "LUMA", "Yeah, give me a few centuries and things will be back to normal!" },
+        { "ELLE.png", "Elle", "You haven't changed at all *Player*" },
+        { null      , "Elle", "You took everything away from me. Do you know how much I suffered?" },
     };
     private static final String[] POSTBOSS_MSG = {
         "I just want to go home..."
@@ -53,6 +57,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private Clip bgm;
     private int phase;
 
+    private Image imgDialogFace;
     private int prebossMsgPhase;
 
     // loop frame for level
@@ -109,15 +114,31 @@ public final class LevelOneScene extends AbstractGameScene {
 
         // Stop bgm just in case we forgot
         bgm.stop();
+        // Reset the face associated with dialog
+        imgDialogFace = null;
     }
 
     private boolean displayNextPrebossDialogue() {
         if (++prebossMsgPhase < PREBOSS_MSG.length) {
             final String[] arr = PREBOSS_MSG[prebossMsgPhase];
-            updateDialogue(arr[0], arr[1]);
+            if (arr[0] != null) {
+                imgDialogFace = (Image) scene.resources().get(arr[0]);
+            }
+            updateDialogue(arr[1], arr[2]);
             return true;
         }
+
+        // no more dialogs, must clear out player portrait
+        imgDialogFace = null;
         return false;
+    }
+
+    @Override
+    public void renderBackground(final IGraphics g) {
+        super.renderBackground(g);
+        if (imgDialogFace != null) {
+            g.drawImage(imgDialogFace, (GAME_BORDER - imgDialogFace.getWidth(null)) / 2, (HEIGHT - imgDialogFace.getHeight(null)) / 2);
+        }
     }
 
     @Override
@@ -268,9 +289,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -434,9 +456,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -661,9 +684,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -934,9 +958,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        updateDialogue("Elle", POSTBOSS_MSG);
                         disableInput();
                         game.clearBullets();
+                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
+                        updateDialogue("Elle", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
