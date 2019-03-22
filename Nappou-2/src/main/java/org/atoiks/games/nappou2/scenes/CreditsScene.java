@@ -45,7 +45,7 @@ public final class CreditsScene extends CenteringScene {
         g.drawString("Thanks folks!", 10, 30);
 
 
-        g.drawString("Alexander Bimm, Jeongmin Lee, Paul Teng, Shelby Elder, Sam Markowitz", 10, 50);
+        g.drawString("Alexander Bimm, Jeongmin Lee, Paul Teng, Shelby Elder, Sam Markowitz", 10, 60);
 
         g.setFont(SANS_FONT);
         g.drawString("Hit Escape or Enter to return to title screen", 14, 580);

@@ -46,6 +46,8 @@ public final class TutorialScene extends AbstractGameScene {
     };
 
     private int waveCounter;
+    private float imX;
+    private float imY;
     private float time;
     private Clip bgm;
     private Image tutorialImg;
@@ -64,6 +66,8 @@ public final class TutorialScene extends AbstractGameScene {
         resetDialogue();
 
         tutorialImg = (Image) scene.resources().get("z.png");
+        imX = (GAME_BORDER - tutorialImg.getWidth(null)) / 2;
+        imY = (HEIGHT - tutorialImg.getHeight(null)) / 2;
         renderControls = true;
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
@@ -86,7 +90,7 @@ public final class TutorialScene extends AbstractGameScene {
     public void renderBackground(final IGraphics g) {
         super.renderBackground(g);
         if (tutorialImg != null) {
-            g.drawImage(tutorialImg, (GAME_BORDER - tutorialImg.getWidth(null)) / 2, (HEIGHT - tutorialImg.getHeight(null)) / 2);
+            g.drawImage(tutorialImg, imX, imY);
         }
         if (renderControls) {
             g.setColor(Color.black);
@@ -134,6 +138,8 @@ public final class TutorialScene extends AbstractGameScene {
                     } else {
                         ++waveCounter;
                         tutorialImg = (Image) scene.resources().get("x.png");
+                        imX = (GAME_BORDER - tutorialImg.getWidth(null)) / 2;
+                        imY = (HEIGHT - tutorialImg.getHeight(null)) / 2;
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
@@ -141,6 +147,8 @@ public final class TutorialScene extends AbstractGameScene {
 
                 case 2:
                     tutorialImg = (Image) scene.resources().get("CAI.png");
+                    imX = GAME_BORDER - tutorialImg.getWidth(null);
+                    imY = 400 - tutorialImg.getHeight(null);
                     disableDamage();
                     disableInput();
                     game.clearBullets();
@@ -153,6 +161,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 3:
                     tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    imX = 0;
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("LUMA", "What?");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -160,6 +170,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 4:
                     tutorialImg = (Image) scene.resources().get("CAI.png");
+                    imX = GAME_BORDER - tutorialImg.getWidth(null);
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -167,6 +179,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 5:
                     tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    imX = 0;
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("LUMA", "What?!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -174,6 +188,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 6:
                     tutorialImg = (Image) scene.resources().get("CAI.png");
+                    imX = GAME_BORDER - tutorialImg.getWidth(null);
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("CAI", "Yep, the humans threw us in just like that.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -181,6 +197,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 7:
                     tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    imX = 0;
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("LUMA", "Cai, you don't understand, we have to get out of here.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -188,6 +206,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 8:
                     tutorialImg = (Image) scene.resources().get("CAI.png");
+                    imX = GAME_BORDER - tutorialImg.getWidth(null);
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("CAI", "Not before you finish your daily combat exercises!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -195,6 +215,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 9:
                     tutorialImg = (Image) scene.resources().get("LUMA.png");
+                    imX = 0;
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("LUMA", "Cai, now's not that time.");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
@@ -202,6 +224,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 10:
                     tutorialImg = (Image) scene.resources().get("CAI.png");
+                    imX = GAME_BORDER - tutorialImg.getWidth(null);
+                    imY = 400 - tutorialImg.getHeight(null);
                     updateDialogue("CAI", "There's always time for senseless violence!");
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
