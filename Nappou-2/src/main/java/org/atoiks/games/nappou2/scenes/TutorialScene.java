@@ -29,10 +29,13 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.Player;
+import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.*;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
+import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
+import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 public final class TutorialScene extends AbstractGameScene {
 
@@ -45,12 +48,30 @@ public final class TutorialScene extends AbstractGameScene {
         { "Enter", "= Select" }
     };
 
+    private static final Message MSG_BTN_Z = new Message(
+            "z.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
+
+    private static final Message MSG_BTN_X = new Message(
+            "x.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
+
+    private static final Message[] PREBOSS_MSG = {
+        new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "What?"),
+        new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Just kidding! You're just in the void. Which is arguably worse."),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "What?!"),
+        new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Yep, the humans threw us in just like that."),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Cai, you don't understand, we have to get out of here."),
+        new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Not before you finish your daily combat exercises!"),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Cai, now's not that time."),
+        new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "There's always time for senseless violence!"),
+    };
+
+    private static final Message POSTBOSS_MSG = new Message(
+            "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
+
     private int waveCounter;
-    private float imX;
-    private float imY;
     private float time;
     private Clip bgm;
-    private Image tutorialImg;
     private boolean renderControls;
     private boolean bossMode;
 
@@ -63,11 +84,7 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final int prevSceneId) {
         super.enter(prevSceneId);
 
-        resetDialogue();
-
-        tutorialImg = (Image) scene.resources().get("z.png");
-        imX = (GAME_BORDER - tutorialImg.getWidth(null)) / 2;
-        imY = (HEIGHT - tutorialImg.getHeight(null)) / 2;
+        displayMessage(null);
         renderControls = true;
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
@@ -89,13 +106,7 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public void renderBackground(final IGraphics g) {
         super.renderBackground(g);
-        if (tutorialImg != null) {
-            g.drawImage(tutorialImg, imX, imY);
-        }
         if (renderControls) {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-
             g.setColor(Color.white);
             g.setFont(TitleScene.OPTION_FONT);
             g.drawString("Controls", 25, 70);
@@ -114,7 +125,6 @@ public final class TutorialScene extends AbstractGameScene {
     @Override
     public void leave() {
         bgm.stop();
-        tutorialImg = null;
         super.leave();
     }
 
@@ -122,6 +132,7 @@ public final class TutorialScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
+            displayMessage(MSG_BTN_Z);
         }
 
         if (game.noMoreEnemies()) {
@@ -137,112 +148,41 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(new SingleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
-                        tutorialImg = (Image) scene.resources().get("x.png");
-                        imX = (GAME_BORDER - tutorialImg.getWidth(null)) / 2;
-                        imY = (HEIGHT - tutorialImg.getHeight(null)) / 2;
+                        displayMessage(MSG_BTN_X);
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
                     break;
 
                 case 2:
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    imX = GAME_BORDER - tutorialImg.getWidth(null);
-                    imY = 400 - tutorialImg.getHeight(null);
                     disableDamage();
                     disableInput();
                     game.clearBullets();
                     bgm.stop();
-
-                    updateDialogue("CAI", "Good morning! You're dead!");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
+                    // fallthrough!!
                 case 3:
-                    tutorialImg = (Image) scene.resources().get("LUMA.png");
-                    imX = 0;
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("LUMA", "What?");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 4:
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    imX = GAME_BORDER - tutorialImg.getWidth(null);
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("CAI", "Just kidding! You're just in the void. Which is arguably worse.");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 5:
-                    tutorialImg = (Image) scene.resources().get("LUMA.png");
-                    imX = 0;
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("LUMA", "What?!");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 6:
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    imX = GAME_BORDER - tutorialImg.getWidth(null);
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("CAI", "Yep, the humans threw us in just like that.");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 7:
-                    tutorialImg = (Image) scene.resources().get("LUMA.png");
-                    imX = 0;
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("LUMA", "Cai, you don't understand, we have to get out of here.");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 8:
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    imX = GAME_BORDER - tutorialImg.getWidth(null);
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("CAI", "Not before you finish your daily combat exercises!");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 9:
-                    tutorialImg = (Image) scene.resources().get("LUMA.png");
-                    imX = 0;
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("LUMA", "Cai, now's not that time.");
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ++waveCounter;
-                    }
-                    break;
                 case 10:
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    imX = GAME_BORDER - tutorialImg.getWidth(null);
-                    imY = 400 - tutorialImg.getHeight(null);
-                    updateDialogue("CAI", "There's always time for senseless violence!");
+                    displayMessage(PREBOSS_MSG[waveCounter - 2]);
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         ++waveCounter;
                     }
                     break;
-
                 case 11:
-                    tutorialImg = null;
                     bgm = (Clip) scene.resources().get("Unlocked.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
-                    resetDialogue();
                     enableDamage();
                     enableInput();
+                    displayMessage(null);
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(50, 375, -10, 20));
                     ++waveCounter;
@@ -253,8 +193,7 @@ public final class TutorialScene extends AbstractGameScene {
                     game.clearBullets();
                     bgm.stop();
 
-                    tutorialImg = (Image) scene.resources().get("CAI.png");
-                    updateDialogue("CAI", "Alright now we are ready for whomever we come across!");
+                    displayMessage(POSTBOSS_MSG);
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly

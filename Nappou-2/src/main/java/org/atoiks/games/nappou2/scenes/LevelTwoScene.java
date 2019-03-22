@@ -33,26 +33,27 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.GameConfig;
 
 public final class LevelTwoScene extends AbstractGameScene {
-    private static final String[][] PREBOSS_MSG = {
 
-        { "Cryo", "*Player*?! What are you doing here?!?!" },
-        { "Pyro", "Clearly the humans betrayed her like she betrayed us. Do you even remember us, traitor?" },
-        { "CAI", "Nope. Not at all." },
-        { "Cryo", "WE HAVE BEEN TRAPPED HERE FOR YEARS BECAUSE OF YOU TWO!!!!" },
-        { "CAI", "Oh right, you are the one that yells." },
-        { "Player", "Yeah, I remember. Once I fight the humans, everything will be back to normal." },
-        { "Cryo", "YOU POWER HUNGRY IDIOT!!!!" },
-        { "Pyro", "I concur." },
-        {"Player", "Alright, I'm sorry! Is that what you wanted?"},
-        {"Pyro", "Apology..."},
-        {"Cryo", "DENIED!!!"},
+    private static final Message[] PREBOSS_MSG = {
+        new Message("Cryo", "*Player*?! What are you doing here?!?!"),
+        new Message("Pyro", "Clearly the humans betrayed her like she betrayed us. Do you even remember us, traitor?"),
+        new Message("CAI", "Nope. Not at all."),
+        new Message("Cryo", "WE HAVE BEEN TRAPPED HERE FOR YEARS BECAUSE OF YOU TWO!!!!"),
+        new Message("CAI", "Oh right, you are the one that yells."),
+        new Message("Player", "Yeah, I remember. Once I fight the humans, everything will be back to normal."),
+        new Message("Cryo", "YOU POWER HUNGRY IDIOT!!!!"),
+        new Message("Pyro", "I concur."),
+        new Message("Player", "Alright, I'm sorry! Is that what you wanted?"),
+        new Message("Pyro", "Apology..."),
+        new Message("Cryo", "DENIED!!!"),
     };
-    private static final String[][] POSTBOSS_MSG = {
 
-        { "Cryo", "IS THAT ALL YOU DO?!?! SHOOT AT ANYTHING THAT MOVES?!?!" },
-        { "CAI", "Pretty much!" },
-        { "Pyro", "Come brother, they are not worth our time." },
+    private static final Message[] POSTBOSS_MSG = {
+        new Message("Cryo", "IS THAT ALL YOU DO?!?! SHOOT AT ANYTHING THAT MOVES?!?!"),
+        new Message("CAI", "Pretty much!"),
+        new Message("Pyro", "Come brother, they are not worth our time."),
     };
+
     private int cycles;
     private int wave;
     private Clip bgm;
@@ -75,7 +76,7 @@ public final class LevelTwoScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        resetDialogue();
+        displayMessage(null);
         cycles = 0;
         wave = 0;
         phase = 0;
@@ -97,12 +98,12 @@ public final class LevelTwoScene extends AbstractGameScene {
         }
     }
 
-    private boolean displayNextDialogue(String[][] s) {
+    private boolean displayNextDialogue(Message[] s) {
         if (++msgPhase < s.length) {
-            final String[] arr = s[msgPhase];
-            updateDialogue(arr[0], arr[1]);
+            displayMessage(s[msgPhase]);
             return true;
         }
+        displayMessage(null);
         return false;
     }
 
@@ -300,7 +301,6 @@ public final class LevelTwoScene extends AbstractGameScene {
                             wave++;
                             enableDamage();
                             enableInput();
-                            resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
