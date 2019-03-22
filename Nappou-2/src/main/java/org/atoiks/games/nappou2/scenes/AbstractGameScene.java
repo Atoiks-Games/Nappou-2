@@ -93,63 +93,55 @@ public abstract class AbstractGameScene extends CenteringScene {
         disableInput = false;
     }
 
-    protected final void resetDialogue() {
-        msgSpeaker = null;
-        msgLines = null;
-    }
-
-    protected final void updateDialogue(final String speaker, final String... lines) {
-        this.msgSpeaker = speaker == null ? null : speaker + ":";
-        this.msgLines = lines;
-    }
-
     protected final void displayMessage(final Message msg) {
         if (msg == null) {
-            imgMsg = null;
-            resetDialogue();
+            this.imgMsg = null;
+            this.msgSpeaker = null;
+            this.msgLines = null;
             return;
         }
 
         if (msg.imgRes != null) {
-            imgMsg = (Image) scene.resources().get(msg.imgRes);
+            this.imgMsg = (Image) scene.resources().get(msg.imgRes);
         }
 
-        if (imgMsg != null) {
+        if (this.imgMsg != null) {
             switch (msg.getImageHorizontalAlignment()) {
                 case LEFT:
-                    xoffMsgImg = 0;
+                    this.xoffMsgImg = 0;
                     break;
                 case RIGHT:
-                    xoffMsgImg = GAME_BORDER - imgMsg.getWidth(null);
+                    this.xoffMsgImg = GAME_BORDER - imgMsg.getWidth(null);
                     break;
                 default:
                     // Assumes center alignment, but prints out warning
                     System.err.println("Unknown horizontal alignment for msg:" + msg);
                 case CENTER:
-                    xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
+                    this.xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
                     break;
             }
 
             switch (msg.getImageVerticalAlignment()) {
                 case TOP:
-                    yoffMsgImg = 0;
+                    this.yoffMsgImg = 0;
                     break;
                 case BOTTOM:
-                    yoffMsgImg = HEIGHT - imgMsg.getHeight(null);
+                    this.yoffMsgImg = HEIGHT - imgMsg.getHeight(null);
                     break;
                 case CENTER:
-                    yoffMsgImg = (HEIGHT - imgMsg.getHeight(null)) / 2;
+                    this.yoffMsgImg = (HEIGHT - imgMsg.getHeight(null)) / 2;
                     break;
                 default:
                     // Assumes center alignment, ut prints out warning
                     System.err.println("Unknown vertical alignment for msg:" + msg);
                 case ABOVE_DIALOGUE:
-                    yoffMsgImg = 400 - imgMsg.getHeight(null);
+                    this.yoffMsgImg = 400 - imgMsg.getHeight(null);
                     break;
             }
         }
 
-        updateDialogue(msg.speaker, msg.lines);
+        this.msgSpeaker = msg.speaker == null ? null : msg.speaker + ":";
+        this.msgLines = msg.lines;
     }
 
     @Override
