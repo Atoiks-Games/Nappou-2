@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -55,8 +54,6 @@ public final class LevelOneScene extends AbstractGameScene {
     private Clip bgm;
     private int phase;
 
-    private Image imgDialogFace;
-    private float imX;
     private int prebossMsgPhase;
 
     // loop frame for level
@@ -105,8 +102,6 @@ public final class LevelOneScene extends AbstractGameScene {
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
-
-        imX = 0;
     }
 
     @Override
@@ -115,8 +110,6 @@ public final class LevelOneScene extends AbstractGameScene {
 
         // Stop bgm just in case we forgot
         bgm.stop();
-        // Reset the face associated with dialog
-        imgDialogFace = null;
     }
 
     private boolean displayNextPrebossDialogue() {
