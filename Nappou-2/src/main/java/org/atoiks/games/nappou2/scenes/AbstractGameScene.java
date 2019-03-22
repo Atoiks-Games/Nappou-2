@@ -124,13 +124,29 @@ public abstract class AbstractGameScene extends CenteringScene {
                     break;
                 default:
                     // Assumes center alignment, but prints out warning
-                    System.err.println("Unknown alignment for msg:" + msg);
+                    System.err.println("Unknown horizontal alignment for msg:" + msg);
                 case CENTER:
                     xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
                     break;
             }
 
-            yoffMsgImg = 400 - imgMsg.getHeight(null);
+            switch (msg.getImageVerticalAlignment()) {
+                case TOP:
+                    yoffMsgImg = 0;
+                    break;
+                case BOTTOM:
+                    yoffMsgImg = HEIGHT - imgMsg.getHeight(null);
+                    break;
+                case CENTER:
+                    yoffMsgImg = (HEIGHT - imgMsg.getHeight(null)) / 2;
+                    break;
+                default:
+                    // Assumes center alignment, ut prints out warning
+                    System.err.println("Unknown vertical alignment for msg:" + msg);
+                case ABOVE_DIALOGUE:
+                    yoffMsgImg = 400 - imgMsg.getHeight(null);
+                    break;
+            }
         }
 
         updateDialogue(msg.speaker, msg.lines);

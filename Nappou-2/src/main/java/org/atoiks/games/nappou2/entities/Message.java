@@ -30,32 +30,52 @@ public final class Message implements Serializable {
         LEFT, CENTER, RIGHT;
     };
 
-    // If necessary, add VerticalAlignment as well
+    public enum VerticalAlignment {
+        TOP, CENTER, ABOVE_DIALOGUE, BOTTOM;
+    };
 
     public final String speaker;
     public final String[] lines;
 
     public final String imgRes;
     private HorizontalAlignment imgHoriz;
+    private VerticalAlignment imgVert;
 
     public Message(String speaker, String... lines) {
-        this(null, HorizontalAlignment.CENTER, speaker, lines);
+        this(null, null, null, speaker, lines);
     }
 
     public Message(String imgRes, HorizontalAlignment horiz, String speaker, String... lines) {
+        this(imgRes, horiz, null, speaker, lines);
+    }
+
+    public Message(String imgRes, VerticalAlignment vert, String speaker, String... lines) {
+        this(imgRes, null, vert, speaker, lines);
+    }
+
+    public Message(String imgRes, HorizontalAlignment horiz, VerticalAlignment vert, String speaker, String... lines) {
         this.imgRes = imgRes;
         this.speaker = speaker;
         this.lines = lines;
 
         this.setImageHorizontalAlignment(horiz);
+        this.setImageVerticalAlignment(vert);
     }
 
     public final void setImageHorizontalAlignment(HorizontalAlignment horiz) {
         this.imgHoriz = horiz == null ? HorizontalAlignment.CENTER : horiz;
     }
 
+    public final void setImageVerticalAlignment(VerticalAlignment vert) {
+        this.imgVert = vert == null ? VerticalAlignment.ABOVE_DIALOGUE : vert;
+    }
+
     public HorizontalAlignment getImageHorizontalAlignment() {
         return this.imgHoriz;
+    }
+
+    public VerticalAlignment getImageVerticalAlignment() {
+        return this.imgVert;
     }
 
     @Override
