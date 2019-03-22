@@ -39,14 +39,14 @@ public final class LevelOneScene extends AbstractGameScene {
     private static final String[][] PREBOSS_MSG = {
         // img-name, speaker-name, message
         // if img-name is null, it reuses previous image!
-        { "ELLE.png", "Elle", "Why are you here?" },
-        { "LUMA.png", "LUMA", "Oh you know, humans." },
-        { "ELLE.png", "Elle", "I no longer find joy in another's pain." },
-        { "CAI.png",  "CAI", "Why so moody?" },
-        { "ELLE.png", "Elle", "..." },
-        { "LUMA.png", "LUMA", "Yeah, give me a few centuries and things will be back to normal!" },
-        { "ELLE.png", "Elle", "You haven't changed at all *Player*" },
-        { null      , "Elle", "You took everything away from me. Do you know how much I suffered?" },
+        { "ELLE.png", "ELLE", "Why are you here?", "r" },
+        { "LUMA.png", "LUMA", "Oh you know, humans.", "l" },
+        { "ELLE.png", "ELLE", "I no longer find joy in another's pain.", "r" },
+        { "CAI.png",  "CAI", "Why so moody?", "" },
+        { "ELLE.png", "ELLE", "...", "r" },
+        { "LUMA.png", "LUMA", "Yeah, give me a few centuries and things will be back to normal!", "l" },
+        { "ELLE.png", "ELLE", "You haven't changed at all Luma!", "r" },
+        { null      , "ELLE", "You took everything away from me. Do you know how much I suffered?", "r" },
     };
     private static final String[] POSTBOSS_MSG = {
         "I just want to go home..."
@@ -58,6 +58,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private int phase;
 
     private Image imgDialogFace;
+    private float imX;
     private int prebossMsgPhase;
 
     // loop frame for level
@@ -106,6 +107,8 @@ public final class LevelOneScene extends AbstractGameScene {
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        imX = 0;
     }
 
     @Override
@@ -124,6 +127,17 @@ public final class LevelOneScene extends AbstractGameScene {
             if (arr[0] != null) {
                 imgDialogFace = (Image) scene.resources().get(arr[0]);
             }
+            switch (arr[3]) {
+                case "l":
+                    imX = 0;
+                break;
+                case "r":
+                    imX = GAME_BORDER - imgDialogFace.getWidth(null);
+                break;
+                default:
+                    imX = (GAME_BORDER - imgDialogFace.getWidth(null)) / 2;
+                break;
+            }
             updateDialogue(arr[1], arr[2]);
             return true;
         }
@@ -137,7 +151,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public void renderBackground(final IGraphics g) {
         super.renderBackground(g);
         if (imgDialogFace != null) {
-            g.drawImage(imgDialogFace, (GAME_BORDER - imgDialogFace.getWidth(null)) / 2, (HEIGHT - imgDialogFace.getHeight(null)) / 2);
+            g.drawImage(imgDialogFace, imX, 400 - imgDialogFace.getHeight(null));
         }
     }
 
@@ -292,7 +306,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("Elle", POSTBOSS_MSG);
+                        updateDialogue("ELLE", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -459,7 +473,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("Elle", POSTBOSS_MSG);
+                        updateDialogue("ELLE", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -687,7 +701,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("Elle", POSTBOSS_MSG);
+                        updateDialogue("ELLE", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -961,7 +975,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableInput();
                         game.clearBullets();
                         imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("Elle", POSTBOSS_MSG);
+                        updateDialogue("ELLE", POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
