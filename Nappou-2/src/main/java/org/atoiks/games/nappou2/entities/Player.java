@@ -52,14 +52,14 @@ public final class Player implements Serializable {
 
     public void render(final IGraphics g) {
         this.shield.render(g);
-        g.setColor(Color.cyan);
         if (isRespawnShieldActive()) {
-            g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
-        } else {
-            g.fillOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
-        }
-        if (speedScale != 1) {
             g.setColor(Color.red);
+        } else {
+            g.setColor(Color.cyan);
+        }
+        g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
+        if (speedScale != 1) {
+            g.setColor(Color.yellow);
             g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
     }

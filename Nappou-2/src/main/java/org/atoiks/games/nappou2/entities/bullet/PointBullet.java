@@ -57,7 +57,7 @@ public class PointBullet extends AbstractBullet {
         // Can change this to using textures later
         g.setColor(color);
         // x, y are the center of the bullet
-        g.drawOval(x - r, y - r, x + r, y + r);
+        g.fillOval(x - r, y - r, x + r, y + r);
     }
 
     @Override

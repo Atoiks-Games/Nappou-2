@@ -87,7 +87,7 @@ public class PolygonBullet extends AbstractBullet {
     @Override
     public void render(final IGraphics g) {
         g.setColor(color);
-        g.drawPolygon(coords);
+        g.fillPolygon(coords);
     }
 
     @Override
