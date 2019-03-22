@@ -33,24 +33,22 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
+import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 public final class LevelOneScene extends AbstractGameScene {
 
-    private static final String[][] PREBOSS_MSG = {
-        // img-name, speaker-name, message
-        // if img-name is null, it reuses previous image!
-        { "ELLE.png", "ELLE", "Why are you here?", "r" },
-        { "LUMA.png", "LUMA", "Oh you know, humans.", "l" },
-        { "ELLE.png", "ELLE", "I no longer find joy in another's pain.", "r" },
-        { "CAI.png",  "CAI", "Why so moody?", "" },
-        { "ELLE.png", "ELLE", "...", "r" },
-        { "LUMA.png", "LUMA", "Yeah, give me a few centuries and things will be back to normal!", "l" },
-        { "ELLE.png", "ELLE", "You haven't changed at all Luma!", "r" },
-        { null      , "ELLE", "You took everything away from me. Do you know how much I suffered?", "r" },
+    private static final Message[] PREBOSS_MSG = {
+        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "Why are you here?"),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Oh you know, humans."),
+        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I no longer find joy in another's pain."),
+        new Message("CAI.png", HorizontalAlignment.CENTER, "CAI", "Why so moody?"),
+        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "..."),
+        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Yeah, give me a few centuries and things will be back to normal!"),
+        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "You haven't changed at all Luma!"),
+        new Message(null      , HorizontalAlignment.RIGHT, "ELLE", "You took everything away from me. Do you know how much I suffered?"),
     };
-    private static final String[] POSTBOSS_MSG = {
-        "I just want to go home..."
-    };
+
+    private static final Message POSTBOSS_MSG = new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I just want to go home...");
 
     private int cycles;
     private int wave;
@@ -87,7 +85,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        resetDialogue();
+        displayMessage(null);
         cycles = 0;
         wave = 0;
         phase = 0;
@@ -123,36 +121,13 @@ public final class LevelOneScene extends AbstractGameScene {
 
     private boolean displayNextPrebossDialogue() {
         if (++prebossMsgPhase < PREBOSS_MSG.length) {
-            final String[] arr = PREBOSS_MSG[prebossMsgPhase];
-            if (arr[0] != null) {
-                imgDialogFace = (Image) scene.resources().get(arr[0]);
-            }
-            switch (arr[3]) {
-                case "l":
-                    imX = 0;
-                break;
-                case "r":
-                    imX = GAME_BORDER - imgDialogFace.getWidth(null);
-                break;
-                default:
-                    imX = (GAME_BORDER - imgDialogFace.getWidth(null)) / 2;
-                break;
-            }
-            updateDialogue(arr[1], arr[2]);
+            displayMessage(PREBOSS_MSG[prebossMsgPhase]);
             return true;
         }
 
         // no more dialogs, must clear out player portrait
-        imgDialogFace = null;
+        displayMessage(null);
         return false;
-    }
-
-    @Override
-    public void renderBackground(final IGraphics g) {
-        super.renderBackground(g);
-        if (imgDialogFace != null) {
-            g.drawImage(imgDialogFace, imX, 400 - imgDialogFace.getHeight(null));
-        }
     }
 
     @Override
@@ -262,7 +237,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             wave++;
                             enableDamage();
                             enableInput();
-                            resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -305,8 +279,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("ELLE", POSTBOSS_MSG);
+                        displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -429,7 +402,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             wave++;
                             enableDamage();
                             enableInput();
-                            resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -472,8 +444,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("ELLE", POSTBOSS_MSG);
+                        displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -657,7 +628,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             wave++;
                             enableDamage();
                             enableInput();
-                            resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -700,8 +670,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("ELLE", POSTBOSS_MSG);
+                        displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);
@@ -931,7 +900,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             wave++;
                             enableDamage();
                             enableInput();
-                            resetDialogue();
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -974,8 +942,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        imgDialogFace = (Image) scene.resources().get("ELLE.png");
-                        updateDialogue("ELLE", POSTBOSS_MSG);
+                        displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             scene.resources().put("prompt.trans", 1);

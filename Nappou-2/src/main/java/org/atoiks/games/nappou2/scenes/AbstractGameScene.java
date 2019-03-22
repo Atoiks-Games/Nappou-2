@@ -67,8 +67,11 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     public final int sceneId;
 
-    private String dialogSpeaker;
-    private String[] dialogMessage;
+    private String msgSpeaker;
+    private String[] msgLines;
+    private Image imgMsg;
+    private int xoffMsgImg;
+    private int yoffMsgImg;
 
     protected AbstractGameScene(int id) {
         sceneId = id;
@@ -91,13 +94,46 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     protected final void resetDialogue() {
-        dialogSpeaker = null;
-        dialogMessage = null;
+        msgSpeaker = null;
+        msgLines = null;
     }
 
     protected final void updateDialogue(final String speaker, final String... lines) {
-        this.dialogSpeaker = speaker + ":";
-        this.dialogMessage = lines;
+        this.msgSpeaker = speaker + ":";
+        this.msgLines = lines;
+    }
+
+    protected final void displayMessage(final Message msg) {
+        if (msg == null) {
+            imgMsg = null;
+            resetDialogue();
+            return;
+        }
+
+        if (msg.imgRes != null) {
+            imgMsg = (Image) scene.resources().get(msg.imgRes);
+        }
+
+        if (imgMsg != null) {
+            switch (msg.getImageHorizontalAlignment()) {
+                case LEFT:
+                    xoffMsgImg = 0;
+                    break;
+                case RIGHT:
+                    xoffMsgImg = GAME_BORDER - imgMsg.getWidth(null);
+                    break;
+                default:
+                    // Assumes center alignment, but prints out warning
+                    System.err.println("Unknown alignment for msg:" + msg);
+                case CENTER:
+                    xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
+                    break;
+            }
+
+            yoffMsgImg = 400 - imgMsg.getHeight(null);
+        }
+
+        updateDialogue(msg.speaker, msg.lines);
     }
 
     @Override
@@ -126,6 +162,10 @@ public abstract class AbstractGameScene extends CenteringScene {
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+
+        if (imgMsg != null) {
+            g.drawImage(imgMsg, xoffMsgImg, yoffMsgImg);
+        }
     }
 
     public void renderStats(final IGraphics g) {
@@ -152,8 +192,8 @@ public abstract class AbstractGameScene extends CenteringScene {
             g.drawString("Shield Ready", GAME_BORDER + 30, 96);
         }
 
-        if (dialogSpeaker != null) {
-            drawDialog(g, dialogSpeaker, dialogMessage);
+        if (msgSpeaker != null) {
+            drawDialog(g, msgSpeaker, msgLines);
         }
     }
 
