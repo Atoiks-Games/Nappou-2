@@ -53,6 +53,10 @@ public final class Message implements Serializable {
         this(imgRes, null, vert, speaker, lines);
     }
 
+    public Message(String imgRes, HorizontalAlignment horiz, VerticalAlignment vert) {
+        this(imgRes, horiz, vert, null, (String[]) null);
+    }
+
     public Message(String imgRes, HorizontalAlignment horiz, VerticalAlignment vert, String speaker, String... lines) {
         this.imgRes = imgRes;
         this.speaker = speaker;

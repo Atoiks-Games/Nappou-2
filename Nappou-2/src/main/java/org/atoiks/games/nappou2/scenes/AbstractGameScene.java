@@ -99,7 +99,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     protected final void updateDialogue(final String speaker, final String... lines) {
-        this.msgSpeaker = speaker + ":";
+        this.msgSpeaker = speaker == null ? null : speaker + ":";
         this.msgLines = lines;
     }
 
