@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.nappou2.physics.ICollidable;
 
 public interface IBullet extends ICollidable, Serializable {
 

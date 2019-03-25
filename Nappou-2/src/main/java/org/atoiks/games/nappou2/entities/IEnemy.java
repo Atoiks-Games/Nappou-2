@@ -23,6 +23,7 @@ import java.io.Serializable;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.physics.ICollidable;
 
 public interface IEnemy extends ICollidable, Serializable {
 

@@ -22,6 +22,7 @@ import java.awt.geom.AffineTransform;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.physics.CollisionSquare;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
@@ -119,5 +120,11 @@ public final class Beam extends AbstractBullet {
             && isPtOutOfScreen(dest[2], dest[3], w, h)
             && isPtOutOfScreen(dest[4], dest[5], w, h)
             && isPtOutOfScreen(dest[6], dest[7], w, h);
+    }
+
+    @Override
+    public CollisionSquare makeCollisionSquare() {
+        final float apothem = Math.max(halfThickness, length * 2) / 2;
+        return new CollisionSquare(x, y, apothem);
     }
 }

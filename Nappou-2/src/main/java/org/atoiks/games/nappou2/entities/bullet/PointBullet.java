@@ -22,6 +22,7 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.physics.CollisionSquare;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
@@ -87,5 +88,10 @@ public class PointBullet extends AbstractBullet {
             || (x - r > w + SCREEN_EDGE_BUFFER)
             || (y + r < -SCREEN_EDGE_BUFFER)
             || (y - r > h + SCREEN_EDGE_BUFFER);
+    }
+
+    @Override
+    public CollisionSquare makeCollisionSquare() {
+        return new CollisionSquare(x, y, r);
     }
 }

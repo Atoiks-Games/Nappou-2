@@ -23,6 +23,8 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 
+import org.atoiks.games.nappou2.physics.CollisionSquare;
+
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
 import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
 
@@ -71,6 +73,11 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
             || (x - r > w + SCREEN_EDGE_BUFFER)
             || (y + r < -SCREEN_EDGE_BUFFER)
             || (y - r > h + SCREEN_EDGE_BUFFER);
+    }
+
+    @Override
+    public CollisionSquare makeCollisionSquare() {
+        return new CollisionSquare(getX(), getY(), getR());
     }
 
     @Override

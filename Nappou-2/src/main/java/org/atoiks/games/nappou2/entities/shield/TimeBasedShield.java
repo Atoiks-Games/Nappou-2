@@ -22,6 +22,8 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.physics.CollisionSquare;
+
 import org.atoiks.games.nappou2.entities.IShield;
 
 public abstract class TimeBasedShield implements IShield {
@@ -105,5 +107,10 @@ public abstract class TimeBasedShield implements IShield {
     @Override
     public boolean isReady() {
         return time > timeout + reloadTime;
+    }
+
+    @Override
+    public CollisionSquare makeCollisionSquare() {
+        return new CollisionSquare(x, y, r);
     }
 }

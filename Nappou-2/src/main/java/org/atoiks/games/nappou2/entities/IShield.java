@@ -22,6 +22,8 @@ import java.io.Serializable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.physics.CollisionSquare;
+
 public interface IShield extends Serializable {
 
     public float getX();
@@ -38,4 +40,6 @@ public interface IShield extends Serializable {
 
     public void update(float dt);
     public void render(IGraphics g);
+
+    public CollisionSquare makeCollisionSquare();
 }
