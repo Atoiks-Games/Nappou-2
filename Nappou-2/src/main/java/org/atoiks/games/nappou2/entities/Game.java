@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.physics.CollisionTree;
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 
 public final class Game implements Serializable {
 
@@ -70,7 +70,7 @@ public final class Game implements Serializable {
     }
 
     public void addEnemyBullet(final IBullet bullet) {
-        enemyBulletTree.add(bullet, bullet.makeCollisionSquare());
+        enemyBulletTree.add(bullet, bullet.makeCollisionBox());
     }
 
     public void addPlayerBullet(final IBullet bullet) {
@@ -78,7 +78,7 @@ public final class Game implements Serializable {
     }
 
     public void addEnemy(final IEnemy enemy) {
-        enemyTree.add(enemy, enemy.makeCollisionSquare());
+        enemyTree.add(enemy, enemy.makeCollisionBox());
         enemy.attachGame(this);
     }
 
@@ -134,7 +134,7 @@ public final class Game implements Serializable {
                 continue;
             }
 
-            enemyTree.update(enemy, enemy.makeCollisionSquare());
+            enemyTree.update(enemy, enemy.makeCollisionBox());
         }
 
         for (final IEnemy enemy : bufEnemy) {
@@ -152,7 +152,7 @@ public final class Game implements Serializable {
                 continue;
             }
 
-            enemyBulletTree.update(bullet, bullet.makeCollisionSquare());
+            enemyBulletTree.update(bullet, bullet.makeCollisionBox());
         }
 
         for (final IBullet bullet : bufBullet) {
@@ -177,7 +177,7 @@ public final class Game implements Serializable {
         bufBullet.clear();
 
         if (player.shield.isActive()) {
-            enemyBulletTree.getCollidingKeys(bufBullet, player.shield.makeCollisionSquare());
+            enemyBulletTree.getCollidingKeys(bufBullet, player.shield.makeCollisionBox());
 
             final float sx = player.shield.getX();
             final float sy = player.shield.getY();
@@ -193,7 +193,7 @@ public final class Game implements Serializable {
         outer:
         for (int i = 0; i < playerBullets.size(); ++i) {
             final IBullet bullet = playerBullets.get(i);
-            enemyTree.getCollidingKeys(bufEnemy, bullet.makeCollisionSquare());
+            enemyTree.getCollidingKeys(bufEnemy, bullet.makeCollisionBox());
             for (final IEnemy item : bufEnemy) {
                 if (bullet.collidesWith(item.getX(), item.getY(), item.getR())) {
                     playerBullets.remove(i);
@@ -214,7 +214,7 @@ public final class Game implements Serializable {
 
         final float px = player.getX();
         final float py = player.getY();
-        final CollisionSquare playerBox = new CollisionSquare(px, py, Player.COLLISION_RADIUS);
+        final CollisionBox playerBox = new CollisionBox(px, py, Player.COLLISION_RADIUS);
 
         bufBullet.clear();
         enemyBulletTree.getCollidingKeys(bufBullet, playerBox);

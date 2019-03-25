@@ -26,7 +26,7 @@ public class CollisionTree<K> {
 
     private class Node {
 
-        private final CollisionSquare box;
+        private final CollisionBox box;
 
         private Node parent;
         private Node lhs;
@@ -34,7 +34,7 @@ public class CollisionTree<K> {
 
         private K key;
 
-        public Node(final CollisionSquare box) {
+        public Node(final CollisionBox box) {
             this.box = box;
         }
 
@@ -64,12 +64,12 @@ public class CollisionTree<K> {
         return table.keySet();
     }
 
-    public CollisionSquare getCopyOf(K key) {
+    public CollisionBox getCopyOf(K key) {
         final Node n = table.get(key);
-        return n == null ? null : new CollisionSquare(n.box);
+        return n == null ? null : new CollisionBox(n.box);
     }
 
-    public void add(final K key, final CollisionSquare s) {
+    public void add(final K key, final CollisionBox s) {
         final Node n = table.get(key);
         if (n == null) {
             if (s == null) return;
@@ -86,7 +86,7 @@ public class CollisionTree<K> {
         }
     }
 
-    public void update(final K key, final CollisionSquare s) {
+    public void update(final K key, final CollisionBox s) {
         final Node n = table.get(key);
         if (n != null) {
             if (s == null) {
@@ -106,12 +106,12 @@ public class CollisionTree<K> {
         }
     }
 
-    public void getCollidingKeys(final List<K> list, final CollisionSquare s) {
+    public void getCollidingKeys(final List<K> list, final CollisionBox s) {
         if (s == null) return;
         getCollidingKeys(root, list, s);
     }
 
-    private void getCollidingKeys(final Node item, final List<K> list, final CollisionSquare s) {
+    private void getCollidingKeys(final Node item, final List<K> list, final CollisionBox s) {
         if (item == null) return;
 
         if (!item.box.collidesWith(s)) return;
@@ -120,7 +120,7 @@ public class CollisionTree<K> {
         getCollidingKeys(item.rhs, list, s);
     }
 
-    private void update(final Node item, final CollisionSquare s) {
+    private void update(final Node item, final CollisionBox s) {
         if (!item.box.contains(s)) {
             this.remove(item);
             item.box.readFrom(s);
@@ -175,11 +175,11 @@ public class CollisionTree<K> {
             return;
         }
 
-        final CollisionSquare s = item.box;
+        final CollisionBox s = item.box;
 
-        final CollisionSquare top = new CollisionSquare();
-        final CollisionSquare lhs = new CollisionSquare();
-        final CollisionSquare rhs = new CollisionSquare();
+        final CollisionBox top = new CollisionBox();
+        final CollisionBox lhs = new CollisionBox();
+        final CollisionBox rhs = new CollisionBox();
 
         Node node = root;
         while (!node.isLeaf()) {
@@ -210,7 +210,7 @@ public class CollisionTree<K> {
         }
 
         // Compute new parent node's box size
-        final CollisionSquare outer = new CollisionSquare(s);
+        final CollisionBox outer = new CollisionBox(s);
         outer.union(node.box);
 
         // Create a new parent node

@@ -18,22 +18,22 @@
 
 package org.atoiks.games.nappou2.physics;
 
-public final class CollisionSquare {
+public final class CollisionBox {
 
-    float x;
-    float y;
-    float w;
-    float h;
+    private float x;
+    private float y;
+    private float w;
+    private float h;
 
-    public CollisionSquare() {
+    public CollisionBox() {
         this(0, 0, 0);
     }
 
-    public CollisionSquare(final CollisionSquare s) {
+    public CollisionBox(final CollisionBox s) {
         this(s.x, s.y, s.w, s.h);
     }
 
-    public CollisionSquare(float x, float y, final float apothem) {
+    public CollisionBox(float x, float y, final float apothem) {
         final float hs = Math.abs(apothem);
         this.x = x - hs;
         this.y = y - hs;
@@ -41,14 +41,14 @@ public final class CollisionSquare {
         this.h = 2 * hs;
     }
 
-    public CollisionSquare(float x, float y, float w, float h) {
+    public CollisionBox(float x, float y, float w, float h) {
         this.x = x;
         this.y = y;
         this.w = Math.abs(w);
         this.h = Math.abs(h);
     }
 
-    public void readFrom(final CollisionSquare s) {
+    public void readFrom(final CollisionBox s) {
         this.x = s.x;
         this.y = s.y;
         this.w = s.w;
@@ -64,7 +64,7 @@ public final class CollisionSquare {
             && y <= py && y + h >= py;
     }
 
-    public boolean contains(final CollisionSquare s) {
+    public boolean contains(final CollisionBox s) {
         final float x11 = x;
         final float y11 = y;
         final float x12 = x + w;
@@ -79,7 +79,7 @@ public final class CollisionSquare {
             && y11 <= y21 && y12 >= y22;
     }
 
-    public void union(final CollisionSquare s) {
+    public void union(final CollisionBox s) {
         final float endX = Math.max(this.x + this.w, s.x + s.w);
         final float endY = Math.max(this.y + this.h, s.y + s.h);
 
@@ -87,7 +87,7 @@ public final class CollisionSquare {
         this.h = endY - (this.y = Math.min(this.y, s.y));
     }
 
-    public boolean collidesWith(final CollisionSquare s) {
+    public boolean collidesWith(final CollisionBox s) {
         return x < s.x + s.w && x + w > s.x
             && y < s.y + s.h && y + h > s.y;
     }

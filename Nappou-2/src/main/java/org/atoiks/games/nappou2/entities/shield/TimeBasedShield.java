@@ -22,7 +22,7 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 
 import org.atoiks.games.nappou2.entities.IShield;
 
@@ -110,7 +110,7 @@ public abstract class TimeBasedShield implements IShield {
     }
 
     @Override
-    public CollisionSquare makeCollisionSquare() {
-        return new CollisionSquare(x, y, r);
+    public CollisionBox makeCollisionBox() {
+        return new CollisionBox(x, y, r);
     }
 }

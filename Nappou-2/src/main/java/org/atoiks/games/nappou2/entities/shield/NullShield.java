@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.entities.shield;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 
 import org.atoiks.games.nappou2.entities.IShield;
 
@@ -84,7 +84,7 @@ public final class NullShield implements IShield {
     }
 
     @Override
-    public CollisionSquare makeCollisionSquare() {
+    public CollisionBox makeCollisionBox() {
         return null;
     }
 }

@@ -22,7 +22,7 @@ import java.awt.geom.AffineTransform;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
@@ -123,8 +123,8 @@ public final class Beam extends AbstractBullet {
     }
 
     @Override
-    public CollisionSquare makeCollisionSquare() {
+    public CollisionBox makeCollisionBox() {
         final float apothem = Math.max(halfThickness, length * 2) / 2;
-        return new CollisionSquare(x, y, apothem);
+        return new CollisionBox(x, y, apothem);
     }
 }

@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
@@ -133,7 +133,7 @@ public class PolygonBullet extends AbstractBullet {
     }
 
     @Override
-    public CollisionSquare makeCollisionSquare() {
-        return new CollisionSquare(boundX, boundY, boundR);
+    public CollisionBox makeCollisionBox() {
+        return new CollisionBox(boundX, boundY, boundR);
     }
 }

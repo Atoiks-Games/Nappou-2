@@ -23,5 +23,5 @@ public interface ICollidable {
     public boolean collidesWith(float x, float y, float r);
     public boolean isOutOfScreen(int width, int height);
 
-    public CollisionSquare makeCollisionSquare();
+    public CollisionBox makeCollisionBox();
 }

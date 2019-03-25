@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.physics.CollisionSquare;
+import org.atoiks.games.nappou2.physics.CollisionBox;
 
 public interface IShield extends Serializable {
 
@@ -41,5 +41,5 @@ public interface IShield extends Serializable {
     public void update(float dt);
     public void render(IGraphics g);
 
-    public CollisionSquare makeCollisionSquare();
+    public CollisionBox makeCollisionBox();
 }
