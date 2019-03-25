@@ -16,10 +16,12 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.physics;
 
 public interface ICollidable {
 
     public boolean collidesWith(float x, float y, float r);
     public boolean isOutOfScreen(int width, int height);
+
+    public CollisionSquare makeCollisionSquare();
 }
