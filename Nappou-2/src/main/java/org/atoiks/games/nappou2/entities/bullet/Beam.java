@@ -34,27 +34,33 @@ public final class Beam extends AbstractBullet {
     private static final long serialVersionUID = 4412375L;
     private static final int ARR_SIZE = 8;
 
-    private float x, y;
+    private float mx, my;   // mid point of the beam
+    private float sx, sy;   // displacement to get to the head of the beam
     private float halfThickness, length;
 
     private final float[] dest = new float[ARR_SIZE];
     private final AffineTransform mat;
 
     public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
-        this.x = x;
-        this.y = y;
         this.halfThickness = thickness / 2;
         this.length = length;
 
-        this.dx = dmag * (float) Math.cos(angle);
-        this.dy = dmag * (float) Math.sin(angle);
+        final float cosA = (float) Math.cos(angle);
+        final float sinA = (float) Math.sin(angle);
+
+        this.dx = dmag * cosA;
+        this.dy = dmag * sinA;
+
+        this.mx = x + (this.sx = length / 2 * cosA);
+        this.my = y + (this.sy = length / 2 * sinA);
+
         this.mat = AffineTransform.getRotateInstance(angle - 3 * PI_DIV_2);
     }
 
     @Override
     public void translate(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
+        this.mx += dx;
+        this.my += dy;
     }
 
     @Override
@@ -65,8 +71,8 @@ public final class Beam extends AbstractBullet {
 
     @Override
     public void update(final float dt) {
-        this.x += dx * dt;
-        this.y += dy * dt;
+        this.mx += dx * dt;
+        this.my += dy * dt;
 
         // If we calculate a beam with (x, y) as (0, 0),
         // it will be rectangle with diagonal from (-halfThickness, 0) to (halfThickness, -length).
@@ -81,28 +87,28 @@ public final class Beam extends AbstractBullet {
             -halfThickness, len,
         };
 
-        final AffineTransform trans = AffineTransform.getTranslateInstance(x, y);
+        final AffineTransform trans = AffineTransform.getTranslateInstance(getX(), getY());
         trans.concatenate(mat);
         trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
     }
 
     @Override
     public float getX() {
-        return this.x;
+        return this.mx - this.sx;
     }
 
     @Override
     public float getY() {
-        return this.y;
+        return this.my - this.sy;
     }
 
     @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
         // Only perform accurate collision if the square formed by center
-        // point (x, y) with apothem collides with the circle also
+        // point (mx, my) with apothem collides with the circle also
         // approximated as a square with the apothem being its radius.
-        final float apothem = Math.max(halfThickness, length * 2) / 2;
-        if (centerSquareCollision(x, y, apothem, x1, y1, r1)) {
+        final float apothem = Math.max(halfThickness * 2, length) / 2;
+        if (centerSquareCollision(mx, my, apothem, x1, y1, r1)) {
             // Accurate collision checks if any of the sides intersect with
             // the circle.
             return intersectSegmentCircle(dest[0], dest[1], dest[2], dest[3], x1, y1, r1)
