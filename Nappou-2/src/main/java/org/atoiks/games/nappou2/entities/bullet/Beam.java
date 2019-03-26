@@ -120,9 +120,7 @@ public final class Beam extends AbstractBullet {
         // Only perform accurate collision if the square formed by center
         // point (mx, my) with apothem collides with the circle also
         // approximated as a square with the apothem being its radius.
-
-        // multiply by 1.5 to account for near square-shaped beams (technically it's sqrt(2))
-        final float apothem = Math.max(halfThickness, halfLength) * 1.5f;
+        final float apothem = Math.max(halfThickness, halfLength);
         if (centerSquareCollision(mx, my, apothem, x1, y1, r1)) {
             // Accurate collision checks if any of the sides intersect with
             // the circle.
