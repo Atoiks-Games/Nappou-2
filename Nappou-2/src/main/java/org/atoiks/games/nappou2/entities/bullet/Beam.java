@@ -36,14 +36,14 @@ public final class Beam extends AbstractBullet {
 
     private float mx, my;   // mid point of the beam
     private float sx, sy;   // displacement to get to the head of the beam
-    private float halfThickness, length;
+    private float halfThickness, halfLength;
 
     private final float[] dest = new float[ARR_SIZE];
     private final AffineTransform mat;
 
     public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
         this.halfThickness = thickness / 2;
-        this.length = length;
+        this.halfLength = length / 2;
 
         final float cosA = (float) Math.cos(angle);
         final float sinA = (float) Math.sin(angle);
@@ -51,10 +51,10 @@ public final class Beam extends AbstractBullet {
         this.dx = dmag * cosA;
         this.dy = dmag * sinA;
 
-        this.mx = x + (this.sx = length / 2 * cosA);
-        this.my = y + (this.sy = length / 2 * sinA);
+        this.mx = x + (this.sx = this.halfLength * cosA);
+        this.my = y + (this.sy = this.halfLength * sinA);
 
-        this.mat = AffineTransform.getRotateInstance(angle - 3 * PI_DIV_2);
+        this.mat = AffineTransform.getRotateInstance(angle);
     }
 
     @Override
@@ -74,20 +74,19 @@ public final class Beam extends AbstractBullet {
         this.mx += dx * dt;
         this.my += dy * dt;
 
-        // If we calculate a beam with (x, y) as (0, 0),
-        // it will be rectangle with diagonal from (-halfThickness, 0) to (halfThickness, -length).
-        // we rotate it around (0, 0) by angle, which has fixed value,
-        // then, we translate it by (x, y)
+        // let (mx, my) be (0, 0)
+        // the beam is a rectangle from (-thickness / 2, length / 2) to (thickness / 2, -length / 2)
+        // we rotate it around (0, 0) by angle + pi/2, which has fixed value,
 
-        final float len = -length;
+        // (x, y) --> rotate pi/2 --> (-y, x)
         final float[] input = {
-            -halfThickness, 0,
-            halfThickness , 0,
-            halfThickness , len,
-            -halfThickness, len,
+            -halfLength, -halfThickness,
+            -halfLength, halfThickness,
+            halfLength, halfThickness,
+            halfLength, -halfThickness,
         };
 
-        final AffineTransform trans = AffineTransform.getTranslateInstance(getX(), getY());
+        final AffineTransform trans = AffineTransform.getTranslateInstance(this.mx, this.my);
         trans.concatenate(mat);
         trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
     }
@@ -107,7 +106,9 @@ public final class Beam extends AbstractBullet {
         // Only perform accurate collision if the square formed by center
         // point (mx, my) with apothem collides with the circle also
         // approximated as a square with the apothem being its radius.
-        final float apothem = Math.max(halfThickness * 2, length) / 2;
+
+        // multiply by 1.5 to account for near square-shaped beams (technically it's sqrt(2))
+        final float apothem = Math.max(halfThickness, halfLength) * 1.5f;
         if (centerSquareCollision(mx, my, apothem, x1, y1, r1)) {
             // Accurate collision checks if any of the sides intersect with
             // the circle.
