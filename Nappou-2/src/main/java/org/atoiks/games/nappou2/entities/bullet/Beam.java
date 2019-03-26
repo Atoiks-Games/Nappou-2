@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.geom.AffineTransform;
-
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
@@ -37,24 +35,22 @@ public final class Beam extends AbstractBullet {
     private float mx, my;   // mid point of the beam
     private float sx, sy;   // displacement to get to the head of the beam
     private float halfThickness, halfLength;
+    private float cosA, sinA;
 
     private final float[] dest = new float[ARR_SIZE];
-    private final AffineTransform mat;
 
-    public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
+    public Beam(float x, float y, float thickness, float length, final float angle, final float dmag) {
         this.halfThickness = thickness / 2;
         this.halfLength = length / 2;
 
-        final float cosA = (float) Math.cos(angle);
-        final float sinA = (float) Math.sin(angle);
+        this.cosA = (float) Math.cos(angle);
+        this.sinA = (float) Math.sin(angle);
 
-        this.dx = dmag * cosA;
-        this.dy = dmag * sinA;
+        this.dx = dmag * this.cosA;
+        this.dy = dmag * this.sinA;
 
-        this.mx = x + (this.sx = this.halfLength * cosA);
-        this.my = y + (this.sy = this.halfLength * sinA);
-
-        this.mat = AffineTransform.getRotateInstance(angle);
+        this.mx = x + (this.sx = this.halfLength * this.cosA);
+        this.my = y + (this.sy = this.halfLength * this.sinA);
     }
 
     @Override
@@ -71,24 +67,42 @@ public final class Beam extends AbstractBullet {
 
     @Override
     public void update(final float dt) {
-        this.mx += dx * dt;
-        this.my += dy * dt;
+        final float dhoriz = this.mx += dx * dt;
+        final float dvert  = this.my += dy * dt;
 
-        // let (mx, my) be (0, 0)
-        // the beam is a rectangle from (-thickness / 2, length / 2) to (thickness / 2, -length / 2)
-        // we rotate it around (0, 0) by angle + pi/2, which has fixed value,
+        /*
+        let (mx, my) be (0, 0)
+        the beam is a rectangle from (-thickness / 2, length / 2) to (thickness / 2, -length / 2)
+        we rotate it around (0, 0) by angle + pi/2, which has fixed value,
 
-        // (x, y) --> rotate pi/2 --> (-y, x)
-        final float[] input = {
-            -halfLength, -halfThickness,
-            -halfLength, halfThickness,
-            halfLength, halfThickness,
-            halfLength, -halfThickness,
-        };
+        (x, y) --> rotate pi/2 --> (-y, x)
 
-        final AffineTransform trans = AffineTransform.getTranslateInstance(this.mx, this.my);
-        trans.concatenate(mat);
-        trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
+        let m = halfLength, n = halfThickness
+        | cos -sin | * |-m -m m  m| = | -mcos+nsin -mcos-nsin +mcos-nsin +mcos+nsin |
+        | sin  cos |   |-n  n n -n|   | -msin-ncos -msin+ncos +msin+ncos +msin-ncos |
+
+        let k1 = -mcos+nsin, k2 = +mcos+nsin
+        let k3 = +msin+ncos, k4 = -msin+ncos
+        |  k1 -k2 -k1  k2 |
+        | -k3  k4  k3 -k4 |
+         */
+
+        final float m = halfLength;
+        final float n = halfThickness;
+
+        final float k1 = n * sinA - m * cosA;
+        final float k2 = n * sinA + m * cosA;
+        final float k3 = n * cosA + m * sinA;
+        final float k4 = n * cosA - m * sinA;
+
+        dest[0] = dhoriz + k1;
+        dest[1] = dvert - k3;
+        dest[2] = dhoriz - k2;
+        dest[3] = dvert + k4;
+        dest[4] = dhoriz - k1;
+        dest[5] = dvert + k3;
+        dest[6] = dhoriz + k2;
+        dest[7] = dvert - k4;
     }
 
     @Override
