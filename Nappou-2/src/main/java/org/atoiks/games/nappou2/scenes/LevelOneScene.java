@@ -59,6 +59,10 @@ public final class LevelOneScene extends AbstractGameScene {
     // loop frame for level
     private static final int LEVEL_LOOP = 1229110;
 
+    // loop frame for BOSS
+    private static final int BOSS_LOOP = 1222000;
+
+
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     private static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
     private static final float[] w1eY = {30, 30, 10, 50, 25, 40, 32, 16, 50, 37, 15, 48, 76, 89, 98, 76, 56, 56, 32, 16};
@@ -106,10 +110,9 @@ public final class LevelOneScene extends AbstractGameScene {
 
     @Override
     public void leave() {
-        super.leave();
-
         // Stop bgm just in case we forgot
         bgm.stop();
+        super.leave();
     }
 
     private boolean displayNextPrebossDialogue() {
@@ -221,7 +224,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     disableDamage();
                     disableInput();
                     game.clearBullets();
-
+                    bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm.setMicrosecondPosition(0);
+                        bgm.start();
+                        bgm.setLoopPoints(BOSS_LOOP, -1);
+                        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                    }
                     displayNextPrebossDialogue();
                     break;
                 case 5:
@@ -231,12 +240,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             enableDamage();
                             enableInput();
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                                bgm.setMicrosecondPosition(0);
-                                bgm.start();
-                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                            }
                             game.addEnemy(new Level1Easy(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
@@ -385,7 +388,13 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-
+                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm.setMicrosecondPosition(0);
+                            bgm.start();
+                            bgm.setLoopPoints(BOSS_LOOP, -1);
+                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        }
                         displayNextPrebossDialogue();
                     }
                     break;
@@ -396,12 +405,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             enableDamage();
                             enableInput();
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                                bgm.setMicrosecondPosition(0);
-                                bgm.start();
-                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                            }
                             game.addEnemy(new Level1Normal(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
@@ -611,7 +614,13 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-
+                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm.setMicrosecondPosition(0);
+                            bgm.start();
+                            bgm.setLoopPoints(BOSS_LOOP, -1);
+                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        }
                         displayNextPrebossDialogue();
                     }
                     break;
@@ -622,12 +631,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             enableDamage();
                             enableInput();
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                                bgm.setMicrosecondPosition(0);
-                                bgm.start();
-                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                            }
                             game.addEnemy(new Level1Hard(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;
@@ -883,7 +886,13 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-
+                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm.setMicrosecondPosition(0);
+                            bgm.start();
+                            bgm.setLoopPoints(BOSS_LOOP, -1);
+                            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                        }
                         displayNextPrebossDialogue();
                     }
                     break;
@@ -894,12 +903,6 @@ public final class LevelOneScene extends AbstractGameScene {
                             enableDamage();
                             enableInput();
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-                                bgm.setMicrosecondPosition(0);
-                                bgm.start();
-                                bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                            }
                             game.addEnemy(new Level1Insane(300, 375, -10, 20));
                             drift.accelY = -20;
                             drift.accelX = 20;

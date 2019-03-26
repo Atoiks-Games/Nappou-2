@@ -105,6 +105,7 @@ public final class LoadingScene extends Scene {
                     loadImageFromResources("LUMA.png");
 
                     loadMusicFromResources("Level_One.wav");
+                    loadMusicFromResources("Level_One_Boss.wav");
                     loadMusicFromResources("Enter_The_Void.wav");
                     loadMusicFromResources("Awakening.wav");
                     loadMusicFromResources("Broken_Soul.wav");
