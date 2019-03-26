@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.geom.AffineTransform;
-
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IBullet;
@@ -34,27 +32,31 @@ public final class Beam extends AbstractBullet {
     private static final long serialVersionUID = 4412375L;
     private static final int ARR_SIZE = 8;
 
-    private float x, y;
-    private float halfThickness, length;
+    private float mx, my;   // mid point of the beam
+    private float sx, sy;   // displacement to get to the head of the beam
+    private float halfThickness, halfLength;
+    private float cosA, sinA;
 
     private final float[] dest = new float[ARR_SIZE];
-    private final AffineTransform mat;
 
-    public Beam(float x, float y, float thickness, float length, float angle, float dmag) {
-        this.x = x;
-        this.y = y;
+    public Beam(float x, float y, float thickness, float length, final float angle, final float dmag) {
         this.halfThickness = thickness / 2;
-        this.length = length;
+        this.halfLength = length / 2;
 
-        this.dx = dmag * (float) Math.cos(angle);
-        this.dy = dmag * (float) Math.sin(angle);
-        this.mat = AffineTransform.getRotateInstance(angle - 3 * PI_DIV_2);
+        this.cosA = (float) Math.cos(angle);
+        this.sinA = (float) Math.sin(angle);
+
+        this.dx = dmag * this.cosA;
+        this.dy = dmag * this.sinA;
+
+        this.mx = x + (this.sx = this.halfLength * this.cosA);
+        this.my = y + (this.sy = this.halfLength * this.sinA);
     }
 
     @Override
     public void translate(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
+        this.mx += dx;
+        this.my += dy;
     }
 
     @Override
@@ -65,44 +67,61 @@ public final class Beam extends AbstractBullet {
 
     @Override
     public void update(final float dt) {
-        this.x += dx * dt;
-        this.y += dy * dt;
+        final float dhoriz = this.mx += dx * dt;
+        final float dvert  = this.my += dy * dt;
 
-        // If we calculate a beam with (x, y) as (0, 0),
-        // it will be rectangle with diagonal from (-halfThickness, 0) to (halfThickness, -length).
-        // we rotate it around (0, 0) by angle, which has fixed value,
-        // then, we translate it by (x, y)
+        /*
+        let (mx, my) be (0, 0)
+        the beam is a rectangle from (-thickness / 2, length / 2) to (thickness / 2, -length / 2)
+        we rotate it around (0, 0) by angle + pi/2, which has fixed value,
 
-        final float len = -length;
-        final float[] input = {
-            -halfThickness, 0,
-            halfThickness , 0,
-            halfThickness , len,
-            -halfThickness, len,
-        };
+        (x, y) --> rotate pi/2 --> (-y, x)
 
-        final AffineTransform trans = AffineTransform.getTranslateInstance(x, y);
-        trans.concatenate(mat);
-        trans.transform(input, 0, dest, 0, ARR_SIZE / 2);
+        let m = halfLength, n = halfThickness
+        | cos -sin | * |-m -m m  m| = | -mcos+nsin -mcos-nsin +mcos-nsin +mcos+nsin |
+        | sin  cos |   |-n  n n -n|   | -msin-ncos -msin+ncos +msin+ncos +msin-ncos |
+
+        let k1 = -mcos+nsin, k2 = +mcos+nsin
+        let k3 = +msin+ncos, k4 = -msin+ncos
+        |  k1 -k2 -k1  k2 |
+        | -k3  k4  k3 -k4 |
+         */
+
+        final float m = halfLength;
+        final float n = halfThickness;
+
+        final float k1 = n * sinA - m * cosA;
+        final float k2 = n * sinA + m * cosA;
+        final float k3 = n * cosA + m * sinA;
+        final float k4 = n * cosA - m * sinA;
+
+        dest[0] = dhoriz + k1;
+        dest[1] = dvert - k3;
+        dest[2] = dhoriz - k2;
+        dest[3] = dvert + k4;
+        dest[4] = dhoriz - k1;
+        dest[5] = dvert + k3;
+        dest[6] = dhoriz + k2;
+        dest[7] = dvert - k4;
     }
 
     @Override
     public float getX() {
-        return this.x;
+        return this.mx - this.sx;
     }
 
     @Override
     public float getY() {
-        return this.y;
+        return this.my - this.sy;
     }
 
     @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
         // Only perform accurate collision if the square formed by center
-        // point (x, y) with apothem collides with the circle also
+        // point (mx, my) with apothem collides with the circle also
         // approximated as a square with the apothem being its radius.
-        final float apothem = Math.max(halfThickness, length * 2) / 2;
-        if (centerSquareCollision(x, y, apothem, x1, y1, r1)) {
+        final float apothem = Math.max(halfThickness, halfLength);
+        if (centerSquareCollision(mx, my, apothem, x1, y1, r1)) {
             // Accurate collision checks if any of the sides intersect with
             // the circle.
             return intersectSegmentCircle(dest[0], dest[1], dest[2], dest[3], x1, y1, r1)
