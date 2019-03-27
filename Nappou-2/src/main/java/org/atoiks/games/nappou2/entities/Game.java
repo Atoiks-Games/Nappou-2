@@ -191,8 +191,6 @@ public final class Game implements Serializable {
 
             // If radius is less than zero, it cannot collide with anything, so skip iteration
             final float er = enemy.getR();
-            if (er < 0) continue;
-
             final float ex = enemy.getX();
             final float ey = enemy.getY();
 
