@@ -31,6 +31,7 @@ public final class Game implements Serializable {
     private final ArrayList<IBullet> enemyBullets = new ArrayList<>(32);
     private final ArrayList<IBullet> playerBullets = new ArrayList<>(16);
     private final ArrayList<IEnemy> enemies = new ArrayList<>(16);
+    private final ArrayList<EnemySpawner> spawners = new ArrayList<>(16);
 
     public Player player;
 
@@ -76,8 +77,13 @@ public final class Game implements Serializable {
         enemy.attachGame(this);
     }
 
+    public void addEnemySpawner(final EnemySpawner spawner) {
+        spawners.add(spawner);
+        spawner.attachGame(this);
+    }
+
     public boolean noMoreEnemies() {
-        return enemies.isEmpty();
+        return enemies.isEmpty() && spawners.isEmpty();
     }
 
     public int getScore() {
@@ -100,6 +106,18 @@ public final class Game implements Serializable {
     public void cleanup() {
         clearBullets();
         enemies.clear();
+        spawners.clear();
+    }
+
+    public void updateEnemySpawner(final float dt) {
+        for (int i = 0; i < spawners.size(); ++i) {
+            final EnemySpawner spawner = spawners.get(i);
+            spawner.update(dt);
+            if (spawner.isDoneSpawning()) {
+                spawners.remove(i);
+                if (--i < -1) break;
+            }
+        }
     }
 
     public void updateEnemyPosition(final float dt, final float dx, final float dy) {

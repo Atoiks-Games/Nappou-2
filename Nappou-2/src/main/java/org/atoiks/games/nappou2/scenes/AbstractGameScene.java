@@ -260,6 +260,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
             final float driftX = dtDiv5 * drift.getDx();
             final float driftY = dtDiv5 * drift.getDy();
+            game.updateEnemySpawner(dtDiv5);
             game.updateEnemyPosition(dtDiv5, driftX, driftY);
             game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
             game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
