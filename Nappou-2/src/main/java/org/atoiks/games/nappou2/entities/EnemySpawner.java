@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-public abstract class EnemyGroup {
+public abstract class EnemySpawner {
 
     private static final long serialVersionUID = 823469624677L;
 
@@ -36,15 +36,15 @@ public abstract class EnemyGroup {
 
     public abstract boolean isDoneSpawning();
 
-    public static EnemyGroup createImmediateGroup(float delay, IEnemy... enemies) {
+    public static EnemySpawner createImmediateGroup(float delay, IEnemy... enemies) {
         return new ImmediateEnemyGroup(delay, enemies);
     }
 
-    public static EnemyGroup createImmediateGroup(float delay, int count, Supplier<? extends IEnemy> supplier) {
+    public static EnemySpawner createImmediateGroup(float delay, int count, Supplier<? extends IEnemy> supplier) {
         return new ImmediateEnemyGroup(delay, Stream.generate(supplier).limit(count).toArray(IEnemy[]::new));
     }
 
-    public static EnemyGroup createImmediateGroup(float delay, int count, IntFunction<? extends IEnemy> supplier) {
+    public static EnemySpawner createImmediateGroup(float delay, int count, IntFunction<? extends IEnemy> supplier) {
         final IEnemy[] arr = new IEnemy[count];
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = supplier.apply(i);
@@ -52,16 +52,16 @@ public abstract class EnemyGroup {
         return new ImmediateEnemyGroup(delay, arr);
     }
 
-    public static EnemyGroup createLazyGroup(float delay, int limit, Supplier<? extends IEnemy> supplier) {
+    public static EnemySpawner createLazyGroup(float delay, int limit, Supplier<? extends IEnemy> supplier) {
         return new LazyEnemyGroup(delay, limit, supplier);
     }
 
-    public static EnemyGroup createInfiniteSpawner(float delay, Supplier<? extends IEnemy> supplier) {
+    public static EnemySpawner createInfiniteSpawner(float delay, Supplier<? extends IEnemy> supplier) {
         return new LazyEnemyGroup(delay, -1, supplier);
     }
 }
 
-class LazyEnemyGroup extends EnemyGroup {
+class LazyEnemyGroup extends EnemySpawner {
 
     private static final long serialVersionUID = 2777668966432828726L;
 
@@ -95,7 +95,7 @@ class LazyEnemyGroup extends EnemyGroup {
     }
 }
 
-class ImmediateEnemyGroup extends EnemyGroup {
+class ImmediateEnemyGroup extends EnemySpawner {
 
     private static final long serialVersionUID = 8495734797446043322L;
 
