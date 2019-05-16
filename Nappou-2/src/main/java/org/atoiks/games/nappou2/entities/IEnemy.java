@@ -24,20 +24,16 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-public interface IEnemy extends ICollidable, Serializable {
+public interface IEnemy extends IDriftEntity, ICollidable, Serializable {
 
     public boolean isDead();
     public int changeHp(int delta);
 
-    public float getX();
-    public float getY();
     public float getR();
-    public void drift(float dx, float dy);
 
     public int getScore();
 
     public void attachGame(Game game);
 
-    public void update(float dt);
     public void render(IGraphics g);
 }
