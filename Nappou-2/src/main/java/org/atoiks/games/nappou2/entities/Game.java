@@ -177,7 +177,6 @@ public final class Game implements Serializable {
         for (int i = 0; i < enemies.size(); ++i) {
             final IEnemy enemy = enemies.get(i);
 
-            // If radius is less than zero, it cannot collide with anything, so skip iteration
             final float er = enemy.getR();
             final float ex = enemy.getX();
             final float ey = enemy.getY();
