@@ -22,6 +22,8 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
+import java.util.Random;
+
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -55,6 +57,8 @@ public final class LevelOneScene extends AbstractGameScene {
     private int phase;
 
     private int prebossMsgPhase;
+
+    private final Random rnd = new Random();
 
     // loop frame for level
     private static final int LEVEL_LOOP = 1229110;
@@ -259,23 +263,14 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new FishPart(1, -10, 220, 6, 500, 0, 100, 10, true));
                             game.addEnemy(new FishPart(1, -10, 180, 6, 500, 0, 100, 10, true));
                             break;
-
                     }
-                    if (cycles > 555 && game.noMoreEnemies()) {
+                    if (cycles > 605 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
                     break;
                 case 1:
                     switch (cycles) {
-                        case 40:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                            break;
-                        case 1880:
-                            game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                            break;
                         case 80:
                         case 280:
                         case 480:
@@ -289,8 +284,46 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
                             game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
                             break;
+                        case 50:
+                        case 100:
+                        case 150:
+                        case 200:
+                        case 250:
+                        case 300:
+                        case 350:
+                        case 400:
+                        case 450:
+                        case 500:
+                        case 550:
+                        case 600:
+                        case 650:
+                        case 700:
+                        case 750:
+                        case 800:
+                        case 850:
+                        case 900:
+                        case 950:
+                        case 1000:
+                        case 1050:
+                        case 1100:
+                        case 1150:
+                        case 1200:
+                        case 1250:
+                        case 1300:
+                        case 1350:
+                        case 1400:
+                        case 1450:
+                        case 1500:
+                        case 1550:
+                        case 1600:
+                        case 1650:
+                        case 1700:
+                        case 1750:
+                        case 1800:
+                            game.addEnemy(new FishPart(1, 750 * rnd.nextFloat(), 615, 20 * rnd.nextFloat() + 10, 900 * rnd.nextFloat() + 100, 3 * (float) Math.PI / 2, 900 * rnd.nextFloat() + 100, 10, rnd.nextBoolean()));
+                            break;
                     }
-                    if (cycles > 1880 && game.noMoreEnemies()) {
+                    if (cycles > 1800 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
