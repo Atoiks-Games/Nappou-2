@@ -120,40 +120,28 @@ public final class Game implements Serializable {
         }
     }
 
-    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < enemies.size(); ++i) {
-            final IEnemy enemy = enemies.get(i);
-            enemy.update(dt);
-            enemy.drift(dx, dy);
-            if (enemy.isOutOfScreen(gameWidth, gameHeight)) {
-                enemies.remove(i);
+    private <T extends IDriftEntity & ICollidable> void updateDriftCollidableIterator(final ArrayList<T> list, final float dt, final float dx, final float dy) {
+        for (int i = 0; i < list.size(); ++i) {
+            final T entity = list.get(i);
+            entity.update(dt);
+            entity.drift(dx, dy);
+            if (entity.isOutOfScreen(gameWidth, gameHeight)) {
+                list.remove(i);
                 if (--i < -1) break;
             }
         }
+    }
+
+    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
+        updateDriftCollidableIterator(enemies, dt, dx, dy);
     }
 
     public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < enemyBullets.size(); ++i) {
-            final IBullet bullet = enemyBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(dx, dy);
-            if (bullet.isOutOfScreen(gameWidth, gameHeight)) {
-                enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
+        updateDriftCollidableIterator(enemyBullets, dt, dx, dy);
     }
 
     public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < playerBullets.size(); ++i) {
-            final IBullet bullet = playerBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(dx, dy);
-            if (bullet.isOutOfScreen(gameWidth, gameHeight)) {
-                playerBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
+        updateDriftCollidableIterator(playerBullets, dt, dx, dy);
     }
 
     public void performCollisionCheck() {
