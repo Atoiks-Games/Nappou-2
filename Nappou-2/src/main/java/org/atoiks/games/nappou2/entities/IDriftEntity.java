@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities;
 
-public interface IDriftEntity {
+public interface IDriftEntity extends ICollidable {
 
     public float getX();
     public float getY();

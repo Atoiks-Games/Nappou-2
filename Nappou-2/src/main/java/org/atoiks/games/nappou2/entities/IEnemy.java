@@ -24,7 +24,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-public interface IEnemy extends IDriftEntity, ICollidable, Serializable {
+public interface IEnemy extends IDriftEntity, Serializable {
 
     public boolean isDead();
     public int changeHp(int delta);

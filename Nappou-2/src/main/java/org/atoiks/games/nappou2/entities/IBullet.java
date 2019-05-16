@@ -24,7 +24,7 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-public interface IBullet extends IDriftEntity, ICollidable, Serializable {
+public interface IBullet extends IDriftEntity, Serializable {
 
     public void setColor(Color newColor);
     public Color getColor();

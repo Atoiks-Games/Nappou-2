@@ -120,9 +120,9 @@ public final class Game implements Serializable {
         }
     }
 
-    private <T extends IDriftEntity & ICollidable> void updateDriftCollidableIterator(final ArrayList<T> list, final float dt, final float dx, final float dy) {
+    private void updateDriftEntityIterator(final ArrayList<? extends IDriftEntity> list, final float dt, final float dx, final float dy) {
         for (int i = 0; i < list.size(); ++i) {
-            final T entity = list.get(i);
+            final IDriftEntity entity = list.get(i);
             entity.update(dt);
             entity.drift(dx, dy);
             if (entity.isOutOfScreen(gameWidth, gameHeight)) {
@@ -133,15 +133,15 @@ public final class Game implements Serializable {
     }
 
     public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        updateDriftCollidableIterator(enemies, dt, dx, dy);
+        updateDriftEntityIterator(enemies, dt, dx, dy);
     }
 
     public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftCollidableIterator(enemyBullets, dt, dx, dy);
+        updateDriftEntityIterator(enemyBullets, dt, dx, dy);
     }
 
     public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftCollidableIterator(playerBullets, dt, dx, dy);
+        updateDriftEntityIterator(playerBullets, dt, dx, dy);
     }
 
     public void performCollisionCheck() {
