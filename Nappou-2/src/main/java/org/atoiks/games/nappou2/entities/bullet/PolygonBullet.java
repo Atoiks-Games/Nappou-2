@@ -75,7 +75,7 @@ public class PolygonBullet extends AbstractBullet {
     }
 
     @Override
-    public void translate(float dx, float dy) {
+    public void drift(float dx, float dy) {
         for (int i = 0; i < coords.length; i += 2) {
             coords[i] += dx;
             coords[i + 1] += dy;
@@ -92,7 +92,7 @@ public class PolygonBullet extends AbstractBullet {
 
     @Override
     public void update(final float dt) {
-        translate(this.dx * dt, this.dy * dt);
+        drift(this.dx * dt, this.dy * dt);
     }
 
     @Override

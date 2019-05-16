@@ -120,40 +120,28 @@ public final class Game implements Serializable {
         }
     }
 
-    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < enemies.size(); ++i) {
-            final IEnemy enemy = enemies.get(i);
-            enemy.update(dt);
-            enemy.drift(dx, dy);
-            if (enemy.isOutOfScreen(gameWidth, gameHeight)) {
-                enemies.remove(i);
+    private void updateDriftEntityIterator(final ArrayList<? extends IDriftEntity> list, final float dt, final float dx, final float dy) {
+        for (int i = 0; i < list.size(); ++i) {
+            final IDriftEntity entity = list.get(i);
+            entity.update(dt);
+            entity.drift(dx, dy);
+            if (entity.isOutOfScreen(gameWidth, gameHeight)) {
+                list.remove(i);
                 if (--i < -1) break;
             }
         }
+    }
+
+    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
+        updateDriftEntityIterator(enemies, dt, dx, dy);
     }
 
     public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < enemyBullets.size(); ++i) {
-            final IBullet bullet = enemyBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(dx, dy);
-            if (bullet.isOutOfScreen(gameWidth, gameHeight)) {
-                enemyBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
+        updateDriftEntityIterator(enemyBullets, dt, dx, dy);
     }
 
     public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        for (int i = 0; i < playerBullets.size(); ++i) {
-            final IBullet bullet = playerBullets.get(i);
-            bullet.update(dt);
-            bullet.translate(dx, dy);
-            if (bullet.isOutOfScreen(gameWidth, gameHeight)) {
-                playerBullets.remove(i);
-                if (--i < -1) break;
-            }
-        }
+        updateDriftEntityIterator(playerBullets, dt, dx, dy);
     }
 
     public void performCollisionCheck() {
@@ -189,7 +177,6 @@ public final class Game implements Serializable {
         for (int i = 0; i < enemies.size(); ++i) {
             final IEnemy enemy = enemies.get(i);
 
-            // If radius is less than zero, it cannot collide with anything, so skip iteration
             final float er = enemy.getR();
             final float ex = enemy.getX();
             final float ey = enemy.getY();

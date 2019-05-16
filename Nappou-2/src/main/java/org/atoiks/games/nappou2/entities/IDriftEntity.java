@@ -18,22 +18,12 @@
 
 package org.atoiks.games.nappou2.entities;
 
-import java.io.Serializable;
+public interface IDriftEntity extends ICollidable {
 
-import org.atoiks.games.framework2d.IGraphics;
+    public float getX();
+    public float getY();
 
-import org.atoiks.games.nappou2.entities.Game;
+    public void drift(float dx, float dy);
 
-public interface IEnemy extends IDriftEntity, Serializable {
-
-    public boolean isDead();
-    public int changeHp(int delta);
-
-    public float getR();
-
-    public int getScore();
-
-    public void attachGame(Game game);
-
-    public void render(IGraphics g);
+    public void update(float dt);
 }

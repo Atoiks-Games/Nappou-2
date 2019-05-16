@@ -54,7 +54,7 @@ public final class Beam extends AbstractBullet {
     }
 
     @Override
-    public void translate(float dx, float dy) {
+    public void drift(float dx, float dy) {
         this.mx += dx;
         this.my += dy;
     }

@@ -47,7 +47,7 @@ public class PointBullet extends AbstractBullet {
     }
 
     @Override
-    public void translate(float dx, float dy) {
+    public void drift(float dx, float dy) {
         this.x += dx;
         this.y += dy;
     }
