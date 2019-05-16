@@ -147,19 +147,35 @@ public final class LevelOneScene extends AbstractGameScene {
             switch (wave) {
                 case 0:
                     switch (cycles) {
-                        case 40:
-                        case 120:
-                        case 200:
-                            final int k = cycles * 5 / 4;
-                            game.addEnemy(new SingleShotEnemy(1, 300 - k, -10, 8, false));
-                            game.addEnemy(new SingleShotEnemy(1, 450 + k, -10, 8, false));
+                        case 400:
+                            game.addEnemy(new FishPart(2, 375, -10, 16, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
+                            game.addEnemy(new FishPart(2, 375, -10, 16, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
                             break;
-                        case 440:
-                            game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                            game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        case 425:
+                        case 450:
+                        case 475:
+                        case 500:
+                            game.addEnemy(new FishPart(1, 375, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
+                            game.addEnemy(new FishPart(1, 375, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
                             break;
+                        case 455:
+                            game.addEnemy(new FishPart(2, 760, 50, 16, 500, (float) Math.PI, 100, 10, false));
+                            game.addEnemy(new FishPart(2, -10, 550, 16, 500, 0, 100, 10, true));
+                            game.addEnemy(new FishPart(2, 760, 400, 16, 500, (float) Math.PI, 100, 10, false));
+                            game.addEnemy(new FishPart(2, -10, 200, 16, 500, 0, 100, 10, true));
+                            break;
+                        case 480:
+                        case 505:
+                        case 530:
+                        case 555:
+                            game.addEnemy(new FishPart(1, 760, 50, 8, 500, (float) Math.PI, 100, 10, false));
+                            game.addEnemy(new FishPart(1, -10, 550, 8, 500, 0, 100, 10, true));
+                            game.addEnemy(new FishPart(1, 760, 400, 8, 500, (float) Math.PI, 100, 10, false));
+                            game.addEnemy(new FishPart(1, -10, 200, 8, 500, 0, 100, 10, true));
+                            break;
+
                     }
-                    if (cycles > 440 && game.noMoreEnemies()) {
+                    if (cycles > 555 && game.noMoreEnemies()) {
                         wave++;
                         cycles = 0;
                     }
