@@ -46,8 +46,12 @@ public final class FishPart extends ManualEnemy {
     public void update(float dt) {
         this.time += dt;
 
-        this.x += dt * (float) (Math.cos(this.direction) * this.speed + this.alt * Math.cos(wspd * this.time) * this.amplitude * Math.sin(this.direction));
-        this.y += dt * (float) (Math.sin(this.direction) * this.speed + this.alt * Math.cos(wspd * this.time) * -1 * this.amplitude * Math.cos(this.direction));
+        final float aca = this.alt * (float) Math.cos(wspd * this.time) * this.amplitude;
+        final float cosd = (float) Math.cos(this.direction);
+        final float sind = (float) Math.sin(this.direction);
+
+        this.x += dt * (cosd * this.speed + aca * sind);
+        this.y += dt * (sind * this.speed - aca * cosd);
     }
 
     @Override
