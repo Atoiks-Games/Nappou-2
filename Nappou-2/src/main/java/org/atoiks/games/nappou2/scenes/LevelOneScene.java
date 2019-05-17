@@ -154,79 +154,16 @@ public final class LevelOneScene extends AbstractGameScene {
                     switch (cycles) {
                         //Fish group 1
                         case 400:
-                            game.addEnemySpawner(new FishSpawner(500, 7 * (float) Math.PI / 12, 1000, false));
-                            game.addEnemySpawner(new FishSpawner(500, 5 * (float) Math.PI / 12, 1000, true));
+                            game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
+                            game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
                             break;
 
                         //Fish group 2
                         case 455:
-                            game.addEnemy(new FishPart(2, 760, 50, 16, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(2, -10, 550, 16, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(2, 760, 400, 16, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(2, -10, 200, 16, 500, 0, 100, 10, true));
-                            break;
-                        case 480:
-                            game.addEnemy(new FishPart(1, 760, 60, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 40, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 560, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 540, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 410, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 390, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 210, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 190, 8, 500, 0, 100, 10, true));
-                            break;
-                        case 505:
-                            game.addEnemy(new FishPart(1, 760, 70, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 30, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 570, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 530, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 420, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 380, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 220, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 180, 8, 500, 0, 100, 10, true));
-                            break;
-                        case 530:
-                            game.addEnemy(new FishPart(1, 760, 60, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 40, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 560, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 540, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 410, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 390, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 210, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 190, 8, 500, 0, 100, 10, true));
-                            break;
-                        case 555:
-                            game.addEnemy(new FishPart(1, 760, 50, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 550, 8, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 400, 8, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 200, 8, 500, 0, 100, 10, true));
-                            break;
-                        case 580:
-                            game.addEnemy(new FishPart(1, 760, 60, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 40, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 560, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 540, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 410, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 390, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 210, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 190, 6, 500, 0, 100, 10, true));
-                            break;
-                        case 600:
-                            game.addEnemy(new FishPart(1, 760, 50, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 550, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 400, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 200, 6, 500, 0, 100, 10, true));
-                            break;
-                        case 605:
-                            game.addEnemy(new FishPart(1, 760, 70, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 30, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 570, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 530, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, 760, 420, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, 760, 380, 6, 500, (float) Math.PI, 100, 10, false));
-                            game.addEnemy(new FishPart(1, -10, 220, 6, 500, 0, 100, 10, true));
-                            game.addEnemy(new FishPart(1, -10, 180, 6, 500, 0, 100, 10, true));
-                            break;
+                            game.addEnemySpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
+                            game.addEnemySpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
+                            game.addEnemySpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
+                            game.addEnemySpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
                     }
                     if (cycles > 605 && game.noMoreEnemies()) {
                         wave++;

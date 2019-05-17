@@ -28,12 +28,20 @@ public final class FishSpawner extends EnemySpawner {
 
     private int cycles = -1;
 
+    private final float xmid, xrng;
+    private final float ymid, yrng;
+
     private final float speed;
     private final float angle;
     private final float amplitude;
     private final boolean alt;
 
-    public FishSpawner(float speed, float angle, float amplitude, boolean alt) {
+    public FishSpawner(float xmid, float xrng, float ymid, float yrng, float speed, float angle, float amplitude, boolean alt) {
+        this.xmid = xmid;
+        this.xrng = xrng;
+        this.ymid = ymid;
+        this.yrng = yrng;
+
         this.speed = speed;
         this.angle = angle;
         this.amplitude = amplitude;
@@ -44,33 +52,33 @@ public final class FishSpawner extends EnemySpawner {
     public void update(final float dt) {
         switch (++cycles) {
             case 0:
-                game.addEnemy(new FishPart(2, 375, -10, 16, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(2, xmid, ymid, 16, speed, angle, amplitude, 10, alt));
                 break;
             case 25:
-                game.addEnemy(new FishPart(1, 365, -10, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, 385, -10, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 50:
-                game.addEnemy(new FishPart(1, 355, -10, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, 395, -10, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 75:
-                game.addEnemy(new FishPart(1, 365, -10, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, 385, -10, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 100:
-                game.addEnemy(new FishPart(1, 375, -10, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid, ymid, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 125:
-                game.addEnemy(new FishPart(1, 365, -10, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, 385, -10, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 6, speed, angle, amplitude, 10, alt));
                 break;
             case 145:
-                game.addEnemy(new FishPart(1, 375, -10, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid, ymid, 6, speed, angle, amplitude, 10, alt));
                 break;
             case 150:
-                game.addEnemy(new FishPart(1, 355, -10, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, 395, -10, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
                 break;
         }
     }
