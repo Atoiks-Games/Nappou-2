@@ -81,7 +81,7 @@ public final class TutorialScene extends AbstractGameScene {
     }
 
     @Override
-    public void enter(final int prevSceneId) {
+    public void enter(final String prevSceneId) {
         super.enter(prevSceneId);
 
         displayMessage(null);
@@ -197,7 +197,7 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly
-                        return scene.switchToScene(1);
+                        return scene.switchToScene("TitleScene");
                     }
                     break;
             }
