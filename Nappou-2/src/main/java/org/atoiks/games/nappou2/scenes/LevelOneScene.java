@@ -30,6 +30,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
+import org.atoiks.games.nappou2.entities.spawner.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -153,47 +154,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     switch (cycles) {
                         //Fish group 1
                         case 400:
-                            game.addEnemy(new FishPart(2, 375, -10, 16, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(2, 375, -10, 16, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
+                            game.addEnemySpawner(new FishSpawner(500, 7 * (float) Math.PI / 12, 1000, false));
+                            game.addEnemySpawner(new FishSpawner(500, 5 * (float) Math.PI / 12, 1000, true));
                             break;
-                        case 425:
-                            game.addEnemy(new FishPart(1, 365, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 385, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 365, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            game.addEnemy(new FishPart(1, 385, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 450:
-                            game.addEnemy(new FishPart(1, 355, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 395, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 355, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            game.addEnemy(new FishPart(1, 395, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 475:
-                            game.addEnemy(new FishPart(1, 365, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 385, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 365, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            game.addEnemy(new FishPart(1, 385, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 500:
-                            game.addEnemy(new FishPart(1, 375, -10, 8, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 375, -10, 8, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 525:
-                            game.addEnemy(new FishPart(1, 365, -10, 6, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 385, -10, 6, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 365, -10, 6, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            game.addEnemy(new FishPart(1, 385, -10, 6, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 545:
-                            game.addEnemy(new FishPart(1, 375, -10, 6, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 375, -10, 6, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
-                        case 550:
-                            game.addEnemy(new FishPart(1, 355, -10, 6, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 395, -10, 6, 500, 7 * (float) Math.PI / 12, 1000, 10, false));
-                            game.addEnemy(new FishPart(1, 355, -10, 6, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            game.addEnemy(new FishPart(1, 395, -10, 6, 500, 5 * (float) Math.PI / 12, 1000, 10, true));
-                            break;
+
                         //Fish group 2
                         case 455:
                             game.addEnemy(new FishPart(2, 760, 50, 16, 500, (float) Math.PI, 100, 10, false));
