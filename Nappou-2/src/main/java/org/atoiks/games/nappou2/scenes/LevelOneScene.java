@@ -172,19 +172,6 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 1:
                     switch (cycles) {
-                        case 80:
-                        case 280:
-                        case 480:
-                        case 680:
-                        case 880:
-                        case 1080:
-                        case 1280:
-                        case 1480:
-                        case 1680:
-                            final int offset = (cycles / 4  / 5 - 4) / 5;
-                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, w1eS[offset + 0]));
-                            game.addEnemy(new MiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, w1eS[offset + 1]));
-                            break;
                         case 50:
                         case 100:
                         case 150:
@@ -231,7 +218,9 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 2:
                     if (cycles == 40) {
-                        game.addEnemy(new MB1(10, 375, -10, 20));
+                        game.addEnemy(new Ripple(10, 375, -10, 20, 500, (float) Math.PI / 2));
+                        game.addEnemySpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+                        game.addEnemySpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
                     }
                     if (cycles > 40 && game.noMoreEnemies()) {
                         wave++;
