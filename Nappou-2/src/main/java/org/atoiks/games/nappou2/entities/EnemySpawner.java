@@ -24,8 +24,6 @@ import java.util.function.IntFunction;
 
 public abstract class EnemySpawner {
 
-    private static final long serialVersionUID = 823469624677L;
-
     protected Game game;
 
     public abstract void update(float dt);
@@ -63,8 +61,6 @@ public abstract class EnemySpawner {
 
 class LazyEnemyGroup extends EnemySpawner {
 
-    private static final long serialVersionUID = 2777668966432828726L;
-
     private final float delay;
     private final int limit;
     private final Supplier<? extends IEnemy> supplier;
@@ -96,8 +92,6 @@ class LazyEnemyGroup extends EnemySpawner {
 }
 
 class ImmediateEnemyGroup extends EnemySpawner {
-
-    private static final long serialVersionUID = 8495734797446043322L;
 
     private final IEnemy[] enemies;
     private final float delay;
