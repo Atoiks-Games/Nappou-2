@@ -36,6 +36,13 @@ public final class FishSpawner extends EnemySpawner {
     private final float amplitude;
     private final boolean alt;
 
+    /**
+     * Cycle based: constructs another fish part every 25 cycles from cycle 0
+     *
+     * Recommendations:
+     *  - when moving left-right, xrng should be 0
+     *  - when moving top-bottom, yrng should be 0
+     */
     public FishSpawner(float xmid, float xrng, float ymid, float yrng, float speed, float angle, float amplitude, boolean alt) {
         this.xmid = xmid;
         this.xrng = xrng;
