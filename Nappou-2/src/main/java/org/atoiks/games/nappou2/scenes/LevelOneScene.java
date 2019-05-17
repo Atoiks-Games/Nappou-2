@@ -230,11 +230,8 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 3:
                    switch (cycles) {
                         case 40:
-                            game.addEnemy(new MB1(10, 375, -10, 20));
-                            break;
-                        case 80:
-                            game.addEnemy(new CircularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
-                            game.addEnemy(new CircularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
+                            game.addEnemy(new Squirts(10, 275, -10, 20));
+                            game.addEnemy(new Squirts(10, 475, -10, 20));
                             break;
                     }
                     if (cycles > 80 && game.noMoreEnemies()) {
