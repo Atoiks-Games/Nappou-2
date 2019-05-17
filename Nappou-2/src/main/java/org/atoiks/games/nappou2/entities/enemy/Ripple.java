@@ -51,7 +51,10 @@ public final class Ripple extends ManualEnemy {
             if (this.m > 50) {
                 this.time = 0;
                 this.m = this.m / 2;
-                bulletWave();
+
+                for (int i = 0; i < 24; ++i) {
+                    game.addEnemyBullet(new StutterBullet(x, y, 8, 250, i * (float) Math.PI / 12, 500, 10));
+                }
             } else {
                 this.x = -100;
             }
@@ -61,32 +64,5 @@ public final class Ripple extends ManualEnemy {
     @Override
     public int getScore() {
         return score;
-    }
-
-    private void bulletWave() {
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 0, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 2 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 3 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 4 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 5 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 6 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 7 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 8 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 9 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 10 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 11 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 12 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 13 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 14 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 15 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 16 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 17 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 18 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 19 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 20 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 21 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 22 * (float) Math.PI / 12, 500, 10));
-        game.addEnemyBullet(new StutterBullet(getX(), getY(), 8, 250, 23 * (float) Math.PI / 12, 500, 10));
     }
 }
