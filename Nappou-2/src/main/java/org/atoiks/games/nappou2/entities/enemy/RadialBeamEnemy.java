@@ -18,11 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import se.tube42.lib.tweeny.Item;
-
 import org.atoiks.games.nappou2.entities.bullet.Beam;
 
-public final class RadialBeamEnemy extends TweenEnemy {
+public final class RadialBeamEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = 7329566493126725388L;
 
@@ -39,10 +37,8 @@ public final class RadialBeamEnemy extends TweenEnemy {
     private float time;
     private int bulletId;
 
-    private boolean firstRun = true;
-
-    public RadialBeamEnemy(int hp, int score, Item tweenInfo, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float thickness, int length, float speed) {
-        super(hp, tweenInfo);
+    public RadialBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float thickness, int length, float speed) {
+        super(hp);
         this.score = score;
         this.thickness = thickness;
         this.length = length;
@@ -58,12 +54,7 @@ public final class RadialBeamEnemy extends TweenEnemy {
     }
 
     @Override
-    public void update(float dt) {
-        if (firstRun) {
-            firstRun = false;
-            return;
-        }
-
+    public void customUpdate(float dt) {
         time += dt;
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;

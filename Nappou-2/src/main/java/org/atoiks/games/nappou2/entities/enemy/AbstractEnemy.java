@@ -44,10 +44,12 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
         this.hp = hp;
     }
 
+    @Override
     public boolean isDead() {
         return hp <= 0;
     }
 
+    @Override
     public int changeHp(int delta) {
         return this.hp += delta;
     }

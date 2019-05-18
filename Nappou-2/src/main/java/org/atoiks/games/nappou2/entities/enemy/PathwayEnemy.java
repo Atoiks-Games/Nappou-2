@@ -18,62 +18,67 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import se.tube42.lib.tweeny.Item;
+import org.atoiks.games.nappou2.entities.IPathway;
+import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
 
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.IEnemy;
+public abstract class PathwayEnemy extends AbstractEnemy {
 
-public abstract class TweenEnemy extends AbstractEnemy {
+    private static final long serialVersionUID = 4632259879769823818L;
 
-    private static final long serialVersionUID = 7192746L;
+    private IPathway path;
 
-    public static final int FIELD_X = 0;
-    public static final int FIELD_Y = 1;
-    public static final int FIELD_R = 2;
+    protected float r;
 
-    protected final Item xyr;
+    private float dx;
+    private float dy;
 
-    private float dspX;
-    private float dspY;
-
-    protected TweenEnemy(int hp, float x, float y, float r) {
-        this(hp, new Item(3));
-        this.xyr.setImmediate(FIELD_X, x);
-        this.xyr.setImmediate(FIELD_Y, y);
-        this.xyr.setImmediate(FIELD_R, r);
+    public PathwayEnemy(int hp) {
+        this(hp, FixedPathway.DEFAULT);
     }
 
-    protected TweenEnemy(int hp, Item tween) {
+    protected PathwayEnemy(int hp, final IPathway path) {
         super(hp);
-        this.xyr = tween;
+        setPathway(path);
+    }
+
+    public final IPathway getPathway() {
+        return path;
+    }
+
+    public final void setPathway(IPathway p) {
+        this.path = p != null ? p : FixedPathway.DEFAULT;
+    }
+
+    @Override
+    public final void update(float dt) {
+        customUpdate(dt);
+        path.update(dt);
     }
 
     @Override
     public void drift(float dx, float dy) {
-        dspX += dx;
-        dspY += dy;
+        this.dx += dx;
+        this.dy += dy;
     }
 
     @Override
     public final float getX() {
-        return this.xyr.get(FIELD_X) + dspX;
+        return this.path.getX() + this.dx;
     }
 
     @Override
     public final float getY() {
-        return this.xyr.get(FIELD_Y) + dspY;
+        return this.path.getY() + this.dy;
     }
 
     @Override
     public final float getR() {
-        return this.xyr.get(FIELD_R);
+        return this.r;
     }
 
     public final void setR(float r) {
-        this.xyr.setImmediate(FIELD_R, r);
+        this.r = r;
     }
 
-    public Item tween() {
-        return xyr;
-    }
+    protected abstract void customUpdate(float dt);
 }

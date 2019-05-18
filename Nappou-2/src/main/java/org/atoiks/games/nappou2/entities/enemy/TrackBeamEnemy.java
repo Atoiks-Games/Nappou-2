@@ -18,11 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import se.tube42.lib.tweeny.Item;
-
 import org.atoiks.games.nappou2.entities.bullet.Beam;
 
-public final class TrackBeamEnemy extends TweenEnemy {
+public final class TrackBeamEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
 
@@ -37,10 +35,8 @@ public final class TrackBeamEnemy extends TweenEnemy {
     private float time;
     private int bulletId;
 
-    private boolean firstRun = true;
-
-    public TrackBeamEnemy(int hp, int score, Item tweenInfo, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float thickness, int length, float speed) {
-        super(hp, tweenInfo);
+    public TrackBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float thickness, int length, float speed) {
+        super(hp);
         this.score = score;
         this.thickness = thickness;
         this.length = length;
@@ -54,12 +50,7 @@ public final class TrackBeamEnemy extends TweenEnemy {
     }
 
     @Override
-    public void update(float dt) {
-        if (firstRun) {
-            firstRun = false;
-            return;
-        }
-
+    public void customUpdate(float dt) {
         time += dt;
         if (bulletId >= angleOffsets.length) {
             if (time >= fireInterval) bulletId = 0;

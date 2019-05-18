@@ -18,12 +18,15 @@
 
 package org.atoiks.games.nappou2;
 
-import se.tube42.lib.tweeny.Item;
-import se.tube42.lib.tweeny.TweenEquation;
+import java.util.List;
+import java.util.Collections;
+
+import org.atoiks.games.nappou2.equations.*;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
+import org.atoiks.games.nappou2.entities.pathway.*;
 
 public final class Utils {
 
@@ -33,12 +36,17 @@ public final class Utils {
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
         for (int idx = 0; idx < radOffset.length; ++idx) {
             final int i = idx;  // Lambda captures must be effectively final
-            game.addEnemySpawner(EnemySpawner.createLazyGroup(0.17f, 5, () -> {
-                final Item tweenInfo = new Item(3);
-                tweenInfo.set(0, xrangeInv[i], xrangeInv[i ^ 1]).configure(28, TweenEquation.QUAD_INOUT);
-                tweenInfo.set(1, 10, 600 + 40).configure(14, TweenEquation.LINEAR);
-                tweenInfo.setImmediate(2, 8);
-                return new RadialPointEnemy(2, 2, tweenInfo, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
+            game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
+                final RadialPointEnemy enemy = new RadialPointEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
+
+                final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
+                    new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));
+                final List<LerpPathway.LerpEquation> fy = Collections.singletonList(
+                    new LerpPathway.LerpEquation(10, 640, 1.4f * 2.1f, Linear.INSTANCE));
+
+                enemy.setPathway(new LerpPathway(fx.iterator(), fy.iterator()));
+                enemy.setR(8);
+                return enemy;
             }));
         }
     }
@@ -101,5 +109,33 @@ public final class Utils {
 
     public static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
         return !(x > 0 && y > 0 && x < w && y < h);
+    }
+
+    public static float lerp(final float start, final float end, final float frac) {
+        return (end - start) * frac + start;
+    }
+
+    /**
+     * Clamps a value within [0, 1]
+     *
+     * @param val the value being clamped
+     *
+     * @return the clamped value
+     */
+    public static float clamp01(final float val) {
+        return val < 0 ? 0 : (val > 1 ? 1 : val);
+    }
+
+    /**
+     * Clamps a value within the value range.
+     *
+     * @param val the value being clamped
+     * @param low the lower limit
+     * @param high the upper limit
+     *
+     * @return the clamped value
+     */
+    public static float clamp(final float val, final float low, final float high) {
+        return val < low ? low : (val > high ? high : val);
     }
 }
