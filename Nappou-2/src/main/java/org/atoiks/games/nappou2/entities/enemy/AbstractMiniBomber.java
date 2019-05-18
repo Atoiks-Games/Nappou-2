@@ -20,21 +20,19 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MiniBomberEnemy extends AbstractMiniBomber {
+/* package */ abstract class AbstractMiniBomber extends FireGateEnemy {
 
-    private static final long serialVersionUID = 5619264522L;
+    private static final long serialVersionUID = -5242193802166472563L;
 
-    public MiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
-        super(hp, x, y, r, direction, speed);
+    private final int dir;
+
+    public AbstractMiniBomber(int hp, float x, float y, float r, int direction, float speed) {
+        super(hp, x, y, r, speed);
+        dir = direction;
     }
 
     @Override
-    protected void customFireAction(float dt) {
-        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
+    protected final void customUpdate(float dt) {
+        x += dir * 300 * dt;
     }
 }
