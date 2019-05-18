@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
+import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.bullet.Beam;
 
 public final class BeamInfo implements BulletFactory {
@@ -33,7 +34,7 @@ public final class BeamInfo implements BulletFactory {
     }
 
     @Override
-    public Beam createBullet(float x, float y, float angle) {
+    public Beam createBullet(Game g, float x, float y, float angle) {
         return new Beam(x, y, thickness, length, angle, speed);
     }
 }

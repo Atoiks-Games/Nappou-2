@@ -18,9 +18,10 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
+import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IBullet;
 
 public interface BulletFactory {
 
-    public IBullet createBullet(float x, float y, float angle);
+    public IBullet createBullet(Game game, float x, float y, float angle);
 }
