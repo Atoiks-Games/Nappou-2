@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import se.tube42.lib.tweeny.Item;
-
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class RadialPointEnemy extends PathwayEnemy {
