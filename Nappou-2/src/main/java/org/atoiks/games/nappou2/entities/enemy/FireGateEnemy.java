@@ -26,11 +26,18 @@ public abstract class FireGateEnemy extends ManualEnemy {
 
     protected float time;
 
+    private final double limit;
+
     private boolean fireGate;
 
     protected FireGateEnemy(int hp, float x, float y, float r, float spd) {
+        this(hp, x, y, r, spd, 0.5);
+    }
+
+    protected FireGateEnemy(int hp, float x, float y, float r, float spd, double limit) {
         super(hp, x, y, r);
         this.spd = spd;
+        this.limit = limit;
     }
 
     @Override
@@ -40,12 +47,12 @@ public abstract class FireGateEnemy extends ManualEnemy {
         customUpdate(dt);
 
         final double cosSpdTime = Math.cos(spd * time);
-        if (!fireGate && cosSpdTime < 0.5) {
+        if (!fireGate && cosSpdTime < limit) {
             fireGate = true;
             return;
         }
 
-        if (fireGate && cosSpdTime > 0.5) {
+        if (fireGate && cosSpdTime > limit) {
             fireGate = false;
             customFireAction(dt);
         }
