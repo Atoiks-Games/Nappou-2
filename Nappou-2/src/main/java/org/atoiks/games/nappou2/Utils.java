@@ -102,4 +102,32 @@ public final class Utils {
     public static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
         return !(x > 0 && y > 0 && x < w && y < h);
     }
+
+    public static float lerp(final float start, final float end, final float frac) {
+        return (end - start) * frac + start;
+    }
+
+    /**
+     * Clamps a value within [0, 1]
+     *
+     * @param val the value being clamped
+     *
+     * @return the clamped value
+     */
+    public static float clamp01(final float val) {
+        return val < 0 ? 0 : (val > 1 ? 1 : val);
+    }
+
+    /**
+     * Clamps a value within the value range.
+     *
+     * @param val the value being clamped
+     * @param low the lower limit
+     * @param high the upper limit
+     *
+     * @return the clamped value
+     */
+    public static float clamp(final float val, final float low, final float high) {
+        return val < low ? low : (val > high ? high : val);
+    }
 }

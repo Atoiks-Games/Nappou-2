@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2;
 
+import static org.atoiks.games.nappou2.Utils.clamp;
+
 public class Drifter {
 
     private float lowerX = Float.NEGATIVE_INFINITY;
@@ -141,18 +143,5 @@ public class Drifter {
      */
     public float getDy() {
         return dy;
-    }
-
-    /**
-     * Clamps a value within the value range.
-     *
-     * @param val the value being clamped
-     * @param low the lower limit
-     * @param high the upper limit
-     *
-     * @return the clamped value
-     */
-    public static float clamp(final float val, final float low, final float high) {
-        return val < low ? low : (val > high ? high : val);
     }
 }
