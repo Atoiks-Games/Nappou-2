@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 
-import se.tube42.lib.tweeny.TweenManager;
-
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -246,9 +244,6 @@ public abstract class AbstractGameScene extends CenteringScene {
                 pause = true;
             }
             playerFireTimeout -= dt;
-
-            // TweenManager uses milliseconds, dt is seconds
-            TweenManager.service((long) (dt * 1000));
 
             // This is the magic number that makes all of this work!
             // it is 5 because the update sequence used to be split

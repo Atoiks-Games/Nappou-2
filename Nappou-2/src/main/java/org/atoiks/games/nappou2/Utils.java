@@ -21,9 +21,6 @@ package org.atoiks.games.nappou2;
 import java.util.List;
 import java.util.Collections;
 
-import se.tube42.lib.tweeny.Item;
-import se.tube42.lib.tweeny.TweenEquation;
-
 import org.atoiks.games.nappou2.equations.*;
 
 import org.atoiks.games.nappou2.entities.*;
