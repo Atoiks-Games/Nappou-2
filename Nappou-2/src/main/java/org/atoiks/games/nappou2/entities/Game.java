@@ -20,7 +20,8 @@ package org.atoiks.games.nappou2.entities;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.atoiks.games.framework2d.IGraphics;
 
@@ -28,10 +29,10 @@ public final class Game implements Serializable {
 
     private static final long serialVersionUID = 62102375L;
 
-    private final ArrayList<IBullet> enemyBullets = new ArrayList<>(32);
-    private final ArrayList<IBullet> playerBullets = new ArrayList<>(16);
-    private final ArrayList<IEnemy> enemies = new ArrayList<>(16);
-    private final ArrayList<EnemySpawner> spawners = new ArrayList<>(16);
+    private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
+    private final LinkedList<IBullet> playerBullets = new LinkedList<>();
+    private final LinkedList<IEnemy> enemies = new LinkedList<>();
+    private final LinkedList<EnemySpawner> spawners = new LinkedList<>();
 
     public Player player;
 
@@ -43,20 +44,9 @@ public final class Game implements Serializable {
     public void render(IGraphics g) {
         if (player != null) player.render(g);
 
-        final int szEnemyBullets = enemyBullets.size();
-        for (int i = 0; i < szEnemyBullets; ++i) {
-            enemyBullets.get(i).render(g);
-        }
-
-        final int szPlayerBullets = playerBullets.size();
-        for (int i = 0; i < szPlayerBullets; ++i) {
-            playerBullets.get(i).render(g);
-        }
-
-        final int szEnemies = enemies.size();
-        for (int i = 0; i < szEnemies; ++i) {
-            enemies.get(i).render(g);
-        }
+        for (final IBullet bullet : enemyBullets) bullet.render(g);
+        for (final IBullet bullet : playerBullets) bullet.render(g);
+        for (final IEnemy enemy : enemies) enemy.render(g);
     }
 
     public void clipGameBorder(int w, int h) {
@@ -110,38 +100,37 @@ public final class Game implements Serializable {
     }
 
     public void updateEnemySpawner(final float dt) {
-        for (int i = 0; i < spawners.size(); ++i) {
-            final EnemySpawner spawner = spawners.get(i);
+        final Iterator<EnemySpawner> it = spawners.iterator();
+        while (it.hasNext()) {
+            final EnemySpawner spawner = it.next();
             spawner.update(dt);
             if (spawner.isDoneSpawning()) {
-                spawners.remove(i);
-                if (--i < -1) break;
+                it.remove();
             }
         }
     }
 
-    private void updateDriftEntityIterator(final ArrayList<? extends IDriftEntity> list, final float dt, final float dx, final float dy) {
-        for (int i = 0; i < list.size(); ++i) {
-            final IDriftEntity entity = list.get(i);
+    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final float dx, final float dy) {
+        while (it.hasNext()) {
+            final IDriftEntity entity = it.next();
             entity.update(dt);
             entity.drift(dx, dy);
             if (entity.isOutOfScreen(gameWidth, gameHeight)) {
-                list.remove(i);
-                if (--i < -1) break;
+                it.remove();
             }
         }
     }
 
     public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemies, dt, dx, dy);
+        updateDriftEntityIterator(enemies.iterator(), dt, dx, dy);
     }
 
     public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemyBullets, dt, dx, dy);
+        updateDriftEntityIterator(enemyBullets.iterator(), dt, dx, dy);
     }
 
     public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(playerBullets, dt, dx, dy);
+        updateDriftEntityIterator(playerBullets.iterator(), dt, dx, dy);
     }
 
     public void performCollisionCheck() {
@@ -153,47 +142,36 @@ public final class Game implements Serializable {
         final float sy = player.shield.getY();
         final float sr = player.shield.getR();
 
-        for (int i = 0; i < enemyBullets.size(); ++i) {
-            final IBullet bullet = enemyBullets.get(i);
+        for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
+            final IBullet bullet = it.next();
             if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
-                enemyBullets.remove(i);
-                if (--i < -1) break;
-                continue;
-            }
-
-            if (!player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
-                enemyBullets.remove(i);
+                it.remove();
+            } else if (!player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+                it.remove();
                 if (player.changeHpBy(-1) <= 0) {
                     // Player is dead, no more collision can happen
                     return;
                 }
                 player.activateRespawnShield();
-                if (--i < -1) break;
-                continue;
             }
         }
 
         enemy_loop:
-        for (int i = 0; i < enemies.size(); ++i) {
-            final IEnemy enemy = enemies.get(i);
+        for (final Iterator<IEnemy> outer = enemies.iterator(); outer.hasNext(); ) {
+            final IEnemy enemy = outer.next();
 
             final float er = enemy.getR();
             final float ex = enemy.getX();
             final float ey = enemy.getY();
 
-            for (int j = 0; j < playerBullets.size(); ++j) {
-                final IBullet bullet = playerBullets.get(j);
-                if (bullet.collidesWith(ex, ey, er)) {
-                    playerBullets.remove(j);
+            for (final Iterator<IBullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
+                if (inner.next().collidesWith(ex, ey, er)) {
+                    inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
                         changeScore(enemy.getScore());
-                        enemies.remove(i);
-                        if (--i < -1) break enemy_loop;
+                        outer.remove();
                         continue enemy_loop;
                     }
-                    // Bullet is already destroyed, move on to next one
-                    if (--j < -1) break;
-                    continue;
                 }
             }
 
@@ -204,9 +182,7 @@ public final class Game implements Serializable {
                 player.activateRespawnShield();
                 if (enemy.changeHp(-1) <= 0) {
                     changeScore(enemy.getScore());
-                    enemies.remove(i);
-                    if (--i < -1) break;
-                    continue;
+                    outer.remove();
                 }
             }
         }
