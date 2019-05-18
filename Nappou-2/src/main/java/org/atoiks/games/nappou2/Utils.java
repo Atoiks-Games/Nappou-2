@@ -40,7 +40,7 @@ public final class Utils {
         for (int idx = 0; idx < radOffset.length; ++idx) {
             final int i = idx;  // Lambda captures must be effectively final
             game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
-                final RadialPointEnemy enemy = new RadialPointEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info);
+                final RadialBulletEnemy enemy = new RadialBulletEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info);
 
                 final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
                     new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));
