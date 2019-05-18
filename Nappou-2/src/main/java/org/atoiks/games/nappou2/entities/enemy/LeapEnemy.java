@@ -24,8 +24,6 @@ public final class LeapEnemy extends ManualEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
-    private float time;
-    private boolean fireGate;
     private float cycles;
     private float rad;
     private float orbitX;
@@ -50,7 +48,6 @@ public final class LeapEnemy extends ManualEnemy {
 
     @Override
     public void update(float dt) {
-        time += dt;
         cycles++;
 
         final double k = mod * cycles / 50 + spos * Math.PI / 2;
