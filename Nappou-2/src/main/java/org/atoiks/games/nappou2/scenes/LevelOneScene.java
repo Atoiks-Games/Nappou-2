@@ -240,6 +240,26 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     break;
                 case 4:
+                    switch (cycles) {
+                        case 40:
+                        case 440:
+                        case 840:
+                        case 1240:
+                        case 1640:
+                        case 2040:
+                            game.addEnemy(new StreamBeam(1, 10, 610, 8, true));
+                            game.addEnemy(new StreamBeam(1, 375, -10, 8, false));
+                            game.addEnemy(new StreamBeam(1, 740, 610, 8, true));
+                            break;
+                    }
+                    if (cycles > 2040 && game.noMoreEnemies()) {
+                        wave++;
+                        cycles = 0;
+                    }
+                    break;
+
+                    /*
+                case 4:
                     wave++;
                     cycles = 0;
                     bgm.stop();
@@ -304,7 +324,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             return scene.switchToScene(0);
                         }
                     }
-                    break;
+                    break;*/
             }
             break;
 
