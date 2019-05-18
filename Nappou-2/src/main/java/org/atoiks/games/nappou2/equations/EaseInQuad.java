@@ -22,6 +22,10 @@ public final class EaseInQuad implements IEquation {
 
     public static final EaseInQuad INSTANCE = new EaseInQuad();
 
+    private EaseInQuad() {
+        //
+    }
+
     public float compute(final float t) {
         return t * t;
     }

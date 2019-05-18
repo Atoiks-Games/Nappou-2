@@ -22,6 +22,12 @@ import static org.atoiks.games.nappou2.Utils.lerp;
 
 public final class EaseInOutQuad implements IEquation {
 
+    public static final EaseInOutQuad INSTANCE = new EaseInOutQuad();
+
+    private EaseInOutQuad() {
+        //
+    }
+
     public float compute(final float t) {
         return lerp(EaseInQuad.INSTANCE.compute(t),
                 EaseOutQuad.INSTANCE.compute(t), t);
