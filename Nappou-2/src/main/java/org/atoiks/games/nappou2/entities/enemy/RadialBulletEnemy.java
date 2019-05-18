@@ -58,7 +58,7 @@ public final class RadialBulletEnemy extends PathwayEnemy {
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            game.addEnemyBullet(factory.createBullet(game, getX(), getY(), initialAngle + bulletId * anglePerInterval));
+            game.addEnemyBullet(factory.createBullet(getX(), getY(), initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }

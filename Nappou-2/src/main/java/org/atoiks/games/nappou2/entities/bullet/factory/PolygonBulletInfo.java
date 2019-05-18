@@ -34,7 +34,7 @@ public final class PolygonBulletInfo implements BulletFactory {
     }
 
     @Override
-    public PolygonBullet createBullet(Game g, float x, float y, float angle) {
+    public PolygonBullet createBullet(float x, float y, float angle) {
         final PolygonBullet bullet = new PolygonBullet(Arrays.copyOf(coords, coords.length), speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
         bullet.drift(x, y);
         return bullet;

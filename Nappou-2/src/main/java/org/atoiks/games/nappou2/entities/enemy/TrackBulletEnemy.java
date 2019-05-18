@@ -57,7 +57,7 @@ public final class TrackBulletEnemy extends PathwayEnemy {
             final float x = getX();
             final float y = getY();
             final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(factory.createBullet(game, x, y, angle));
+            game.addEnemyBullet(factory.createBullet(x, y, angle));
             ++bulletId;
             time = 0;
         }

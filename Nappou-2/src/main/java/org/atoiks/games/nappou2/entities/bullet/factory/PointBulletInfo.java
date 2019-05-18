@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class PointBulletInfo implements BulletFactory {
@@ -32,7 +31,7 @@ public final class PointBulletInfo implements BulletFactory {
     }
 
     @Override
-    public PointBullet createBullet(Game g, float x, float y, float angle) {
+    public PointBullet createBullet(float x, float y, float angle) {
         return new PointBullet(x, y, radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
     }
 }
