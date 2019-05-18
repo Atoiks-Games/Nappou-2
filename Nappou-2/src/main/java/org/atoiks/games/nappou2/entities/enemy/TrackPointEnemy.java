@@ -19,14 +19,15 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.PointBulletInfo;
 
 public final class TrackPointEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
 
     private final int score;
-    private final float radius;
-    private final float speed;
+    private final PointBulletInfo bulletInfo;
+
     private final float fireInterval;
     private final float delay;
     private final float[] angleOffsets;
@@ -34,11 +35,11 @@ public final class TrackPointEnemy extends PathwayEnemy {
     private float time;
     private int bulletId;
 
-    public TrackPointEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float radius, float speed) {
+    public TrackPointEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, PointBulletInfo bulletInfo) {
         super(hp);
         this.score = score;
-        this.radius = radius;
-        this.speed = speed;
+        this.bulletInfo = bulletInfo;
+
         this.angleOffsets = angleOffsets;
         this.delay = delay;
         this.fireInterval = fireInterval;
@@ -55,8 +56,8 @@ public final class TrackPointEnemy extends PathwayEnemy {
         } else if (time > delay) {
             final float x = getX();
             final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(new PointBullet(x, y, radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle)));
+            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
+            game.addEnemyBullet(bulletInfo.createPointBullet(x, y, angle));
             ++bulletId;
             time = 0;
         }

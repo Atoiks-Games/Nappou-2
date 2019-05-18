@@ -19,15 +19,15 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.bullet.factory.BeamInfo;
 
 public final class TrackBeamEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = -2145973374641410758L;
 
     private final int score;
-    private final float thickness;
-    private final int length;
-    private final float speed;
+    private final BeamInfo beamInfo;
+
     private final float fireInterval;
     private final float delay;
     private final float[] angleOffsets;
@@ -35,12 +35,11 @@ public final class TrackBeamEnemy extends PathwayEnemy {
     private float time;
     private int bulletId;
 
-    public TrackBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float thickness, int length, float speed) {
+    public TrackBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BeamInfo beamInfo) {
         super(hp);
         this.score = score;
-        this.thickness = thickness;
-        this.length = length;
-        this.speed = speed;
+        this.beamInfo = beamInfo;
+
         this.angleOffsets = angleOffsets;
         this.delay = delay;
         this.fireInterval = fireInterval;
@@ -58,7 +57,7 @@ public final class TrackBeamEnemy extends PathwayEnemy {
             final float x = getX();
             final float y = getY();
             final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new Beam(x, y, thickness, length, angle + angleOffsets[bulletId], speed));
+            game.addEnemyBullet(beamInfo.createBeam(x, y, angle + angleOffsets[bulletId]));
             ++bulletId;
             time = 0;
         }

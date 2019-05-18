@@ -19,15 +19,16 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.PointBulletInfo;
 
 public final class RadialPointEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = 1L;
 
     private final int score;
+    private final PointBulletInfo bulletInfo;
+
     private final int intervals;
-    private final float speed;
-    private final float radius;
     private final float fireInterval;
     private final float delay;
     private final float initialAngle;
@@ -36,19 +37,19 @@ public final class RadialPointEnemy extends PathwayEnemy {
     private float time;
     private int bulletId;
 
-    public RadialPointEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float radius, float speed) {
+    public RadialPointEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, PointBulletInfo bulletInfo) {
         super(hp);
         this.score = score;
+        this.bulletInfo = bulletInfo;
+
+        this.initialAngle = initialAngle;
+        this.anglePerInterval = anglePerInterval;
         this.intervals = intervals;
-        this.speed = speed;
-        this.radius = radius;
         this.delay = delay;
         this.fireInterval = fireInterval;
         if (immediateFire) {
             bulletId = intervals;
         }
-        this.initialAngle = initialAngle;
-        this.anglePerInterval = anglePerInterval;
     }
 
     @Override
@@ -57,8 +58,7 @@ public final class RadialPointEnemy extends PathwayEnemy {
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            float angle = initialAngle + bulletId * anglePerInterval;
-            game.addEnemyBullet(new PointBullet(getX(), getY(), radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle)));
+            game.addEnemyBullet(bulletInfo.createPointBullet(getX(), getY(), initialAngle + bulletId * anglePerInterval));
             bulletId++;
             time = 0;
         }

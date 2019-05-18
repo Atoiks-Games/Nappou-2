@@ -19,32 +19,31 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.bullet.factory.BeamInfo;
 
 public final class RadialBeamEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = 7329566493126725388L;
 
     private final int score;
+    private final BeamInfo beamInfo;
+
     private final int intervals;
-    private final float thickness;
-    private final float length;
     private final float fireInterval;
     private final float delay;
     private final float initialAngle;
     private final float anglePerInterval;
-    private final float speed;
 
     private float time;
     private int bulletId;
 
-    public RadialBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float thickness, int length, float speed) {
+    public RadialBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BeamInfo beamInfo) {
         super(hp);
         this.score = score;
-        this.thickness = thickness;
-        this.length = length;
+        this.beamInfo = beamInfo;
+
         this.initialAngle = initialAngle;
         this.anglePerInterval = anglePerInterval;
-        this.speed = speed;
         this.intervals = intervals;
         this.delay = delay;
         this.fireInterval = fireInterval;
@@ -59,7 +58,7 @@ public final class RadialBeamEnemy extends PathwayEnemy {
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            game.addEnemyBullet(new Beam(getX(), getY(), thickness, length, initialAngle + bulletId * anglePerInterval, speed));
+            game.addEnemyBullet(beamInfo.createBeam(getX(), getY(), initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }

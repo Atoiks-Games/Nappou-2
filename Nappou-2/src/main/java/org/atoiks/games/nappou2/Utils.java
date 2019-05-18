@@ -28,16 +28,19 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.entities.pathway.*;
 
+import org.atoiks.games.nappou2.entities.bullet.factory.*;
+
 public final class Utils {
 
     private Utils() {
     }
 
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
+        final PointBulletInfo info = new PointBulletInfo(15, 300);
         for (int idx = 0; idx < radOffset.length; ++idx) {
             final int i = idx;  // Lambda captures must be effectively final
             game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
-                final RadialPointEnemy enemy = new RadialPointEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
+                final RadialPointEnemy enemy = new RadialPointEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info);
 
                 final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
                     new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));
