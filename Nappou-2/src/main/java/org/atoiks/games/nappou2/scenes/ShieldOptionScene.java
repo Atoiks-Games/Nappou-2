@@ -65,14 +65,14 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (skipSelection) {
-            return scene.gotoNextScene();
+            return scene.switchToScene("LevelOneScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene(1);
+            return scene.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.gotoNextScene();
+            return scene.switchToScene("LevelOneScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -90,7 +90,7 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     @Override
-    public void enter(int previousSceneId) {
+    public void enter(String previousSceneId) {
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
         if ((skipSelection = cfg.challengeMode)) {
             // Challenge mode does not use NullShield

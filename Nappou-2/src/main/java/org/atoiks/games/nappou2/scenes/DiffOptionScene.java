@@ -58,10 +58,10 @@ public final class DiffOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene(1);
+            return scene.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.gotoNextScene();
+            return scene.switchToScene("ShieldOptionScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -80,7 +80,7 @@ public final class DiffOptionScene extends CenteringScene {
     }
 
     @Override
-    public void enter(int previousSceneId) {
+    public void enter(String previousSceneId) {
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");

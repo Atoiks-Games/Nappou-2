@@ -64,14 +64,14 @@ public final class SaveHighscoreScene extends CenteringScene {
     }
 
     // This scene acts like a transitioning scene
-    private int transition;
+    private String transition;
 
     private int currentIdx = 0;
     private String currentStr = "";
 
     @Override
-    public void enter(int from) {
-        transition = (int) scene.resources().get("prompt.trans");
+    public void enter(String from) {
+        transition = (String) scene.resources().get("prompt.trans");
 
         currentIdx = 0;
         currentStr = "";

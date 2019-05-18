@@ -49,7 +49,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     // Conventionally, continue is always the first option,
     // sceneDest is always one less than the selectorY
     private static final int[] selectorY = {342, 402};
-    private static final int[] sceneDest = {1};
+    private static final String[] sceneDest = {"TitleScene"};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
@@ -151,7 +151,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     @Override
-    public void enter(int prevSceneId) {
+    public void enter(String prevSceneId) {
         difficulty = (Difficulty) scene.resources().get("difficulty");
 
         playerFireTimeout = 0f;
@@ -335,7 +335,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     private boolean testCollisions() {
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            return scene.switchToScene(1);
+            return scene.switchToScene("TitleScene");
         }
         return false;
     }

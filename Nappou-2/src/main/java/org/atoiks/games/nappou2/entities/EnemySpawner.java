@@ -22,9 +22,10 @@ import java.util.stream.Stream;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-public abstract class EnemySpawner {
+import org.atoiks.games.nappou2.entities.spawner.LazyEnemySpawner;
+import org.atoiks.games.nappou2.entities.spawner.ImmediateEnemySpawner;
 
-    private static final long serialVersionUID = 823469624677L;
+public abstract class EnemySpawner {
 
     protected Game game;
 
@@ -37,11 +38,11 @@ public abstract class EnemySpawner {
     public abstract boolean isDoneSpawning();
 
     public static EnemySpawner createImmediateGroup(float delay, IEnemy... enemies) {
-        return new ImmediateEnemyGroup(delay, enemies);
+        return new ImmediateEnemySpawner(delay, enemies);
     }
 
     public static EnemySpawner createImmediateGroup(float delay, int count, Supplier<? extends IEnemy> supplier) {
-        return new ImmediateEnemyGroup(delay, Stream.generate(supplier).limit(count).toArray(IEnemy[]::new));
+        return new ImmediateEnemySpawner(delay, Stream.generate(supplier).limit(count).toArray(IEnemy[]::new));
     }
 
     public static EnemySpawner createImmediateGroup(float delay, int count, IntFunction<? extends IEnemy> supplier) {
@@ -49,78 +50,14 @@ public abstract class EnemySpawner {
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = supplier.apply(i);
         }
-        return new ImmediateEnemyGroup(delay, arr);
+        return new ImmediateEnemySpawner(delay, arr);
     }
 
     public static EnemySpawner createLazyGroup(float delay, int limit, Supplier<? extends IEnemy> supplier) {
-        return new LazyEnemyGroup(delay, limit, supplier);
+        return new LazyEnemySpawner(delay, limit, supplier);
     }
 
     public static EnemySpawner createInfiniteSpawner(float delay, Supplier<? extends IEnemy> supplier) {
-        return new LazyEnemyGroup(delay, -1, supplier);
-    }
-}
-
-class LazyEnemyGroup extends EnemySpawner {
-
-    private static final long serialVersionUID = 2777668966432828726L;
-
-    private final float delay;
-    private final int limit;
-    private final Supplier<? extends IEnemy> supplier;
-
-    private float time;
-    private int index;
-
-    public LazyEnemyGroup(float delay, int limit, Supplier<? extends IEnemy> supplier) {
-        this.delay = delay;
-        this.limit = limit;
-        this.supplier = supplier;
-    }
-
-    @Override
-    public void update(float dt) {
-        while (!isDoneSpawning() && (time += dt) >= delay) {
-            time -= delay;
-            index++;
-            final IEnemy enemy = supplier.get();
-            if (enemy != null) game.addEnemy(enemy);
-        }
-    }
-
-    @Override
-    public boolean isDoneSpawning() {
-        // Negative limits are used as infinite-spawners
-        return limit >= 0 && index >= limit;
-    }
-}
-
-class ImmediateEnemyGroup extends EnemySpawner {
-
-    private static final long serialVersionUID = 8495734797446043322L;
-
-    private final IEnemy[] enemies;
-    private final float delay;
-
-    private float time;
-    private int index;
-
-    public ImmediateEnemyGroup(float delay, IEnemy... enemies) {
-        this.delay = delay;
-        this.enemies = enemies;
-    }
-
-    @Override
-    public void update(float dt) {
-        while (index < enemies.length && (time += dt) >= delay) {
-            time -= delay;
-            final IEnemy enemy = enemies[index++];
-            if (enemy != null) game.addEnemy(enemy);
-        }
-    }
-
-    @Override
-    public boolean isDoneSpawning() {
-        return index >= enemies.length;
+        return new LazyEnemySpawner(delay, -1, supplier);
     }
 }

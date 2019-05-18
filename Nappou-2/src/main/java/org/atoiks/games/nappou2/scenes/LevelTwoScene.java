@@ -71,7 +71,7 @@ public final class LevelTwoScene extends AbstractGameScene {
     }
 
     @Override
-    public void enter(final int prevSceneId) {
+    public void enter(final String prevSceneId) {
         super.enter(prevSceneId);
 
         drift.clampSpeed(0,0,0,0);
@@ -329,8 +329,8 @@ public final class LevelTwoScene extends AbstractGameScene {
                         if (!displayNextDialogue(POSTBOSS_MSG)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             // scene.resources().put("prompt.trans", /* whatever the next scene id should be... */);
-                            scene.resources().put("prompt.trans", 1);
-                            return scene.switchToScene(0);
+                            scene.resources().put("prompt.trans", "TitleScene");
+                            return scene.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
