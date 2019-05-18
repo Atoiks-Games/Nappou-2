@@ -92,8 +92,7 @@ public final class LoadingScene extends Scene {
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
                 scene.frame().setFullScreen(enterFullscreen);
-                // Title is remapped to 1!
-                return scene.switchToScene(1);
+                return scene.switchToScene("TitleScene");
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {

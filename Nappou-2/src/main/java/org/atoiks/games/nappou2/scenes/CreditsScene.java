@@ -54,13 +54,13 @@ public final class CreditsScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene(1);
+            return scene.switchToScene("TitleScene");
         }
         return true;
     }
 
     @Override
-    public void enter(int previousSceneId) {
+    public void enter(String previousSceneId) {
         bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {

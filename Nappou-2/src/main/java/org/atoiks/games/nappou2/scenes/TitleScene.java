@@ -42,7 +42,9 @@ public final class TitleScene extends CenteringScene {
         "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
     };
     private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
-    private static final int[] sceneDest = {2, 6, 3, 5, 4};
+    private static final String[] sceneDest = {
+        "TutorialScene", "DiffOptionScene", "ScoreScene", "ConfigScene", "CreditsScene"
+    };
     private static final int OPT_HEIGHT = 30;
 
     private Clip bgm;
@@ -96,14 +98,16 @@ public final class TitleScene extends CenteringScene {
     }
 
     @Override
-    public void enter(final int prevSceneId) {
+    public void enter(final String prevSceneId) {
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
-            // ScoreScene and ConfigScene continues to play music
-            switch (prevSceneId) {
-                case 2:
-                case 3:
-                case 4:
-                case 5:
+            // switch-case with strings crash when value is null
+            switch (prevSceneId != null ? prevSceneId : "") {
+                case "ScoreScene":
+                case "CreditsScene":
+                case "ConfigScene":
+                case "DiffOptionScene":
+                    // These scenes continue playing music.
+                    // No need to reset playback
                     break;
                 default:
                     bgm.setMicrosecondPosition(0);
