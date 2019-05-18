@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class PointBulletInfo {
+public final class PointBulletInfo implements BulletFactory {
 
     public final float radius;
     public final float speed;
@@ -30,7 +30,8 @@ public final class PointBulletInfo {
         this.speed = speed;
     }
 
-    public PointBullet createPointBullet(float x, float y, float angle) {
+    @Override
+    public PointBullet createBullet(float x, float y, float angle) {
         return new PointBullet(x, y, radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
     }
 }

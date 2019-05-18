@@ -18,22 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.IBullet;
 
-public final class BeamInfo implements BulletFactory {
+public interface BulletFactory {
 
-    public final float thickness;
-    public final float length;
-    public final float speed;
-
-    public BeamInfo(float thickness, float length, float speed) {
-        this.thickness = thickness;
-        this.length = length;
-        this.speed = speed;
-    }
-
-    @Override
-    public Beam createBullet(float x, float y, float angle) {
-        return new Beam(x, y, thickness, length, angle, speed);
-    }
+    public IBullet createBullet(float x, float y, float angle);
 }
