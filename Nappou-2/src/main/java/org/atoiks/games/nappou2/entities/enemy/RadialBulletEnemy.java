@@ -19,45 +19,46 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.Beam;
-import org.atoiks.games.nappou2.entities.bullet.factory.BeamInfo;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class TrackBeamEnemy extends PathwayEnemy {
+public final class RadialBulletEnemy extends PathwayEnemy {
 
-    private static final long serialVersionUID = -2145973374641410758L;
+    private static final long serialVersionUID = 7329566493126725388L;
 
     private final int score;
-    private final BeamInfo beamInfo;
+    private final BulletFactory factory;
 
+    private final int intervals;
     private final float fireInterval;
     private final float delay;
-    private final float[] angleOffsets;
+    private final float initialAngle;
+    private final float anglePerInterval;
 
     private float time;
     private int bulletId;
 
-    public TrackBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BeamInfo beamInfo) {
+    public RadialBulletEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BulletFactory factory) {
         super(hp);
         this.score = score;
-        this.beamInfo = beamInfo;
+        this.factory = factory;
 
-        this.angleOffsets = angleOffsets;
+        this.initialAngle = initialAngle;
+        this.anglePerInterval = anglePerInterval;
+        this.intervals = intervals;
         this.delay = delay;
         this.fireInterval = fireInterval;
         if (!immediateFire) {
-            bulletId = angleOffsets.length;
+            bulletId = intervals;
         }
     }
 
     @Override
     public void customUpdate(float dt) {
         time += dt;
-        if (bulletId >= angleOffsets.length) {
+        if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            final float x = getX();
-            final float y = getY();
-            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(beamInfo.createBeam(x, y, angle + angleOffsets[bulletId]));
+            game.addEnemyBullet(factory.createBullet(getX(), getY(), initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }
