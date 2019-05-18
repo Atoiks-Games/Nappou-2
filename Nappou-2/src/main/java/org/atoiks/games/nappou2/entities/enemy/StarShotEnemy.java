@@ -43,10 +43,13 @@ public final class StarShotEnemy extends FireGateEnemy {
 
     @Override
     protected void customFireAction(float dt) {
+        // see TrigConstant for angle change
         final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle + Math.PI / 2), 1000 * (float) Math.sin(angle + Math.PI / 2)));
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle + Math.PI), 1000 * (float) Math.sin(angle + Math.PI)));
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle - Math.PI / 2), 1000 * (float) Math.sin(angle - Math.PI / 2)));
+        final float ksinA = 1000 * (float) Math.sin(angle);
+        final float kcosA = 1000 * (float) Math.cos(angle);
+        game.addEnemyBullet(new PointBullet(x, y, 2,  kcosA,  ksinA)); // +0,    +0
+        game.addEnemyBullet(new PointBullet(x, y, 2, -ksinA,  kcosA)); // +pi/2, +pi/2
+        game.addEnemyBullet(new PointBullet(x, y, 2, -kcosA, -ksinA)); // +pi,   +pi
+        game.addEnemyBullet(new PointBullet(x, y, 2,  ksinA, -kcosA)); // -pi/2, -pi/2
     }
 }
