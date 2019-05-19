@@ -19,26 +19,35 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.IPathway;
+import org.atoiks.games.nappou2.entities.IUpdateListener;
+
+import org.atoiks.games.nappou2.entities.attack.NullPattern;
 import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
 
-public abstract class PathwayEnemy extends AbstractEnemy {
+public class PathwayEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 4632259879769823818L;
 
-    private IPathway path;
+    protected IPathway path;
+    protected IUpdateListener listener;
 
     protected float r;
 
     private float dx;
     private float dy;
 
-    public PathwayEnemy(int hp) {
-        this(hp, FixedPathway.DEFAULT);
+    private final int score;
+
+    public PathwayEnemy(int hp, int score) {
+        this(hp, score, FixedPathway.DEFAULT, NullPattern.INSTANCE);
     }
 
-    protected PathwayEnemy(int hp, final IPathway path) {
+    public PathwayEnemy(int hp, int score, final IPathway path, final IUpdateListener listener) {
         super(hp);
+        this.score = score;
+
         setPathway(path);
+        setUpdateListener(listener);
     }
 
     public final IPathway getPathway() {
@@ -49,10 +58,18 @@ public abstract class PathwayEnemy extends AbstractEnemy {
         this.path = p != null ? p : FixedPathway.DEFAULT;
     }
 
+    public final IUpdateListener getUpdateListener() {
+        return listener;
+    }
+
+    public final void setUpdateListener(IUpdateListener lis) {
+        this.listener = lis != null ? lis : NullPattern.INSTANCE;
+    }
+
     @Override
-    public final void update(float dt) {
-        customUpdate(dt);
+    public void update(float dt) {
         path.update(dt);
+        listener.onFireUpdate(this, dt);
     }
 
     @Override
@@ -80,5 +97,8 @@ public abstract class PathwayEnemy extends AbstractEnemy {
         this.r = r;
     }
 
-    protected abstract void customUpdate(float dt);
+    @Override
+    public int getScore() {
+        return score;
+    }
 }
