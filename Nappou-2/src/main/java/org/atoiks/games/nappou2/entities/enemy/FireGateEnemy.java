@@ -18,34 +18,37 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-public abstract class FireGateEnemy extends ManualEnemy {
+import org.atoiks.games.nappou2.entities.IUpdateListener;
+
+public class FireGateEnemy extends PathwayEnemy {
 
     private static final long serialVersionUID = 6503566228630955824L;
 
-    protected final float spd;
-
-    protected float time;
-
+    private final float spd;
     private final double limit;
 
+    private float time;
     private boolean fireGate;
 
-    protected FireGateEnemy(int hp, float x, float y, float r, float spd) {
-        this(hp, x, y, r, spd, 0.5);
+    public FireGateEnemy(int hp, int score, float r, float spd) {
+        this(hp, score, r, spd, 0.5);
     }
 
-    protected FireGateEnemy(int hp, float x, float y, float r, float spd, double limit) {
-        super(hp, x, y, r);
+    public FireGateEnemy(int hp, int score, float r, float spd, double limit) {
+        super(hp, score);
         this.spd = spd;
         this.limit = limit;
+        this.setR(r);
     }
 
     @Override
     public final void update(float dt) {
+        path.update(dt);
+
+        // but what if the following fenced block was yet another listener?
+        // could we simply use PathwayEnemy directly?
+        // {
         time += dt;
-
-        customUpdate(dt);
-
         final double cosSpdTime = Math.cos(spd * time);
         if (!fireGate && cosSpdTime < limit) {
             fireGate = true;
@@ -54,10 +57,8 @@ public abstract class FireGateEnemy extends ManualEnemy {
 
         if (fireGate && cosSpdTime > limit) {
             fireGate = false;
-            customFireAction(dt);
+            listener.onFireUpdate(this, dt);
         }
+        // }
     }
-
-    protected abstract void customUpdate(float dt);
-    protected abstract void customFireAction(float dt);
 }

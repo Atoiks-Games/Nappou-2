@@ -18,49 +18,16 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.attack.SingleShot;
+import org.atoiks.games.nappou2.entities.pathway.OrbitalPathway;
 
 public final class CircularPathEnemy extends FireGateEnemy {
 
     private static final long serialVersionUID = 5619264522L;
 
-    private final float rad;
-    private final float orbitX;
-    private final float orbitY;
-
-    private final float dir;
-    private final float mod;
-    private final int spos;
-
-    private int cycles;
-
     public CircularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
-        super(hp, x, y, r, bulletSpeed, 0.01);
-        rad = radius;
-        orbitX = x;
-        orbitY = y;
-        dir = direction;
-        mod = speedMod;
-        spos = startPos % 4;    // spos can only be {0, 1, 2, 3}
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
-    }
-
-    @Override
-    protected void customUpdate(float dt) {
-        cycles++;
-
-        final double k = mod * cycles / 50 + spos * Math.PI / 2;
-        y = orbitY + dir * rad * (float) Math.sin(k);
-        x = orbitX + rad * (float) Math.cos(k);
-    }
-
-    @Override
-    protected void customFireAction(float dt) {
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+        super(hp, 1, r, bulletSpeed, 0.01);
+        setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
+        setUpdateListener(new SingleShot());
     }
 }

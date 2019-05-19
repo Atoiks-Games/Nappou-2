@@ -18,32 +18,16 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.attack.SingleShot;
+import org.atoiks.games.nappou2.entities.pathway.FixedVelocity;
 
 public final class SingleShotEnemy extends FireGateEnemy {
 
     private static final long serialVersionUID = -3483536584027126124L;
 
-    private final int invSign;
-
     public SingleShotEnemy(int hp, float x, float y, float r, boolean inverted) {
-        super(hp, x, y, r, 6);
-        this.invSign = inverted ? -1 : 1;
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
-    }
-
-    @Override
-    protected void customUpdate(float dt) {
-        y += invSign * 300 * dt;
-    }
-
-    @Override
-    protected void customFireAction(float dt) {
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+        super(hp, 1, r, 6);
+        setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        setUpdateListener(new SingleShot());
     }
 }

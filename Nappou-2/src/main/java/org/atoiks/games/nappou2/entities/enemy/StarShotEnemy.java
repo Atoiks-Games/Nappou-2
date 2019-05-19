@@ -18,38 +18,16 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.attack.StarPattern;
+import org.atoiks.games.nappou2.entities.pathway.FixedVelocity;
 
 public final class StarShotEnemy extends FireGateEnemy {
 
     private static final long serialVersionUID = -5680129834018943119L;
 
-    private final int invSign;
-
     public StarShotEnemy(int hp, float x, float y, float r, boolean inverted) {
-        super(hp, x, y, r, 6);
-        this.invSign = inverted ? -1 : 1;
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
-    }
-
-    @Override
-    protected void customUpdate(float dt) {
-        y += invSign * 300 * dt;
-    }
-
-    @Override
-    protected void customFireAction(float dt) {
-        // see TrigConstant for angle change
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        final float ksinA = 1000 * (float) Math.sin(angle);
-        final float kcosA = 1000 * (float) Math.cos(angle);
-        game.addEnemyBullet(new PointBullet(x, y, 2,  kcosA,  ksinA)); // +0,    +0
-        game.addEnemyBullet(new PointBullet(x, y, 2, -ksinA,  kcosA)); // +pi/2, +pi/2
-        game.addEnemyBullet(new PointBullet(x, y, 2, -kcosA, -ksinA)); // +pi,   +pi
-        game.addEnemyBullet(new PointBullet(x, y, 2,  ksinA, -kcosA)); // -pi/2, -pi/2
+        super(hp, 1, r, 6);
+        setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        setUpdateListener(new StarPattern());
     }
 }

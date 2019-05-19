@@ -18,21 +18,17 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.IUpdateListener;
+
+import org.atoiks.games.nappou2.entities.pathway.FixedVelocity;
 
 /* package */ abstract class AbstractMiniBomber extends FireGateEnemy {
 
     private static final long serialVersionUID = -5242193802166472563L;
 
-    private final int dir;
-
-    public AbstractMiniBomber(int hp, float x, float y, float r, int direction, float speed) {
-        super(hp, x, y, r, speed);
-        dir = direction;
-    }
-
-    @Override
-    protected final void customUpdate(float dt) {
-        x += dir * 300 * dt;
+    public AbstractMiniBomber(int hp, int score, float x, float y, float r, IUpdateListener listener, int dir, float speed) {
+        super(hp, score, r, speed);
+        setPathway(new FixedVelocity(x, y, dir * 300, 0));
+        setUpdateListener(listener);
     }
 }

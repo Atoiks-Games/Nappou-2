@@ -18,23 +18,13 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.attack.MiniBomber;
 
 public final class MiniBomberEnemy extends AbstractMiniBomber {
 
     private static final long serialVersionUID = 5619264522L;
 
     public MiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
-        super(hp, x, y, r, direction, speed);
-    }
-
-    @Override
-    protected void customFireAction(float dt) {
-        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
+        super(hp, 1, x, y, r, new MiniBomber(), direction, speed);
     }
 }
