@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.ITrackable;
 
 public final class TrackPointBullet extends PointBullet {
 
@@ -26,7 +26,7 @@ public final class TrackPointBullet extends PointBullet {
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
-    private final Game game;
+    private final ITrackable entity;
     private final float scale;
     private final float moveTime;
     private final float delay;
@@ -34,10 +34,10 @@ public final class TrackPointBullet extends PointBullet {
     private float time;
     private boolean moving;
 
-    public TrackPointBullet(float x, float y, float r, Game game, float pathScale, float moveTime, float delay) {
+    public TrackPointBullet(float x, float y, float r, ITrackable entity, float pathScale, float moveTime, float delay) {
         super(x, y, r);
 
-        this.game = game;
+        this.entity = entity;
         this.scale = pathScale;
         this.moveTime = moveTime;
         this.delay = delay;
@@ -49,8 +49,6 @@ public final class TrackPointBullet extends PointBullet {
 
     @Override
     public void update(float dt) {
-        if (game.player == null) return;
-
         time += dt;
         if (moving) {
             if (time >= moveTime) {
@@ -61,8 +59,8 @@ public final class TrackPointBullet extends PointBullet {
             }
         } else if (time >= delay) {
             // Re-calculate endpoints
-            dx = scale * (game.player.getX() - x) / moveTime;
-            dy = scale * (game.player.getY() - y) / moveTime;
+            dx = scale * (entity.getX() - x) / moveTime;
+            dy = scale * (entity.getY() - y) / moveTime;
             moving = true;
             time = 0;
         }
