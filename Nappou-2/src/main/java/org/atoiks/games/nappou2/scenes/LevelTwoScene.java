@@ -32,6 +32,9 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.Utils.starShotEnemy;
+import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
+
 public final class LevelTwoScene extends AbstractGameScene {
 
     private static final Message[] PREBOSS_MSG = {
@@ -116,7 +119,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 0:
                     switch (cycles) {
                         case 20:
-                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(2, -10, 20, 20, 500, 1, true));
                             game.addEnemy(new DummyEnemy(2, 760, 20, 20, 500, 1, false));
                             game.addEnemy(new DummyEnemy(2, -10, 120, 20, 500, 1, true));
@@ -151,7 +154,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             game.addEnemy(new DummyEnemy(1, 760, 150, 10, 500, 1, false));
                             break;
                         case 320:
-                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new DummyEnemy(1, -10, 590, 10, 1000, 1, true));
                             game.addEnemy(new DummyEnemy(1, 760, 590, 10, 1000, 1, false));
                             game.addEnemy(new DummyEnemy(1, -10, 550, 10, 1000, 1, true));
@@ -188,22 +191,22 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 1:
                     switch (cycles) {
                         case 20:
-                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 0, 5, 5, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 0, 5, 5, 500));
                             break;
                         case 120:
-                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 600, 10, 6, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 600, 10, 6, 500));
                             break;
                         case 220:
-                            game.addEnemy(new SingleShotEnemy(1, 375, -10, 8, false));
+                            game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
                             game.addEnemy(new ChargerEnemy(1, 0, 300, 15, 7, 500));
                             game.addEnemy(new ChargerEnemy(1, 750, 300, 15, 7, 500));
                             break;
                         case 310:
-                            game.addEnemy(new SingleShotEnemy(5, 375, -10, 15, false));
+                            game.addEnemy(singleShotEnemy(5, 375, -10, 15, false));
                             break;
                         }
                     if (cycles > 310) {
@@ -226,10 +229,10 @@ public final class LevelTwoScene extends AbstractGameScene {
                         case 300:
                         case 400:
                         case 500:
-                            game.addEnemy(new StarShotEnemy(1, 600, 0, 5, false));
-                            game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
-                            game.addEnemy(new StarShotEnemy(1, 600, -10, 5, false));
-                            game.addEnemy(new StarShotEnemy(1, 450, -10, 5, false));
+                            game.addEnemy(starShotEnemy(1, 600, 0, 5, false));
+                            game.addEnemy(starShotEnemy(1, 450, 0, 5, false));
+                            game.addEnemy(starShotEnemy(1, 600, -10, 5, false));
+                            game.addEnemy(starShotEnemy(1, 450, -10, 5, false));
                             break;
                         case 510:
                             game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
@@ -254,18 +257,18 @@ public final class LevelTwoScene extends AbstractGameScene {
                     case 510:
                         game.addEnemy(new LeapEnemy(1, 300, 600, 9, 75, -1, 0.25f, 4, 1, 4));
                         game.addEnemy(new LeapEnemy(1, 450, 600, 9, 75, 1, 0.25f, 2, 1, 6.25f));
-                        game.addEnemy(new StarShotEnemy(1, 300, 0, 5, false));
-                        game.addEnemy(new StarShotEnemy(1, 450, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 300, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 450, 0, 5, false));
                         break;
                     case 1010:
                         game.addEnemy(new LeapEnemy(1, 200, 600, 10, 75, -1, 0.25f, 4, 2, 3));
                         game.addEnemy(new LeapEnemy(1, 350, 600, 10, 75, 1, 0.25f, 2, 0.5f, 7));
                         game.addEnemy(new LeapEnemy(1, 400, 600, 10, 75, -1, 0.25f, 4, 3, 2));
                         game.addEnemy(new LeapEnemy(1, 550, 600, 10, 75, 1, 0.25f, 2, 1, 6.25f));
-                        game.addEnemy(new StarShotEnemy(1, 350, 0, 5, false));
-                        game.addEnemy(new StarShotEnemy(1, 400, 0, 5, false));
-                        game.addEnemy(new StarShotEnemy(1, 550, 0, 5, false));
-                        game.addEnemy(new StarShotEnemy(1, 200, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 350, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 400, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 550, 0, 5, false));
+                        game.addEnemy(starShotEnemy(1, 200, 0, 5, false));
                         break;
                     case 1510:
                         game.addEnemy(new LeapEnemy(1, 150, 600, 8, 75, -1, 0.25f, 4, 2, 0.75f));

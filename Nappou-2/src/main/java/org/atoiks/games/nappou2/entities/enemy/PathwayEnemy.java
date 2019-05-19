@@ -24,14 +24,14 @@ import org.atoiks.games.nappou2.entities.IUpdateListener;
 import org.atoiks.games.nappou2.entities.attack.NullPattern;
 import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
 
-public class PathwayEnemy extends AbstractEnemy {
+public final class PathwayEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 4632259879769823818L;
 
-    protected IPathway path;
-    protected IUpdateListener listener;
+    private IPathway path;
+    private IUpdateListener listener;
 
-    protected float r;
+    private float r;
 
     private float dx;
     private float dy;
@@ -50,19 +50,19 @@ public class PathwayEnemy extends AbstractEnemy {
         setUpdateListener(listener);
     }
 
-    public final IPathway getPathway() {
+    public IPathway getPathway() {
         return path;
     }
 
-    public final void setPathway(IPathway p) {
+    public void setPathway(IPathway p) {
         this.path = p != null ? p : FixedPathway.DEFAULT;
     }
 
-    public final IUpdateListener getUpdateListener() {
+    public IUpdateListener getUpdateListener() {
         return listener;
     }
 
-    public final void setUpdateListener(IUpdateListener lis) {
+    public void setUpdateListener(IUpdateListener lis) {
         this.listener = lis != null ? lis : NullPattern.INSTANCE;
     }
 
@@ -79,21 +79,21 @@ public class PathwayEnemy extends AbstractEnemy {
     }
 
     @Override
-    public final float getX() {
+    public float getX() {
         return this.path.getX() + this.dx;
     }
 
     @Override
-    public final float getY() {
+    public float getY() {
         return this.path.getY() + this.dy;
     }
 
     @Override
-    public final float getR() {
+    public float getR() {
         return this.r;
     }
 
-    public final void setR(float r) {
+    public void setR(float r) {
         this.r = r;
     }
 

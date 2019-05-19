@@ -56,6 +56,46 @@ public final class Utils {
         }
     }
 
+    public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
+        enemy.setUpdateListener(new SineFireGate(bulletSpeed, 0, 0.01, new SingleShot()));
+        return enemy;
+    }
+
+    public static PathwayEnemy singleShotEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, new SingleShot()));
+        return enemy;
+    }
+
+    public static PathwayEnemy starShotEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, new StarPattern()));
+        return enemy;
+    }
+
+    public static PathwayEnemy miniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
+        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, new MiniBomber()));
+        return enemy;
+    }
+
+    public static PathwayEnemy advancedMiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
+        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, new AdvancedMiniBomber()));
+        return enemy;
+    }
+
     public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
                                                  float cx, float cy, float cr) {
         // Taken from https://stackoverflow.com/a/10392860

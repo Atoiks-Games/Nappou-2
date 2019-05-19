@@ -34,6 +34,9 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.*;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
+
+import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
+
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
@@ -144,8 +147,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 1:
                     if (game.getScore() < 6) {
-                        game.addEnemy(new SingleShotEnemy(1, 250, -10, 8, false));
-                        game.addEnemy(new SingleShotEnemy(1, 500, -10, 8, false));
+                        game.addEnemy(singleShotEnemy(1, 250, -10, 8, false));
+                        game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
                         displayMessage(MSG_BTN_X);
