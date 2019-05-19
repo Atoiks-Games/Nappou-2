@@ -34,6 +34,7 @@ public interface IEnemy extends IDriftEntity, Serializable {
     public int getScore();
 
     public void attachGame(Game game);
+    public Game getAssocGame();
 
     public void render(IGraphics g);
 }
