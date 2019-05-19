@@ -22,4 +22,14 @@ public interface ITrackable {
 
     public float getX();
     public float getY();
+
+    public default float distanceFrom(float x, float y) {
+        final float dx = getX() - x;
+        final float dy = getY() - y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public default double angleWith(float x, float y) {
+        return Math.atan2(getX() - x, getY() - y);
+    }
 }
