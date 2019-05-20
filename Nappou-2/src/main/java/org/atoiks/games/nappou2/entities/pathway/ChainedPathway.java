@@ -61,11 +61,6 @@ public final class ChainedPathway implements IPathway {
     }
 
     @Override
-    public boolean canFinish() {
-        return true;
-    }
-
-    @Override
     public boolean hasFinished() {
         return currentPath.hasFinished() && !it.hasNext();
     }

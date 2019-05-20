@@ -26,6 +26,5 @@ public interface IPathway {
     // might want to return the amount of unprocessed time left
     public void update(float dt);
 
-    public boolean canFinish();
     public boolean hasFinished();
 }
