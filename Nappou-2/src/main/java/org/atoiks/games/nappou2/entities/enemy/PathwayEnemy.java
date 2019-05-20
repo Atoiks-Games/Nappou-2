@@ -33,6 +33,7 @@ public final class PathwayEnemy extends AbstractEnemy {
 
     private float r;
 
+    private boolean driftFlag = true;
     private float dx;
     private float dy;
 
@@ -66,6 +67,15 @@ public final class PathwayEnemy extends AbstractEnemy {
         this.attack = lis != null ? lis : NullPattern.INSTANCE;
     }
 
+    public void ignoreDrift(boolean flag) {
+        driftFlag = !flag;
+    }
+
+    public void resetDriftFactor() {
+        this.dx = 0;
+        this.dy = 0;
+    }
+
     @Override
     public void update(float dt) {
         path.update(dt);
@@ -74,8 +84,10 @@ public final class PathwayEnemy extends AbstractEnemy {
 
     @Override
     public void drift(float dx, float dy) {
-        this.dx += dx;
-        this.dy += dy;
+        if (driftFlag) {
+            this.dx += dx;
+            this.dy += dy;
+        }
     }
 
     @Override
