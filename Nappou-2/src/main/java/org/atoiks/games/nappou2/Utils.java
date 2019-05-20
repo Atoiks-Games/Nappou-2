@@ -23,13 +23,13 @@ import java.util.Collections;
 
 import org.atoiks.games.nappou2.equations.*;
 
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
+import org.atoiks.games.nappou2.entities.spawner.ImmediateEnemySpawner;
+
 import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
-import org.atoiks.games.nappou2.entities.*;
-import org.atoiks.games.nappou2.entities.enemy.*;
-import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.entities.bullet.factory.*;
-import org.atoiks.games.nappou2.entities.spawner.*;
 
 public final class Utils {
 
@@ -38,9 +38,9 @@ public final class Utils {
 
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
         final PointBulletInfo info = new PointBulletInfo(15, 300);
-        for (int idx = 0; idx < radOffset.length; ++idx) {
-            final int i = idx;  // Lambda captures must be effectively final
-            game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
+        for (int i = 0; i < radOffset.length; ++i) {
+            final PathwayEnemy[] array = new PathwayEnemy[5];
+            for (int j = 0; j < array.length; ++j) {
                 final PathwayEnemy enemy = new PathwayEnemy(2, 2);
                 enemy.setAttackPattern(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info));
 
@@ -51,8 +51,10 @@ public final class Utils {
 
                 enemy.setPathway(new LerpPathway(fx.iterator(), fy.iterator()));
                 enemy.setR(8);
-                return enemy;
-            }));
+
+                array[j] = enemy;
+            }
+            game.addEnemySpawner(new ImmediateEnemySpawner(0.17f, array));
         }
     }
 
