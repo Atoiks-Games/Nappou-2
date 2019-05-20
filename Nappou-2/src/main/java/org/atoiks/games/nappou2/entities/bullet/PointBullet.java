@@ -22,8 +22,6 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IBullet;
-
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PointBullet extends AbstractBullet {

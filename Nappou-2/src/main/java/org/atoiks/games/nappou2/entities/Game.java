@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.bullet.IBullet;
 import org.atoiks.games.nappou2.entities.spawner.EnemySpawner;
 
 public final class Game implements Serializable {
