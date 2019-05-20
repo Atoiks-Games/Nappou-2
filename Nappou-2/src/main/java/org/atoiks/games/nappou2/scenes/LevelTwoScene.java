@@ -32,6 +32,7 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.Utils.leapEnemy;
 import static org.atoiks.games.nappou2.Utils.starShotEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 
@@ -252,33 +253,33 @@ public final class LevelTwoScene extends AbstractGameScene {
                 case 3:
                 switch (cycles) {
                     case 10:
-                        game.addEnemy(new LeapEnemy(1, 375, 600, 8, 75, 1, 0.25f, 2, 1, 5));
+                        game.addEnemy(leapEnemy(1, 375, 600, 8, 75, 1, 0.25f, 2, 1, 5));
                         break;
                     case 510:
-                        game.addEnemy(new LeapEnemy(1, 300, 600, 9, 75, -1, 0.25f, 4, 1, 4));
-                        game.addEnemy(new LeapEnemy(1, 450, 600, 9, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(leapEnemy(1, 300, 600, 9, 75, -1, 0.25f, 4, 1, 4));
+                        game.addEnemy(leapEnemy(1, 450, 600, 9, 75, 1, 0.25f, 2, 1, 6.25f));
                         game.addEnemy(starShotEnemy(1, 300, 0, 5, false));
                         game.addEnemy(starShotEnemy(1, 450, 0, 5, false));
                         break;
                     case 1010:
-                        game.addEnemy(new LeapEnemy(1, 200, 600, 10, 75, -1, 0.25f, 4, 2, 3));
-                        game.addEnemy(new LeapEnemy(1, 350, 600, 10, 75, 1, 0.25f, 2, 0.5f, 7));
-                        game.addEnemy(new LeapEnemy(1, 400, 600, 10, 75, -1, 0.25f, 4, 3, 2));
-                        game.addEnemy(new LeapEnemy(1, 550, 600, 10, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(leapEnemy(1, 200, 600, 10, 75, -1, 0.25f, 4, 2, 3));
+                        game.addEnemy(leapEnemy(1, 350, 600, 10, 75, 1, 0.25f, 2, 0.5f, 7));
+                        game.addEnemy(leapEnemy(1, 400, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(leapEnemy(1, 550, 600, 10, 75, 1, 0.25f, 2, 1, 6.25f));
                         game.addEnemy(starShotEnemy(1, 350, 0, 5, false));
                         game.addEnemy(starShotEnemy(1, 400, 0, 5, false));
                         game.addEnemy(starShotEnemy(1, 550, 0, 5, false));
                         game.addEnemy(starShotEnemy(1, 200, 0, 5, false));
                         break;
                     case 1510:
-                        game.addEnemy(new LeapEnemy(1, 150, 600, 8, 75, -1, 0.25f, 4, 2, 0.75f));
-                        game.addEnemy(new LeapEnemy(1, 276, 600, 9, 75, -1, 0.25f, 4, 0.5f, 4.5f));
-                        game.addEnemy(new LeapEnemy(1, 367, 600, 10, 75, -1, 0.25f, 4, 3, 2));
-                        game.addEnemy(new LeapEnemy(1, 675, 600, 8, 75, 1, 0.25f, 2, 0.345f, 1.3f));
-                        game.addEnemy(new LeapEnemy(1, 293, 600, 9, 75, 1, 0.25f, 2, 0.23f, 0.5f));
-                        game.addEnemy(new LeapEnemy(1, 700, 600, 10, 75, 1, 0.25f, 2, 5, 7));
-                        game.addEnemy(new LeapEnemy(1, 100, 600, 12, 75, -1, 0.25f, 4, 3, 10));
-                        game.addEnemy(new LeapEnemy(1, 545, 600, 12, 75, 1, 0.25f, 2, 1, 6.25f));
+                        game.addEnemy(leapEnemy(1, 150, 600, 8, 75, -1, 0.25f, 4, 2, 0.75f));
+                        game.addEnemy(leapEnemy(1, 276, 600, 9, 75, -1, 0.25f, 4, 0.5f, 4.5f));
+                        game.addEnemy(leapEnemy(1, 367, 600, 10, 75, -1, 0.25f, 4, 3, 2));
+                        game.addEnemy(leapEnemy(1, 675, 600, 8, 75, 1, 0.25f, 2, 0.345f, 1.3f));
+                        game.addEnemy(leapEnemy(1, 293, 600, 9, 75, 1, 0.25f, 2, 0.23f, 0.5f));
+                        game.addEnemy(leapEnemy(1, 700, 600, 10, 75, 1, 0.25f, 2, 5, 7));
+                        game.addEnemy(leapEnemy(1, 100, 600, 12, 75, -1, 0.25f, 4, 3, 10));
+                        game.addEnemy(leapEnemy(1, 545, 600, 12, 75, 1, 0.25f, 2, 1, 6.25f));
                         break;
                     }
                     if (cycles > 1510) {

@@ -25,7 +25,8 @@ import org.atoiks.games.nappou2.entities.IPathway;
  */
 public final class OrbitalPathway implements IPathway {
 
-    private final float radius;
+    private final float axisX;
+    private final float axisY;
     private final float orbitX;
     private final float orbitY;
 
@@ -38,8 +39,15 @@ public final class OrbitalPathway implements IPathway {
 
     private int cycles;
 
+    // Use if path is circular
     public OrbitalPathway(float radius, float x, float y, int direction, float speedMod, int startPos) {
-        this.radius = radius;
+        this(radius, radius, x, y, direction, speedMod, startPos);
+    }
+
+    // Use if path is elliptical
+    public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
+        this.axisX = rx;
+        this.axisY = ry;
         this.orbitX = x;
         this.orbitY = y;
 
@@ -67,8 +75,8 @@ public final class OrbitalPathway implements IPathway {
         cycles++;
 
         final double k = mod * cycles / 50 + spos * Math.PI / 2;
-        y = orbitY + direction * radius * (float) Math.sin(k);
-        x = orbitX + radius * (float) Math.cos(k);
+        y = orbitY + direction * axisY * (float) Math.sin(k);
+        x = orbitX + axisX * (float) Math.cos(k);
     }
 
     @Override

@@ -96,6 +96,14 @@ public final class Utils {
         return enemy;
     }
 
+    public static PathwayEnemy leapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
+        // XXX: currently has no attack pattern
+        return enemy;
+    }
+
     public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
                                                  float cx, float cy, float cr) {
         // Taken from https://stackoverflow.com/a/10392860
