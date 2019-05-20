@@ -29,6 +29,7 @@ import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.entities.bullet.factory.*;
+import org.atoiks.games.nappou2.entities.spawner.*;
 
 public final class Utils {
 

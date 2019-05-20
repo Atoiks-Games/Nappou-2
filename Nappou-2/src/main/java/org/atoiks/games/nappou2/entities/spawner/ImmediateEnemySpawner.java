@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.entities.spawner;
 
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.EnemySpawner;
 
 public final class ImmediateEnemySpawner extends EnemySpawner {
 
