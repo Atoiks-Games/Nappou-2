@@ -36,6 +36,10 @@ public final class Utils {
     private static final FixedAnglePattern MINI_BOMBER_PATTERN =
             new FixedAnglePattern(new PointBulletInfo(2, 1000), (float) (Math.PI / 2));
 
+    private static final MultiAnglePattern ADV_MINI_BOMBER_PATTERN =
+            new MultiAnglePattern(new PointBulletInfo(2, 1000),
+                    (float) (7 * Math.PI / 16), (float) (9 * Math.PI / 16), (float) (Math.PI / 2));
+
     private Utils() {
     }
 
@@ -95,7 +99,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, ADV_MINI_BOMBER_PATTERN));
         return enemy;
     }
 
