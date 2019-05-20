@@ -18,9 +18,18 @@
 
 package org.atoiks.games.nappou2.entities;
 
-public interface IDriftEntity extends ITrackable, ICollidable {
+public interface ITrackable {
 
-    public void drift(float dx, float dy);
+    public float getX();
+    public float getY();
 
-    public void update(float dt);
+    public default float distanceFrom(float x, float y) {
+        final float dx = getX() - x;
+        final float dy = getY() - y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public default double angleWith(float x, float y) {
+        return Math.atan2(getX() - x, getY() - y);
+    }
 }
