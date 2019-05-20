@@ -96,6 +96,24 @@ public final class Utils {
         return enemy;
     }
 
+    public static PathwayEnemy mb1(int hp, final float x, final float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.ignoreDrift(true);
+        enemy.setR(r);
+        enemy.setPathway(new mb1Pathway(x, y));
+        enemy.setAttackPattern(new MB1(600));
+        return enemy;
+    }
+
+    public static PathwayEnemy altMb1(int hp, float x, float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.ignoreDrift(true);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300));
+        enemy.setAttackPattern(new MB1(200));
+        return enemy;
+    }
+
     public static PathwayEnemy leapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
@@ -190,5 +208,34 @@ public final class Utils {
      */
     public static float clamp(final float val, final float low, final float high) {
         return val < low ? low : (val > high ? high : val);
+    }
+}
+
+// Used by Utils.mb1(...)
+final class mb1Pathway implements UnboundPathway {
+
+    private final float x;
+    private float y;
+
+    public mb1Pathway(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void update(float dt) {
+        if (y <= 150) {
+            y += 300 * dt;
+        }
     }
 }

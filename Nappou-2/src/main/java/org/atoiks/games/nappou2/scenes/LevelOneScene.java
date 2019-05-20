@@ -31,6 +31,8 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 
+import static org.atoiks.games.nappou2.Utils.mb1;
+import static org.atoiks.games.nappou2.Utils.altMb1;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
@@ -200,7 +202,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 2:
                     if (cycles == 40) {
-                        game.addEnemy(new MB1(10, 375, -10, 20));
+                        game.addEnemy(mb1(10, 375, -10, 20));
                     }
                     if (cycles > 40 && game.noMoreEnemies()) {
                         wave++;
@@ -210,7 +212,7 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 3:
                    switch (cycles) {
                         case 40:
-                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            game.addEnemy(mb1(10, 375, -10, 20));
                             break;
                         case 80:
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
@@ -352,9 +354,9 @@ public final class LevelOneScene extends AbstractGameScene {
                     break;
                 case 2:
                     if (cycles == 40) {
-                        game.addEnemy(new MB1(10, 225, -10, 20));
-                        game.addEnemy(new MB1(10, 375, -10, 20));
-                        game.addEnemy(new MB1(10, 525, -10, 20));
+                        game.addEnemy(mb1(10, 225, -10, 20));
+                        game.addEnemy(mb1(10, 375, -10, 20));
+                        game.addEnemy(mb1(10, 525, -10, 20));
                     }
                     if (cycles > 40 && game.noMoreEnemies()) {
                         wave++;
@@ -364,7 +366,7 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 3:
                    switch (cycles) {
                         case 40:
-                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            game.addEnemy(mb1(10, 375, -10, 20));
                             break;
                         case 80:
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
@@ -538,9 +540,9 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 2:
                     switch (cycles) {
                         case 40:
-                            game.addEnemy(new MB1(10, 225, -10, 20));
-                            game.addEnemy(new MB1(10, 525, -10, 20));
-                            game.addEnemy(new MB1(10, 375, -10, 20));
+                            game.addEnemy(mb1(10, 225, -10, 20));
+                            game.addEnemy(mb1(10, 525, -10, 20));
+                            game.addEnemy(mb1(10, 375, -10, 20));
                             break;
                         case 80:
                         case 280:
@@ -564,14 +566,14 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 3:
                    switch (cycles) {
                         case 40:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             break;
                         case 80:
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             break;
                         case 1080:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
@@ -580,7 +582,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(circularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                         case 2080:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(circularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
@@ -796,9 +798,9 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 2:
                     switch (cycles) {
                         case 40:
-                            game.addEnemy(new MB1(10, 225, -10, 20));
-                            game.addEnemy(new MB1(10, 525, -10, 20));
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(mb1(10, 225, -10, 20));
+                            game.addEnemy(mb1(10, 525, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             break;
                         case 80:
                         case 280:
@@ -817,7 +819,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         case 1100:
                         case 1200:
                         case 1300:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             break;
                     }
                     if (cycles > 1300 && game.noMoreEnemies()) {
@@ -828,18 +830,18 @@ public final class LevelOneScene extends AbstractGameScene {
                 case 3:
                    switch (cycles) {
                         case 40:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
                             break;
                         case 80:
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
-                            game.addEnemy(new AltMB1(10, 225, -10, 20));
-                            game.addEnemy(new AltMB1(10, 525, -10, 20));
+                            game.addEnemy(altMb1(10, 225, -10, 20));
+                            game.addEnemy(altMb1(10, 525, -10, 20));
                             break;
                         case 1080:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
-                            game.addEnemy(new AltMB1(10, 225, -10, 20));
-                            game.addEnemy(new AltMB1(10, 525, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 225, -10, 20));
+                            game.addEnemy(altMb1(10, 525, -10, 20));
                             game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
@@ -848,9 +850,9 @@ public final class LevelOneScene extends AbstractGameScene {
                             game.addEnemy(circularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
                             break;
                         case 2080:
-                            game.addEnemy(new AltMB1(10, 375, -10, 20));
-                            game.addEnemy(new AltMB1(10, 225, -10, 20));
-                            game.addEnemy(new AltMB1(10, 525, -10, 20));
+                            game.addEnemy(altMb1(10, 375, -10, 20));
+                            game.addEnemy(altMb1(10, 225, -10, 20));
+                            game.addEnemy(altMb1(10, 525, -10, 20));
                             game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
                             game.addEnemy(circularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
                             game.addEnemy(circularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
