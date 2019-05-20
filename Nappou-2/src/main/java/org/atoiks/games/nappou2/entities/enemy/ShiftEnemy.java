@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class ShiftEnemy extends ManualEnemy {
 
-    private static final long serialVersionUID = 5619264522L;
+    private static final long serialVersionUID = 8477629010820715980L;
 
     private float time;
     private int bullets = 0;

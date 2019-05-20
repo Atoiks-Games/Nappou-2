@@ -30,7 +30,7 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 /* package */ abstract class AbstractEnemy implements IEnemy {
 
-    private static final long serialVersionUID = 8123472652L;
+    private static final long serialVersionUID = 8888331135112650585L;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 

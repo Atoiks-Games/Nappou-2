@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class DropEnemy extends ManualEnemy {
 
-    private static final long serialVersionUID = 8326702143654175787L;
+    private static final long serialVersionUID = 1893607609016608532L;
 
     private float time;
     private int bullets;
