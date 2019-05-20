@@ -33,6 +33,7 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.entities.spawner.*;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.SaveData;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.altMb1;
@@ -118,6 +119,16 @@ public final class LevelOneScene extends AbstractGameScene {
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        final SaveData sData = (SaveData) scene.resources().get("saves.dat");
+        switch (sData.getCheck()){
+            case 1:
+                wave = 5;
+                break;
+            default:
+                //Do nothing
+                break;
+        }
     }
 
     @Override
@@ -140,17 +151,20 @@ public final class LevelOneScene extends AbstractGameScene {
 
     @Override
     public boolean postUpdate(float dt) {
-        //DEV CHEAT CODE
+        //DEV CHEAT CODES
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
         //    return scene.gotoNextScene();
         //}
-        //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
         //    disableDamage();
         // }
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_E)) {
         //    enableDamage();
         //}
+        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_O)) {
+            final SaveData sData = (SaveData) scene.resources().get("saves.dat");
+            sData.setCheck(0);
+        }
 
         ++cycles;
         switch (difficulty) {
@@ -260,6 +274,8 @@ public final class LevelOneScene extends AbstractGameScene {
                             break;
                     }
                     if (cycles > 2040 && game.noMoreEnemies()) {
+                        final SaveData sData = (SaveData) scene.resources().get("saves.dat");
+                        sData.setCheck(1);
                         wave++;
                         cycles = 0;
                     }

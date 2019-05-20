@@ -65,6 +65,7 @@ public class App {
         } finally {
             final GameConfig gameCfg = (GameConfig) frame.getSceneManager().resources().get("game.cfg");
             final ScoreData scoreDat = (ScoreData) frame.getSceneManager().resources().get("score.dat");
+            final SaveData saveDat = (SaveData) frame.getSceneManager().resources().get("saves.dat");
             frame.close();
 
             // Saves config
@@ -79,6 +80,13 @@ public class App {
                 oos.writeObject(scoreDat);
             } catch (IOException ex) {
                 // Oh well... to bad... the user's score does not get saved...
+            }
+
+            // Saves user saves
+            try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves.dat"))) {
+                oos.writeObject(saveDat);
+            } catch (IOException ex) {
+                // Oh well... to bad... the user's saves do not get saved...
             }
         }
     }
