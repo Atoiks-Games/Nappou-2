@@ -28,7 +28,7 @@ public final class Ripple extends ManualEnemy {
     private float direction;
     private float speed;
     private int score;
-    private float time;
+    private int time;
     private int m;
 
     public Ripple(int hp, float x, float y, float r, float speed, float direction) {
