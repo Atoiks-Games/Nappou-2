@@ -22,6 +22,8 @@ import java.io.Serializable;
 
 public final class SaveData implements Serializable {
 
+    private static final long serialVersionUID = -6315543815579288169L;
+
     private int checkpoint = 0;
 
     public void setCheck(int n){
