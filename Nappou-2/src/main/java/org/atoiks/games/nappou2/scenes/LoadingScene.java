@@ -41,6 +41,7 @@ import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreData;
+//import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SoundEffect;
 
@@ -144,6 +145,28 @@ public final class LoadingScene extends Scene {
                         // Supply default score
                         scene.resources().put("score.dat", new ScoreData());
                     }
+
+                    /*
+                    // Load save file from "current" directory
+                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves.dat"))) {
+                        final SaveData data = (SaveData) ois.readObject();
+
+                        SaveData sanitized;
+                        if (data == null) {
+                            // if we cannot find the old save, supply blank save
+                            sanitized = new SaveData();
+                        } else if (*//*insert a way to see if we need a new savedata*//*) {
+                            // ***
+                            sanitized = new SaveData();
+                        } else {
+                            // keep old save, it is probably valid
+                            sanitized = data;
+                        }
+                        scene.resources().put("saves.dat", sanitized);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        // Supply default save
+                        scene.resources().put("saves.dat", new SaveData());
+                    }*/
 
                     loaded = LoadState.DONE;
                 });
