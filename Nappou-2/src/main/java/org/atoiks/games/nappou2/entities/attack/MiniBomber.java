@@ -26,6 +26,12 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class MiniBomber implements IUpdateListener {
 
+    public static final MiniBomber INSTANCE = new MiniBomber();
+
+    private MiniBomber() {
+        //
+    }
+
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();

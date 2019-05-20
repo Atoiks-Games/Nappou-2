@@ -60,7 +60,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
-        enemy.setUpdateListener(new SineFireGate(bulletSpeed, 0, 0.01, new SingleShot()));
+        enemy.setUpdateListener(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
         return enemy;
     }
 
@@ -68,7 +68,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, new SingleShot()));
+        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
         return enemy;
     }
 
@@ -76,7 +76,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, new StarPattern()));
+        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
         return enemy;
     }
 
@@ -84,7 +84,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, new MiniBomber()));
+        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
         return enemy;
     }
 
@@ -92,7 +92,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, new AdvancedMiniBomber()));
+        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
         return enemy;
     }
 

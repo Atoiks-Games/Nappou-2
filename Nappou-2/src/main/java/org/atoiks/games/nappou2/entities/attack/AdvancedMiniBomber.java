@@ -29,6 +29,12 @@ public final class AdvancedMiniBomber implements IUpdateListener {
     private static final float VERTICAL = 1000 * (float) Math.sin(7 * Math.PI / 16);
     private static final float HORIZONTAL = 1000 * (float) Math.cos(7 * Math.PI / 16);
 
+    public static final AdvancedMiniBomber INSTANCE = new AdvancedMiniBomber();
+
+    private AdvancedMiniBomber() {
+        //
+    }
+
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();

@@ -26,6 +26,12 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class SingleShot implements IUpdateListener {
 
+    public static final SingleShot INSTANCE = new SingleShot();
+
+    private SingleShot() {
+        //
+    }
+
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();

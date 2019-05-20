@@ -26,6 +26,12 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class StarPattern implements IUpdateListener {
 
+    public static final StarPattern INSTANCE = new StarPattern();
+
+    private StarPattern() {
+        //
+    }
+
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
