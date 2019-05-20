@@ -22,8 +22,7 @@ import org.atoiks.games.nappou2.entities.bullet.StutterBullet;
 
 public final class Ripple extends ManualEnemy {
 
-    private static final long serialVersionUID = 56192645221L;
-    //This needs to be different for every enemy...
+    private static final long serialVersionUID = 4457531978627272902L;
 
     private float direction;
     private float speed;

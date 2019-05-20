@@ -26,7 +26,7 @@ import static org.atoiks.games.nappou2.TrigConstants.*;
 
 public final class Level1Hard extends ManualEnemy {
 
-    private static final long serialVersionUID = 5619264524L;
+    private static final long serialVersionUID = 3536890333577996354L;
 
     private final Random rnd = new Random();
 

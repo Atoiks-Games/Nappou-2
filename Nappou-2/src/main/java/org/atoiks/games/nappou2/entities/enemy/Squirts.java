@@ -23,7 +23,7 @@ import org.atoiks.games.nappou2.entities.bullet.FallingBullet;
 
 public final class Squirts extends ManualEnemy {
 
-    private static final long serialVersionUID = 5619264522L;
+    private static final long serialVersionUID = -6831272651450179157L;
 
     private static final double PI_DIV_6 = Math.PI / 6;
     private static final int ROTATIONS = 7;

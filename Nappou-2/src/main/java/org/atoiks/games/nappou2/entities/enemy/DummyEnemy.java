@@ -20,8 +20,7 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 public final class DummyEnemy extends ManualEnemy {
 
-    private static final long serialVersionUID = 56192645221L;
-    //This needs to be different for every enemy...
+    private static final long serialVersionUID = 5058019602677709927L;
 
     private boolean right;
     private float speed;
