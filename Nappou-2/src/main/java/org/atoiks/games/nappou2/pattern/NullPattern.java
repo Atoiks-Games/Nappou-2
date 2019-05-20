@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public final class NullPattern implements IAttackPattern {
 

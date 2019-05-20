@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public abstract class EnemySpawner {
 
