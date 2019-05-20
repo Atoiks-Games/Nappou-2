@@ -19,9 +19,8 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 
-import org.atoiks.games.nappou2.entities.IAttackPattern;
-
-import org.atoiks.games.nappou2.entities.attack.NullPattern;
+import org.atoiks.games.nappou2.pattern.NullPattern;
+import org.atoiks.games.nappou2.pattern.IAttackPattern;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 import org.atoiks.games.nappou2.pathway.FixedPathway;

@@ -16,19 +16,18 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class StarPattern implements IAttackPattern {
+public final class MiniBomber implements IAttackPattern {
 
-    public static final StarPattern INSTANCE = new StarPattern();
+    public static final MiniBomber INSTANCE = new MiniBomber();
 
-    private StarPattern() {
+    private MiniBomber() {
         //
     }
 
@@ -38,13 +37,6 @@ public final class StarPattern implements IAttackPattern {
         final float x = enemy.getX();
         final float y = enemy.getY();
 
-        // see TrigConstant for angle change
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        final float ksinA = 1000 * (float) Math.sin(angle);
-        final float kcosA = 1000 * (float) Math.cos(angle);
-        game.addEnemyBullet(new PointBullet(x, y, 2,  kcosA,  ksinA)); // +0,    +0
-        game.addEnemyBullet(new PointBullet(x, y, 2, -ksinA,  kcosA)); // +pi/2, +pi/2
-        game.addEnemyBullet(new PointBullet(x, y, 2, -kcosA, -ksinA)); // +pi,   +pi
-        game.addEnemyBullet(new PointBullet(x, y, 2,  ksinA, -kcosA)); // -pi/2, -pi/2
+        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
     }
 }

@@ -16,21 +16,41 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class NullPattern implements IAttackPattern {
+public final class SineFireGate implements IAttackPattern {
 
-    public static final NullPattern INSTANCE = new NullPattern();
+    private final IAttackPattern delegate;
 
-    private NullPattern() {
-        //
+    private final float afreq;
+    private final float phase;
+    private final double limit;
+
+    private float time;
+    private boolean fireGate;
+
+    public SineFireGate(float afreq, float phase, double limit, IAttackPattern delegate) {
+        this.afreq = afreq;
+        this.phase = phase;
+        this.limit = limit;
+
+        this.delegate = delegate;
     }
 
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
-        // Do nothing
+        time += dt;
+        final double cosSpdTime = Math.cos(afreq * time + phase);
+        if (!fireGate && cosSpdTime < limit) {
+            fireGate = true;
+            return;
+        }
+
+        if (fireGate && cosSpdTime > limit) {
+            fireGate = false;
+            delegate.onFireUpdate(enemy, dt);
+        }
     }
 }

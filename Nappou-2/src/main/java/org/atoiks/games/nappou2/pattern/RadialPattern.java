@@ -16,49 +16,51 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class TrackingPattern implements IAttackPattern {
+public final class RadialPattern implements IAttackPattern {
 
     private final BulletFactory factory;
 
+    private final int intervals;
     private final float fireInterval;
     private final float delay;
-    private final float[] angleOffsets;
+    private final float initialAngle;
+    private final float anglePerInterval;
 
     private float time;
     private int bulletId;
 
-    public TrackingPattern(float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BulletFactory factory) {
+    public RadialPattern(float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BulletFactory factory) {
         this.factory = factory;
 
+        this.intervals = intervals;
         this.fireInterval = fireInterval;
         this.delay = delay;
-        this.angleOffsets = angleOffsets;
+        this.initialAngle = initialAngle;
+        this.anglePerInterval = anglePerInterval;
 
         if (!immediateFire) {
-            bulletId = angleOffsets.length;
+            bulletId = intervals;
         }
     }
 
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         time += dt;
-        if (bulletId >= angleOffsets.length) {
+        if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
             final Game game = enemy.getAssocGame();
             final float x = enemy.getX();
             final float y = enemy.getY();
 
-            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(factory.createBullet(x, y, angle));
+            game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }

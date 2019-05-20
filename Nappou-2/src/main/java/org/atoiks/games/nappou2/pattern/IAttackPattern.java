@@ -16,29 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+public interface IAttackPattern {
 
-public final class SingleShot implements IAttackPattern {
-
-    public static final SingleShot INSTANCE = new SingleShot();
-
-    private SingleShot() {
-        //
-    }
-
-    @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
-        final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
-
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
-    }
+    public void onFireUpdate(IEnemy enemy, float dt);
 }

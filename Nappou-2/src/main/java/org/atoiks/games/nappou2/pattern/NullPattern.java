@@ -16,9 +16,20 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-public interface IAttackPattern {
+import org.atoiks.games.nappou2.entities.IEnemy;
 
-    public void onFireUpdate(IEnemy enemy, float dt);
+public final class NullPattern implements IAttackPattern {
+
+    public static final NullPattern INSTANCE = new NullPattern();
+
+    private NullPattern() {
+        //
+    }
+
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        // Do nothing
+    }
 }

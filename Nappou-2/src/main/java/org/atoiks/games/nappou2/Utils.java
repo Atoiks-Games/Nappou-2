@@ -23,12 +23,11 @@ import java.util.Collections;
 
 import org.atoiks.games.nappou2.equations.*;
 
+import org.atoiks.games.nappou2.pathway.*;
+import org.atoiks.games.nappou2.pattern.*;
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
-import org.atoiks.games.nappou2.entities.attack.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
-import org.atoiks.games.nappou2.pathway.*;
-
 import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
