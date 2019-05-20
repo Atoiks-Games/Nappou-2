@@ -26,7 +26,6 @@ public final class StreamBeam extends ManualEnemy {
     private static final long serialVersionUID = 5619264522L;
 
     private int time;
-    private boolean fireGate;
 
     private final int invSign;
 
