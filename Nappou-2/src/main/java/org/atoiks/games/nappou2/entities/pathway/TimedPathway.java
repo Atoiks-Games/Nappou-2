@@ -21,24 +21,21 @@ package org.atoiks.games.nappou2.entities.pathway;
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
- * Used to put a time limit on unlimited pathways (like FixedPathway)
+ * Used to put a time limit on unbounded pathways (like FixedPathway)
  */
 public final class TimedPathway implements IPathway {
 
-    private final IPathway path;
+    private final UnboundPathway path;
     private final float limit;
 
     private float elapsed;
 
-    public TimedPathway(final IPathway path, final float limit) {
+    public TimedPathway(final UnboundPathway path, final float limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("Time limit must be greater than zero: " + limit);
         }
         if (path == null) {
             throw new IllegalArgumentException("Pathway cannot be null");
-        }
-        if (path.canFinish()) {
-            throw new IllegalArgumentException("Cannot set time restriction on time-bound pathways: " + path.getClass().getSimpleName());
         }
 
         this.path = path;
@@ -60,11 +57,6 @@ public final class TimedPathway implements IPathway {
         if (elapsed < limit) {
             path.update(Math.min(Math.abs(limit - (elapsed += dt)), dt));
         }
-    }
-
-    @Override
-    public boolean canFinish() {
-        return true;
     }
 
     @Override

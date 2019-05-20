@@ -21,9 +21,9 @@ package org.atoiks.games.nappou2.entities.pathway;
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
- * An unlimited pathway that orbits around a singular point
+ * Pathway that orbits around a singular point
  */
-public final class OrbitalPathway implements IPathway {
+public final class OrbitalPathway implements UnboundPathway {
 
     private final float axisX;
     private final float axisY;
@@ -77,11 +77,6 @@ public final class OrbitalPathway implements IPathway {
         final double k = mod * cycles / 50 + spos * Math.PI / 2;
         y = orbitY + direction * axisY * (float) Math.sin(k);
         x = orbitX + axisX * (float) Math.cos(k);
-    }
-
-    @Override
-    public boolean canFinish() {
-        return false;
     }
 
     @Override

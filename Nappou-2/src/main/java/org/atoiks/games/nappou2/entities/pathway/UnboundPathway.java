@@ -20,41 +20,10 @@ package org.atoiks.games.nappou2.entities.pathway;
 
 import org.atoiks.games.nappou2.entities.IPathway;
 
-/**
- * A fixed pathway. (Can it really be a path if it stays at the same spot?)
- */
-public final class FixedPathway implements UnboundPathway {
+public interface UnboundPathway extends IPathway {
 
-    /**
-     * A path that just stays fixed at (0, 0)
-     */
-    public static final FixedPathway DEFAULT = new FixedPathway(0, 0);
-
-    private final float x;
-    private final float y;
-
-    public FixedPathway(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public void update(float dt) {
-        // Do nothing
-    }
-
-    @Override
-    public boolean hasFinished() {
+    public default boolean hasFinished() {
+        // It is unbounded... so it better never finish!
         return false;
     }
 }

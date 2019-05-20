@@ -21,9 +21,9 @@ package org.atoiks.games.nappou2.entities.pathway;
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
- * An unlimited pathway with constant velocity
+ * Pathway with constant velocity
  */
-public final class FixedVelocity implements IPathway {
+public final class FixedVelocity implements UnboundPathway {
 
     private final float dx;
     private final float dy;
@@ -52,11 +52,6 @@ public final class FixedVelocity implements IPathway {
     public void update(final float dt) {
         x += dx * dt;
         y += dy * dt;
-    }
-
-    @Override
-    public boolean canFinish() {
-        return false;
     }
 
     @Override
