@@ -96,11 +96,6 @@ public final class LerpPathway implements IPathway {
     }
 
     @Override
-    public boolean canFinish() {
-        return true;
-    }
-
-    @Override
     public boolean hasFinished() {
         return fx.hasCompleted() && !fxs.hasNext()
             && fy.hasCompleted() && !fys.hasNext();

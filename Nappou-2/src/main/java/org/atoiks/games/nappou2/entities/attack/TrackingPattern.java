@@ -16,18 +16,18 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities.attack;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class TrackBeamEnemy extends PathwayEnemy {
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-    private static final long serialVersionUID = -2145973374641410758L;
+public final class TrackingPattern implements IAttackPattern {
 
-    private final int score;
-    private final float thickness;
-    private final int length;
-    private final float speed;
+    private final BulletFactory factory;
+
     private final float fireInterval;
     private final float delay;
     private final float[] angleOffsets;
@@ -35,37 +35,32 @@ public final class TrackBeamEnemy extends PathwayEnemy {
     private float time;
     private int bulletId;
 
-    public TrackBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, float thickness, int length, float speed) {
-        super(hp);
-        this.score = score;
-        this.thickness = thickness;
-        this.length = length;
-        this.speed = speed;
-        this.angleOffsets = angleOffsets;
-        this.delay = delay;
+    public TrackingPattern(float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BulletFactory factory) {
+        this.factory = factory;
+
         this.fireInterval = fireInterval;
+        this.delay = delay;
+        this.angleOffsets = angleOffsets;
+
         if (!immediateFire) {
             bulletId = angleOffsets.length;
         }
     }
 
     @Override
-    public void customUpdate(float dt) {
+    public void onFireUpdate(IEnemy enemy, float dt) {
         time += dt;
         if (bulletId >= angleOffsets.length) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            final float x = getX();
-            final float y = getY();
-            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new Beam(x, y, thickness, length, angle + angleOffsets[bulletId], speed));
+            final Game game = enemy.getAssocGame();
+            final float x = enemy.getX();
+            final float y = enemy.getY();
+
+            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
+            game.addEnemyBullet(factory.createBullet(x, y, angle));
             ++bulletId;
             time = 0;
         }
-    }
-
-    @Override
-    public int getScore() {
-        return score;
     }
 }

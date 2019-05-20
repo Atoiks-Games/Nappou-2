@@ -16,58 +16,50 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities.attack;
+
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class AltMB1 extends ManualEnemy {
-
-    private static final long serialVersionUID = 5689264522L;
+public final class MB1 implements IAttackPattern {
 
     private static final double PI_DIV_6 = Math.PI / 6;
     private static final int ROTATIONS = 7;
 
-    private int enemyTime;
+    private final int limiter;
 
-    public AltMB1(int hp, float x, float y, float r) {
-        super(hp, x, y, r);
+    private int time;
+
+    public MB1(int limiter) {
+        this.limiter = limiter;
     }
 
     @Override
-    public void drift(float dx, float dy) {
-        // Bosses / Mini bosses do not drift
-    }
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        time++;
 
-    @Override
-    public void update(float dt) {
-        enemyTime++;
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
 
-        final float x = getX();
-        final float y = getY();
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-
-        if (enemyTime % 200 == 0) {
+        if (time % limiter == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {
                 final double k = i * PI_DIV_6;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
             }
         }
 
-        if ((enemyTime + 100) % 200 == 0) {
+        if ((time + limiter / 2) % limiter == 0) {
+            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
             for (int i = 0; i < ROTATIONS; ++i) {
                 final int offset = 3 - i;
-                final double k = angle - offset * PI_DIV_6;
                 final int s = (4 - Math.abs(offset)) * 100;
+                final double k = angle - offset * PI_DIV_6;
                 game.addEnemyBullet(new PointBullet(x, y, 3, (float) (s * Math.cos(k)), (float) (s * Math.sin(k))));
             }
         }
-
-        // reference y directly, first setY since getY was called
-        setY(y + 300 * dt);
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
     }
 }

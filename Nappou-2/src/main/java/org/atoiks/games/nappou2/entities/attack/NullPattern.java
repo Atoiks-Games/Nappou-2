@@ -16,15 +16,21 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.attack;
 
-public interface IPathway {
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-    public float getX();
-    public float getY();
+public final class NullPattern implements IAttackPattern {
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
+    public static final NullPattern INSTANCE = new NullPattern();
 
-    public boolean hasFinished();
+    private NullPattern() {
+        //
+    }
+
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        // Do nothing
+    }
 }

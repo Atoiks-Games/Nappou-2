@@ -25,8 +25,11 @@ import org.atoiks.games.nappou2.equations.*;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
+import org.atoiks.games.nappou2.entities.attack.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
 import org.atoiks.games.nappou2.entities.pathway.*;
+
+import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
 
@@ -34,10 +37,12 @@ public final class Utils {
     }
 
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
+        final PointBulletInfo info = new PointBulletInfo(15, 300);
         for (int idx = 0; idx < radOffset.length; ++idx) {
             final int i = idx;  // Lambda captures must be effectively final
             game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
-                final RadialPointEnemy enemy = new RadialPointEnemy(2, 2, 0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), 15f, 500f);
+                final PathwayEnemy enemy = new PathwayEnemy(2, 2);
+                enemy.setAttackPattern(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info));
 
                 final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
                     new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));
@@ -49,6 +54,72 @@ public final class Utils {
                 return enemy;
             }));
         }
+    }
+
+    public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
+        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
+        return enemy;
+    }
+
+    public static PathwayEnemy singleShotEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
+        return enemy;
+    }
+
+    public static PathwayEnemy starShotEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
+        return enemy;
+    }
+
+    public static PathwayEnemy miniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
+        return enemy;
+    }
+
+    public static PathwayEnemy advancedMiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
+        return enemy;
+    }
+
+    public static PathwayEnemy mb1(int hp, final float x, final float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.ignoreDrift(true);
+        enemy.setR(r);
+        enemy.setPathway(new mb1Pathway(x, y));
+        enemy.setAttackPattern(new MB1(600));
+        return enemy;
+    }
+
+    public static PathwayEnemy altMb1(int hp, float x, float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.ignoreDrift(true);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300));
+        enemy.setAttackPattern(new MB1(200));
+        return enemy;
+    }
+
+    public static PathwayEnemy leapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
+        // XXX: currently has no attack pattern
+        return enemy;
     }
 
     public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
@@ -137,5 +208,34 @@ public final class Utils {
      */
     public static float clamp(final float val, final float low, final float high) {
         return val < low ? low : (val > high ? high : val);
+    }
+}
+
+// Used by Utils.mb1(...)
+final class mb1Pathway implements UnboundPathway {
+
+    private final float x;
+    private float y;
+
+    public mb1Pathway(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void update(float dt) {
+        if (y <= 150) {
+            y += 300 * dt;
+        }
     }
 }

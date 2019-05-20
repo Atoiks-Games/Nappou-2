@@ -18,13 +18,7 @@
 
 package org.atoiks.games.nappou2.entities;
 
-public interface IPathway {
+public interface IAttackPattern {
 
-    public float getX();
-    public float getY();
-
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
-
-    public boolean hasFinished();
+    public void onFireUpdate(IEnemy enemy, float dt);
 }

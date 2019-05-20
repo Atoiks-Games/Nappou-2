@@ -16,15 +16,14 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.pathway;
 
-public interface IPathway {
+import org.atoiks.games.nappou2.entities.IPathway;
 
-    public float getX();
-    public float getY();
+public interface UnboundPathway extends IPathway {
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
-
-    public boolean hasFinished();
+    public default boolean hasFinished() {
+        // It is unbounded... so it better never finish!
+        return false;
+    }
 }

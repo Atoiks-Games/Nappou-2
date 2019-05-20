@@ -16,15 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.bullet.factory;
 
-public interface IPathway {
+import org.atoiks.games.nappou2.entities.IBullet;
 
-    public float getX();
-    public float getY();
+public interface BulletFactory {
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
-
-    public boolean hasFinished();
+    public IBullet createBullet(float x, float y, float angle);
 }

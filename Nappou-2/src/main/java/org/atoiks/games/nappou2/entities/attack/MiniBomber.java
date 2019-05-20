@@ -16,15 +16,28 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.attack;
 
-public interface IPathway {
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-    public float getX();
-    public float getY();
+import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
+public final class MiniBomber implements IAttackPattern {
 
-    public boolean hasFinished();
+    public static final MiniBomber INSTANCE = new MiniBomber();
+
+    private MiniBomber() {
+        //
+    }
+
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
+
+        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
+    }
 }
