@@ -33,6 +33,9 @@ import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
 
+    private static final FixedAnglePattern MINI_BOMBER_PATTERN =
+            new FixedAnglePattern(new PointBulletInfo(2, 1000), (float) (Math.PI / 2));
+
     private Utils() {
     }
 
@@ -84,7 +87,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MINI_BOMBER_PATTERN));
         return enemy;
     }
 
