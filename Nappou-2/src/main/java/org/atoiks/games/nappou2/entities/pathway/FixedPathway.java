@@ -23,7 +23,7 @@ import org.atoiks.games.nappou2.entities.IPathway;
 /**
  * A fixed pathway. (Can it really be a path if it stays at the same spot?)
  */
-public final class FixedPathway implements IPathway {
+public final class FixedPathway implements UnboundPathway {
 
     /**
      * A path that just stays fixed at (0, 0)
@@ -51,11 +51,6 @@ public final class FixedPathway implements IPathway {
     @Override
     public void update(float dt) {
         // Do nothing
-    }
-
-    @Override
-    public boolean canFinish() {
-        return false;
     }
 
     @Override

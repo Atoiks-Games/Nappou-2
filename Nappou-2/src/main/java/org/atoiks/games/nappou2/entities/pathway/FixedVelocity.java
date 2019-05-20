@@ -18,50 +18,44 @@
 
 package org.atoiks.games.nappou2.entities.pathway;
 
-import java.util.Iterator;
-
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
- * Sequences a bunch of pathways. Note: canFinish always true, but whether it
- * can actually finish depends on the sequence of pathways. If an unlimited
- * pathway is passed to this, it will never return true for hasFinished!
+ * Pathway with constant velocity
  */
-public final class ChainedPathway implements IPathway {
+public final class FixedVelocity implements UnboundPathway {
 
-    private final Iterator<? extends IPathway> it;
+    private final float dx;
+    private final float dy;
 
-    private IPathway currentPath;
+    private float x;
+    private float y;
 
-    public ChainedPathway(Iterator<? extends IPathway> it) {
-        this.it = it;
-        if (it.hasNext()) {
-            currentPath = it.next();
-        } else {
-            throw new IllegalArgumentException("Iterator is already empty!");
-        }
+    public FixedVelocity(float x, float y, float dx, float dy) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     @Override
     public float getX() {
-        return currentPath.getX();
+        return x;
     }
 
     @Override
     public float getY() {
-        return currentPath.getY();
+        return y;
     }
 
     @Override
     public void update(final float dt) {
-        currentPath.update(dt);
-        if (currentPath.hasFinished() && it.hasNext()) {
-            currentPath = it.next();
-        }
+        x += dx * dt;
+        y += dy * dt;
     }
 
     @Override
     public boolean hasFinished() {
-        return currentPath.hasFinished() && !it.hasNext();
+        return false;
     }
 }

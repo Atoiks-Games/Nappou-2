@@ -16,15 +16,27 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.bullet.factory;
 
-public interface IPathway {
+import java.util.Arrays;
 
-    public float getX();
-    public float getY();
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.bullet.PolygonBullet;
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
+public final class PolygonBulletInfo implements BulletFactory {
 
-    public boolean hasFinished();
+    public final float[] coords;
+    public final float speed;
+
+    public PolygonBulletInfo(float[] coords, float speed) {
+        this.coords = coords;
+        this.speed = speed;
+    }
+
+    @Override
+    public PolygonBullet createBullet(float x, float y, float angle) {
+        final PolygonBullet bullet = new PolygonBullet(Arrays.copyOf(coords, coords.length), speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
+        bullet.drift(x, y);
+        return bullet;
+    }
 }

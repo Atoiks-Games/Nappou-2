@@ -79,4 +79,9 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
     public final void attachGame(Game game) {
         this.game = game;
     }
+
+    @Override
+    public final Game getAssocGame() {
+        return this.game;
+    }
 }

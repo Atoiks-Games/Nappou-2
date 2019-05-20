@@ -19,66 +19,98 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.IPathway;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
+
+import org.atoiks.games.nappou2.entities.attack.NullPattern;
 import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
 
-public abstract class PathwayEnemy extends AbstractEnemy {
+public final class PathwayEnemy extends AbstractEnemy {
 
     private static final long serialVersionUID = 4632259879769823818L;
 
     private IPathway path;
+    private IAttackPattern attack;
 
-    protected float r;
+    private float r;
 
+    private boolean driftFlag = true;
     private float dx;
     private float dy;
 
-    public PathwayEnemy(int hp) {
-        this(hp, FixedPathway.DEFAULT);
+    private final int score;
+
+    public PathwayEnemy(int hp, int score) {
+        this(hp, score, FixedPathway.DEFAULT, NullPattern.INSTANCE);
     }
 
-    protected PathwayEnemy(int hp, final IPathway path) {
+    public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack) {
         super(hp);
+        this.score = score;
+
         setPathway(path);
+        setAttackPattern(attack);
     }
 
-    public final IPathway getPathway() {
+    public IPathway getPathway() {
         return path;
     }
 
-    public final void setPathway(IPathway p) {
+    public void setPathway(IPathway p) {
         this.path = p != null ? p : FixedPathway.DEFAULT;
     }
 
+    public IAttackPattern getUpdateListener() {
+        return attack;
+    }
+
+    public void setAttackPattern(IAttackPattern lis) {
+        this.attack = lis != null ? lis : NullPattern.INSTANCE;
+    }
+
+    public void ignoreDrift(boolean flag) {
+        driftFlag = !flag;
+    }
+
+    public void resetDriftFactor() {
+        this.dx = 0;
+        this.dy = 0;
+    }
+
     @Override
-    public final void update(float dt) {
-        customUpdate(dt);
+    public void update(float dt) {
         path.update(dt);
+        attack.onFireUpdate(this, dt);
     }
 
     @Override
     public void drift(float dx, float dy) {
-        this.dx += dx;
-        this.dy += dy;
+        if (driftFlag) {
+            this.dx += dx;
+            this.dy += dy;
+        }
     }
 
     @Override
-    public final float getX() {
+    public float getX() {
         return this.path.getX() + this.dx;
     }
 
     @Override
-    public final float getY() {
+    public float getY() {
         return this.path.getY() + this.dy;
     }
 
     @Override
-    public final float getR() {
+    public float getR() {
         return this.r;
     }
 
-    public final void setR(float r) {
+    public void setR(float r) {
         this.r = r;
     }
 
-    protected abstract void customUpdate(float dt);
+    @Override
+    public int getScore() {
+        return score;
+    }
 }

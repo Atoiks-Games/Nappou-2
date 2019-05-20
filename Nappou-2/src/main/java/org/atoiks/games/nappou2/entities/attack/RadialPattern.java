@@ -16,57 +16,54 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities.attack;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class RadialBeamEnemy extends PathwayEnemy {
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-    private static final long serialVersionUID = 7329566493126725388L;
+public final class RadialPattern implements IAttackPattern {
 
-    private final int score;
+    private final BulletFactory factory;
+
     private final int intervals;
-    private final float thickness;
-    private final float length;
     private final float fireInterval;
     private final float delay;
     private final float initialAngle;
     private final float anglePerInterval;
-    private final float speed;
 
     private float time;
     private int bulletId;
 
-    public RadialBeamEnemy(int hp, int score, final float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, float thickness, int length, float speed) {
-        super(hp);
-        this.score = score;
-        this.thickness = thickness;
-        this.length = length;
+    public RadialPattern(float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BulletFactory factory) {
+        this.factory = factory;
+
+        this.intervals = intervals;
+        this.fireInterval = fireInterval;
+        this.delay = delay;
         this.initialAngle = initialAngle;
         this.anglePerInterval = anglePerInterval;
-        this.speed = speed;
-        this.intervals = intervals;
-        this.delay = delay;
-        this.fireInterval = fireInterval;
+
         if (!immediateFire) {
             bulletId = intervals;
         }
     }
 
     @Override
-    public void customUpdate(float dt) {
+    public void onFireUpdate(IEnemy enemy, float dt) {
         time += dt;
         if (bulletId >= intervals) {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
-            game.addEnemyBullet(new Beam(getX(), getY(), thickness, length, initialAngle + bulletId * anglePerInterval, speed));
+            final Game game = enemy.getAssocGame();
+            final float x = enemy.getX();
+            final float y = enemy.getY();
+
+            game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }
-    }
-
-    @Override
-    public int getScore() {
-        return score;
     }
 }

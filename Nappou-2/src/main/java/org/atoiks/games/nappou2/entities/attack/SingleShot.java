@@ -16,25 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
-
-import java.io.Serializable;
-
-import org.atoiks.games.framework2d.IGraphics;
+package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public interface IEnemy extends IDriftEntity, Serializable {
+import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-    public boolean isDead();
-    public int changeHp(int delta);
+public final class SingleShot implements IAttackPattern {
 
-    public float getR();
+    public static final SingleShot INSTANCE = new SingleShot();
 
-    public int getScore();
+    private SingleShot() {
+        //
+    }
 
-    public void attachGame(Game game);
-    public Game getAssocGame();
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
 
-    public void render(IGraphics g);
+        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+    }
 }

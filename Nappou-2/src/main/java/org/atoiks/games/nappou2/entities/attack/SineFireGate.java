@@ -16,44 +16,42 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities.attack;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class MiniBomberEnemy extends ManualEnemy {
+public final class SineFireGate implements IAttackPattern {
 
-    private static final long serialVersionUID = 5619264522L;
+    private final IAttackPattern delegate;
+
+    private final float afreq;
+    private final float phase;
+    private final double limit;
 
     private float time;
     private boolean fireGate;
-    private int dir;
-    private float spd;
 
-    public MiniBomberEnemy(int hp, float x, float y, float r, int direction, float speed) {
-        super(hp, x, y, r);
-        dir = direction;
-        spd = speed;
+    public SineFireGate(float afreq, float phase, double limit, IAttackPattern delegate) {
+        this.afreq = afreq;
+        this.phase = phase;
+        this.limit = limit;
+
+        this.delegate = delegate;
     }
 
     @Override
-    public void update(float dt) {
+    public void onFireUpdate(IEnemy enemy, float dt) {
         time += dt;
-
-        setX(getX() + dir * 300 * dt);
-
-        final double cosSpdTime = Math.cos(spd * time);
-        if (!fireGate && cosSpdTime < 0.5) {
+        final double cosSpdTime = Math.cos(afreq * time + phase);
+        if (!fireGate && cosSpdTime < limit) {
             fireGate = true;
+            return;
         }
 
-        if (fireGate && cosSpdTime > 0.5) {
+        if (fireGate && cosSpdTime > limit) {
             fireGate = false;
-            game.addEnemyBullet(new PointBullet(getX(), getY(), 2, 0, 1000));
+            delegate.onFireUpdate(enemy, dt);
         }
-    }
-
-    @Override
-    public int getScore() {
-        return 1;
     }
 }
