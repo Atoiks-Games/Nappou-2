@@ -19,7 +19,7 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.IPathway;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.attack.NullPattern;
 import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
@@ -29,7 +29,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     private static final long serialVersionUID = 4632259879769823818L;
 
     private IPathway path;
-    private IUpdateListener listener;
+    private IAttackPattern attack;
 
     private float r;
 
@@ -42,12 +42,12 @@ public final class PathwayEnemy extends AbstractEnemy {
         this(hp, score, FixedPathway.DEFAULT, NullPattern.INSTANCE);
     }
 
-    public PathwayEnemy(int hp, int score, final IPathway path, final IUpdateListener listener) {
+    public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack) {
         super(hp);
         this.score = score;
 
         setPathway(path);
-        setUpdateListener(listener);
+        setAttackPattern(attack);
     }
 
     public IPathway getPathway() {
@@ -58,18 +58,18 @@ public final class PathwayEnemy extends AbstractEnemy {
         this.path = p != null ? p : FixedPathway.DEFAULT;
     }
 
-    public IUpdateListener getUpdateListener() {
-        return listener;
+    public IAttackPattern getUpdateListener() {
+        return attack;
     }
 
-    public void setUpdateListener(IUpdateListener lis) {
-        this.listener = lis != null ? lis : NullPattern.INSTANCE;
+    public void setAttackPattern(IAttackPattern lis) {
+        this.attack = lis != null ? lis : NullPattern.INSTANCE;
     }
 
     @Override
     public void update(float dt) {
         path.update(dt);
-        listener.onFireUpdate(this, dt);
+        attack.onFireUpdate(this, dt);
     }
 
     @Override

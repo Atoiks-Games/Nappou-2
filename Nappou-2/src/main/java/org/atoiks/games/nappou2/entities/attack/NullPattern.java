@@ -19,9 +19,9 @@
 package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class NullPattern implements IUpdateListener {
+public final class NullPattern implements IAttackPattern {
 
     public static final NullPattern INSTANCE = new NullPattern();
 

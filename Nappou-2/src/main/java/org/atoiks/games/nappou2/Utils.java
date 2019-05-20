@@ -42,7 +42,7 @@ public final class Utils {
             final int i = idx;  // Lambda captures must be effectively final
             game.addEnemySpawner(EnemySpawner.createImmediateGroup(0.17f, 5, () -> {
                 final PathwayEnemy enemy = new PathwayEnemy(2, 2);
-                enemy.setUpdateListener(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info));
+                enemy.setAttackPattern(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info));
 
                 final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
                     new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));
@@ -60,7 +60,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
-        enemy.setUpdateListener(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
         return enemy;
     }
 
@@ -68,7 +68,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
         return enemy;
     }
 
@@ -76,7 +76,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setUpdateListener(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
         return enemy;
     }
 
@@ -84,7 +84,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
         return enemy;
     }
 
@@ -92,7 +92,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setUpdateListener(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
         return enemy;
     }
 

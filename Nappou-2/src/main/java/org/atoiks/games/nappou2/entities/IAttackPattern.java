@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities;
 
-public interface IUpdateListener {
+public interface IAttackPattern {
 
     public void onFireUpdate(IEnemy enemy, float dt);
 }

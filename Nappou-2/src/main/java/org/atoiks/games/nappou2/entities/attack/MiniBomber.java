@@ -20,11 +20,11 @@ package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MiniBomber implements IUpdateListener {
+public final class MiniBomber implements IAttackPattern {
 
     public static final MiniBomber INSTANCE = new MiniBomber();
 

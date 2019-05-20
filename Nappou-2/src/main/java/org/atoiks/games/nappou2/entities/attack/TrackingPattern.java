@@ -20,11 +20,11 @@ package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class TrackingPattern implements IUpdateListener {
+public final class TrackingPattern implements IAttackPattern {
 
     private final BulletFactory factory;
 

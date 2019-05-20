@@ -20,11 +20,11 @@ package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class AdvancedMiniBomber implements IUpdateListener {
+public final class AdvancedMiniBomber implements IAttackPattern {
 
     private static final float VERTICAL = 1000 * (float) Math.sin(7 * Math.PI / 16);
     private static final float HORIZONTAL = 1000 * (float) Math.cos(7 * Math.PI / 16);

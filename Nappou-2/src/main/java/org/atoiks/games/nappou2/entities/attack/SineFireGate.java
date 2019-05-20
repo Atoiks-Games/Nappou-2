@@ -19,11 +19,11 @@
 package org.atoiks.games.nappou2.entities.attack;
 
 import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IUpdateListener;
+import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-public final class SineFireGate implements IUpdateListener {
+public final class SineFireGate implements IAttackPattern {
 
-    private final IUpdateListener delegate;
+    private final IAttackPattern delegate;
 
     private final float afreq;
     private final float phase;
@@ -32,7 +32,7 @@ public final class SineFireGate implements IUpdateListener {
     private float time;
     private boolean fireGate;
 
-    public SineFireGate(float afreq, float phase, double limit, IUpdateListener delegate) {
+    public SineFireGate(float afreq, float phase, double limit, IAttackPattern delegate) {
         this.afreq = afreq;
         this.phase = phase;
         this.limit = limit;
