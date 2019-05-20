@@ -25,6 +25,8 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.entities.shield.IShield;
+
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
