@@ -16,9 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
-
-import org.atoiks.games.nappou2.entities.IPathway;
+package org.atoiks.games.nappou2.pathway;
 
 /**
  * A fixed pathway. (Can it really be a path if it stays at the same spot?)

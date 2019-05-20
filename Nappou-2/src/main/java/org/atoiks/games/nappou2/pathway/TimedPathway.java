@@ -16,52 +16,49 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
-
-import java.util.Iterator;
-
-import org.atoiks.games.nappou2.entities.IPathway;
+package org.atoiks.games.nappou2.pathway;
 
 /**
- * Sequences a bunch of pathways. Note: canFinish always true, but whether it
- * can actually finish depends on the sequence of pathways. If an unlimited
- * pathway is passed to this, it will never return true for hasFinished!
+ * Used to put a time limit on unbounded pathways (like FixedPathway)
  */
-public final class ChainedPathway implements IPathway {
+public final class TimedPathway implements IPathway {
 
-    private final Iterator<? extends IPathway> it;
+    private final UnboundPathway path;
+    private final float limit;
 
-    private IPathway currentPath;
+    private float elapsed;
 
-    public ChainedPathway(Iterator<? extends IPathway> it) {
-        this.it = it;
-        if (it.hasNext()) {
-            currentPath = it.next();
-        } else {
-            throw new IllegalArgumentException("Iterator is already empty!");
+    public TimedPathway(final UnboundPathway path, final float limit) {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Time limit must be greater than zero: " + limit);
         }
+        if (path == null) {
+            throw new IllegalArgumentException("Pathway cannot be null");
+        }
+
+        this.path = path;
+        this.limit = limit;
     }
 
     @Override
     public float getX() {
-        return currentPath.getX();
+        return path.getX();
     }
 
     @Override
     public float getY() {
-        return currentPath.getY();
+        return path.getY();
     }
 
     @Override
     public void update(final float dt) {
-        currentPath.update(dt);
-        if (currentPath.hasFinished() && it.hasNext()) {
-            currentPath = it.next();
+        if (elapsed < limit) {
+            path.update(Math.min(Math.abs(limit - (elapsed += dt)), dt));
         }
     }
 
     @Override
     public boolean hasFinished() {
-        return currentPath.hasFinished() && !it.hasNext();
+        return elapsed > limit;
     }
 }

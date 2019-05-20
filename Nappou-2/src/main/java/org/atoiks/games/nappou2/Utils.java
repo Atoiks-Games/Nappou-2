@@ -27,7 +27,7 @@ import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.attack.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
-import org.atoiks.games.nappou2.entities.pathway.*;
+import org.atoiks.games.nappou2.pathway.*;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.*;
 

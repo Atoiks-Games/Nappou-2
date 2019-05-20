@@ -16,51 +16,44 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
-
-import org.atoiks.games.nappou2.entities.IPathway;
+package org.atoiks.games.nappou2.pathway;
 
 /**
- * Used to put a time limit on unbounded pathways (like FixedPathway)
+ * Pathway with constant velocity
  */
-public final class TimedPathway implements IPathway {
+public final class FixedVelocity implements UnboundPathway {
 
-    private final UnboundPathway path;
-    private final float limit;
+    private final float dx;
+    private final float dy;
 
-    private float elapsed;
+    private float x;
+    private float y;
 
-    public TimedPathway(final UnboundPathway path, final float limit) {
-        if (limit <= 0) {
-            throw new IllegalArgumentException("Time limit must be greater than zero: " + limit);
-        }
-        if (path == null) {
-            throw new IllegalArgumentException("Pathway cannot be null");
-        }
-
-        this.path = path;
-        this.limit = limit;
+    public FixedVelocity(float x, float y, float dx, float dy) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     @Override
     public float getX() {
-        return path.getX();
+        return x;
     }
 
     @Override
     public float getY() {
-        return path.getY();
+        return y;
     }
 
     @Override
     public void update(final float dt) {
-        if (elapsed < limit) {
-            path.update(Math.min(Math.abs(limit - (elapsed += dt)), dt));
-        }
+        x += dx * dt;
+        y += dy * dt;
     }
 
     @Override
     public boolean hasFinished() {
-        return elapsed > limit;
+        return false;
     }
 }

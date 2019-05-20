@@ -16,46 +16,12 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pathway;
 
-import org.atoiks.games.nappou2.entities.IPathway;
+public interface UnboundPathway extends IPathway {
 
-/**
- * Pathway with constant velocity
- */
-public final class FixedVelocity implements UnboundPathway {
-
-    private final float dx;
-    private final float dy;
-
-    private float x;
-    private float y;
-
-    public FixedVelocity(float x, float y, float dx, float dy) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public void update(final float dt) {
-        x += dx * dt;
-        y += dy * dt;
-    }
-
-    @Override
-    public boolean hasFinished() {
+    public default boolean hasFinished() {
+        // It is unbounded... so it better never finish!
         return false;
     }
 }
