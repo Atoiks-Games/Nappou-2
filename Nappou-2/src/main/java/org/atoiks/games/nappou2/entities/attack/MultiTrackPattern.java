@@ -22,14 +22,16 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class StarPattern implements IAttackPattern {
+public final class MultiTrackPattern implements IAttackPattern {
 
-    public static final StarPattern INSTANCE = new StarPattern();
+    private final float[] angles;
+    private final BulletFactory factory;
 
-    private StarPattern() {
-        //
+    public MultiTrackPattern(BulletFactory factory, float... angles) {
+        this.angles = angles;
+        this.factory = factory;
     }
 
     @Override
@@ -38,13 +40,9 @@ public final class StarPattern implements IAttackPattern {
         final float x = enemy.getX();
         final float y = enemy.getY();
 
-        // see TrigConstant for angle change
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        final float ksinA = 1000 * (float) Math.sin(angle);
-        final float kcosA = 1000 * (float) Math.cos(angle);
-        game.addEnemyBullet(new PointBullet(x, y, 2,  kcosA,  ksinA)); // +0,    +0
-        game.addEnemyBullet(new PointBullet(x, y, 2, -ksinA,  kcosA)); // +pi/2, +pi/2
-        game.addEnemyBullet(new PointBullet(x, y, 2, -kcosA, -ksinA)); // +pi,   +pi
-        game.addEnemyBullet(new PointBullet(x, y, 2,  ksinA, -kcosA)); // -pi/2, -pi/2
+        final float base = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        for (final float angle : angles) {
+            game.addEnemyBullet(factory.createBullet(x, y, base + angle));
+        }
     }
 }

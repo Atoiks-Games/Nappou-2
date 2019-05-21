@@ -43,6 +43,9 @@ public final class Utils {
     private static final FixedTrackPattern SINGLE_SHOT_PATTERN =
             new FixedTrackPattern(new PointBulletInfo(2, 1000));
 
+    private static final MultiTrackPattern STAR_SHOT_PATTERN =
+            new MultiTrackPattern(new PointBulletInfo(2, 1000), 0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
+
     private Utils() {
     }
 
@@ -86,7 +89,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, STAR_SHOT_PATTERN));
         return enemy;
     }
 
