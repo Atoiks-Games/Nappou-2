@@ -40,6 +40,9 @@ public final class Utils {
             new MultiAnglePattern(new PointBulletInfo(2, 1000),
                     (float) (7 * Math.PI / 16), (float) (9 * Math.PI / 16), (float) (Math.PI / 2));
 
+    private static final FixedTrackPattern SINGLE_SHOT_PATTERN =
+            new FixedTrackPattern(new PointBulletInfo(2, 1000));
+
     private Utils() {
     }
 
@@ -67,7 +70,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
-        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SINGLE_SHOT_PATTERN));
         return enemy;
     }
 
@@ -75,7 +78,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SINGLE_SHOT_PATTERN));
         return enemy;
     }
 
