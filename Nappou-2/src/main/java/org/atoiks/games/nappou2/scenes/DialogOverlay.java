@@ -62,8 +62,8 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
         this.msgLines = msg.lines;
         this.imgMsg = loadMessageResource(msg);
 
-        adjustVertAlign(msg.getImageVerticalAlignment());
-        adjustHorizAlign(msg.getImageHorizontalAlignment());
+        this.yoffMsgImg = alignVertical(msg.getImageVerticalAlignment(), imgMsg);
+        this.xoffMsgImg = alignHorizontal(msg.getImageHorizontalAlignment(), imgMsg);
     }
 
     public void render(final IGraphics g) {
@@ -105,48 +105,35 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
         return null;
     }
 
-    private void adjustVertAlign(Message.VerticalAlignment vAlign) {
+    public static int alignVertical(Message.VerticalAlignment vAlign, Image img) {
+        final int imgH = img != null ? img.getHeight(null) : 0;
         switch (vAlign) {
             case TOP:
-                this.yoffMsgImg = 0;
-                break;
+                return 0;
             case BOTTOM:
-                this.yoffMsgImg = HEIGHT - getImageHeight();
-                break;
+                return HEIGHT - imgH;
             case CENTER:
-                this.yoffMsgImg = (HEIGHT - getImageHeight()) / 2;
-                break;
+                return (HEIGHT - imgH) / 2;
             default:
                 // Assumes center alignment, ut prints out warning
                 System.err.println("Unknown vertical alignment: " + vAlign);
             case ABOVE_DIALOGUE:
-                this.yoffMsgImg = 400 - getImageHeight();
-                break;
+                return 400 - imgH;
         }
     }
 
-    private void adjustHorizAlign(Message.HorizontalAlignment hAlign) {
-        switch (hAlign) {
+    public static int alignHorizontal(Message.HorizontalAlignment vAlign, Image img) {
+        final int imgW = img != null ? img.getWidth(null) : 0;
+        switch (vAlign) {
             case LEFT:
-                this.xoffMsgImg = 0;
-                break;
+                return 0;
             case RIGHT:
-                this.xoffMsgImg = GAME_BORDER - getImageWidth();
-                break;
+                return GAME_BORDER - imgW;
             default:
-                // Assumes center alignment, but prints out warning
-                System.err.println("Unknown horizontal alignment: " + hAlign);
+                // Assumes center alignment, ut prints out warning
+                System.err.println("Unknown vertical alignment: " + vAlign);
             case CENTER:
-                this.xoffMsgImg = (GAME_BORDER - getImageWidth()) / 2;
-                break;
+                return (GAME_BORDER - imgW) / 2;
         }
-    }
-
-    private int getImageWidth() {
-        return imgMsg != null ? imgMsg.getWidth(null) : 0;
-    }
-
-    private int getImageHeight() {
-        return imgMsg != null ? imgMsg.getHeight(null) : 0;
     }
 }

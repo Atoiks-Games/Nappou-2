@@ -40,6 +40,9 @@ import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
+import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignVertical;
+import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignHorizontal;
+
 public final class TutorialScene extends AbstractGameScene {
 
     private static final String[][] INFO_MSG = {
@@ -50,12 +53,6 @@ public final class TutorialScene extends AbstractGameScene {
         { "Escape", "= Pause" },
         { "Enter", "= Select" }
     };
-
-    private static final Message MSG_BTN_Z = new Message(
-            "z.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
-
-    private static final Message MSG_BTN_X = new Message(
-            "x.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
 
     private static final Message[] PREBOSS_MSG = {
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
@@ -71,6 +68,10 @@ public final class TutorialScene extends AbstractGameScene {
 
     private static final Message POSTBOSS_MSG = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
+
+    private Image background;
+    private int xoffImg;
+    private int yoffImg;
 
     private int waveCounter;
     private float time;
@@ -123,6 +124,10 @@ public final class TutorialScene extends AbstractGameScene {
             g.drawString("Survive the void", 25, 550);
             g.drawString("Press Enter to continue", 25, 580);
         }
+
+        if (background != null) {
+            g.drawImage(background, xoffImg, yoffImg);
+        }
     }
 
     @Override
@@ -131,11 +136,17 @@ public final class TutorialScene extends AbstractGameScene {
         super.leave();
     }
 
+    private void updateBackgroundImage(final Image img) {
+        background = img;
+        yoffImg = alignVertical(VerticalAlignment.CENTER, img);
+        xoffImg = alignHorizontal(HorizontalAlignment.CENTER, img);
+    }
+
     @Override
     public boolean postUpdate(float dt) {
         if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
-            displayMessage(MSG_BTN_Z);
+            updateBackgroundImage((Image) scene.resources().get("z.png"));
         }
 
         if (game.noMoreEnemies()) {
@@ -151,13 +162,14 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
-                        displayMessage(MSG_BTN_X);
+                        updateBackgroundImage((Image) scene.resources().get("x.png"));
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
                     break;
 
                 case 2:
+                    updateBackgroundImage(null);
                     disableDamage();
                     disableInput();
                     game.clearBullets();
