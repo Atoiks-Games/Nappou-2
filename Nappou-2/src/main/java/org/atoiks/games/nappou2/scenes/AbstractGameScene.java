@@ -42,16 +42,14 @@ public abstract class AbstractGameScene extends CenteringScene {
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
 
-    public static final Color STATS_GREY = new Color(106, 106, 106);
-
     private final PauseOverlay pauseOverlay = new PauseOverlay();
+    private final StatusOverlay statusOverlay = new StatusOverlay();
 
     protected final Game game = new Game();
 
     private boolean disableInput = false;
 
     protected float playerFireTimeout;
-    protected Image hpImg;
     protected Difficulty difficulty;
 
     protected final Drifter drift = new Drifter();
@@ -137,9 +135,11 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void init() {
-        hpImg = (Image) scene.resources().get("hp.png");
+        final Image hpImg = (Image) scene.resources().get("hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
         pauseOverlay.attachSceneManager(this.scene);
+        statusOverlay.attachGame(this.game);
+        statusOverlay.attachHpImg(hpImg);
     }
 
     @Override
@@ -167,28 +167,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     public void renderStats(final IGraphics g) {
-        g.setColor(STATS_GREY);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-
-        g.setColor(Color.white);
-        g.setFont(SANS_FONT);
-        g.drawString("HP Remaining", GAME_BORDER + 2, 16);
-        g.drawString("Score", GAME_BORDER + 2, 58);
-
-        if (hpImg != null) {
-            final int hp = game.player.getHp();
-            final int w = hpImg.getWidth(null);
-            for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
-            }
-        }
-
-        final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
-        g.drawString(str, GAME_BORDER + 5, 74);
-
-        if (game.player.shield.isReady()) {
-            g.drawString("Shield Ready", GAME_BORDER + 30, 96);
-        }
+        statusOverlay.render(g);
 
         if (msgSpeaker != null) {
             drawDialog(g, msgSpeaker, msgLines);
@@ -214,7 +193,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
         pauseOverlay.render(g);
 
-        g.setColor(STATS_GREY);
+        g.setColor(StatusOverlay.BACKGROUND_COLOR);
         drawSideBlinder(g);
     }
 
