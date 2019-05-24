@@ -111,11 +111,6 @@ public abstract class AbstractGameScene extends CenteringScene {
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
     }
 
-    public void renderStats(final IGraphics g) {
-        statusOverlay.render(g);
-        dialogOverlay.render(g);
-    }
-
     @Override
     public final void render(final IGraphics g) {
         // setup aspect ratio
@@ -125,13 +120,8 @@ public abstract class AbstractGameScene extends CenteringScene {
         renderBackground(g);
         game.render(g);
 
-        // The game stats part
-        g.setColor(Color.black);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-        g.setColor(Color.white);
-        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
-
-        renderStats(g);
+        statusOverlay.render(g);
+        dialogOverlay.render(g);
 
         pauseOverlay.render(g);
 
