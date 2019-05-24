@@ -41,16 +41,10 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
-    public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
+
     public static final Color STATS_GREY = new Color(106, 106, 106);
 
-    // Conventionally, continue is always the first option,
-    // sceneDest is always one less than the selectorY
-    private static final int[] selectorY = {342, 402};
-    private static final String[] sceneDest = {"TitleScene"};
-    private static final int OPT_HEIGHT = 37;
-
-    private int selector;
+    private final PauseOverlay pauseOverlay = new PauseOverlay();
 
     protected final Game game = new Game();
 
@@ -58,7 +52,6 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     protected float playerFireTimeout;
     protected Image hpImg;
-    protected boolean pause;
     protected Difficulty difficulty;
 
     protected final Drifter drift = new Drifter();
@@ -146,6 +139,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     public void init() {
         hpImg = (Image) scene.resources().get("hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
+        pauseOverlay.attachSceneManager(this.scene);
     }
 
     @Override
@@ -153,8 +147,6 @@ public abstract class AbstractGameScene extends CenteringScene {
         difficulty = (Difficulty) scene.resources().get("difficulty");
 
         playerFireTimeout = 0f;
-        pause = false;
-        selector = 0;
         enableInput();
     }
 
@@ -220,17 +212,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
         renderStats(g);
 
-        if (pause) {
-            g.setColor(PAUSE_OVERLAY);
-            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-            g.setColor(Color.black);
-            g.setFont(TitleScene.TITLE_FONT);
-            g.drawString("PAUSE", 274, 202);
-            g.setFont(TitleScene.OPTION_FONT);
-            g.drawString("Continue Game", 52, 373);
-            g.drawString("Return to Title", 52, 433);
-            g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
-        }
+        pauseOverlay.render(g);
 
         g.setColor(STATS_GREY);
         drawSideBlinder(g);
@@ -238,55 +220,36 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public boolean update(final float dt) {
-        // Hopefully the only "black magic" in here
-        if (!pause) {
-            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                pause = true;
-            }
-            playerFireTimeout -= dt;
-
-            // This is the magic number that makes all of this work!
-            // it is 5 because the update sequence used to be split
-            // between phases 0 to 4 (which adds up to 5 phases)
-            final float dtDiv5 = dt / 5;
-            drift.update(dtDiv5);
-
-            procPlayerPos(dt);
-
-            final float driftX = dtDiv5 * drift.getDx();
-            final float driftY = dtDiv5 * drift.getDy();
-            game.updateEnemySpawner(dtDiv5);
-            game.updateEnemyPosition(dtDiv5, driftX, driftY);
-            game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
-            game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
-
-            // testCollisions() returns true if a scene change is requested
-            // which means we return as soon as it happens (hence || not &&)
-            return testCollisions() || postUpdate(dtDiv5);
-        } else {
-            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                pause = false;
-                selector = 0;
-                return true;
-            }
-
-            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                if (selector != 0) {
-                    return scene.switchToScene(sceneDest[selector - 1]);
-                }
-
-                // selector is 0, which means we continue (unpause) the game
-                pause = false;
-                return true;
-            }
-            if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (++selector >= selectorY.length) selector = 0;
-            }
-            if (Input.isKeyPressed(KeyEvent.VK_UP)) {
-                if (--selector < 0) selector = selectorY.length - 1;
-            }
+        if (pauseOverlay.isEnabled()) {
+            pauseOverlay.update(dt);
+            return true;
         }
-        return true;
+
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            pauseOverlay.enable();
+            return true;
+        }
+
+        playerFireTimeout -= dt;
+
+        // This is the magic number that makes all of this work!
+        // it is 5 because the update sequence used to be split
+        // between phases 0 to 4 (which adds up to 5 phases)
+        final float dtDiv5 = dt / 5;
+        drift.update(dtDiv5);
+
+        procPlayerPos(dt);
+
+        final float driftX = dtDiv5 * drift.getDx();
+        final float driftY = dtDiv5 * drift.getDy();
+        game.updateEnemySpawner(dtDiv5);
+        game.updateEnemyPosition(dtDiv5, driftX, driftY);
+        game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
+        game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
+
+        // testCollisions() returns true if a scene change is requested
+        // which means we return as soon as it happens (hence || not &&)
+        return testCollisions() || postUpdate(dtDiv5);
     }
 
     private void procPlayerPos(final float dt) {
