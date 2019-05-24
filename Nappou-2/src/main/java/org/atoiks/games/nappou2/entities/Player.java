@@ -65,9 +65,13 @@ public final class Player implements ITrackable, Serializable {
     }
 
     public void update(final float dt) {
+        final float dtScaled = this.speedScale * dt;
+        final float newX = (this.x += this.dx * dtScaled);
+        final float newY = (this.y += this.dy * dtScaled);
+
         this.shield.update(dt);
-        this.shield.setX(this.x += this.dx * this.speedScale * dt);
-        this.shield.setY(this.y += this.dy * this.speedScale * dt);
+        this.shield.setX(newX);
+        this.shield.setY(newY);
 
         if (respawnShieldTime >= 0) {
             if ((respawnShieldTime += dt) >= RESPAWN_SHIELD_TIME) respawnShieldTime = RESPAWN_SHIELD_OFF;
