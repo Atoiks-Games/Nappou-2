@@ -44,6 +44,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     private final PauseOverlay pauseOverlay = new PauseOverlay();
     private final StatusOverlay statusOverlay = new StatusOverlay();
+    private final DialogOverlay dialogOverlay = new DialogOverlay();
 
     protected final Game game = new Game();
 
@@ -55,12 +56,6 @@ public abstract class AbstractGameScene extends CenteringScene {
     protected final Drifter drift = new Drifter();
 
     public final int sceneId;
-
-    private String msgSpeaker;
-    private String[] msgLines;
-    private Image imgMsg;
-    private int xoffMsgImg;
-    private int yoffMsgImg;
 
     protected AbstractGameScene(int id) {
         sceneId = id;
@@ -83,54 +78,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     protected final void displayMessage(final Message msg) {
-        if (msg == null) {
-            this.imgMsg = null;
-            this.msgSpeaker = null;
-            this.msgLines = null;
-            return;
-        }
-
-        if (msg.imgRes != null) {
-            this.imgMsg = (Image) scene.resources().get(msg.imgRes);
-        }
-
-        if (this.imgMsg != null) {
-            switch (msg.getImageHorizontalAlignment()) {
-                case LEFT:
-                    this.xoffMsgImg = 0;
-                    break;
-                case RIGHT:
-                    this.xoffMsgImg = GAME_BORDER - imgMsg.getWidth(null);
-                    break;
-                default:
-                    // Assumes center alignment, but prints out warning
-                    System.err.println("Unknown horizontal alignment for msg:" + msg);
-                case CENTER:
-                    this.xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
-                    break;
-            }
-
-            switch (msg.getImageVerticalAlignment()) {
-                case TOP:
-                    this.yoffMsgImg = 0;
-                    break;
-                case BOTTOM:
-                    this.yoffMsgImg = HEIGHT - imgMsg.getHeight(null);
-                    break;
-                case CENTER:
-                    this.yoffMsgImg = (HEIGHT - imgMsg.getHeight(null)) / 2;
-                    break;
-                default:
-                    // Assumes center alignment, ut prints out warning
-                    System.err.println("Unknown vertical alignment for msg:" + msg);
-                case ABOVE_DIALOGUE:
-                    this.yoffMsgImg = 400 - imgMsg.getHeight(null);
-                    break;
-            }
-        }
-
-        this.msgSpeaker = msg.speaker == null ? null : msg.speaker + ":";
-        this.msgLines = msg.lines;
+        dialogOverlay.displayMessage(msg);
     }
 
     @Override
@@ -140,6 +88,7 @@ public abstract class AbstractGameScene extends CenteringScene {
         pauseOverlay.attachSceneManager(this.scene);
         statusOverlay.attachGame(this.game);
         statusOverlay.attachHpImg(hpImg);
+        dialogOverlay.attachSceneManager(this.scene);
     }
 
     @Override
@@ -160,18 +109,11 @@ public abstract class AbstractGameScene extends CenteringScene {
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-
-        if (imgMsg != null) {
-            g.drawImage(imgMsg, xoffMsgImg, yoffMsgImg);
-        }
     }
 
     public void renderStats(final IGraphics g) {
         statusOverlay.render(g);
-
-        if (msgSpeaker != null) {
-            drawDialog(g, msgSpeaker, msgLines);
-        }
+        dialogOverlay.render(g);
     }
 
     @Override
