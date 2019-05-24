@@ -49,6 +49,8 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
     public void render(final IGraphics g) {
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
+        g.setColor(Color.white);
+        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         g.setColor(Color.white);
         g.setFont(SANS_FONT);
