@@ -53,8 +53,9 @@ public class App {
                 .setResizable(false)
                 .setSize(900, 600)
                 .setFps(120.0f)
-                .setLoader(new LoadingScene())
-                .setGameScenes(new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
+                .setFirstScene("LoadingScene")
+                .setScenes(new LoadingScene(),
+                        new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
                         new ScoreScene(), new CreditsScene(), new ConfigScene(),
                         new DiffOptionScene(), new ShieldOptionScene(),
                         new LevelOneScene(), new LevelTwoScene());

@@ -66,6 +66,11 @@ public final class LoadingScene extends Scene {
     private float time;
 
     @Override
+    public String getId() {
+        return "LoadingScene";
+    }
+
+    @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
