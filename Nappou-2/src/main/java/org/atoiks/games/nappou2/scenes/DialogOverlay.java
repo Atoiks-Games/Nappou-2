@@ -53,11 +53,6 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
     }
 
     public void displayMessage(final Message msg) {
-        if (msg == null) {
-            clearMessage();
-            return;
-        }
-
         this.msgSpeaker = msg.speaker == null ? null : msg.speaker + ":";
         this.msgLines = msg.lines;
         this.imgMsg = loadMessageResource(msg);
