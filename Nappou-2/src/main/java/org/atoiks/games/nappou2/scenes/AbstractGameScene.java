@@ -80,6 +80,10 @@ public abstract class AbstractGameScene extends CenteringScene {
         skipPlayerUpdate = false;
     }
 
+    protected final void clearMessage() {
+        dialogOverlay.clearMessage();
+    }
+
     protected final void displayMessage(final Message msg) {
         dialogOverlay.displayMessage(msg);
     }

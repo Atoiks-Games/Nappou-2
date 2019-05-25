@@ -93,7 +93,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        displayMessage(null);
+        clearMessage();
         cycles = 0;
         wave = 0;
         phase = 0;
@@ -129,7 +129,7 @@ public final class LevelOneScene extends AbstractGameScene {
         }
 
         // no more dialogs, must clear out player portrait
-        displayMessage(null);
+        clearMessage();
         return false;
     }
 

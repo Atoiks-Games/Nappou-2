@@ -88,7 +88,7 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final String prevSceneId) {
         super.enter(prevSceneId);
 
-        displayMessage(null);
+        clearMessage();
         renderControls = true;
 
         bgm = (Clip) scene.resources().get("Awakening.wav");
@@ -197,7 +197,7 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     enableDamage();
                     enableInput();
-                    displayMessage(null);
+                    clearMessage();
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(50, 375, -10, 20));
                     ++waveCounter;

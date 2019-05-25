@@ -80,7 +80,7 @@ public final class LevelTwoScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        displayMessage(null);
+        clearMessage();
         cycles = 0;
         wave = 0;
         phase = 0;
@@ -107,7 +107,7 @@ public final class LevelTwoScene extends AbstractGameScene {
             displayMessage(s[msgPhase]);
             return true;
         }
-        displayMessage(null);
+        clearMessage();
         return false;
     }
 
