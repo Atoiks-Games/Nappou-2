@@ -26,8 +26,8 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.AbstractGameScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
 /* package */ final class PauseOverlay {
 
