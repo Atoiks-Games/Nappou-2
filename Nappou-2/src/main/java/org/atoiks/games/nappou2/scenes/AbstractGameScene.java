@@ -28,10 +28,11 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 
-import org.atoiks.games.nappou2.entities.*;
-import org.atoiks.games.nappou2.entities.bullet.*;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
+import org.atoiks.games.nappou2.entities.Message;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
+import org.atoiks.games.nappou2.entities.bullet.factory.PointBulletInfo;
 
 public abstract class AbstractGameScene extends CenteringScene {
 
@@ -42,18 +43,20 @@ public abstract class AbstractGameScene extends CenteringScene {
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
 
+    private static final PointBulletInfo PLAYER_BULLET_INFO = new PointBulletInfo(5, DEFAULT_DY * 4.5f);
+    private static final float MIN_FIRE_DELAY = 0.2f;
+
     private final PauseOverlay pauseOverlay = new PauseOverlay();
     private final StatusOverlay statusOverlay = new StatusOverlay();
     private final DialogOverlay dialogOverlay = new DialogOverlay();
 
     protected final Game game = new Game();
+    protected final Drifter drift = new Drifter();
 
-    private boolean disableInput = false;
-
-    protected float playerFireTimeout;
     protected Difficulty difficulty;
 
-    protected final Drifter drift = new Drifter();
+    private boolean skipPlayerUpdate;
+    private float playerFireLimiter;
 
     public final int sceneId;
 
@@ -70,11 +73,11 @@ public abstract class AbstractGameScene extends CenteringScene {
     }
 
     protected final void disableInput() {
-        disableInput = true;
+        skipPlayerUpdate = true;
     }
 
     protected final void enableInput() {
-        disableInput = false;
+        skipPlayerUpdate = false;
     }
 
     protected final void displayMessage(final Message msg) {
@@ -85,6 +88,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     public void init() {
         final Image hpImg = (Image) scene.resources().get("hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
+
         pauseOverlay.attachSceneManager(this.scene);
         statusOverlay.attachGame(this.game);
         statusOverlay.attachHpImg(hpImg);
@@ -95,7 +99,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     public void enter(String prevSceneId) {
         difficulty = (Difficulty) scene.resources().get("difficulty");
 
-        playerFireTimeout = 0f;
+        playerFireLimiter = 0f;
         enableInput();
     }
 
@@ -133,24 +137,27 @@ public abstract class AbstractGameScene extends CenteringScene {
     public boolean update(final float dt) {
         if (pauseOverlay.isEnabled()) {
             pauseOverlay.update(dt);
-            return true;
+        } else {
+            levelUpdate(dt);
         }
+        return true;
+    }
 
+    private void levelUpdate(final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             pauseOverlay.enable();
-            return true;
+            return;
         }
 
-        playerFireTimeout -= dt;
+        // And strangely enough, if you have read the next comment
+        // already, player updates were not part of the *5
+        // things*, so it uses the un-partitioned dt.
+        processPlayerTime(dt);
 
-        // This is the magic number that makes all of this work!
-        // it is 5 because the update sequence used to be split
-        // between phases 0 to 4 (which adds up to 5 phases)
+        // At some point, the update sequence used to be split up
+        // so each update frame only did one thing. It was divided
+        // into 5 things.
         final float dtDiv5 = dt / 5;
-        drift.update(dtDiv5);
-
-        procPlayerPos(dt);
-
         final float driftX = dtDiv5 * drift.getDx();
         final float driftY = dtDiv5 * drift.getDy();
         game.updateEnemySpawner(dtDiv5);
@@ -158,75 +165,65 @@ public abstract class AbstractGameScene extends CenteringScene {
         game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
         game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
 
-        // testCollisions() returns true if a scene change is requested
-        // which means we return as soon as it happens (hence || not &&)
-        return testCollisions() || postUpdate(dtDiv5);
+        game.performCollisionCheck();
+        if (game.player.getHp() <= 0) {
+            scene.switchToScene("TitleScene");
+            return;
+        }
+
+        postUpdate(dtDiv5);
     }
 
-    private void procPlayerPos(final float dt) {
-        if (disableInput) return;
+    private void processPlayerTime(final float dt) {
+        if (skipPlayerUpdate) {
+            return;
+        }
 
-        // TODO: Simplify this
+        processPlayerMovement(dt);
+        processPlayerAttack(dt);
+        processPlayerShield(dt);
+    }
+
+    private void processPlayerMovement(final float dt) {
+        final Player player = game.player;
+
+        // Calculate player's unscaled speed in y
         float tmpVal = drift.getDy();
-        float tmpPos = game.player.getY();
+        float tmpPos = player.getY();
         if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpVal += DEFAULT_DY;
         if (Input.isKeyDown(KeyEvent.VK_UP))    tmpVal -= DEFAULT_DY;
         if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
-        game.player.setDy(tmpVal);
+        player.setDy(tmpVal);
 
+        // Calculate player's unscaled speed in x
         tmpVal = drift.getDx();
-        tmpPos = game.player.getX();
+        tmpPos = player.getX();
         if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpVal += DEFAULT_DX;
         if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpVal -= DEFAULT_DX;
         if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
-        game.player.setDx(tmpVal);
+        player.setDx(tmpVal);
 
-        game.player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        player.update(dt);
+    }
 
-        game.player.update(dt);
-
-        if (playerFireTimeout <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
-            final float px = game.player.getX();
-            final float py = game.player.getY();
-            game.addPlayerBullet(new PointBullet(px, py, 5, 0, -DEFAULT_DY * 4.5f));
-            playerFireTimeout = 0.2f;  // 0.2 second cap
+    private void processPlayerAttack(final float dt) {
+        if ((playerFireLimiter -= dt) <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
+            final Player player = game.player;
+            game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(
+                    player.getX(), player.getY(), (float) (-Math.PI / 2)));
+            playerFireLimiter = MIN_FIRE_DELAY;
         }
+    }
 
+    private void processPlayerShield(final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_X)) {
             game.player.shield.activate();
         }
-    }
-
-    private boolean testCollisions() {
-        game.performCollisionCheck();
-        if (game.player.getHp() <= 0) {
-            return scene.switchToScene("TitleScene");
-        }
-        return false;
-    }
-
-    public static void drawDialog(IGraphics g, String speaker, String[] msg) {
-        // Draw msgbox border
-        g.setColor(Color.white);
-        g.fillRect(12, HEIGHT - 200, GAME_BORDER - 12, HEIGHT - 12);
-        // Draw grey area
-        g.setColor(Color.gray);
-        g.fillRect(20, HEIGHT - 192, GAME_BORDER - 20, HEIGHT - 20);
-        // Draw name inside msgbox
-        g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
-        g.drawString(speaker, 28, HEIGHT - 162);
-        // Draw message inside msgbox
-        g.setFont(SANS_FONT);
-        for (int i = 0; i < msg.length; ++i) {
-            g.drawString(msg[i], 28, HEIGHT - 142 + i * (SANS_FONT.getSize()) + 10);
-        }
-        // Draw footer
-        g.drawString("Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
     }
 
     public abstract boolean postUpdate(float dt);
