@@ -24,6 +24,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -106,7 +107,7 @@ public final class LevelOneScene extends AbstractGameScene {
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
-        bgm = (Clip) scene.resources().get("Level_One.wav");
+        bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
@@ -231,7 +232,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     disableDamage();
                     disableInput();
                     game.clearBullets();
-                    bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                    bgm = ResourceManager.get("/music/Level_One_Boss.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
@@ -395,7 +396,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();
@@ -621,7 +622,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();
@@ -893,7 +894,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         disableDamage();
                         disableInput();
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();

@@ -26,6 +26,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.Player;
@@ -90,7 +91,7 @@ public final class TutorialScene extends AbstractGameScene {
         displayMessage(null);
         renderControls = true;
 
-        bgm = (Clip) scene.resources().get("Awakening.wav");
+        bgm = ResourceManager.get("/music/Awakening.wav");
 
         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
             bgm.setMicrosecondPosition(0);
@@ -177,7 +178,7 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 11:
-                    bgm = (Clip) scene.resources().get("Unlocked.wav");
+                    bgm = ResourceManager.get("/music/Unlocked.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();

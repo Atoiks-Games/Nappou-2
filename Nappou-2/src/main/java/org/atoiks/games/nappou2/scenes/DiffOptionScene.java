@@ -25,6 +25,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
@@ -76,7 +77,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void init() {
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
     }
 
     @Override

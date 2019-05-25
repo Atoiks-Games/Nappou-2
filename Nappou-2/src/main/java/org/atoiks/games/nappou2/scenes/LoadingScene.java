@@ -39,6 +39,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.decoder.ImageDecoder;
+import org.atoiks.games.framework2d.decoder.AudioDecoder;
+import org.atoiks.games.framework2d.decoder.DecodeException;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
@@ -101,20 +106,26 @@ public final class LoadingScene extends Scene {
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
-                    loadImageFromResources("hp.png");
-                    loadImageFromResources("z.png");
-                    loadImageFromResources("x.png");
-                    loadImageFromResources("CAI.png");
-                    loadImageFromResources("ELLE.png");
-                    loadImageFromResources("LUMA.png");
+                    try {
+                        loadImageFromResources("hp.png");
+                        loadImageFromResources("z.png");
+                        loadImageFromResources("x.png");
+                        loadImageFromResources("CAI.png");
+                        loadImageFromResources("ELLE.png");
+                        loadImageFromResources("LUMA.png");
 
-                    loadMusicFromResources("Level_One.wav");
-                    loadMusicFromResources("Level_One_Boss.wav");
-                    loadMusicFromResources("Enter_The_Void.wav");
-                    loadMusicFromResources("Awakening.wav");
-                    loadMusicFromResources("Broken_Soul.wav");
-                    loadMusicFromResources("Haunted.wav");
-                    loadMusicFromResources("Unlocked.wav");
+                        loadMusicFromResources("Level_One.wav");
+                        loadMusicFromResources("Level_One_Boss.wav");
+                        loadMusicFromResources("Enter_The_Void.wav");
+                        loadMusicFromResources("Awakening.wav");
+                        loadMusicFromResources("Broken_Soul.wav");
+                        loadMusicFromResources("Haunted.wav");
+                        loadMusicFromResources("Unlocked.wav");
+                    } catch (DecodeException ex) {
+                        ex.printStackTrace();
+                        loaded = LoadState.NO_RES;
+                        return;
+                    }
 
                     // Load configuration file from "current" directory
                     try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
@@ -162,37 +173,11 @@ public final class LoadingScene extends Scene {
         // Ignore, screen size is fixed
     }
 
-    private InputStream getResourceStreamFrom(final String folder, final String name) {
-        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/en/" + name);
-        if (is == null) {
-            is = this.getClass().getResourceAsStream("/" + folder + "/" + name);
-        }
-        return is;
-    }
-
     private void loadImageFromResources(final String name) {
-        try {
-            InputStream is = getResourceStreamFrom("image", name);
-            if (is == null) {
-                loaded = LoadState.NO_RES;
-                return;
-            }
-            scene.resources().put(name, ImageIO.read(is));
-        } catch (IOException ex) {
-        }
+        ResourceManager.load("/image/" + name, ImageDecoder.INSTANCE);
     }
 
     private void loadMusicFromResources(final String name) {
-        InputStream is = getResourceStreamFrom("music", name);
-        if (is == null) {
-            loaded = LoadState.NO_RES;
-            return;
-        }
-        try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
-            final Clip clip = SoundEffect.getFromAudioInputStream(in).makeClip();
-            scene.resources().put(name, clip);
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-            ex.printStackTrace();
-        }
+        ResourceManager.load("/music/" + name, AudioDecoder.INSTANCE);
     }
 }

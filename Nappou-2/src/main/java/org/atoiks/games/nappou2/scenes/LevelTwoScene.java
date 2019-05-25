@@ -25,6 +25,7 @@ import java.util.Random;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -93,7 +94,7 @@ public final class LevelTwoScene extends AbstractGameScene {
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
-        bgm = (Clip) scene.resources().get("Level_One.wav");
+        bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
@@ -306,7 +307,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             enableDamage();
                             enableInput();
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
+                            bgm = ResourceManager.get("/music/Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
                                 bgm.setMicrosecondPosition(0);
                                 bgm.start();

@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
@@ -100,7 +101,7 @@ public abstract class AbstractGameScene extends CenteringScene {
         }
 
         if (msg.imgRes != null) {
-            this.imgMsg = (Image) scene.resources().get(msg.imgRes);
+            this.imgMsg = ResourceManager.get("/image/" + msg.imgRes);
         }
 
         if (this.imgMsg != null) {
@@ -144,7 +145,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void init() {
-        hpImg = (Image) scene.resources().get("hp.png");
+        hpImg = ResourceManager.get("/image/hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
     }
 
