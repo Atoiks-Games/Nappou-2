@@ -229,7 +229,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     cycles = 0;
                     bgm.stop();
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
                     bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
                     if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -245,7 +245,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Easy(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -280,7 +280,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -393,7 +393,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -410,7 +410,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Normal(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -445,7 +445,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -619,7 +619,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -636,7 +636,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Hard(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -671,7 +671,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -891,7 +891,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
                         if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -908,7 +908,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Insane(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -943,7 +943,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {

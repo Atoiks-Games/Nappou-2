@@ -72,12 +72,8 @@ public abstract class AbstractGameScene extends CenteringScene {
         game.player.setIgnoreHpChange(false);
     }
 
-    protected final void disableInput() {
-        skipPlayerUpdate = true;
-    }
-
-    protected final void enableInput() {
-        skipPlayerUpdate = false;
+    protected final void shouldSkipPlayerUpdate(final boolean flag) {
+        skipPlayerUpdate = flag;
     }
 
     protected final void clearMessage() {
@@ -104,7 +100,7 @@ public abstract class AbstractGameScene extends CenteringScene {
         difficulty = (Difficulty) scene.resources().get("difficulty");
 
         playerFireLimiter = 0f;
-        enableInput();
+        shouldSkipPlayerUpdate(false);
     }
 
     @Override

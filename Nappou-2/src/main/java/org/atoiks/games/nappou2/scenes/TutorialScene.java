@@ -171,7 +171,7 @@ public final class TutorialScene extends AbstractGameScene {
                 case 2:
                     updateBackgroundImage(null);
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
                     bgm.stop();
                     // fallthrough!!
@@ -196,7 +196,7 @@ public final class TutorialScene extends AbstractGameScene {
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
                     enableDamage();
-                    enableInput();
+                    shouldSkipPlayerUpdate(false);
                     clearMessage();
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(50, 375, -10, 20));
@@ -204,7 +204,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 12:
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
                     bgm.stop();
 

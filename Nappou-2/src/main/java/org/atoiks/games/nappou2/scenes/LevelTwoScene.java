@@ -294,7 +294,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                     cycles = 0;
                     bgm.stop();
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
 
                     displayNextDialogue(PREBOSS_MSG);
@@ -304,7 +304,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                         if (!displayNextDialogue(PREBOSS_MSG)) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             bgm = (Clip) scene.resources().get("Broken_Soul.wav");
                             if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
@@ -323,7 +323,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                         disableDamage();
                         msgPhase = -1;
                         displayNextDialogue(POSTBOSS_MSG);
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         wave++;
                     }
