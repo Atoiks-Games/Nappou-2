@@ -43,7 +43,10 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.decoder.ImageDecoder;
 import org.atoiks.games.framework2d.decoder.AudioDecoder;
+import org.atoiks.games.framework2d.decoder.ObjectDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
+
+import org.atoiks.games.framework2d.resolver.ExternalResourceResolver;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
@@ -128,37 +131,17 @@ public final class LoadingScene extends Scene {
                     }
 
                     // Load configuration file from "current" directory
-                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
-                        final GameConfig cfg = (GameConfig) ois.readObject();
-                        scene.resources().put("game.cfg", cfg == null ? new GameConfig() : cfg);
-                        if (cfg != null) {
-                            // Check if user wanted fullscreen mode
-                            enterFullscreen = cfg.fullscreen;
-                        }
-                    } catch (IOException | ClassNotFoundException ex) {
-                        // Supply default configuration
-                        scene.resources().put("game.cfg", new GameConfig());
-                    }
+                    final GameConfig cfg = ResourceManager.loadOrDefault("./game.cfg", ExternalResourceResolver.INSTANCE,
+                            ObjectDecoder.getInstance(), GameConfig::new);
+                    enterFullscreen = cfg.fullscreen;
 
                     // Load score file from "current" directory
-                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./score.dat"))) {
-                        final ScoreData data = (ScoreData) ois.readObject();
+                    final ScoreData data = ResourceManager.loadOrDefault("./score.dat", ExternalResourceResolver.INSTANCE,
+                            ObjectDecoder.getInstance(), ScoreData::new);
 
-                        ScoreData sanitized;
-                        if (data == null) {
-                            // if we cannot find the old score, supply blank score
-                            sanitized = new ScoreData();
-                        } else if (data.data[0].length != ScoreData.LEVELS) {
-                            // amount of levels is changed, assume old score is wrong
-                            sanitized = new ScoreData();
-                        } else {
-                            // keep old score, it is probably valid
-                            sanitized = data;
-                        }
-                        scene.resources().put("score.dat", sanitized);
-                    } catch (IOException | ClassNotFoundException ex) {
-                        // Supply default score
-                        scene.resources().put("score.dat", new ScoreData());
+                    if (data.data[0].length != ScoreData.LEVELS) {
+                        // amount of levels is changed, assume old score is wrong
+                        ResourceManager.replace("./score.dat", new ScoreData());
                     }
 
                     loaded = LoadState.DONE;

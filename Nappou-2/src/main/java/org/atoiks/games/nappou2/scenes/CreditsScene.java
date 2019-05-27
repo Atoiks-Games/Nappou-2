@@ -64,7 +64,7 @@ public final class CreditsScene extends CenteringScene {
     public void enter(String previousSceneId) {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }

@@ -100,7 +100,7 @@ public final class TitleScene extends CenteringScene {
 
     @Override
     public void enter(final String prevSceneId) {
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             // switch-case with strings crash when value is null
             switch (prevSceneId != null ? prevSceneId : "") {
                 case "ScoreScene":

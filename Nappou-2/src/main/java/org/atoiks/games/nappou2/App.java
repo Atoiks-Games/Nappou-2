@@ -26,6 +26,8 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 
 import org.atoiks.games.framework2d.FrameInfo;
+import org.atoiks.games.framework2d.ResourceManager;
+
 import org.atoiks.games.framework2d.java2d.Frame;
 
 import org.atoiks.games.nappou2.scenes.*;
@@ -64,8 +66,8 @@ public class App {
             frame.init();
             frame.loop();
         } finally {
-            final GameConfig gameCfg = (GameConfig) frame.getSceneManager().resources().get("game.cfg");
-            final ScoreData scoreDat = (ScoreData) frame.getSceneManager().resources().get("score.dat");
+            final GameConfig gameCfg = ResourceManager.get("./game.cfg");
+            final ScoreData scoreDat = ResourceManager.get("./score.dat");
             frame.close();
 
             // Saves config

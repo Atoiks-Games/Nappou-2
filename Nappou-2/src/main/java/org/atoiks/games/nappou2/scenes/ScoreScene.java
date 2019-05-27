@@ -117,10 +117,10 @@ public final class ScoreScene extends CenteringScene {
 
     @Override
     public void enter(String previousSceneId) {
-        score = (ScoreData) scene.resources().get("score.dat");
+        score = ResourceManager.get("./score.dat");
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }

@@ -133,7 +133,7 @@ public final class ConfigScene extends CenteringScene {
     @Override
     public void init() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-        config = (GameConfig) scene.resources().get("game.cfg");
+        config = ResourceManager.get("./game.cfg");
     }
 
     @Override

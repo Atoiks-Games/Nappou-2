@@ -88,7 +88,7 @@ public final class LevelTwoScene extends AbstractGameScene {
 
         msgPhase = -1;
 
-        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
@@ -308,7 +308,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                             enableInput();
                             cycles = 0;
                             bgm = ResourceManager.get("/music/Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                                 bgm.setMicrosecondPosition(0);
                                 bgm.start();
                                 bgm.loop(Clip.LOOP_CONTINUOUSLY);

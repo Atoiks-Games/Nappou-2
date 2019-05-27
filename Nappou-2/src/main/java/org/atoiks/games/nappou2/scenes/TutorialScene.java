@@ -93,7 +93,7 @@ public final class TutorialScene extends AbstractGameScene {
 
         bgm = ResourceManager.get("/music/Awakening.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -179,7 +179,7 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
                 case 11:
                     bgm = ResourceManager.get("/music/Unlocked.wav");
-                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                    if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);

@@ -92,7 +92,7 @@ public final class ShieldOptionScene extends CenteringScene {
 
     @Override
     public void enter(String previousSceneId) {
-        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
         if ((skipSelection = cfg.challengeMode)) {
             // Challenge mode does not use NullShield
             // Also, line above is intentional assignment, not test equality

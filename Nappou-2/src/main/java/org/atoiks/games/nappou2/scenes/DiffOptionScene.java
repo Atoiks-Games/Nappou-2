@@ -84,7 +84,7 @@ public final class DiffOptionScene extends CenteringScene {
     public void enter(String previousSceneId) {
         difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
-        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         if (cfg.bgm) {
             bgm.start();
