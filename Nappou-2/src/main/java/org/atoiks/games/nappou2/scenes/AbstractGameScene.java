@@ -88,13 +88,11 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void init() {
-        final Image hpImg = (Image) scene.resources().get("hp.png");
+        final Image hpImg = ResourceManager.get("/image/hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
 
-        pauseOverlay.attachSceneManager(this.scene);
         statusOverlay.attachGame(this.game);
         statusOverlay.attachHpImg(hpImg);
-        dialogOverlay.attachSceneManager(this.scene);
     }
 
     @Override
@@ -169,7 +167,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            scene.switchToScene("TitleScene");
+            SceneManager.switchToScene("TitleScene");
             return;
         }
 

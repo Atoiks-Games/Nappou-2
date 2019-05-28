@@ -22,7 +22,7 @@ import java.awt.Color;
 import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
-import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.Message;
 
@@ -39,12 +39,6 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
     private int xoffMsgImg;
     private int yoffMsgImg;
-
-    private SceneManager scene;
-
-    public void attachSceneManager(final SceneManager mgr) {
-        this.scene = mgr;
-    }
 
     public void clearMessage() {
         this.imgMsg = null;
@@ -95,7 +89,7 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
     private Image loadMessageResource(final Message msg) {
         if (msg.imgRes != null) {
-            return (Image) scene.resources().get(msg.imgRes);
+            return ResourceManager.get("/image/" + msg.imgRes);
         }
         return null;
     }

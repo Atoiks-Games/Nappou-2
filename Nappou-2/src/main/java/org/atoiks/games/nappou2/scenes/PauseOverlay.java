@@ -42,15 +42,6 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
     private boolean enabled;
 
-    private SceneManager scene;
-
-    public PauseOverlay() {
-    }
-
-    public void attachSceneManager(final SceneManager mgr) {
-        this.scene = mgr;
-    }
-
     public void enable() {
         this.enabled = true;
         this.selector = 0;
@@ -92,7 +83,7 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
             enabled = false;
 
             if (selector != SEL_RESUME_GAME) {
-                scene.switchToScene(SCENE_DEST[selector - 1]);
+                SceneManager.switchToScene(SCENE_DEST[selector - 1]);
             }
             return;
         }

@@ -148,7 +148,7 @@ public final class TutorialScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
-            updateBackgroundImage((Image) scene.resources().get("z.png"));
+            updateBackgroundImage(ResourceManager.get("/image/z.png"));
         }
 
         if (game.noMoreEnemies()) {
@@ -164,7 +164,7 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
-                        updateBackgroundImage((Image) scene.resources().get("x.png"));
+                        updateBackgroundImage(ResourceManager.get("/image/x.png"));
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
