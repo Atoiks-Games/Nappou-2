@@ -24,6 +24,8 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
@@ -97,7 +99,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void enter(String prevSceneId) {
-        difficulty = (Difficulty) scene.resources().get("difficulty");
+        difficulty = (Difficulty) SceneManager.resources().get("difficulty");
 
         playerFireLimiter = 0f;
         shouldSkipPlayerUpdate(false);
@@ -105,8 +107,8 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void leave() {
-        scene.resources().put("level.id", sceneId);
-        scene.resources().put("level.score", game.getScore());
+        SceneManager.resources().put("level.id", sceneId);
+        SceneManager.resources().put("level.score", game.getScore());
         game.cleanup();
     }
 

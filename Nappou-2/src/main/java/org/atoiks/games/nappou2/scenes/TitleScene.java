@@ -26,6 +26,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -77,7 +79,7 @@ public final class TitleScene extends CenteringScene {
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             if (selector < sceneDest.length) {
-                return scene.switchToScene(sceneDest[selector]);
+                return SceneManager.switchToScene(sceneDest[selector]);
             }
 
             // Quit was chosen
@@ -94,12 +96,12 @@ public final class TitleScene extends CenteringScene {
 
     @Override
     public void init() {
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
     }
 
     @Override
     public void enter(final String prevSceneId) {
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             // switch-case with strings crash when value is null
             switch (prevSceneId != null ? prevSceneId : "") {
                 case "ScoreScene":

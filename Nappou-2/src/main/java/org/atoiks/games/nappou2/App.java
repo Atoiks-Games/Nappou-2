@@ -26,6 +26,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 
 import org.atoiks.games.framework2d.FrameInfo;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
+
 import org.atoiks.games.framework2d.java2d.Frame;
 
 import org.atoiks.games.nappou2.scenes.*;
@@ -52,19 +55,22 @@ public class App {
                 .setTitle("Atoiks Games - Void Walker")
                 .setResizable(false)
                 .setSize(900, 600)
-                .setFps(120.0f)
-                .setLoader(new LoadingScene())
-                .setGameScenes(new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
-                        new ScoreScene(), new CreditsScene(), new ConfigScene(),
-                        new DiffOptionScene(), new ShieldOptionScene(),
-                        new LevelOneScene(), new LevelTwoScene());
+                .setFps(120.0f);
+
+        SceneManager.loadScenes(new LoadingScene(),
+                new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
+                new ScoreScene(), new CreditsScene(), new ConfigScene(),
+                new DiffOptionScene(), new ShieldOptionScene(),
+                new LevelOneScene(), new LevelTwoScene());
+
         final Frame frame = new Frame(info);
         try {
+            SceneManager.switchToScene("LoadingScene");
             frame.init();
             frame.loop();
         } finally {
-            final GameConfig gameCfg = (GameConfig) frame.getSceneManager().resources().get("game.cfg");
-            final ScoreData scoreDat = (ScoreData) frame.getSceneManager().resources().get("score.dat");
+            final GameConfig gameCfg = ResourceManager.get("./game.cfg");
+            final ScoreData scoreDat = ResourceManager.get("./score.dat");
             frame.close();
 
             // Saves config

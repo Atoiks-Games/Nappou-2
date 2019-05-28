@@ -26,6 +26,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.Player;
@@ -91,9 +93,9 @@ public final class TutorialScene extends AbstractGameScene {
         clearMessage();
         renderControls = true;
 
-        bgm = (Clip) scene.resources().get("Awakening.wav");
+        bgm = ResourceManager.get("/music/Awakening.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -189,8 +191,8 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 11:
-                    bgm = (Clip) scene.resources().get("Unlocked.wav");
-                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                    bgm = ResourceManager.get("/music/Unlocked.wav");
+                    if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -212,7 +214,7 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly
-                        return scene.switchToScene("TitleScene");
+                        return SceneManager.switchToScene("TitleScene");
                     }
                     break;
             }

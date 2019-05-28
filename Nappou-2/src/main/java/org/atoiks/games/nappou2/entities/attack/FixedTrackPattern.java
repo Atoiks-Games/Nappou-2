@@ -22,14 +22,20 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class MiniBomber implements IAttackPattern {
+public final class FixedTrackPattern implements IAttackPattern {
 
-    public static final MiniBomber INSTANCE = new MiniBomber();
+    private final float angle;
+    private final BulletFactory factory;
 
-    private MiniBomber() {
-        //
+    public FixedTrackPattern(BulletFactory factory) {
+        this(factory, 0);
+    }
+
+    public FixedTrackPattern(BulletFactory factory, float angle) {
+        this.angle = angle;
+        this.factory = factory;
     }
 
     @Override
@@ -38,6 +44,7 @@ public final class MiniBomber implements IAttackPattern {
         final float x = enemy.getX();
         final float y = enemy.getY();
 
-        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
+        final float base = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        game.addEnemyBullet(factory.createBullet(x, y, base + angle));
     }
 }

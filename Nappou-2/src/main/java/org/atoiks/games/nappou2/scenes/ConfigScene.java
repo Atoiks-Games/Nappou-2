@@ -25,6 +25,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -88,7 +90,7 @@ public final class ConfigScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             selector = (selector + 1) % SELECTOR_Y.length;
@@ -122,7 +124,7 @@ public final class ConfigScene extends CenteringScene {
                 config.challengeMode = newValue;
                 break;
             case 2:
-                scene.frame().setFullScreen(config.fullscreen = newValue);
+                SceneManager.frame().setFullScreen(config.fullscreen = newValue);
                 break;
             default:
                 throw new RuntimeException("Unknown selector index " + selector);
@@ -131,8 +133,8 @@ public final class ConfigScene extends CenteringScene {
 
     @Override
     public void init() {
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
-        config = (GameConfig) scene.resources().get("game.cfg");
+        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+        config = ResourceManager.get("./game.cfg");
     }
 
     @Override

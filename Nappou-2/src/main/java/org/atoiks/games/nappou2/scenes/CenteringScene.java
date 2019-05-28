@@ -18,10 +18,10 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import org.atoiks.games.framework2d.GameScene;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 
-public abstract class CenteringScene extends GameScene {
+public abstract class CenteringScene implements Scene {
 
     private float scaleFactor;
     private float transX;

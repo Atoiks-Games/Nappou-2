@@ -33,6 +33,19 @@ import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
 
+    private static final FixedAnglePattern MINI_BOMBER_PATTERN =
+            new FixedAnglePattern(new PointBulletInfo(2, 1000), (float) (Math.PI / 2));
+
+    private static final MultiAnglePattern ADV_MINI_BOMBER_PATTERN =
+            new MultiAnglePattern(new PointBulletInfo(2, 1000),
+                    (float) (7 * Math.PI / 16), (float) (9 * Math.PI / 16), (float) (Math.PI / 2));
+
+    private static final FixedTrackPattern SINGLE_SHOT_PATTERN =
+            new FixedTrackPattern(new PointBulletInfo(2, 1000));
+
+    private static final MultiTrackPattern STAR_SHOT_PATTERN =
+            new MultiTrackPattern(new PointBulletInfo(2, 1000), 0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
+
     private Utils() {
     }
 
@@ -60,7 +73,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
-        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SINGLE_SHOT_PATTERN));
         return enemy;
     }
 
@@ -68,7 +81,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SingleShot.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, SINGLE_SHOT_PATTERN));
         return enemy;
     }
 
@@ -76,7 +89,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300 * (inverted ? -1 : 1)));
-        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, StarPattern.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(6, 0, 0.5, STAR_SHOT_PATTERN));
         return enemy;
     }
 
@@ -84,7 +97,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, MINI_BOMBER_PATTERN));
         return enemy;
     }
 
@@ -92,7 +105,7 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, direction * 300, 0));
-        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, AdvancedMiniBomber.INSTANCE));
+        enemy.setAttackPattern(new SineFireGate(speed, 0, 0.5, ADV_MINI_BOMBER_PATTERN));
         return enemy;
     }
 
