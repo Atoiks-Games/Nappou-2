@@ -22,14 +22,16 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 import org.atoiks.games.nappou2.entities.IAttackPattern;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class SingleShot implements IAttackPattern {
+public final class MultiAnglePattern implements IAttackPattern {
 
-    public static final SingleShot INSTANCE = new SingleShot();
+    private final float[] angles;
+    private final BulletFactory factory;
 
-    private SingleShot() {
-        //
+    public MultiAnglePattern(BulletFactory factory, float... angles) {
+        this.factory = factory;
+        this.angles = angles;
     }
 
     @Override
@@ -38,7 +40,8 @@ public final class SingleShot implements IAttackPattern {
         final float x = enemy.getX();
         final float y = enemy.getY();
 
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+        for (final float angle : angles) {
+            game.addEnemyBullet(factory.createBullet(x, y, angle));
+        }
     }
 }

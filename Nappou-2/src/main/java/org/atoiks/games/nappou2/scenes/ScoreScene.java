@@ -25,6 +25,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
@@ -100,7 +102,7 @@ public final class ScoreScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_C)) {
             score.clear(plane);
@@ -116,10 +118,10 @@ public final class ScoreScene extends CenteringScene {
 
     @Override
     public void enter(String previousSceneId) {
-        score = (ScoreData) scene.resources().get("score.dat");
-        bgm = (Clip) scene.resources().get("Enter_The_Void.wav");
+        score = ResourceManager.get("./score.dat");
+        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }

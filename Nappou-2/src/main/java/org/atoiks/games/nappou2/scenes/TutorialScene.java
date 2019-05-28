@@ -26,6 +26,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.entities.Player;
@@ -40,6 +42,9 @@ import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
+import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignVertical;
+import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignHorizontal;
+
 public final class TutorialScene extends AbstractGameScene {
 
     private static final String[][] INFO_MSG = {
@@ -50,12 +55,6 @@ public final class TutorialScene extends AbstractGameScene {
         { "Escape", "= Pause" },
         { "Enter", "= Select" }
     };
-
-    private static final Message MSG_BTN_Z = new Message(
-            "z.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
-
-    private static final Message MSG_BTN_X = new Message(
-            "x.png", HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
 
     private static final Message[] PREBOSS_MSG = {
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
@@ -72,6 +71,10 @@ public final class TutorialScene extends AbstractGameScene {
     private static final Message POSTBOSS_MSG = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
+    private Image background;
+    private int xoffImg;
+    private int yoffImg;
+
     private int waveCounter;
     private float time;
     private Clip bgm;
@@ -87,12 +90,12 @@ public final class TutorialScene extends AbstractGameScene {
     public void enter(final String prevSceneId) {
         super.enter(prevSceneId);
 
-        displayMessage(null);
+        clearMessage();
         renderControls = true;
 
-        bgm = (Clip) scene.resources().get("Awakening.wav");
+        bgm = ResourceManager.get("/music/Awakening.wav");
 
-        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -123,6 +126,10 @@ public final class TutorialScene extends AbstractGameScene {
             g.drawString("Survive the void", 25, 550);
             g.drawString("Press Enter to continue", 25, 580);
         }
+
+        if (background != null) {
+            g.drawImage(background, xoffImg, yoffImg);
+        }
     }
 
     @Override
@@ -131,11 +138,17 @@ public final class TutorialScene extends AbstractGameScene {
         super.leave();
     }
 
+    private void updateBackgroundImage(final Image img) {
+        background = img;
+        yoffImg = alignVertical(VerticalAlignment.CENTER, img);
+        xoffImg = alignHorizontal(HorizontalAlignment.CENTER, img);
+    }
+
     @Override
     public boolean postUpdate(float dt) {
         if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
-            displayMessage(MSG_BTN_Z);
+            updateBackgroundImage((Image) scene.resources().get("z.png"));
         }
 
         if (game.noMoreEnemies()) {
@@ -151,15 +164,16 @@ public final class TutorialScene extends AbstractGameScene {
                         game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
                     } else {
                         ++waveCounter;
-                        displayMessage(MSG_BTN_X);
+                        updateBackgroundImage((Image) scene.resources().get("x.png"));
                         game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                         game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
                     }
                     break;
 
                 case 2:
+                    updateBackgroundImage(null);
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
                     bgm.stop();
                     // fallthrough!!
@@ -177,22 +191,22 @@ public final class TutorialScene extends AbstractGameScene {
                     }
                     break;
                 case 11:
-                    bgm = (Clip) scene.resources().get("Unlocked.wav");
-                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                    bgm = ResourceManager.get("/music/Unlocked.wav");
+                    if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.loop(Clip.LOOP_CONTINUOUSLY);
                     }
                     enableDamage();
-                    enableInput();
-                    displayMessage(null);
+                    shouldSkipPlayerUpdate(false);
+                    clearMessage();
                     //bossMode = true;
                     game.addEnemy(new CAITutorial(50, 375, -10, 20));
                     ++waveCounter;
                     break;
                 case 12:
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
                     bgm.stop();
 
@@ -200,7 +214,7 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly
-                        return scene.switchToScene("TitleScene");
+                        return SceneManager.switchToScene("TitleScene");
                     }
                     break;
             }

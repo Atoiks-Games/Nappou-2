@@ -26,6 +26,8 @@ import java.util.Random;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -99,20 +101,20 @@ public final class LevelOneScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        displayMessage(null);
+        clearMessage();
         cycles = 0;
         wave = 0;
         phase = 0;
 
         prebossMsgPhase = -1;
 
-        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) SceneManager.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
-        bgm = (Clip) scene.resources().get("Level_One.wav");
+        bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
@@ -145,7 +147,7 @@ public final class LevelOneScene extends AbstractGameScene {
         }
 
         // no more dialogs, must clear out player portrait
-        displayMessage(null);
+        clearMessage();
         return false;
     }
 
@@ -153,7 +155,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODES
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-        //    return scene.gotoNextScene();
+        //    return SceneManager.gotoNextScene();
         //}
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
         //    disableDamage();
@@ -287,10 +289,10 @@ public final class LevelOneScene extends AbstractGameScene {
                     cycles = 0;
                     bgm.stop();
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
-                    bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
-                    if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                    bgm = ResourceManager.get("/music/Level_One_Boss.wav");
+                    if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                         bgm.setMicrosecondPosition(0);
                         bgm.start();
                         bgm.setLoopPoints(BOSS_LOOP, -1);
@@ -303,7 +305,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Easy(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -338,13 +340,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;*/
@@ -451,10 +453,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
+                        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();
                             bgm.setLoopPoints(BOSS_LOOP, -1);
@@ -468,7 +470,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Normal(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -503,13 +505,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
@@ -677,10 +679,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
+                        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();
                             bgm.setLoopPoints(BOSS_LOOP, -1);
@@ -694,7 +696,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Hard(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -729,13 +731,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
@@ -949,10 +951,10 @@ public final class LevelOneScene extends AbstractGameScene {
                         cycles = 0;
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
-                        bgm = (Clip) scene.resources().get("Level_One_Boss.wav");
-                        if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                        bgm = ResourceManager.get("/music/Level_One_Boss.wav");
+                        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                             bgm.setMicrosecondPosition(0);
                             bgm.start();
                             bgm.setLoopPoints(BOSS_LOOP, -1);
@@ -966,7 +968,7 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (!displayNextPrebossDialogue()) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
                             game.addEnemy(new Level1Insane(300, 375, -10, 20));
                             drift.accelY = -20;
@@ -1001,13 +1003,13 @@ public final class LevelOneScene extends AbstractGameScene {
                     if (cycles > 40 && game.noMoreEnemies()) {
                         bgm.stop();
                         disableDamage();
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
