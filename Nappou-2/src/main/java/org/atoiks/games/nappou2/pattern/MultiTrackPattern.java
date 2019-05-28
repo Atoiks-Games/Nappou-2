@@ -19,48 +19,29 @@
 package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.Game;
-
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class TrackingPattern implements IAttackPattern {
+public final class MultiTrackPattern implements IAttackPattern {
 
+    private final float[] angles;
     private final BulletFactory factory;
 
-    private final float fireInterval;
-    private final float delay;
-    private final float[] angleOffsets;
-
-    private float time;
-    private int bulletId;
-
-    public TrackingPattern(float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BulletFactory factory) {
+    public MultiTrackPattern(BulletFactory factory, float... angles) {
+        this.angles = angles;
         this.factory = factory;
-
-        this.fireInterval = fireInterval;
-        this.delay = delay;
-        this.angleOffsets = angleOffsets;
-
-        if (!immediateFire) {
-            bulletId = angleOffsets.length;
-        }
     }
 
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
-        time += dt;
-        if (bulletId >= angleOffsets.length) {
-            if (time >= fireInterval) bulletId = 0;
-        } else if (time > delay) {
-            final Game game = enemy.getAssocGame();
-            final float x = enemy.getX();
-            final float y = enemy.getY();
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
 
-            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(factory.createBullet(x, y, angle));
-            ++bulletId;
-            time = 0;
+        final float base = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
+        for (final float angle : angles) {
+            game.addEnemyBullet(factory.createBullet(x, y, base + angle));
         }
     }
 }

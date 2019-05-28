@@ -39,6 +39,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.decoder.ImageDecoder;
+import org.atoiks.games.framework2d.decoder.AudioDecoder;
+import org.atoiks.games.framework2d.decoder.ObjectDecoder;
+import org.atoiks.games.framework2d.decoder.DecodeException;
+
+import org.atoiks.games.framework2d.resolver.ExternalResourceResolver;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
@@ -48,7 +57,7 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
-public final class LoadingScene extends Scene {
+public final class LoadingScene implements Scene {
 
     private enum LoadState {
         WAITING, LOADING, DONE, NO_RES
@@ -91,58 +100,44 @@ public final class LoadingScene extends Scene {
             case DONE:
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
-                scene.frame().setFullScreen(enterFullscreen);
-                return scene.switchToScene("TitleScene");
+                SceneManager.frame().setFullScreen(enterFullscreen);
+                return SceneManager.switchToScene("TitleScene");
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
-                    loadImageFromResources("hp.png");
-                    loadImageFromResources("z.png");
-                    loadImageFromResources("x.png");
-                    loadImageFromResources("CAI.png");
-                    loadImageFromResources("ELLE.png");
-                    loadImageFromResources("LUMA.png");
+                    try {
+                        loadImageFromResources("hp.png");
+                        loadImageFromResources("z.png");
+                        loadImageFromResources("x.png");
+                        loadImageFromResources("CAI.png");
+                        loadImageFromResources("ELLE.png");
+                        loadImageFromResources("LUMA.png");
 
-                    loadMusicFromResources("Level_One.wav");
-                    loadMusicFromResources("Level_One_Boss.wav");
-                    loadMusicFromResources("Enter_The_Void.wav");
-                    loadMusicFromResources("Awakening.wav");
-                    loadMusicFromResources("Broken_Soul.wav");
-                    loadMusicFromResources("Haunted.wav");
-                    loadMusicFromResources("Unlocked.wav");
-
-                    // Load configuration file from "current" directory
-                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./game.cfg"))) {
-                        final GameConfig cfg = (GameConfig) ois.readObject();
-                        scene.resources().put("game.cfg", cfg == null ? new GameConfig() : cfg);
-                        if (cfg != null) {
-                            // Check if user wanted fullscreen mode
-                            enterFullscreen = cfg.fullscreen;
-                        }
-                    } catch (IOException | ClassNotFoundException ex) {
-                        // Supply default configuration
-                        scene.resources().put("game.cfg", new GameConfig());
+                        loadMusicFromResources("Level_One.wav");
+                        loadMusicFromResources("Level_One_Boss.wav");
+                        loadMusicFromResources("Enter_The_Void.wav");
+                        loadMusicFromResources("Awakening.wav");
+                        loadMusicFromResources("Broken_Soul.wav");
+                        loadMusicFromResources("Haunted.wav");
+                        loadMusicFromResources("Unlocked.wav");
+                    } catch (DecodeException ex) {
+                        ex.printStackTrace();
+                        loaded = LoadState.NO_RES;
+                        return;
                     }
 
-                    // Load score file from "current" directory
-                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./score.dat"))) {
-                        final ScoreData data = (ScoreData) ois.readObject();
+                    // Load configuration file from "current" directory
+                    final GameConfig cfg = ResourceManager.loadOrDefault("./game.cfg", ExternalResourceResolver.INSTANCE,
+                            ObjectDecoder.getInstance(), GameConfig::new);
+                    enterFullscreen = cfg.fullscreen;
 
-                        ScoreData sanitized;
-                        if (data == null) {
-                            // if we cannot find the old score, supply blank score
-                            sanitized = new ScoreData();
-                        } else if (data.data[0].length != ScoreData.LEVELS) {
-                            // amount of levels is changed, assume old score is wrong
-                            sanitized = new ScoreData();
-                        } else {
-                            // keep old score, it is probably valid
-                            sanitized = data;
-                        }
-                        scene.resources().put("score.dat", sanitized);
-                    } catch (IOException | ClassNotFoundException ex) {
-                        // Supply default score
-                        scene.resources().put("score.dat", new ScoreData());
+                    // Load score file from "current" directory
+                    final ScoreData data = ResourceManager.loadOrDefault("./score.dat", ExternalResourceResolver.INSTANCE,
+                            ObjectDecoder.getInstance(), ScoreData::new);
+
+                    if (data.data[0].length != ScoreData.LEVELS) {
+                        // amount of levels is changed, assume old score is wrong
+                        ResourceManager.replace("./score.dat", new ScoreData());
                     }
 
                     loaded = LoadState.DONE;
@@ -157,37 +152,11 @@ public final class LoadingScene extends Scene {
         // Ignore, screen size is fixed
     }
 
-    private InputStream getResourceStreamFrom(final String folder, final String name) {
-        InputStream is = this.getClass().getResourceAsStream("/" + folder + "/en/" + name);
-        if (is == null) {
-            is = this.getClass().getResourceAsStream("/" + folder + "/" + name);
-        }
-        return is;
-    }
-
     private void loadImageFromResources(final String name) {
-        try {
-            InputStream is = getResourceStreamFrom("image", name);
-            if (is == null) {
-                loaded = LoadState.NO_RES;
-                return;
-            }
-            scene.resources().put(name, ImageIO.read(is));
-        } catch (IOException ex) {
-        }
+        ResourceManager.load("/image/" + name, ImageDecoder.INSTANCE);
     }
 
     private void loadMusicFromResources(final String name) {
-        InputStream is = getResourceStreamFrom("music", name);
-        if (is == null) {
-            loaded = LoadState.NO_RES;
-            return;
-        }
-        try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
-            final Clip clip = SoundEffect.getFromAudioInputStream(in).makeClip();
-            scene.resources().put(name, clip);
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-            ex.printStackTrace();
-        }
+        ResourceManager.load("/music/" + name, AudioDecoder.INSTANCE);
     }
 }

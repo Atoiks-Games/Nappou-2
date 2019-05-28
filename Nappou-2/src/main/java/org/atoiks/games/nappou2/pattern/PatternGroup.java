@@ -18,26 +18,20 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+public final class PatternGroup implements IAttackPattern {
 
-public final class SingleShot implements IAttackPattern {
+    private final Iterable<? extends IAttackPattern> patterns;
 
-    public static final SingleShot INSTANCE = new SingleShot();
-
-    private SingleShot() {
-        //
+    public PatternGroup(Iterable<? extends IAttackPattern> patterns) {
+        this.patterns = patterns;
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
-        final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
-
-        final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-        game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+    public void onFireUpdate(final IEnemy enemy, final float dt) {
+        for (final IAttackPattern pattern : patterns) {
+            pattern.onFireUpdate(enemy, dt);
+        }
     }
 }

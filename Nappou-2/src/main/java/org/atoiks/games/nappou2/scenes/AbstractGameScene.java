@@ -24,14 +24,17 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 
-import org.atoiks.games.nappou2.entities.*;
-import org.atoiks.games.nappou2.entities.bullet.*;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
+import org.atoiks.games.nappou2.entities.Message;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
+import org.atoiks.games.nappou2.entities.bullet.factory.PointBulletInfo;
 
 public abstract class AbstractGameScene extends CenteringScene {
 
@@ -41,35 +44,23 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
-    public static final Color PAUSE_OVERLAY = new Color(192, 192, 192, 100);
-    public static final Color STATS_GREY = new Color(106, 106, 106);
 
-    // Conventionally, continue is always the first option,
-    // sceneDest is always one less than the selectorY
-    private static final int[] selectorY = {342, 402};
-    private static final String[] sceneDest = {"TitleScene"};
-    private static final int OPT_HEIGHT = 37;
+    private static final PointBulletInfo PLAYER_BULLET_INFO = new PointBulletInfo(5, DEFAULT_DY * 4.5f);
+    private static final float MIN_FIRE_DELAY = 0.2f;
 
-    private int selector;
+    private final PauseOverlay pauseOverlay = new PauseOverlay();
+    private final StatusOverlay statusOverlay = new StatusOverlay();
+    private final DialogOverlay dialogOverlay = new DialogOverlay();
 
     protected final Game game = new Game();
-
-    private boolean disableInput = false;
-
-    protected float playerFireTimeout;
-    protected Image hpImg;
-    protected boolean pause;
-    protected Difficulty difficulty;
-
     protected final Drifter drift = new Drifter();
 
-    public final int sceneId;
+    protected Difficulty difficulty;
 
-    private String msgSpeaker;
-    private String[] msgLines;
-    private Image imgMsg;
-    private int xoffMsgImg;
-    private int yoffMsgImg;
+    private boolean skipPlayerUpdate;
+    private float playerFireLimiter;
+
+    public final int sceneId;
 
     protected AbstractGameScene(int id) {
         sceneId = id;
@@ -83,124 +74,45 @@ public abstract class AbstractGameScene extends CenteringScene {
         game.player.setIgnoreHpChange(false);
     }
 
-    protected final void disableInput() {
-        disableInput = true;
+    protected final void shouldSkipPlayerUpdate(final boolean flag) {
+        skipPlayerUpdate = flag;
     }
 
-    protected final void enableInput() {
-        disableInput = false;
+    protected final void clearMessage() {
+        dialogOverlay.clearMessage();
     }
 
     protected final void displayMessage(final Message msg) {
-        if (msg == null) {
-            this.imgMsg = null;
-            this.msgSpeaker = null;
-            this.msgLines = null;
-            return;
-        }
-
-        if (msg.imgRes != null) {
-            this.imgMsg = (Image) scene.resources().get(msg.imgRes);
-        }
-
-        if (this.imgMsg != null) {
-            switch (msg.getImageHorizontalAlignment()) {
-                case LEFT:
-                    this.xoffMsgImg = 0;
-                    break;
-                case RIGHT:
-                    this.xoffMsgImg = GAME_BORDER - imgMsg.getWidth(null);
-                    break;
-                default:
-                    // Assumes center alignment, but prints out warning
-                    System.err.println("Unknown horizontal alignment for msg:" + msg);
-                case CENTER:
-                    this.xoffMsgImg = (GAME_BORDER - imgMsg.getWidth(null)) / 2;
-                    break;
-            }
-
-            switch (msg.getImageVerticalAlignment()) {
-                case TOP:
-                    this.yoffMsgImg = 0;
-                    break;
-                case BOTTOM:
-                    this.yoffMsgImg = HEIGHT - imgMsg.getHeight(null);
-                    break;
-                case CENTER:
-                    this.yoffMsgImg = (HEIGHT - imgMsg.getHeight(null)) / 2;
-                    break;
-                default:
-                    // Assumes center alignment, ut prints out warning
-                    System.err.println("Unknown vertical alignment for msg:" + msg);
-                case ABOVE_DIALOGUE:
-                    this.yoffMsgImg = 400 - imgMsg.getHeight(null);
-                    break;
-            }
-        }
-
-        this.msgSpeaker = msg.speaker == null ? null : msg.speaker + ":";
-        this.msgLines = msg.lines;
+        dialogOverlay.displayMessage(msg);
     }
 
     @Override
     public void init() {
-        hpImg = (Image) scene.resources().get("hp.png");
+        final Image hpImg = ResourceManager.get("/image/hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
+
+        statusOverlay.attachGame(this.game);
+        statusOverlay.attachHpImg(hpImg);
     }
 
     @Override
     public void enter(String prevSceneId) {
-        difficulty = (Difficulty) scene.resources().get("difficulty");
+        difficulty = (Difficulty) SceneManager.resources().get("difficulty");
 
-        playerFireTimeout = 0f;
-        pause = false;
-        selector = 0;
-        enableInput();
+        playerFireLimiter = 0f;
+        shouldSkipPlayerUpdate(false);
     }
 
     @Override
     public void leave() {
-        scene.resources().put("level.id", sceneId);
-        scene.resources().put("level.score", game.getScore());
+        SceneManager.resources().put("level.id", sceneId);
+        SceneManager.resources().put("level.score", game.getScore());
         game.cleanup();
     }
 
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-
-        if (imgMsg != null) {
-            g.drawImage(imgMsg, xoffMsgImg, yoffMsgImg);
-        }
-    }
-
-    public void renderStats(final IGraphics g) {
-        g.setColor(STATS_GREY);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-
-        g.setColor(Color.white);
-        g.setFont(SANS_FONT);
-        g.drawString("HP Remaining", GAME_BORDER + 2, 16);
-        g.drawString("Score", GAME_BORDER + 2, 58);
-
-        if (hpImg != null) {
-            final int hp = game.player.getHp();
-            final int w = hpImg.getWidth(null);
-            for (int i = 0; i < hp; ++i) {
-                g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
-            }
-        }
-
-        final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
-        g.drawString(str, GAME_BORDER + 5, 74);
-
-        if (game.player.shield.isReady()) {
-            g.drawString("Shield Ready", GAME_BORDER + 30, 96);
-        }
-
-        if (msgSpeaker != null) {
-            drawDialog(g, msgSpeaker, msgLines);
-        }
     }
 
     @Override
@@ -212,147 +124,106 @@ public abstract class AbstractGameScene extends CenteringScene {
         renderBackground(g);
         game.render(g);
 
-        // The game stats part
-        g.setColor(Color.black);
-        g.fillRect(GAME_BORDER, 0, WIDTH, HEIGHT);
-        g.setColor(Color.white);
-        g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
+        statusOverlay.render(g);
+        dialogOverlay.render(g);
 
-        renderStats(g);
+        pauseOverlay.render(g);
 
-        if (pause) {
-            g.setColor(PAUSE_OVERLAY);
-            g.fillRect(0, 0, GAME_BORDER, HEIGHT);
-            g.setColor(Color.black);
-            g.setFont(TitleScene.TITLE_FONT);
-            g.drawString("PAUSE", 274, 202);
-            g.setFont(TitleScene.OPTION_FONT);
-            g.drawString("Continue Game", 52, 373);
-            g.drawString("Return to Title", 52, 433);
-            g.drawRect(45, selectorY[selector], 49, selectorY[selector] + OPT_HEIGHT);
-        }
-
-        g.setColor(STATS_GREY);
+        g.setColor(StatusOverlay.BACKGROUND_COLOR);
         drawSideBlinder(g);
     }
 
     @Override
     public boolean update(final float dt) {
-        // Hopefully the only "black magic" in here
-        if (!pause) {
-            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                pause = true;
-            }
-            playerFireTimeout -= dt;
-
-            // This is the magic number that makes all of this work!
-            // it is 5 because the update sequence used to be split
-            // between phases 0 to 4 (which adds up to 5 phases)
-            final float dtDiv5 = dt / 5;
-            drift.update(dtDiv5);
-
-            procPlayerPos(dt);
-
-            final float driftX = dtDiv5 * drift.getDx();
-            final float driftY = dtDiv5 * drift.getDy();
-            game.updateEnemySpawner(dtDiv5);
-            game.updateEnemyPosition(dtDiv5, driftX, driftY);
-            game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
-            game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
-
-            // testCollisions() returns true if a scene change is requested
-            // which means we return as soon as it happens (hence || not &&)
-            return testCollisions() || postUpdate(dtDiv5);
+        if (pauseOverlay.isEnabled()) {
+            pauseOverlay.update(dt);
         } else {
-            if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                pause = false;
-                selector = 0;
-                return true;
-            }
-
-            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                if (selector != 0) {
-                    return scene.switchToScene(sceneDest[selector - 1]);
-                }
-
-                // selector is 0, which means we continue (unpause) the game
-                pause = false;
-                return true;
-            }
-            if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (++selector >= selectorY.length) selector = 0;
-            }
-            if (Input.isKeyPressed(KeyEvent.VK_UP)) {
-                if (--selector < 0) selector = selectorY.length - 1;
-            }
+            levelUpdate(dt);
         }
         return true;
     }
 
-    private void procPlayerPos(final float dt) {
-        if (disableInput) return;
+    private void levelUpdate(final float dt) {
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            pauseOverlay.enable();
+            return;
+        }
 
-        // TODO: Simplify this
+        // And strangely enough, if you have read the next comment
+        // already, player updates were not part of the *5
+        // things*, so it uses the un-partitioned dt.
+        processPlayerTime(dt);
+
+        // At some point, the update sequence used to be split up
+        // so each update frame only did one thing. It was divided
+        // into 5 things.
+        final float dtDiv5 = dt / 5;
+        final float driftX = dtDiv5 * drift.getDx();
+        final float driftY = dtDiv5 * drift.getDy();
+        game.updateEnemySpawner(dtDiv5);
+        game.updateEnemyPosition(dtDiv5, driftX, driftY);
+        game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
+        game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
+
+        game.performCollisionCheck();
+        if (game.player.getHp() <= 0) {
+            SceneManager.switchToScene("TitleScene");
+            return;
+        }
+
+        postUpdate(dtDiv5);
+    }
+
+    private void processPlayerTime(final float dt) {
+        if (skipPlayerUpdate) {
+            return;
+        }
+
+        processPlayerMovement(dt);
+        processPlayerAttack(dt);
+        processPlayerShield(dt);
+    }
+
+    private void processPlayerMovement(final float dt) {
+        final Player player = game.player;
+
+        // Calculate player's unscaled speed in y
         float tmpVal = drift.getDy();
-        float tmpPos = game.player.getY();
+        float tmpPos = player.getY();
         if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpVal += DEFAULT_DY;
         if (Input.isKeyDown(KeyEvent.VK_UP))    tmpVal -= DEFAULT_DY;
         if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
-        game.player.setDy(tmpVal);
+        player.setDy(tmpVal);
 
+        // Calculate player's unscaled speed in x
         tmpVal = drift.getDx();
-        tmpPos = game.player.getX();
+        tmpPos = player.getX();
         if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpVal += DEFAULT_DX;
         if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpVal -= DEFAULT_DX;
         if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
             tmpVal = 0;
         }
-        game.player.setDx(tmpVal);
+        player.setDx(tmpVal);
 
-        game.player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        player.update(dt);
+    }
 
-        game.player.update(dt);
-
-        if (playerFireTimeout <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
-            final float px = game.player.getX();
-            final float py = game.player.getY();
-            game.addPlayerBullet(new PointBullet(px, py, 5, 0, -DEFAULT_DY * 4.5f));
-            playerFireTimeout = 0.2f;  // 0.2 second cap
+    private void processPlayerAttack(final float dt) {
+        if ((playerFireLimiter -= dt) <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
+            final Player player = game.player;
+            game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(
+                    player.getX(), player.getY(), (float) (-Math.PI / 2)));
+            playerFireLimiter = MIN_FIRE_DELAY;
         }
+    }
 
+    private void processPlayerShield(final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_X)) {
             game.player.shield.activate();
         }
-    }
-
-    private boolean testCollisions() {
-        game.performCollisionCheck();
-        if (game.player.getHp() <= 0) {
-            return scene.switchToScene("TitleScene");
-        }
-        return false;
-    }
-
-    public static void drawDialog(IGraphics g, String speaker, String[] msg) {
-        // Draw msgbox border
-        g.setColor(Color.white);
-        g.fillRect(12, HEIGHT - 200, GAME_BORDER - 12, HEIGHT - 12);
-        // Draw grey area
-        g.setColor(Color.gray);
-        g.fillRect(20, HEIGHT - 192, GAME_BORDER - 20, HEIGHT - 20);
-        // Draw name inside msgbox
-        g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
-        g.drawString(speaker, 28, HEIGHT - 162);
-        // Draw message inside msgbox
-        g.setFont(SANS_FONT);
-        for (int i = 0; i < msg.length; ++i) {
-            g.drawString(msg[i], 28, HEIGHT - 142 + i * (SANS_FONT.getSize()) + 10);
-        }
-        // Draw footer
-        g.drawString("Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
     }
 
     public abstract boolean postUpdate(float dt);

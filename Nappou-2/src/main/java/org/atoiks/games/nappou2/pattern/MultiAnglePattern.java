@@ -21,17 +21,16 @@ package org.atoiks.games.nappou2.pattern;
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class AdvancedMiniBomber implements IAttackPattern {
+public final class MultiAnglePattern implements IAttackPattern {
 
-    private static final float VERTICAL = 1000 * (float) Math.sin(7 * Math.PI / 16);
-    private static final float HORIZONTAL = 1000 * (float) Math.cos(7 * Math.PI / 16);
+    private final float[] angles;
+    private final BulletFactory factory;
 
-    public static final AdvancedMiniBomber INSTANCE = new AdvancedMiniBomber();
-
-    private AdvancedMiniBomber() {
-        //
+    public MultiAnglePattern(BulletFactory factory, float... angles) {
+        this.factory = factory;
+        this.angles = angles;
     }
 
     @Override
@@ -40,8 +39,8 @@ public final class AdvancedMiniBomber implements IAttackPattern {
         final float x = enemy.getX();
         final float y = enemy.getY();
 
-        game.addEnemyBullet(new PointBullet(x, y, 2, HORIZONTAL, VERTICAL));
-        game.addEnemyBullet(new PointBullet(x, y, 2, -HORIZONTAL, VERTICAL));
-        game.addEnemyBullet(new PointBullet(x, y, 2, 0, 1000));
+        for (final float angle : angles) {
+            game.addEnemyBullet(factory.createBullet(x, y, angle));
+        }
     }
 }

@@ -26,6 +26,8 @@ import java.util.Comparator;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
@@ -71,7 +73,7 @@ public final class SaveHighscoreScene extends CenteringScene {
 
     @Override
     public void enter(String from) {
-        transition = (String) scene.resources().get("prompt.trans");
+        transition = (String) SceneManager.resources().get("prompt.trans");
 
         currentIdx = 0;
         currentStr = "";
@@ -132,12 +134,12 @@ public final class SaveHighscoreScene extends CenteringScene {
                     break;
                 case BANK_LENGTH - 1: // Done
                     // We will save the score here!
-                    final boolean challengeMode = ((GameConfig) scene.resources().get("game.cfg")).challengeMode;
-                    final int levelId = (int) scene.resources().get("level.id");
-                    final int levelScore = (int) scene.resources().get("level.score");
-                    final int levelDiff = ((Difficulty) scene.resources().get("difficulty")).ordinal();
+                    final boolean challengeMode = ResourceManager.<GameConfig>get("./game.cfg").challengeMode;
+                    final int levelId = (int) SceneManager.resources().get("level.id");
+                    final int levelScore = (int) SceneManager.resources().get("level.score");
+                    final int levelDiff = ((Difficulty) SceneManager.resources().get("difficulty")).ordinal();
 
-                    final ScoreData scoreDat = (ScoreData) scene.resources().get("score.dat");
+                    final ScoreData scoreDat = ResourceManager.get("./score.dat");
                     final String name = currentStr.length() > NAME_LENGTH_CAP
                             ? currentStr.substring(0, NAME_LENGTH_CAP) : currentStr;
 
@@ -148,7 +150,7 @@ public final class SaveHighscoreScene extends CenteringScene {
                     System.arraycopy(a, 1, alias, 0, a.length - 1);
 
                     // Then transition to correct scene
-                    return scene.switchToScene(transition);
+                    return SceneManager.switchToScene(transition);
                 default:
                     currentStr += CHAR_BANK[currentIdx];
                     break;

@@ -25,6 +25,8 @@ import java.util.Random;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
@@ -82,20 +84,20 @@ public final class LevelTwoScene extends AbstractGameScene {
 
         drift.clampSpeed(0,0,0,0);
 
-        displayMessage(null);
+        clearMessage();
         cycles = 0;
         wave = 0;
         phase = 0;
 
         msgPhase = -1;
 
-        final GameConfig cfg = (GameConfig) scene.resources().get("game.cfg");
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) SceneManager.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
-        bgm = (Clip) scene.resources().get("Level_One.wav");
+        bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
             bgm.start();
@@ -109,7 +111,7 @@ public final class LevelTwoScene extends AbstractGameScene {
             displayMessage(s[msgPhase]);
             return true;
         }
-        displayMessage(null);
+        clearMessage();
         return false;
     }
 
@@ -296,7 +298,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                     cycles = 0;
                     bgm.stop();
                     disableDamage();
-                    disableInput();
+                    shouldSkipPlayerUpdate(true);
                     game.clearBullets();
 
                     displayNextDialogue(PREBOSS_MSG);
@@ -306,10 +308,10 @@ public final class LevelTwoScene extends AbstractGameScene {
                         if (!displayNextDialogue(PREBOSS_MSG)) {
                             wave++;
                             enableDamage();
-                            enableInput();
+                            shouldSkipPlayerUpdate(false);
                             cycles = 0;
-                            bgm = (Clip) scene.resources().get("Broken_Soul.wav");
-                            if (((GameConfig) scene.resources().get("game.cfg")).bgm) {
+                            bgm = ResourceManager.get("/music/Broken_Soul.wav");
+                            if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
                                 bgm.setMicrosecondPosition(0);
                                 bgm.start();
                                 bgm.loop(Clip.LOOP_CONTINUOUSLY);
@@ -325,7 +327,7 @@ public final class LevelTwoScene extends AbstractGameScene {
                         disableDamage();
                         msgPhase = -1;
                         displayNextDialogue(POSTBOSS_MSG);
-                        disableInput();
+                        shouldSkipPlayerUpdate(true);
                         game.clearBullets();
                         wave++;
                     }
@@ -334,9 +336,9 @@ public final class LevelTwoScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         if (!displayNextDialogue(POSTBOSS_MSG)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            // scene.resources().put("prompt.trans", /* whatever the next scene id should be... */);
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            // SceneManager.resources().put("prompt.trans", /* whatever the next scene id should be... */);
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
