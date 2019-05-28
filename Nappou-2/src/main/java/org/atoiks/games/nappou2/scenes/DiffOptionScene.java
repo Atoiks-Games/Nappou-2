@@ -25,6 +25,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Difficulty;
@@ -59,10 +60,10 @@ public final class DiffOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene("ShieldOptionScene");
+            return SceneManager.switchToScene("ShieldOptionScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -82,7 +83,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void enter(String previousSceneId) {
-        difficulty = (Difficulty) scene.resources().getOrDefault("difficulty", Difficulty.NORMAL);
+        difficulty = (Difficulty) SceneManager.resources().getOrDefault("difficulty", Difficulty.NORMAL);
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
@@ -94,7 +95,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-        scene.resources().put("difficulty", getDiffFromOption());
+        SceneManager.resources().put("difficulty", getDiffFromOption());
 
         bgm.stop();
     }

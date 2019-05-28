@@ -24,6 +24,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.*;
@@ -103,7 +104,7 @@ public final class LevelOneScene extends AbstractGameScene {
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) scene.resources().get("shield"));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) SceneManager.resources().get("shield"));
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
@@ -138,7 +139,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-        //    return scene.gotoNextScene();
+        //    return SceneManager.gotoNextScene();
         //}
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
@@ -286,8 +287,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
@@ -451,8 +452,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
@@ -677,8 +678,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;
@@ -949,8 +950,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         displayMessage(POSTBOSS_MSG);
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
-                            scene.resources().put("prompt.trans", "TitleScene");
-                            return scene.switchToScene("SaveHighscoreScene");
+                            SceneManager.resources().put("prompt.trans", "TitleScene");
+                            return SceneManager.switchToScene("SaveHighscoreScene");
                         }
                     }
                     break;

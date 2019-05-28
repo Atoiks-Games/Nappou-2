@@ -25,6 +25,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
@@ -66,14 +67,14 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (skipSelection) {
-            return scene.switchToScene("LevelOneScene");
+            return SceneManager.switchToScene("LevelOneScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene("LevelOneScene");
+            return SceneManager.switchToScene("LevelOneScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -108,7 +109,7 @@ public final class ShieldOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-        scene.resources().put("shield", getShieldFromOption());
+        SceneManager.resources().put("shield", getShieldFromOption());
 
         if (bgm != null) bgm.stop();
     }

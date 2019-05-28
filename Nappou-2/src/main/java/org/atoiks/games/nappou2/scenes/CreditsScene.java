@@ -25,6 +25,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
@@ -55,7 +56,7 @@ public final class CreditsScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         return true;
     }

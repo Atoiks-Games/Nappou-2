@@ -26,6 +26,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
@@ -201,7 +202,7 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly
-                        return scene.switchToScene("TitleScene");
+                        return SceneManager.switchToScene("TitleScene");
                     }
                     break;
             }

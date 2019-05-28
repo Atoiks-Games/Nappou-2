@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
@@ -151,7 +152,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void enter(String prevSceneId) {
-        difficulty = (Difficulty) scene.resources().get("difficulty");
+        difficulty = (Difficulty) SceneManager.resources().get("difficulty");
 
         playerFireTimeout = 0f;
         pause = false;
@@ -161,8 +162,8 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void leave() {
-        scene.resources().put("level.id", sceneId);
-        scene.resources().put("level.score", game.getScore());
+        SceneManager.resources().put("level.id", sceneId);
+        SceneManager.resources().put("level.score", game.getScore());
         game.cleanup();
     }
 
@@ -273,7 +274,7 @@ public abstract class AbstractGameScene extends CenteringScene {
 
             if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                 if (selector != 0) {
-                    return scene.switchToScene(sceneDest[selector - 1]);
+                    return SceneManager.switchToScene(sceneDest[selector - 1]);
                 }
 
                 // selector is 0, which means we continue (unpause) the game
@@ -331,7 +332,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     private boolean testCollisions() {
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            return scene.switchToScene("TitleScene");
+            return SceneManager.switchToScene("TitleScene");
         }
         return false;
     }

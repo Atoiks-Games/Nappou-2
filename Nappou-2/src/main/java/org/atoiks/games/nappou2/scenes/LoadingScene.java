@@ -39,6 +39,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.decoder.ImageDecoder;
@@ -56,7 +57,7 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
 
-public final class LoadingScene extends Scene {
+public final class LoadingScene implements Scene {
 
     private enum LoadState {
         WAITING, LOADING, DONE, NO_RES
@@ -72,11 +73,6 @@ public final class LoadingScene extends Scene {
     private boolean enterFullscreen = false;
 
     private float time;
-
-    @Override
-    public String getId() {
-        return "LoadingScene";
-    }
 
     @Override
     public void render(IGraphics g) {
@@ -104,8 +100,8 @@ public final class LoadingScene extends Scene {
             case DONE:
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
-                scene.frame().setFullScreen(enterFullscreen);
-                return scene.switchToScene("TitleScene");
+                SceneManager.frame().setFullScreen(enterFullscreen);
+                return SceneManager.switchToScene("TitleScene");
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {
