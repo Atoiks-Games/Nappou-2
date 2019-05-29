@@ -22,6 +22,8 @@ import java.io.Serializable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public interface IShield extends Serializable {
 
     public float getX();
@@ -30,6 +32,11 @@ public interface IShield extends Serializable {
 
     public void setX(float x);
     public void setY(float y);
+
+    public default void setPosition(Vector2 v) {
+        setX(v.getX());
+        setY(v.getY());
+    }
 
     public void activate();
     public void deactivate();

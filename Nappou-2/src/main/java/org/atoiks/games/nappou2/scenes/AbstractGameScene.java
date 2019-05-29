@@ -191,24 +191,24 @@ public abstract class AbstractGameScene extends CenteringScene {
         final Vector2 disp = drift.getDrift();
 
         // Calculate player's unscaled speed in y
-        float tmpVal = disp.getY();
-        float tmpPos = player.getY();
-        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpVal += DEFAULT_DY;
-        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpVal -= DEFAULT_DY;
-        if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
-            tmpVal = 0;
+        float tmpDy = disp.getY();
+        final float tmpY = player.getY();
+        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpDy += DEFAULT_DY;
+        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpDy -= DEFAULT_DY;
+        if ((tmpY + Player.RADIUS >= HEIGHT && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
+            tmpDy = 0;
         }
-        player.setDy(tmpVal);
 
         // Calculate player's unscaled speed in x
-        tmpVal = disp.getX();
-        tmpPos = player.getX();
-        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpVal += DEFAULT_DX;
-        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpVal -= DEFAULT_DX;
-        if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
-            tmpVal = 0;
+        float tmpDx = disp.getX();
+        final float tmpX = player.getX();
+        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpDx += DEFAULT_DX;
+        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpDx -= DEFAULT_DX;
+        if ((tmpX + Player.RADIUS >= GAME_BORDER && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
+            tmpDx = 0;
         }
-        player.setDx(tmpVal);
+
+        player.setVelocity(new Vector2(tmpDx, tmpDy));
 
         player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
         player.update(dt);
