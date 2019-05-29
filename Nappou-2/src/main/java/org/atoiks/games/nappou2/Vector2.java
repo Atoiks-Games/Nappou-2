@@ -122,4 +122,10 @@ public final class Vector2 {
         // (u * v) + w
         return new Vector2(u.x * v.x + w.x, u.y * v.y + w.y);
     }
+
+    public static Vector2 clamp(final Vector2 v, final Vector2 min, final Vector2 max) {
+        return new Vector2(
+                Utils.clamp(v.x, min.x, max.x),
+                Utils.clamp(v.y, min.y, max.y));
+    }
 }
