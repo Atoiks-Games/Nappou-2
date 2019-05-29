@@ -16,45 +16,20 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.IPathway;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-/**
- * A fixed pathway. (Can it really be a path if it stays at the same spot?)
- */
-public final class FixedPathway implements UnboundPathway {
+public final class NullPattern implements IAttackPattern {
 
-    /**
-     * A path that just stays fixed at (0, 0)
-     */
-    public static final FixedPathway DEFAULT = new FixedPathway(0, 0);
+    public static final NullPattern INSTANCE = new NullPattern();
 
-    private final float x;
-    private final float y;
-
-    public FixedPathway(float x, float y) {
-        this.x = x;
-        this.y = y;
+    private NullPattern() {
+        //
     }
 
     @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public void update(float dt) {
+    public void onFireUpdate(IEnemy enemy, float dt) {
         // Do nothing
-    }
-
-    @Override
-    public boolean hasFinished() {
-        return false;
     }
 }

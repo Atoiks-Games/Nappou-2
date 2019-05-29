@@ -16,21 +16,44 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pathway;
 
-import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
+/**
+ * Pathway with constant velocity
+ */
+public final class FixedVelocity implements UnboundPathway {
 
-public final class NullPattern implements IAttackPattern {
+    private final float dx;
+    private final float dy;
 
-    public static final NullPattern INSTANCE = new NullPattern();
+    private float x;
+    private float y;
 
-    private NullPattern() {
-        //
+    public FixedVelocity(float x, float y, float dx, float dy) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
-        // Do nothing
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void update(final float dt) {
+        x += dx * dt;
+        y += dy * dt;
+    }
+
+    @Override
+    public boolean hasFinished() {
+        return false;
     }
 }

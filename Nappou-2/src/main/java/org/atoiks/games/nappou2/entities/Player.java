@@ -24,6 +24,8 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.entities.shield.IShield;
+
 public final class Player implements ITrackable, Serializable {
 
     private static final long serialVersionUID = 293042L;

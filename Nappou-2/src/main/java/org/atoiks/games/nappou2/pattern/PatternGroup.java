@@ -16,14 +16,22 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.IPathway;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public interface UnboundPathway extends IPathway {
+public final class PatternGroup implements IAttackPattern {
 
-    public default boolean hasFinished() {
-        // It is unbounded... so it better never finish!
-        return false;
+    private final Iterable<? extends IAttackPattern> patterns;
+
+    public PatternGroup(Iterable<? extends IAttackPattern> patterns) {
+        this.patterns = patterns;
+    }
+
+    @Override
+    public void onFireUpdate(final IEnemy enemy, final float dt) {
+        for (final IAttackPattern pattern : patterns) {
+            pattern.onFireUpdate(enemy, dt);
+        }
     }
 }

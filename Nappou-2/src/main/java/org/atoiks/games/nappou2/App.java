@@ -63,23 +63,21 @@ public class App {
                 new DiffOptionScene(), new ShieldOptionScene(),
                 new LevelOneScene(), new LevelTwoScene());
 
-        final Frame frame = new Frame(info);
-        try {
+        try (final Frame frame = new Frame(info)) {
             SceneManager.switchToScene("LoadingScene");
             frame.init();
             frame.loop();
-        } finally {
-            final GameConfig gameCfg = ResourceManager.get("game.cfg");
-            final ScoreData scoreDat = ResourceManager.get("score.dat");
-            final SaveData saveDat = ResourceManager.get("saves.dat");
-            frame.close();
+        }
 
-            // Saves config
-            try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./game.cfg"))) {
-                oos.writeObject(gameCfg);
-            } catch (IOException ex) {
-                // Next time, game will launch with default configurations
-            }
+        final GameConfig gameCfg = ResourceManager.get("./game.cfg");
+        final ScoreData scoreDat = ResourceManager.get("./score.dat");
+
+        // Saves config
+        try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./game.cfg"))) {
+            oos.writeObject(gameCfg);
+        } catch (IOException ex) {
+            // Next time, game will launch with default configurations
+        }
 
             // Saves user score
             try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./score.dat"))) {

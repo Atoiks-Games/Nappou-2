@@ -16,23 +16,31 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.attack;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.IEnemy;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class PatternGroup implements IAttackPattern {
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-    private final Iterable<? extends IAttackPattern> patterns;
+public final class MultiAnglePattern implements IAttackPattern {
 
-    public PatternGroup(Iterable<? extends IAttackPattern> patterns) {
-        this.patterns = patterns;
+    private final float[] angles;
+    private final BulletFactory factory;
+
+    public MultiAnglePattern(BulletFactory factory, float... angles) {
+        this.factory = factory;
+        this.angles = angles;
     }
 
     @Override
-    public void onFireUpdate(final IEnemy enemy, final float dt) {
-        for (final IAttackPattern pattern : patterns) {
-            pattern.onFireUpdate(enemy, dt);
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
+
+        for (final float angle : angles) {
+            game.addEnemyBullet(factory.createBullet(x, y, angle));
         }
     }
 }

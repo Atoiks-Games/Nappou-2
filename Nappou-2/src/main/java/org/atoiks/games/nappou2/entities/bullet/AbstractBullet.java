@@ -22,8 +22,6 @@ import java.io.Serializable;
 
 import java.awt.Color;
 
-import org.atoiks.games.nappou2.entities.IBullet;
-
 /* package */ abstract class AbstractBullet implements IBullet {
 
     private static final long serialVersionUID = 12837435231L;

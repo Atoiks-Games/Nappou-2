@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.IEnemy;
 
 public abstract class ManualEnemy extends AbstractEnemy {
 

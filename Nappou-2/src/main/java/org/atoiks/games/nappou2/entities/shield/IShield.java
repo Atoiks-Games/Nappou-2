@@ -16,9 +16,26 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.shield;
 
-public interface IAttackPattern {
+import java.io.Serializable;
 
-    public void onFireUpdate(IEnemy enemy, float dt);
+import org.atoiks.games.framework2d.IGraphics;
+
+public interface IShield extends Serializable {
+
+    public float getX();
+    public float getY();
+    public float getR();
+
+    public void setX(float x);
+    public void setY(float y);
+
+    public void activate();
+    public void deactivate();
+    public boolean isActive();
+    public boolean isReady();
+
+    public void update(float dt);
+    public void render(IGraphics g);
 }

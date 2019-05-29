@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
-import org.atoiks.games.nappou2.entities.IBullet;
+import org.atoiks.games.nappou2.entities.bullet.IBullet;
 
 public interface BulletFactory {
 

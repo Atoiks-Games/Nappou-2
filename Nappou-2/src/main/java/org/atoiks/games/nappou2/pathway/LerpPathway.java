@@ -16,11 +16,9 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pathway;
 
 import java.util.Iterator;
-
-import org.atoiks.games.nappou2.entities.IPathway;
 
 import org.atoiks.games.nappou2.equations.IEquation;
 

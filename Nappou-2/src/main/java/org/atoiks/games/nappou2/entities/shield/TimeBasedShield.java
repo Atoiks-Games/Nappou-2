@@ -22,8 +22,6 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IShield;
-
 public abstract class TimeBasedShield implements IShield {
 
     private static final long serialVersionUID = 172635916L;

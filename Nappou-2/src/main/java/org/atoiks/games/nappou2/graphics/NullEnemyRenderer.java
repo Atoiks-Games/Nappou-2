@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.graphics;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public final class NullEnemyRenderer implements IEnemyRenderer {
 
