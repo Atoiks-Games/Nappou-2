@@ -28,6 +28,11 @@ public interface IShield extends Serializable {
 
     public float getX();
     public float getY();
+
+    public default Vector2 getPosition() {
+        return new Vector2(getX(), getY());
+    }
+
     public float getR();
 
     public void setX(float x);
