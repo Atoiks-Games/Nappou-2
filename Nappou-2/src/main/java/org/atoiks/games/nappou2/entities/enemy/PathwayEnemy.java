@@ -92,12 +92,12 @@ public final class PathwayEnemy extends AbstractEnemy {
 
     @Override
     public float getX() {
-        return this.path.getX() + this.dx;
+        return this.path.getPosition().getX() + this.dx;
     }
 
     @Override
     public float getY() {
-        return this.path.getY() + this.dy;
+        return this.path.getPosition().getY() + this.dy;
     }
 
     @Override
