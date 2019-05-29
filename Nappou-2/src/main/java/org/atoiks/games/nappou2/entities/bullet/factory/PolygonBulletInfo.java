@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import java.util.Arrays;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.bullet.PolygonBullet;
 
@@ -36,7 +38,7 @@ public final class PolygonBulletInfo implements BulletFactory {
     @Override
     public PolygonBullet createBullet(float x, float y, float angle) {
         final PolygonBullet bullet = new PolygonBullet(Arrays.copyOf(coords, coords.length), speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
-        bullet.drift(x, y);
+        bullet.drift(new Vector2(x, y));
         return bullet;
     }
 }

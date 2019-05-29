@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import java.util.Random;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.bullet.*;
 
 import static org.atoiks.games.nappou2.TrigConstants.*;
@@ -41,7 +43,7 @@ public final class Level1Hard extends ManualEnemy {
     }
 
     @Override
-    public void drift(float dx, float dy) {
+    public void drift(Vector2 d) {
         // Bosses / Mini bosses do not drift
     }
 

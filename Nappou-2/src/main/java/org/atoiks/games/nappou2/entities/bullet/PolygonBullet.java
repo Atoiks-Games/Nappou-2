@@ -22,6 +22,8 @@ import java.util.Arrays;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
@@ -75,7 +77,10 @@ public class PolygonBullet extends AbstractBullet {
     }
 
     @Override
-    public void drift(float dx, float dy) {
+    public void drift(final Vector2 d) {
+        final float dx = d.getX();
+        final float dy = d.getY();
+
         for (int i = 0; i < coords.length; i += 2) {
             coords[i] += dx;
             coords[i + 1] += dy;
@@ -92,7 +97,7 @@ public class PolygonBullet extends AbstractBullet {
 
     @Override
     public void update(final float dt) {
-        drift(this.dx * dt, this.dy * dt);
+        drift(new Vector2(this.dx * dt, this.dy * dt));
     }
 
     @Override

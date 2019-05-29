@@ -25,6 +25,8 @@ import java.util.LinkedList;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public final class Game implements Serializable {
 
     private static final long serialVersionUID = 62102375L;
@@ -110,27 +112,27 @@ public final class Game implements Serializable {
         }
     }
 
-    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final float dx, final float dy) {
+    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
             final IDriftEntity entity = it.next();
             entity.update(dt);
-            entity.drift(dx, dy);
+            entity.drift(drift);
             if (entity.isOutOfScreen(gameWidth, gameHeight)) {
                 it.remove();
             }
         }
     }
 
-    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemies.iterator(), dt, dx, dy);
+    public void updateEnemyPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(enemies.iterator(), dt, drift);
     }
 
-    public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemyBullets.iterator(), dt, dx, dy);
+    public void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(enemyBullets.iterator(), dt, drift);
     }
 
-    public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(playerBullets.iterator(), dt, dx, dy);
+    public void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
     }
 
     public void performCollisionCheck() {

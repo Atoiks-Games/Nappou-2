@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IEnemy;
 
@@ -35,9 +37,9 @@ public abstract class ManualEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void drift(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
+    public void drift(Vector2 d) {
+        this.x += d.getX();
+        this.y += d.getY();
     }
 
     @Override

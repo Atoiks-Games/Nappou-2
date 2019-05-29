@@ -131,17 +131,9 @@ public class Drifter {
     }
 
     /**
-     * @return dx
+     * @return a vector with dx and dy as its components
      */
-    public float getDx() {
-        return dx;
-    }
-
-
-    /**
-     * @return dy
-     */
-    public float getDy() {
-        return dy;
+    public Vector2 getDrift() {
+        return new Vector2(dx, dy);
     }
 }

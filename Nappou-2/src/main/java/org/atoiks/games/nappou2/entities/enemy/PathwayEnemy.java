@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 import org.atoiks.games.nappou2.entities.IAttackPattern;
 
@@ -83,10 +85,10 @@ public final class PathwayEnemy extends AbstractEnemy {
     }
 
     @Override
-    public void drift(float dx, float dy) {
+    public void drift(Vector2 d) {
         if (driftFlag) {
-            this.dx += dx;
-            this.dy += dy;
+            this.dx += d.getX();
+            this.dy += d.getY();
         }
     }
 

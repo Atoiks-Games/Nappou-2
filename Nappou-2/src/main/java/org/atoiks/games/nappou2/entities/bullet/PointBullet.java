@@ -22,6 +22,8 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IBullet;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
@@ -47,9 +49,9 @@ public class PointBullet extends AbstractBullet {
     }
 
     @Override
-    public void drift(float dx, float dy) {
-        this.x += dx;
-        this.y += dy;
+    public void drift(Vector2 d) {
+        this.x += d.getX();
+        this.y += d.getY();
     }
 
     @Override

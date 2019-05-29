@@ -18,9 +18,11 @@
 
 package org.atoiks.games.nappou2.entities;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public interface IDriftEntity extends ITrackable, ICollidable {
 
-    public void drift(float dx, float dy);
+    public void drift(Vector2 displacement);
 
     public void update(float dt);
 }
