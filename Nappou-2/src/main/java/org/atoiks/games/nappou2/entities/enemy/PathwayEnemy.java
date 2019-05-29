@@ -36,8 +36,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     private float r;
 
     private boolean driftFlag = true;
-    private float dx;
-    private float dy;
+    private Vector2 displacement = Vector2.ZERO;
 
     private final int score;
 
@@ -74,8 +73,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     }
 
     public void resetDriftFactor() {
-        this.dx = 0;
-        this.dy = 0;
+        this.displacement = Vector2.ZERO;
     }
 
     @Override
@@ -87,19 +85,23 @@ public final class PathwayEnemy extends AbstractEnemy {
     @Override
     public void drift(Vector2 d) {
         if (driftFlag) {
-            this.dx += d.getX();
-            this.dy += d.getY();
+            this.displacement = this.displacement.add(d);
         }
     }
 
     @Override
+    public Vector2 getPosition() {
+        return this.path.getPosition().add(this.displacement);
+    }
+
+    @Override
     public float getX() {
-        return this.path.getPosition().getX() + this.dx;
+        return this.path.getPosition().getX();
     }
 
     @Override
     public float getY() {
-        return this.path.getPosition().getY() + this.dy;
+        return this.path.getPosition().getY();
     }
 
     @Override
