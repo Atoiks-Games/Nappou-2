@@ -140,13 +140,12 @@ public final class Game implements Serializable {
         final float py = player.getY();
 
         final boolean shieldActive = player.shield.isActive();
-        final float sx = player.shield.getX();
-        final float sy = player.shield.getY();
+        final Vector2 sp = player.shield.getPosition();
         final float sr = player.shield.getR();
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
-            if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
+            if (shieldActive && bullet.collidesWith(sp, sr)) {
                 it.remove();
             } else if (!player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 it.remove();

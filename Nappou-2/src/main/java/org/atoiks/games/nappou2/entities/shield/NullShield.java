@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.shield;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IShield;
 
 public final class NullShield implements IShield {
@@ -37,13 +39,8 @@ public final class NullShield implements IShield {
     }
 
     @Override
-    public float getX() {
-        return -1;
-    }
-
-    @Override
-    public float getY() {
-        return -1;
+    public Vector2 getPosition() {
+        return null;
     }
 
     @Override
@@ -52,12 +49,7 @@ public final class NullShield implements IShield {
     }
 
     @Override
-    public void setX(float x) {
-        // Do nothing
-    }
-
-    @Override
-    public void setY(float y) {
+    public void setPosition(Vector2 pos) {
         // Do nothing
     }
 
