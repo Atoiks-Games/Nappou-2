@@ -42,6 +42,10 @@ public class PointBullet extends AbstractBullet {
         this.r = r;
     }
 
+    public PointBullet(final Vector2 position, float r, final Vector2 velocity) {
+        this(position.getX(), position.getY(), r, velocity.getX(), velocity.getY());
+    }
+
     public PointBullet(float x, float y, float r, float dx, float dy) {
         this(x, y, r);
         this.dx = dx;
