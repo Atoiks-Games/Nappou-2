@@ -158,6 +158,7 @@ public abstract class AbstractGameScene extends CenteringScene {
         // so each update frame only did one thing. It was divided
         // into 5 things.
         final float dtDiv5 = dt / 5;
+        drift.update(dtDiv5);
         final float driftX = dtDiv5 * drift.getDx();
         final float driftY = dtDiv5 * drift.getDy();
         game.updateEnemySpawner(dtDiv5);
