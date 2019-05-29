@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.pathway;
 
 import java.util.Iterator;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
@@ -43,13 +45,8 @@ public final class ChainedPathway implements IPathway {
     }
 
     @Override
-    public float getX() {
-        return currentPath.getX();
-    }
-
-    @Override
-    public float getY() {
-        return currentPath.getY();
+    public Vector2 getPosition() {
+        return currentPath.getPosition();
     }
 
     @Override

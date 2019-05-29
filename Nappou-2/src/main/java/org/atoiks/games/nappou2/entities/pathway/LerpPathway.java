@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.pathway;
 
 import java.util.Iterator;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 
 import org.atoiks.games.nappou2.equations.IEquation;
@@ -77,13 +79,8 @@ public final class LerpPathway implements IPathway {
     }
 
     @Override
-    public float getX() {
-        return fx.compute();
-    }
-
-    @Override
-    public float getY() {
-        return fy.compute();
+    public Vector2 getPosition() {
+        return new Vector2(fx.compute(), fy.compute());
     }
 
     @Override

@@ -41,13 +41,8 @@ public final class FixedVelocity implements UnboundPathway {
     }
 
     @Override
-    public float getX() {
-        return this.position.getX();
-    }
-
-    @Override
-    public float getY() {
-        return this.position.getY();
+    public Vector2 getPosition() {
+        return this.position;
     }
 
     @Override

@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
@@ -43,13 +45,8 @@ public final class TimedPathway implements IPathway {
     }
 
     @Override
-    public float getX() {
-        return path.getX();
-    }
-
-    @Override
-    public float getY() {
-        return path.getY();
+    public Vector2 getPosition() {
+        return path.getPosition();
     }
 
     @Override
