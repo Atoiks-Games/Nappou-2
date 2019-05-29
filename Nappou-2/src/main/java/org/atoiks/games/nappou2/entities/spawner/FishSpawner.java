@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.entities.spawner;
 
-import org.atoiks.games.nappou2.entities.EnemySpawner;
+import org.atoiks.games.nappou2.entities.spawner.EnemySpawner;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 

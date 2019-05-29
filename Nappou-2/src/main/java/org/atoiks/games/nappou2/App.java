@@ -71,6 +71,7 @@ public class App {
 
         final GameConfig gameCfg = ResourceManager.get("./game.cfg");
         final ScoreData scoreDat = ResourceManager.get("./score.dat");
+        final SaveData saveDat = ResourceManager.get("./saves.dat");
 
         // Saves config
         try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./game.cfg"))) {
@@ -79,19 +80,18 @@ public class App {
             // Next time, game will launch with default configurations
         }
 
-            // Saves user score
-            try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./score.dat"))) {
-                oos.writeObject(scoreDat);
-            } catch (IOException ex) {
-                // Oh well... to bad... the user's score does not get saved...
-            }
+        // Saves user score
+        try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./score.dat"))) {
+            oos.writeObject(scoreDat);
+        } catch (IOException ex) {
+            // Oh well... to bad... the user's score does not get saved...
+        }
 
-            // Saves user saves
-            try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves.dat"))) {
-                oos.writeObject(saveDat);
-            } catch (IOException ex) {
-                // Oh well... to bad... the user's saves do not get saved...
-            }
+        // Saves user saves
+        try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves.dat"))) {
+            oos.writeObject(saveDat);
+        } catch (IOException ex) {
+            // Oh well... to bad... the user's saves do not get saved...
         }
     }
 }

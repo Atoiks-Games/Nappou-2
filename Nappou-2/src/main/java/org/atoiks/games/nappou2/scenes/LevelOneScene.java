@@ -124,7 +124,7 @@ public final class LevelOneScene extends AbstractGameScene {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        final SaveData sData = ResourceManager.get("saves.dat");
+        final SaveData sData = ResourceManager.get("./saves.dat");
         switch (sData.getCheck()){
             case 1:
                 wave = 5;
@@ -278,7 +278,7 @@ public final class LevelOneScene extends AbstractGameScene {
                             break;
                     }
                     if (cycles > 2040 && game.noMoreEnemies()) {
-                        final SaveData sData = ResourceManager.get("saves.dat");
+                        final SaveData sData = ResourceManager.get("./saves.dat");
                         sData.setCheck(1);
                         wave++;
                         cycles = 0;
