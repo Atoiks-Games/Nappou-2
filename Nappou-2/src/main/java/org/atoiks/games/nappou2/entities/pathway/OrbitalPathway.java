@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
@@ -25,17 +27,14 @@ import org.atoiks.games.nappou2.entities.IPathway;
  */
 public final class OrbitalPathway implements UnboundPathway {
 
-    private final float axisX;
-    private final float axisY;
-    private final float orbitX;
-    private final float orbitY;
+    private final Vector2 axis;
+    private final Vector2 center;
 
-    private final int direction;
+    private final Vector2 direction;
     private final float mod;
     private final int spos;
 
-    private float x;
-    private float y;
+    private Vector2 position;
 
     private int cycles;
 
@@ -46,12 +45,15 @@ public final class OrbitalPathway implements UnboundPathway {
 
     // Use if path is elliptical
     public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
-        this.axisX = rx;
-        this.axisY = ry;
-        this.orbitX = x;
-        this.orbitY = y;
+        this(new Vector2(rx, ry), new Vector2(x, y), direction, speedMod, startPos);
+    }
 
-        this.direction = direction;
+    public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
+        this.axis = axis;
+        this.center = center;
+
+        // Direction is applied on the Y component
+        this.direction = new Vector2(1, direction);
         this.mod = speedMod;
         this.spos = startPos % 4;
 
@@ -62,21 +64,20 @@ public final class OrbitalPathway implements UnboundPathway {
 
     @Override
     public float getX() {
-        return x;
+        return this.position.getX();
     }
 
     @Override
     public float getY() {
-        return y;
+        return this.position.getY();
     }
 
     @Override
     public void update(final float dt) {
         cycles++;
 
-        final double k = mod * cycles / 50 + spos * Math.PI / 2;
-        y = orbitY + direction * axisY * (float) Math.sin(k);
-        x = orbitX + axisX * (float) Math.cos(k);
+        final float k = mod * cycles / 50 + spos * (float) Math.PI / 2;
+        this.position = Vector2.muladd(axis, Vector2.fromPolar(1, k).mul(direction), center);
     }
 
     @Override

@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
@@ -25,33 +27,32 @@ import org.atoiks.games.nappou2.entities.IPathway;
  */
 public final class FixedVelocity implements UnboundPathway {
 
-    private final float dx;
-    private final float dy;
+    private final Vector2 velocity;
 
-    private float x;
-    private float y;
+    private Vector2 position;
 
     public FixedVelocity(float x, float y, float dx, float dy) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
+        this(new Vector2(x, y), new Vector2(dx, dy));
+    }
+
+    public FixedVelocity(final Vector2 pos, final Vector2 velocity) {
+        this.velocity = velocity;
+        this.position = pos;
     }
 
     @Override
     public float getX() {
-        return x;
+        return this.position.getX();
     }
 
     @Override
     public float getY() {
-        return y;
+        return this.position.getY();
     }
 
     @Override
     public void update(final float dt) {
-        x += dx * dt;
-        y += dy * dt;
+        this.position = this.position.add(this.velocity.mul(dt));
     }
 
     @Override
