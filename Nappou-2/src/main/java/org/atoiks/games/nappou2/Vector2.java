@@ -110,6 +110,11 @@ public final class Vector2 {
         return vec.x == x && vec.y == y;
     }
 
+    @Override
+    public String toString() {
+        return "" + '(' + x + ',' + y + ')';
+    }
+
     public static Vector2 fromCartesian(float x, float y) {
         return new Vector2(x, y);
     }
