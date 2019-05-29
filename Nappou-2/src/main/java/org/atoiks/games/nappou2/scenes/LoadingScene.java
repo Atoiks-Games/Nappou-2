@@ -142,22 +142,8 @@ public final class LoadingScene implements Scene {
                     }
 
                     // Load save file from "current" directory
-                    try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./saves.dat"))) {
-                        final SaveData data = (SaveData) ois.readObject();
-
-                        SaveData sanitized;
-                        if (data == null) {
-                            // if we cannot find the old save, supply blank save
-                            sanitized = new SaveData();
-                        } else {
-                            // keep old save, it is probably valid
-                            sanitized = data;
-                        }
-                        scene.resources().put("saves.dat", sanitized);
-                    } catch (IOException | ClassNotFoundException ex) {
-                        // Supply default save
-                        scene.resources().put("saves.dat", new SaveData());
-                    }
+                    final SaveData saves = ResourceManager.loadOrDefault("./saves.dat", ExternalResourceResolver.INSTANCE,
+                            ObjectDecoder.getInstance(), SaveData::new);
 
                     loaded = LoadState.DONE;
                 });

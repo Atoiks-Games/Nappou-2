@@ -69,9 +69,9 @@ public class App {
             frame.init();
             frame.loop();
         } finally {
-            final GameConfig gameCfg = (GameConfig) frame.getSceneManager().resources().get("game.cfg");
-            final ScoreData scoreDat = (ScoreData) frame.getSceneManager().resources().get("score.dat");
-            final SaveData saveDat = (SaveData) frame.getSceneManager().resources().get("saves.dat");
+            final GameConfig gameCfg = ResourceManager.get("game.cfg");
+            final ScoreData scoreDat = ResourceManager.get("score.dat");
+            final SaveData saveDat = ResourceManager.get("saves.dat");
             frame.close();
 
             // Saves config
