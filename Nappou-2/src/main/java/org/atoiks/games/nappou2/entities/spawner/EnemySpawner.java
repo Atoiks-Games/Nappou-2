@@ -16,14 +16,14 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.spawner;
 
 import java.util.stream.Stream;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-import org.atoiks.games.nappou2.entities.spawner.LazyEnemySpawner;
-import org.atoiks.games.nappou2.entities.spawner.ImmediateEnemySpawner;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public abstract class EnemySpawner {
 

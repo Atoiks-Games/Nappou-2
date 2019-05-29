@@ -16,18 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-import java.io.Serializable;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-import java.awt.Color;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-import org.atoiks.games.framework2d.IGraphics;
+public final class FixedAnglePattern implements IAttackPattern {
 
-public interface IBullet extends IDriftEntity, Serializable {
+    private final float angle;
+    private final BulletFactory factory;
 
-    public void setColor(Color newColor);
-    public Color getColor();
+    public FixedAnglePattern(BulletFactory factory, float angle) {
+        this.angle = angle;
+        this.factory = factory;
+    }
 
-    public void render(IGraphics g);
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
+
+        game.addEnemyBullet(factory.createBullet(x, y, angle));
+    }
 }

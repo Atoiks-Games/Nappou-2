@@ -30,7 +30,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.entities.IShield;
 import org.atoiks.games.nappou2.entities.shield.*;
 
 public final class ShieldOptionScene extends CenteringScene {

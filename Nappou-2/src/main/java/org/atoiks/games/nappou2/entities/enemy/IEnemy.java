@@ -16,13 +16,14 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.enemy;
 
 import java.io.Serializable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IDriftEntity;
 
 public interface IEnemy extends IDriftEntity, Serializable {
 

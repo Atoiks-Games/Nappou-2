@@ -16,26 +16,24 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
-
-import org.atoiks.games.nappou2.entities.IPathway;
+package org.atoiks.games.nappou2.pathway;
 
 /**
- * Pathway with constant velocity
+ * A fixed pathway. (Can it really be a path if it stays at the same spot?)
  */
-public final class FixedVelocity implements UnboundPathway {
+public final class FixedPathway implements UnboundPathway {
 
-    private final float dx;
-    private final float dy;
+    /**
+     * A path that just stays fixed at (0, 0)
+     */
+    public static final FixedPathway DEFAULT = new FixedPathway(0, 0);
 
-    private float x;
-    private float y;
+    private final float x;
+    private final float y;
 
-    public FixedVelocity(float x, float y, float dx, float dy) {
+    public FixedPathway(float x, float y) {
         this.x = x;
         this.y = y;
-        this.dx = dx;
-        this.dy = dy;
     }
 
     @Override
@@ -49,9 +47,8 @@ public final class FixedVelocity implements UnboundPathway {
     }
 
     @Override
-    public void update(final float dt) {
-        x += dx * dt;
-        y += dy * dt;
+    public void update(float dt) {
+        // Do nothing
     }
 
     @Override
