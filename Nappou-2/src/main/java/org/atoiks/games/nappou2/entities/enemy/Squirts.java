@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 import org.atoiks.games.nappou2.entities.bullet.FallingBullet;
 
@@ -35,7 +37,7 @@ public final class Squirts extends ManualEnemy {
     }
 
     @Override
-    public void drift(float dx, float dy) {
+    public void drift(Vector2 d) {
         // Bosses / Mini bosses do not drift
     }
 
