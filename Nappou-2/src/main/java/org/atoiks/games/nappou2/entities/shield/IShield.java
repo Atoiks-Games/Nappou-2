@@ -16,17 +16,25 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet.factory;
+package org.atoiks.games.nappou2.entities.shield;
+
+import java.io.Serializable;
+
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.bullet.IBullet;
+public interface IShield extends Serializable {
 
-public interface BulletFactory {
+    public float getR();
+    public Vector2 getPosition();
+    public void setPosition(Vector2 v);
 
-    public IBullet createBullet(float x, float y, float angle);
+    public void activate();
+    public void deactivate();
+    public boolean isActive();
+    public boolean isReady();
 
-    public default IBullet createBullet(Vector2 pos, float angle) {
-        return createBullet(pos.getX(), pos.getY(), angle);
-    }
+    public void update(float dt);
+    public void render(IGraphics g);
 }

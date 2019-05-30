@@ -16,25 +16,20 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-import java.io.Serializable;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-import org.atoiks.games.framework2d.IGraphics;
+public final class NullPattern implements IAttackPattern {
 
-import org.atoiks.games.nappou2.Vector2;
+    public static final NullPattern INSTANCE = new NullPattern();
 
-public interface IShield extends Serializable {
+    private NullPattern() {
+        //
+    }
 
-    public float getR();
-    public Vector2 getPosition();
-    public void setPosition(Vector2 v);
-
-    public void activate();
-    public void deactivate();
-    public boolean isActive();
-    public boolean isReady();
-
-    public void update(float dt);
-    public void render(IGraphics g);
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        // Do nothing
+    }
 }

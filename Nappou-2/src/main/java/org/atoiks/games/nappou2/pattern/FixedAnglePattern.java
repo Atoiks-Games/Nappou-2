@@ -16,16 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public interface IPathway {
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-    public Vector2 getPosition();
+public final class FixedAnglePattern implements IAttackPattern {
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
+    private final float angle;
+    private final BulletFactory factory;
 
-    public boolean hasFinished();
+    public FixedAnglePattern(BulletFactory factory, float angle) {
+        this.angle = angle;
+        this.factory = factory;
+    }
+
+    @Override
+    public void onFireUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final float x = enemy.getX();
+        final float y = enemy.getY();
+
+        game.addEnemyBullet(factory.createBullet(x, y, angle));
+    }
 }

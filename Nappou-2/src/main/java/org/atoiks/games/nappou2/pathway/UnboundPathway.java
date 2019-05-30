@@ -16,9 +16,12 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pathway;
 
-public interface IAttackPattern {
+public interface UnboundPathway extends IPathway {
 
-    public void onFireUpdate(IEnemy enemy, float dt);
+    public default boolean hasFinished() {
+        // It is unbounded... so it better never finish!
+        return false;
+    }
 }

@@ -20,11 +20,11 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.IPathway;
-import org.atoiks.games.nappou2.entities.IAttackPattern;
+import org.atoiks.games.nappou2.pattern.NullPattern;
+import org.atoiks.games.nappou2.pattern.IAttackPattern;
 
-import org.atoiks.games.nappou2.entities.attack.NullPattern;
-import org.atoiks.games.nappou2.entities.pathway.FixedPathway;
+import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.FixedPathway;
 
 public final class PathwayEnemy extends AbstractEnemy {
 

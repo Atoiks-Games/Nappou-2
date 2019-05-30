@@ -22,7 +22,7 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public final class ColorEnemyRenderer implements IEnemyRenderer {
 

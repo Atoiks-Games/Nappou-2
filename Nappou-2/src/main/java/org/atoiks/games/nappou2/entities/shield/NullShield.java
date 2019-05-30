@@ -22,8 +22,6 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.IShield;
-
 public final class NullShield implements IShield {
 
     private static final long serialVersionUID = -6024720306180805901L;

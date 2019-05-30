@@ -16,17 +16,20 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet.factory;
+package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.nappou2.Vector2;
+import java.io.Serializable;
 
-import org.atoiks.games.nappou2.entities.bullet.IBullet;
+import java.awt.Color;
 
-public interface BulletFactory {
+import org.atoiks.games.framework2d.IGraphics;
 
-    public IBullet createBullet(float x, float y, float angle);
+import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-    public default IBullet createBullet(Vector2 pos, float angle) {
-        return createBullet(pos.getX(), pos.getY(), angle);
-    }
+public interface IBullet extends IDriftEntity, Serializable {
+
+    public void setColor(Color newColor);
+    public Color getColor();
+
+    public void render(IGraphics g);
 }

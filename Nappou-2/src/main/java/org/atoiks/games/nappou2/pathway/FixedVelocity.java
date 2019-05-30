@@ -16,11 +16,9 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
  * Pathway with constant velocity

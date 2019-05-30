@@ -16,13 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.pathway;
+package org.atoiks.games.nappou2.pathway;
 
 import java.util.Iterator;
 
 import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.nappou2.entities.IPathway;
 
 /**
  * Sequences a bunch of pathways. Note: canFinish always true, but whether it

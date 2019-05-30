@@ -21,7 +21,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.IEnemy;
 
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
 import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;

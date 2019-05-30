@@ -16,18 +16,26 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.entities.enemy;
 
 import java.io.Serializable;
 
-import java.awt.Color;
-
 import org.atoiks.games.framework2d.IGraphics;
 
-public interface IBullet extends IDriftEntity, Serializable {
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-    public void setColor(Color newColor);
-    public Color getColor();
+public interface IEnemy extends IDriftEntity, Serializable {
+
+    public boolean isDead();
+    public int changeHp(int delta);
+
+    public float getR();
+
+    public int getScore();
+
+    public void attachGame(Game game);
+    public Game getAssocGame();
 
     public void render(IGraphics g);
 }

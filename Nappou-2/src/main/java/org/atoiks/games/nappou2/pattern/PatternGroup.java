@@ -16,25 +16,22 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-import java.io.Serializable;
+import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-import org.atoiks.games.framework2d.IGraphics;
+public final class PatternGroup implements IAttackPattern {
 
-import org.atoiks.games.nappou2.entities.Game;
+    private final Iterable<? extends IAttackPattern> patterns;
 
-public interface IEnemy extends IDriftEntity, Serializable {
+    public PatternGroup(Iterable<? extends IAttackPattern> patterns) {
+        this.patterns = patterns;
+    }
 
-    public boolean isDead();
-    public int changeHp(int delta);
-
-    public float getR();
-
-    public int getScore();
-
-    public void attachGame(Game game);
-    public Game getAssocGame();
-
-    public void render(IGraphics g);
+    @Override
+    public void onFireUpdate(final IEnemy enemy, final float dt) {
+        for (final IAttackPattern pattern : patterns) {
+            pattern.onFireUpdate(enemy, dt);
+        }
+    }
 }
