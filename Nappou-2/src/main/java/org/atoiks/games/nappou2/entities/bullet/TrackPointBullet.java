@@ -18,51 +18,17 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.ITrackable;
 
-public final class TrackPointBullet extends PointBullet {
+import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
-    private static final long serialVersionUID = -1696891011951230605L;
+public final class TrackPointBullet extends PathwayPointBullet {
 
-    private static final int SCREEN_EDGE_BUFFER = 16;
-
-    private final ITrackable entity;
-    private final float scale;
-    private final float moveTime;
-    private final float delay;
-
-    private float time;
-    private boolean moving;
+    private static final long serialVersionUID = -7627798838031610672L;
 
     public TrackPointBullet(float x, float y, float r, ITrackable entity, float pathScale, float moveTime, float delay) {
-        super(x, y, r);
-
-        this.entity = entity;
-        this.scale = pathScale;
-        this.moveTime = moveTime;
-        this.delay = delay;
-
-        // These values force endpoints to be calculated
-        time = delay;
-        moving = false;
-    }
-
-    @Override
-    public void update(float dt) {
-        time += dt;
-        if (moving) {
-            if (time >= moveTime) {
-                moving = false;
-                time = 0;
-            } else {
-                super.update(dt);
-            }
-        } else if (time >= delay) {
-            // Re-calculate endpoints
-            dx = scale * (entity.getX() - x) / moveTime;
-            dy = scale * (entity.getY() - y) / moveTime;
-            moving = true;
-            time = 0;
-        }
+        super(r, new TrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
     }
 }
