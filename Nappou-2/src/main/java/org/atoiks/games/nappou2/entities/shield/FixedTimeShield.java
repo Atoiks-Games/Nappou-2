@@ -18,12 +18,13 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public final class FixedTimeShield extends TimeBasedShield {
 
     private static final long serialVersionUID = 259728713501591561L;
 
-    private boolean relocateX = false;
-    private boolean relocateY = false;
+    private boolean relocate = false;
 
     public FixedTimeShield(float timeout, float reloadTime, float r) {
         super(timeout, reloadTime, r);
@@ -32,32 +33,15 @@ public final class FixedTimeShield extends TimeBasedShield {
     @Override
     public void activate() {
         if (!active) {
-            relocateX = relocateY = true;
+            relocate = true;
         }
     }
 
     @Override
-    public void setX(float x) {
-        if (relocateX) {
-            super.setX(x);
-            relocateX = false;
-            tryActivateShieldWhenReady();
-        }
-    }
-
-    @Override
-    public void setY(float y) {
-        if (relocateY) {
-            super.setY(y);
-            relocateY = false;
-            tryActivateShieldWhenReady();
-        }
-    }
-
-    private void tryActivateShieldWhenReady() {
-        // only activate shield when both x, y
-        // components have been relocated
-        if (!relocateX && !relocateY) {
+    public void setPosition(final Vector2 position) {
+        if (relocate) {
+            super.setPosition(position);
+            relocate = false;
             super.activate();
         }
     }

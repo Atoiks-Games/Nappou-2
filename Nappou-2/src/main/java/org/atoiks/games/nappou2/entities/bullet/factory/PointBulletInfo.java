@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class PointBulletInfo implements BulletFactory {
@@ -28,6 +30,11 @@ public final class PointBulletInfo implements BulletFactory {
     public PointBulletInfo(float radius, float speed) {
         this.radius = radius;
         this.speed = speed;
+    }
+
+    @Override
+    public PointBullet createBullet(Vector2 position, float angle) {
+        return new PointBullet(position, radius, Vector2.fromPolar(speed, angle));
     }
 
     @Override

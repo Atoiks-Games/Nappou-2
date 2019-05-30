@@ -22,6 +22,8 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public abstract class TimeBasedShield implements IShield {
 
     private static final long serialVersionUID = 172635916L;
@@ -31,7 +33,8 @@ public abstract class TimeBasedShield implements IShield {
 
     protected boolean active = false;
     protected float time = 0;
-    protected float x, y, r;
+    protected float r;
+    protected Vector2 position;
 
     protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
         this.timeout = timeout;
@@ -41,13 +44,8 @@ public abstract class TimeBasedShield implements IShield {
     }
 
     @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
+    public Vector2 getPosition() {
+        return position;
     }
 
     @Override
@@ -56,19 +54,17 @@ public abstract class TimeBasedShield implements IShield {
     }
 
     @Override
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    @Override
-    public void setY(float y) {
-        this.y = y;
+    public void setPosition(Vector2 pos) {
+        this.position = pos;
     }
 
     @Override
     public void render(IGraphics g) {
         if (active) {
             g.setColor(Color.orange);
+
+            final float x = position.getX();
+            final float y = position.getY();
             // x, y are the center of the shield
             g.drawOval(x - r, y - r, x + r, y + r);
         }

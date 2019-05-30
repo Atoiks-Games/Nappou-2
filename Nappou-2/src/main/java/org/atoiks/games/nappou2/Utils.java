@@ -21,6 +21,8 @@ package org.atoiks.games.nappou2;
 import java.util.List;
 import java.util.Collections;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.equations.*;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -238,13 +240,8 @@ final class mb1Pathway implements UnboundPathway {
     }
 
     @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
     }
 
     @Override

@@ -18,8 +18,14 @@
 
 package org.atoiks.games.nappou2.entities;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public interface ICollidable {
 
-    public boolean collidesWith(float x, float y, float r);
     public boolean isOutOfScreen(int width, int height);
+    public boolean collidesWith(float x, float y, float r);
+
+    public default boolean collidesWith(final Vector2 position, float r) {
+        return position == null ? false : collidesWith(position.getX(), position.getY(), r);
+    }
 }

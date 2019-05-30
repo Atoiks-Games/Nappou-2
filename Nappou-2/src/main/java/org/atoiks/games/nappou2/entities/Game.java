@@ -25,6 +25,8 @@ import java.util.LinkedList;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
 import org.atoiks.games.nappou2.entities.spawner.EnemySpawner;
@@ -114,27 +116,27 @@ public final class Game implements Serializable {
         }
     }
 
-    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final float dx, final float dy) {
+    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
             final IDriftEntity entity = it.next();
             entity.update(dt);
-            entity.drift(dx, dy);
+            entity.drift(drift);
             if (entity.isOutOfScreen(gameWidth, gameHeight)) {
                 it.remove();
             }
         }
     }
 
-    public void updateEnemyPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemies.iterator(), dt, dx, dy);
+    public void updateEnemyPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(enemies.iterator(), dt, drift);
     }
 
-    public void updateEnemyBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(enemyBullets.iterator(), dt, dx, dy);
+    public void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(enemyBullets.iterator(), dt, drift);
     }
 
-    public void updatePlayerBulletPosition(final float dt, final float dx, final float dy) {
-        updateDriftEntityIterator(playerBullets.iterator(), dt, dx, dy);
+    public void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
+        updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
     }
 
     public void performCollisionCheck() {
@@ -142,13 +144,12 @@ public final class Game implements Serializable {
         final float py = player.getY();
 
         final boolean shieldActive = player.shield.isActive();
-        final float sx = player.shield.getX();
-        final float sy = player.shield.getY();
+        final Vector2 sp = player.shield.getPosition();
         final float sr = player.shield.getR();
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
-            if (shieldActive && bullet.collidesWith(sx, sy, sr)) {
+            if (shieldActive && bullet.collidesWith(sp, sr)) {
                 it.remove();
             } else if (!player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
                 it.remove();

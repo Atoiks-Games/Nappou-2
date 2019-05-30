@@ -18,10 +18,11 @@
 
 package org.atoiks.games.nappou2.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public interface IPathway {
 
-    public float getX();
-    public float getY();
+    public Vector2 getPosition();
 
     // might want to return the amount of unprocessed time left
     public void update(float dt);

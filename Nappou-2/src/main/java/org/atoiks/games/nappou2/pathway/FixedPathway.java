@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 /**
  * A fixed pathway. (Can it really be a path if it stays at the same spot?)
  */
@@ -26,24 +28,21 @@ public final class FixedPathway implements UnboundPathway {
     /**
      * A path that just stays fixed at (0, 0)
      */
-    public static final FixedPathway DEFAULT = new FixedPathway(0, 0);
+    public static final FixedPathway DEFAULT = new FixedPathway(Vector2.ZERO);
 
-    private final float x;
-    private final float y;
+    private final Vector2 position;
 
     public FixedPathway(float x, float y) {
-        this.x = x;
-        this.y = y;
+        this(new Vector2(x, y));
+    }
+
+    public FixedPathway(final Vector2 position) {
+        this.position = position;
     }
 
     @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
+    public Vector2 getPosition() {
+        return this.position;
     }
 
     @Override

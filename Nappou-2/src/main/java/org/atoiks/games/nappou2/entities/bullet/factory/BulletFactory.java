@@ -18,9 +18,15 @@
 
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
 
 public interface BulletFactory {
 
     public IBullet createBullet(float x, float y, float angle);
+
+    public default IBullet createBullet(Vector2 pos, float angle) {
+        return createBullet(pos.getX(), pos.getY(), angle);
+    }
 }

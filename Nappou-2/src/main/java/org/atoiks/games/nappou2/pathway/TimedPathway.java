@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pathway;
 
+import org.atoiks.games.nappou2.Vector2;
+
 /**
  * Used to put a time limit on unbounded pathways (like FixedPathway)
  */
@@ -41,13 +43,8 @@ public final class TimedPathway implements IPathway {
     }
 
     @Override
-    public float getX() {
-        return path.getX();
-    }
-
-    @Override
-    public float getY() {
-        return path.getY();
+    public Vector2 getPosition() {
+        return path.getPosition();
     }
 
     @Override

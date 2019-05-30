@@ -28,6 +28,7 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -159,12 +160,11 @@ public abstract class AbstractGameScene extends CenteringScene {
         // into 5 things.
         final float dtDiv5 = dt / 5;
         drift.update(dtDiv5);
-        final float driftX = dtDiv5 * drift.getDx();
-        final float driftY = dtDiv5 * drift.getDy();
+        final Vector2 disp = drift.getDrift().mul(dtDiv5);
         game.updateEnemySpawner(dtDiv5);
-        game.updateEnemyPosition(dtDiv5, driftX, driftY);
-        game.updateEnemyBulletPosition(dtDiv5, driftX, driftY);
-        game.updatePlayerBulletPosition(dtDiv5, driftX, driftY);
+        game.updateEnemyPosition(dtDiv5, disp);
+        game.updateEnemyBulletPosition(dtDiv5, disp);
+        game.updatePlayerBulletPosition(dtDiv5, disp);
 
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
@@ -188,25 +188,27 @@ public abstract class AbstractGameScene extends CenteringScene {
     private void processPlayerMovement(final float dt) {
         final Player player = game.player;
 
+        final Vector2 disp = drift.getDrift();
+
         // Calculate player's unscaled speed in y
-        float tmpVal = drift.getDy();
-        float tmpPos = player.getY();
-        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpVal += DEFAULT_DY;
-        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpVal -= DEFAULT_DY;
-        if ((tmpPos + Player.RADIUS >= HEIGHT && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
-            tmpVal = 0;
+        float tmpDy = disp.getY();
+        final float tmpY = player.getY();
+        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpDy += DEFAULT_DY;
+        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpDy -= DEFAULT_DY;
+        if ((tmpY + Player.RADIUS >= HEIGHT && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
+            tmpDy = 0;
         }
-        player.setDy(tmpVal);
 
         // Calculate player's unscaled speed in x
-        tmpVal = drift.getDx();
-        tmpPos = player.getX();
-        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpVal += DEFAULT_DX;
-        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpVal -= DEFAULT_DX;
-        if ((tmpPos + Player.RADIUS >= GAME_BORDER && tmpVal > 0) || (tmpPos - Player.RADIUS <= 0 && tmpVal < 0)) {
-            tmpVal = 0;
+        float tmpDx = disp.getX();
+        final float tmpX = player.getX();
+        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpDx += DEFAULT_DX;
+        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpDx -= DEFAULT_DX;
+        if ((tmpX + Player.RADIUS >= GAME_BORDER && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
+            tmpDx = 0;
         }
-        player.setDx(tmpVal);
+
+        player.setVelocity(new Vector2(tmpDx, tmpDy));
 
         player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
         player.update(dt);

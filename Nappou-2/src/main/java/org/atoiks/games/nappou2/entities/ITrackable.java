@@ -18,10 +18,16 @@
 
 package org.atoiks.games.nappou2.entities;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public interface ITrackable {
 
     public float getX();
     public float getY();
+
+    public default Vector2 getPosition() {
+        return new Vector2(getX(), getY());
+    }
 
     public default float distanceFrom(float x, float y) {
         final float dx = getX() - x;

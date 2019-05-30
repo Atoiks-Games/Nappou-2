@@ -24,6 +24,8 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
 public final class Player implements ITrackable, Serializable {
@@ -39,7 +41,8 @@ public final class Player implements ITrackable, Serializable {
 
     public final IShield shield;
 
-    private float x, y, dx, dy;
+    private Vector2 position;
+    private Vector2 velocity;
     private float speedScale = 1;
     private int hp = 5;
     private float respawnShieldTime = RESPAWN_SHIELD_OFF;
@@ -47,8 +50,11 @@ public final class Player implements ITrackable, Serializable {
     private boolean ignoreHpChange;
 
     public Player(float x, float y, IShield shield) {
-        this.x = x;
-        this.y = y;
+        this(new Vector2(x, y), shield);
+    }
+
+    public Player(Vector2 position, IShield shield) {
+        this.position = position;
         this.shield = shield;
     }
 
@@ -59,6 +65,9 @@ public final class Player implements ITrackable, Serializable {
         } else {
             g.setColor(Color.cyan);
         }
+
+        final float x = position.getX();
+        final float y = position.getY();
         g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
         if (speedScale != 1) {
             g.setColor(Color.yellow);
@@ -67,13 +76,10 @@ public final class Player implements ITrackable, Serializable {
     }
 
     public void update(final float dt) {
-        final float dtScaled = this.speedScale * dt;
-        final float newX = (this.x += this.dx * dtScaled);
-        final float newY = (this.y += this.dy * dtScaled);
+        this.position = this.position.add(this.velocity.mul(this.speedScale * dt));
 
         this.shield.update(dt);
-        this.shield.setX(newX);
-        this.shield.setY(newY);
+        this.shield.setPosition(position);
 
         if (respawnShieldTime >= 0) {
             if ((respawnShieldTime += dt) >= RESPAWN_SHIELD_TIME) respawnShieldTime = RESPAWN_SHIELD_OFF;
@@ -119,21 +125,22 @@ public final class Player implements ITrackable, Serializable {
         this.speedScale = 1;
     }
 
-    public void setDx(float dx) {
-        this.dx = dx;
+    public void setVelocity(Vector2 v) {
+        this.velocity = v;
     }
 
-    public void setDy(float dy) {
-        this.dy = dy;
+    @Override
+    public Vector2 getPosition() {
+        return this.position;
     }
 
     @Override
     public float getX() {
-        return x;
+        return this.position.getX();
     }
 
     @Override
     public float getY() {
-        return y;
+        return this.position.getY();
     }
 }

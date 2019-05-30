@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
@@ -52,9 +54,9 @@ public final class Beam extends AbstractBullet {
     }
 
     @Override
-    public void drift(float dx, float dy) {
-        this.mx += dx;
-        this.my += dy;
+    public void drift(final Vector2 d) {
+        this.mx += d.getX();
+        this.my += d.getY();
     }
 
     @Override

@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.pathway;
 
 import java.util.Iterator;
 
+import org.atoiks.games.nappou2.Vector2;
+
 /**
  * Sequences a bunch of pathways. Note: canFinish always true, but whether it
  * can actually finish depends on the sequence of pathways. If an unlimited
@@ -41,13 +43,8 @@ public final class ChainedPathway implements IPathway {
     }
 
     @Override
-    public float getX() {
-        return currentPath.getX();
-    }
-
-    @Override
-    public float getY() {
-        return currentPath.getY();
+    public Vector2 getPosition() {
+        return currentPath.getPosition();
     }
 
     @Override
