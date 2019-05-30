@@ -166,7 +166,7 @@ public final class LevelOneScene extends AbstractGameScene {
         //    enableDamage();
         //}
         if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_O)) {
-            final SaveData sData = ResourceManager.get("saves.dat");
+            final SaveData sData = ResourceManager.get("./saves.dat");
             sData.setCheck(0);
         }
 
