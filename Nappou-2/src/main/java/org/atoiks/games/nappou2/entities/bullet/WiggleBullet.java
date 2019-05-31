@@ -25,10 +25,7 @@ import static org.atoiks.games.nappou2.pathway.WigglePathway.horizontal;
 
 public final class WiggleBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = 3928242215L;
-
-    protected float m, s, time;
-    protected boolean d;
+    private static final long serialVersionUID = 4496193208101836655L;
 
     public WiggleBullet(Vector2 pos, float r, Vector2 vel, boolean d, float m, float s) {
         super(r, d ? horizontal(pos, vel, m, s) : vertical(pos, vel, m, s));
