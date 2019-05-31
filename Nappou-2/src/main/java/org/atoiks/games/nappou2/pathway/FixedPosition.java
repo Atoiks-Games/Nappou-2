@@ -21,22 +21,23 @@ package org.atoiks.games.nappou2.pathway;
 import org.atoiks.games.nappou2.Vector2;
 
 /**
- * A fixed pathway. (Can it really be a path if it stays at the same spot?)
+ * A fixed pathway that stays at one spot.
+ * Can it really be a path if it stays at the same spot?
  */
-public final class FixedPathway implements UnboundPathway {
+public final class FixedPosition implements UnboundPathway {
 
     /**
      * A path that just stays fixed at (0, 0)
      */
-    public static final FixedPathway DEFAULT = new FixedPathway(Vector2.ZERO);
+    public static final FixedPosition DEFAULT = new FixedPosition(Vector2.ZERO);
 
     private final Vector2 position;
 
-    public FixedPathway(float x, float y) {
+    public FixedPosition(float x, float y) {
         this(new Vector2(x, y));
     }
 
-    public FixedPathway(final Vector2 position) {
+    public FixedPosition(final Vector2 position) {
         this.position = position;
     }
 

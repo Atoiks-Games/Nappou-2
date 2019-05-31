@@ -24,7 +24,7 @@ import org.atoiks.games.nappou2.pattern.NullPattern;
 import org.atoiks.games.nappou2.pattern.IAttackPattern;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
-import org.atoiks.games.nappou2.pathway.FixedPathway;
+import org.atoiks.games.nappou2.pathway.FixedPosition;
 
 public final class PathwayEnemy extends AbstractEnemy {
 
@@ -41,7 +41,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     private final int score;
 
     public PathwayEnemy(int hp, int score) {
-        this(hp, score, FixedPathway.DEFAULT, NullPattern.INSTANCE);
+        this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE);
     }
 
     public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack) {
@@ -57,7 +57,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     }
 
     public void setPathway(IPathway p) {
-        this.path = p != null ? p : FixedPathway.DEFAULT;
+        this.path = p != null ? p : FixedPosition.DEFAULT;
     }
 
     public IAttackPattern getUpdateListener() {
