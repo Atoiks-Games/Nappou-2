@@ -35,7 +35,8 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
 
-import org.atoiks.games.nappou2.entities.bullet.factory.PointBulletInfo;
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
+import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
 
 public abstract class AbstractGameScene extends CenteringScene {
 
@@ -46,7 +47,7 @@ public abstract class AbstractGameScene extends CenteringScene {
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
 
-    private static final PointBulletInfo PLAYER_BULLET_INFO = new PointBulletInfo(5, DEFAULT_DY * 4.5f);
+    private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
 
     private final PauseOverlay pauseOverlay = new PauseOverlay();

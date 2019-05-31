@@ -19,10 +19,12 @@
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import java.util.function.Supplier;
+import java.util.function.BiFunction;
 
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
 import org.atoiks.games.nappou2.entities.bullet.PathwayPointBullet;
 
@@ -31,22 +33,29 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPointBullet;
 public final class PathwayPointBulletInfo implements BulletFactory {
 
     public final float radius;
-    public final Supplier<? extends IPathway> pathway;
+    public final BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway;
 
     public PathwayPointBulletInfo(float radius, Supplier<? extends IPathway> pathway) {
+        this(radius, (_a, _b) -> pathway.get());
+    }
+
+    public PathwayPointBulletInfo(float radius, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
         this.radius = radius;
         this.pathway = pathway;
     }
 
     @Override
     public PathwayPointBullet createBullet(Vector2 position, float angle) {
-        final PathwayPointBullet bullet = new PathwayPointBullet(radius, pathway.get());
-        bullet.drift(position);
-        return bullet;
+        return new PathwayPointBullet(radius, pathway.apply(position, angle));
     }
 
     @Override
     public PathwayPointBullet createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
+    }
+
+    public static PathwayPointBulletInfo createLegacyPointBullet(float radius, final float speed) {
+        return new PathwayPointBulletInfo(radius, (position, angle) ->
+                new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
     }
 }
