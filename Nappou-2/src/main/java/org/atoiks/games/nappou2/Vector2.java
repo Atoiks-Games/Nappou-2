@@ -136,4 +136,11 @@ public final class Vector2 {
                 Utils.clamp(v.x, min.x, max.x),
                 Utils.clamp(v.y, min.y, max.y));
     }
+
+    public static boolean inRangeExclusive(final Vector2 v, final Vector2 lo, final Vector2 hi) {
+        final float vx = v.getX();
+        final float vy = v.getY();
+        return lo.getX() < vx && vx < hi.getX()
+            && lo.getY() < vy && vy < hi.getY();
+    }
 }
