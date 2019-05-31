@@ -33,21 +33,22 @@ public final class TrackingPathway implements UnboundPathway {
     private final float moveTime;
     private final float delay;
 
-    private Vector2 position = Vector2.ZERO;
-    private Vector2 velocity = Vector2.ZERO;
+    private Vector2 velocity;
+    private Vector2 position;
 
     private float time;
     private boolean moving;
 
     public TrackingPathway(ITrackable entity, float pathScale, float moveTime, float delay) {
+        this(Vector2.ZERO, entity, pathScale, moveTime, delay);
+    }
+
+    public TrackingPathway(Vector2 pos, ITrackable entity, float pathScale, float moveTime, float delay) {
         this.entity = entity;
         this.scale = pathScale;
         this.moveTime = moveTime;
         this.delay = delay;
-    }
 
-    public TrackingPathway(Vector2 pos, ITrackable entity, float pathScale, float moveTime, float delay) {
-        this(entity, pathScale, moveTime, delay);
         this.setPosition(pos);
     }
 
