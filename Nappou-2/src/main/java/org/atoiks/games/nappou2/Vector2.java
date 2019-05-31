@@ -133,4 +133,10 @@ public final class Vector2 {
                 Utils.clamp(v.x, min.x, max.x),
                 Utils.clamp(v.y, min.y, max.y));
     }
+
+    public static Vector2 lerp(final Vector2 start, final Vector2 end, final float frac) {
+        return new Vector2(
+                Utils.lerp(start.x, end.x, frac),
+                Utils.lerp(start.y, end.y, frac));
+    }
 }
