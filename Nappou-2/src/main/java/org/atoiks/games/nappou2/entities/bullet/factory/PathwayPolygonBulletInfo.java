@@ -19,10 +19,12 @@
 package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import java.util.function.Supplier;
+import java.util.function.BiFunction;
 
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
 import org.atoiks.games.nappou2.entities.bullet.PathwayPolygonBullet;
 
@@ -32,9 +34,13 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPolygonBullet;
 public final class PathwayPolygonBulletInfo implements BulletFactory {
 
     public final float[] coords;
-    public final Supplier<? extends IPathway> pathway;
+    public final BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway;
 
     public PathwayPolygonBulletInfo(float[] coords, Supplier<? extends IPathway> pathway) {
+        this(coords, (_a, _b) -> pathway.get());
+    }
+
+    public PathwayPolygonBulletInfo(float[] coords, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
         this.coords = coords;
         this.pathway = pathway;
     }
@@ -43,13 +49,16 @@ public final class PathwayPolygonBulletInfo implements BulletFactory {
     public PathwayPolygonBullet createBullet(Vector2 position, float angle) {
         // Do not need to copy the coordinates since pathway polygon does not
         // mutate the coordinates at all!
-        final PathwayPolygonBullet bullet = new PathwayPolygonBullet(coords, pathway.get());
-        bullet.drift(position);
-        return bullet;
+        return new PathwayPolygonBullet(coords, pathway.apply(position, angle));
     }
 
     @Override
     public PathwayPolygonBullet createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
+    }
+
+    public static PathwayPolygonBulletInfo createLegacyPolygonBullet(float[] coords, final float speed) {
+        return new PathwayPolygonBulletInfo(coords, (position, angle) ->
+                new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
     }
 }
