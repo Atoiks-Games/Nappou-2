@@ -18,34 +18,23 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
+import org.atoiks.games.nappou2.Vector2;
 
-public class WiggleBullet extends PointBullet {
+import static org.atoiks.games.nappou2.pathway.WigglePathway.vertical;
+import static org.atoiks.games.nappou2.pathway.WigglePathway.horizontal;
+
+public final class WiggleBullet extends PathwayPointBullet {
 
     private static final long serialVersionUID = 3928242215L;
 
     protected float m, s, time;
     protected boolean d;
 
-    public WiggleBullet(float x, float y, float r, float dx, float dy, boolean d, float m, float s) {
-        super(x, y, r, dx, dy);
-
-        this.d = d;
-        this.m = m;
-        this.s = s;
-        this.time = 0;
+    public WiggleBullet(Vector2 pos, float r, Vector2 vel, boolean d, float m, float s) {
+        super(r, d ? horizontal(pos, vel, m, s) : vertical(pos, vel, m, s));
     }
 
-    @Override
-    public void update(final float dt) {
-        this.time += dt;
-
-        if (this.d) {
-            this.x += dt * (this.dx + this.m * Math.cos(this.s * this.time));
-            this.y += this.dy * dt;
-        } else {
-            this.x += this.dx * dt;
-            this.y += dt * (this.dy + this.m * Math.cos(this.s * this.time));
-        }
+    public WiggleBullet(float x, float y, float r, float dx, float dy, boolean d, float m, float s) {
+        this(new Vector2(x, y), r, new Vector2(dx, dy), d, m, s);
     }
 }
