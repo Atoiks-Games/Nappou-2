@@ -28,7 +28,7 @@ public final class ColorEnemyRenderer implements IEnemyRenderer {
 
     public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
 
-    private Color color;
+    private final Color color;
 
     public ColorEnemyRenderer(Color color) {
         this.color = color;

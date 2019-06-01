@@ -23,6 +23,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
+import org.atoiks.games.nappou2.graphics.NullEnemyRenderer;
 import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
@@ -33,11 +34,11 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
+    private IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
+
     protected int hp;
 
     protected Game game;
-
-    public IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
 
     protected AbstractEnemy(int hp) {
         this.hp = hp;
@@ -56,6 +57,10 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
     @Override
     public final void render(IGraphics g) {
         compRenderer.render(g, this);
+    }
+
+    public final void setRenderer(IEnemyRenderer renderer) {
+        this.compRenderer = renderer != null ? renderer : NullEnemyRenderer.INSTANCE;
     }
 
     @Override
