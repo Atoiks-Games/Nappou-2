@@ -19,30 +19,39 @@
 package org.atoiks.games.nappou2.equations;
 
 import static org.atoiks.games.nappou2.Utils.lerp;
+import static org.atoiks.games.nappou2.Utils.clamp01;
 
 public final class CubicBezier implements IEquation {
 
-    public final float p1;
-    public final float p2;
-    public final float p3;
-    public final float p4;
+    public final float t1;
+    public final float y1;
+    public final float t2;
+    public final float y2;
 
-    public CubicBezier(float p1, float p2, float p3, float p4) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
-        this.p4 = p4;
+    public CubicBezier(float t1, float y1, float t2, float y2) {
+        this.t1 = clamp01(t1);
+        this.y1 = y1;
+        this.t2 = clamp01(t2);
+        this.y2 = y2;
     }
 
     @Override
     public float compute(float t) {
-        final float q1 = lerp(p1, p2, t);
-        final float q2 = lerp(p2, p3, t);
-        final float q3 = lerp(p3, p4, t);
+        // Cubic --> Quadratic
+        final float qt1 = lerp(0, t1, t);
+        final float qy1 = lerp(0, y1, t);
+        final float qt2 = lerp(t1, t2, t);
+        final float qy2 = lerp(y1, y2, t);
+        final float qt3 = lerp(t2, 1, t);
+        final float qy3 = lerp(y2, 1, t);
 
-        final float r1 = lerp(q1, q2, t);
-        final float r2 = lerp(q2, q3, t);
+        // Quadratic --> Linear
+        final float lt1 = lerp(qt1, qt2, t);
+        final float ly1 = lerp(qy1, qy2, t);
+        final float lt2 = lerp(qt2, qt3, t);
+        final float ly2 = lerp(qy2, qy3, t);
 
-        return lerp(r1, r2, t);
+        // Interpolate progress using interpolated time
+        return lerp(ly1, ly2, lerp(lt1, lt2, t));
     }
 }
