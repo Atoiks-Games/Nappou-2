@@ -18,42 +18,16 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
+import org.atoiks.games.nappou2.Vector2;
 
-public class FallingBullet extends PointBullet {
+import org.atoiks.games.nappou2.pathway.FixedAcceleration;
 
-    private static final long serialVersionUID = 3928242215L;
+public final class FallingBullet extends PathwayPointBullet {
 
-    private float direction;
-    private float speed;
-    private int score;
-    private float time;
-    private float accel;
-    private boolean xdir;
-    private float dx;
-    private float dy;
+    private static final long serialVersionUID = 5844654826027301562L;
 
     public FallingBullet(float x, float y, float r, float speed, float direction, float accel, boolean xdir) {
-        super(x, y, r, speed * (float) Math.cos(direction), speed * (float) Math.sin(direction) );
-        this.speed = speed;
-        this.direction = direction;
-        this.time = 0;
-        this.accel = accel;
-        this.xdir = xdir;
-        this.dx = speed * (float) Math.cos(direction);
-        this.dy = speed * (float) Math.sin(direction);
-    }
-
-    @Override
-    public void update(final float dt) {
-
-        if (xdir) {
-            this.dx += dt * this.accel;
-        } else {
-            this.dy += dt * this.accel;
-        }
-
-        this.x += dt * this.dx;
-        this.y += dt * this.dy;
+        super(r, new FixedAcceleration(new Vector2(x, y), Vector2.fromPolar(speed, direction),
+                (xdir ? Vector2.UNIT_X : Vector2.UNIT_Y).mul(accel)));
     }
 }

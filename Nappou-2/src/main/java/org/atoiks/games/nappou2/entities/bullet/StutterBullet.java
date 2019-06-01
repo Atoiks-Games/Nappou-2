@@ -18,33 +18,21 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class StutterBullet extends PointBullet {
+import org.atoiks.games.nappou2.Vector2;
 
-    private static final long serialVersionUID = 3928242215L;
+import org.atoiks.games.nappou2.pathway.WigglePathway;
 
-    private float direction;
-    private float speed;
-    private int score;
-    private float time;
-    private float amplitude;
-    private float wspd;
+public final class StutterBullet extends PathwayPointBullet {
+
+    private static final long serialVersionUID = -278750928506833356L;
 
     public StutterBullet(float x, float y, float r, float speed, float direction, float amplitude, float wspd) {
-        super(x, y, r, speed * (float) Math.cos(direction), speed * (float) Math.sin(direction) );
-        this.speed = speed;
-        this.direction = direction;
-        this.time = 0;
-        this.amplitude = amplitude;
-        this.wspd = wspd;
-    }
-
-    @Override
-    public void update(final float dt) {
-        this.time += dt;
-
-        this.x += dt * (this.speed + this.amplitude * (float) Math.sin(this.wspd * this.time)) * (float) Math.cos(this.direction);
-        this.y += dt * (this.speed + this.amplitude * (float) Math.sin(this.wspd * this.time)) * (float) Math.sin(this.direction);
+        super(r, new WigglePathway(
+                new Vector2(x, y),
+                Vector2.ONE.mul(speed),
+                Vector2.fromPolar(amplitude, direction),
+                wspd,
+                (float) -Math.PI / 2));
     }
 }
