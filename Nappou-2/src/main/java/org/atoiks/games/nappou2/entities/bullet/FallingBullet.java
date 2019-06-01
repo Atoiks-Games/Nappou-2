@@ -26,8 +26,11 @@ public final class FallingBullet extends PathwayPointBullet {
 
     private static final long serialVersionUID = 5844654826027301562L;
 
+    public FallingBullet(Vector2 pos, float r, Vector2 vel, Vector2 acc) {
+        super(r, new FixedAcceleration(pos, vel, acc));
+    }
+
     public FallingBullet(float x, float y, float r, float speed, float direction, float accel, boolean xdir) {
-        super(r, new FixedAcceleration(new Vector2(x, y), Vector2.fromPolar(speed, direction),
-                (xdir ? Vector2.UNIT_X : Vector2.UNIT_Y).mul(accel)));
+        this(new Vector2(x, y), r, Vector2.fromPolar(speed, direction), (xdir ? Vector2.UNIT_X : Vector2.UNIT_Y).mul(accel));
     }
 }
