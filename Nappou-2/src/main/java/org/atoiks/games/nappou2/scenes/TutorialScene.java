@@ -30,6 +30,7 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.enemy.*;
@@ -80,6 +81,7 @@ public final class TutorialScene extends AbstractGameScene {
     private Clip bgm;
     private boolean renderControls;
     private boolean bossMode;
+    private IShield shield = new NullShield();
 
     public TutorialScene() {
         // -1 scene id means the score is not saved
@@ -101,12 +103,25 @@ public final class TutorialScene extends AbstractGameScene {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 2, 50));
+        final SaveData sData = ResourceManager.get("./saves.dat");
+
+        shield = sData.getSheild();
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, shield);
 
         game.player.setHp(5);
         game.setScore(0);
         bossMode = false;
-        waveCounter = 0;
+
+        final int checkpoint = sData.getCheck();
+
+        if (checkpoint == 1) {
+            waveCounter = 2;
+        } else if (checkpoint > 1) {
+            SceneManager.switchToScene("LevelOneScene");
+        } else {
+            waveCounter = 0;
+        }
+
     }
 
     @Override
@@ -171,6 +186,8 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 2:
+                    final SaveData sData = ResourceManager.get("./saves.dat");
+                    sData.setCheck(1);
                     updateBackgroundImage(null);
                     disableDamage();
                     shouldSkipPlayerUpdate(true);

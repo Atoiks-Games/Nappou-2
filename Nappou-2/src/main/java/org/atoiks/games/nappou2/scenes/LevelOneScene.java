@@ -166,10 +166,10 @@ public final class LevelOneScene extends AbstractGameScene {
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_E)) {
         //    enableDamage();
         //}
-        if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_O)) {
-            final SaveData sData = ResourceManager.get("./saves.dat");
-            sData.setCheck(0);
-        }
+        //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_O)) {
+        //    final SaveData sData = ResourceManager.get("./saves.dat");
+        //    sData.setCheck(0);
+        //}
 
         ++cycles;
         switch (difficulty) {

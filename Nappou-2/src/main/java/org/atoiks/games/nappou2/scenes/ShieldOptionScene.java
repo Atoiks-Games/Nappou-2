@@ -113,6 +113,8 @@ public final class ShieldOptionScene extends CenteringScene {
 
         final SaveData sData = ResourceManager.get("./saves.dat");
         sData.setShield(getShieldFromOption());
+        //If you are selecting your sheild, you are likely starting a new game.
+        sData.setCheck(0);
 
         if (bgm != null) bgm.stop();
     }

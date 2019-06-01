@@ -38,6 +38,7 @@ public final class SaveData implements Serializable {
         return this.checkpoint;
     }
 
+
     public void setDif(Difficulty d){
         this.dif = d;
     }
