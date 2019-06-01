@@ -20,45 +20,16 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import org.atoiks.games.nappou2.entities.ITrackable;
 
-public final class TrackPolygonBullet extends PolygonBullet {
+import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
-    private static final long serialVersionUID = 2983462354L;
+public final class TrackPolygonBullet extends PathwayPolygonBullet {
 
-    private static final int SCREEN_EDGE_BUFFER = 16;
-
-    private final ITrackable entity;
-    private final float scale;
-    private final float moveTime;
-    private final float delay;
-
-    private float time;
-    private boolean moving;
+    private static final long serialVersionUID = 7756339175776671307L;
 
     public TrackPolygonBullet(float[] coords, ITrackable entity, float pathScale, float moveTime, float delay) {
-        super(coords);
-
-        this.entity = entity;
-        this.scale = pathScale;
-        this.moveTime = moveTime;
-        this.delay = delay;
-    }
-
-    @Override
-    public void update(final float dt) {
-        time += dt;
-        if (moving) {
-            if (time >= moveTime) {
-                moving = false;
-                time = 0;
-            } else {
-                super.update(dt);
-            }
-        } else if (time >= delay) {
-            // Re-calculate endpoints
-            dx = scale * (entity.getX() - coords[0]) / moveTime;
-            dy = scale * (entity.getY() - coords[1]) / moveTime;
-            moving = true;
-            time = 0;
-        }
+        // Assumes coords is already placed at initial position.
+        // In that case, pathway only needs to start from the origin
+        // since the actual position is (coords + pathway + drift)
+        super(coords, new TrackingPathway(entity, pathScale, moveTime, delay));
     }
 }

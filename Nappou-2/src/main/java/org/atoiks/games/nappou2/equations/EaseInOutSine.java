@@ -16,29 +16,17 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet.factory;
+package org.atoiks.games.nappou2.equations;
 
-import org.atoiks.games.nappou2.Vector2;
+public final class EaseInOutSine implements IEquation {
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
+    public static final EaseInOutSine INSTANCE = new EaseInOutSine();
 
-public final class PointBulletInfo implements BulletFactory {
-
-    public final float radius;
-    public final float speed;
-
-    public PointBulletInfo(float radius, float speed) {
-        this.radius = radius;
-        this.speed = speed;
+    private EaseInOutSine() {
     }
 
     @Override
-    public PointBullet createBullet(Vector2 position, float angle) {
-        return new PointBullet(position, radius, Vector2.fromPolar(speed, angle));
-    }
-
-    @Override
-    public PointBullet createBullet(float x, float y, float angle) {
-        return new PointBullet(x, y, radius, speed * (float) Math.cos(angle), speed * (float) Math.sin(angle));
+    public float compute(float t) {
+        return 0.5f * (1.0f - (float) Math.cos(Math.PI * t));
     }
 }

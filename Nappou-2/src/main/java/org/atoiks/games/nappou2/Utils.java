@@ -35,29 +35,32 @@ import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
 
+    private static final BulletFactory DEFAULT_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(2, 1000);
+    private static final BulletFactory RADIAL_GROUP_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(15, 300);
+
     private static final FixedAnglePattern MINI_BOMBER_PATTERN =
-            new FixedAnglePattern(new PointBulletInfo(2, 1000), (float) (Math.PI / 2));
+            new FixedAnglePattern(DEFAULT_BULLET_INFO, (float) (Math.PI / 2));
 
     private static final MultiAnglePattern ADV_MINI_BOMBER_PATTERN =
-            new MultiAnglePattern(new PointBulletInfo(2, 1000),
+            new MultiAnglePattern(DEFAULT_BULLET_INFO,
                     (float) (7 * Math.PI / 16), (float) (9 * Math.PI / 16), (float) (Math.PI / 2));
 
     private static final FixedTrackPattern SINGLE_SHOT_PATTERN =
-            new FixedTrackPattern(new PointBulletInfo(2, 1000));
+            new FixedTrackPattern(DEFAULT_BULLET_INFO);
 
     private static final MultiTrackPattern STAR_SHOT_PATTERN =
-            new MultiTrackPattern(new PointBulletInfo(2, 1000), 0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
+            new MultiTrackPattern(DEFAULT_BULLET_INFO,
+                    0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
 
     private Utils() {
     }
 
     public static void tweenRadialGroupPattern(final Game game, final float[] xrangeInv, final float[] radOffset) {
-        final PointBulletInfo info = new PointBulletInfo(15, 300);
         for (int i = 0; i < radOffset.length; ++i) {
             final PathwayEnemy[] array = new PathwayEnemy[5];
             for (int j = 0; j < array.length; ++j) {
                 final PathwayEnemy enemy = new PathwayEnemy(2, 2);
-                enemy.setAttackPattern(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), info));
+                enemy.setAttackPattern(new RadialPattern(0.5f, true, 0, radOffset[i], 3, (float) (2 * Math.PI / 3), RADIAL_GROUP_BULLET_INFO));
 
                 final List<LerpPathway.LerpEquation> fx = Collections.singletonList(
                     new LerpPathway.LerpEquation(xrangeInv[i], xrangeInv[i ^ 1], 2.8f * 2.1f, EaseInOutQuad.INSTANCE));

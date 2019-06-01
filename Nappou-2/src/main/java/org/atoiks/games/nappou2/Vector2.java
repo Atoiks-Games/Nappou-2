@@ -21,6 +21,9 @@ package org.atoiks.games.nappou2;
 public final class Vector2 {
 
     public static final Vector2 ZERO = new Vector2(0, 0);
+    public static final Vector2 ONE = new Vector2(1, 1);
+    public static final Vector2 UNIT_X = new Vector2(1, 0);
+    public static final Vector2 UNIT_Y = new Vector2(0, 1);
 
     private final float x;
     private final float y;
@@ -132,5 +135,11 @@ public final class Vector2 {
         return new Vector2(
                 Utils.clamp(v.x, min.x, max.x),
                 Utils.clamp(v.y, min.y, max.y));
+    }
+
+    public static Vector2 lerp(final Vector2 start, final Vector2 end, final float frac) {
+        return new Vector2(
+                Utils.lerp(start.x, end.x, frac),
+                Utils.lerp(start.y, end.y, frac));
     }
 }

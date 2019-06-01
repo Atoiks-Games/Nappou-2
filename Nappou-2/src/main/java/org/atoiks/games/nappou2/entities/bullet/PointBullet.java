@@ -24,72 +24,19 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.pathway.FixedVelocity;
+
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class PointBullet extends AbstractBullet {
+public final class PointBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = 3928242215L;
-
-    private static final int SCREEN_EDGE_BUFFER = 16;
-
-    protected float x, y, r;
-
-    protected PointBullet(float x, float y, float r) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-    }
+    private static final long serialVersionUID = 8359587156439267829L;
 
     public PointBullet(final Vector2 position, float r, final Vector2 velocity) {
-        this(position.getX(), position.getY(), r, velocity.getX(), velocity.getY());
+        super(r, new FixedVelocity(position, velocity));
     }
 
     public PointBullet(float x, float y, float r, float dx, float dy) {
-        this(x, y, r);
-        this.dx = dx;
-        this.dy = dy;
-    }
-
-    @Override
-    public void drift(Vector2 d) {
-        this.x += d.getX();
-        this.y += d.getY();
-    }
-
-    @Override
-    public void render(final IGraphics g) {
-        // Can change this to using textures later
-        g.setColor(color);
-        // x, y are the center of the bullet
-        g.fillOval(x - r, y - r, x + r, y + r);
-    }
-
-    @Override
-    public void update(final float dt) {
-        this.x += this.dx * dt;
-        this.y += this.dy * dt;
-    }
-
-    @Override
-    public float getX() {
-        return this.x;
-    }
-
-    @Override
-    public float getY() {
-        return this.y;
-    }
-
-    @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
-        return fastCircleCollision(x, y, r, x1, y1, r1);
-    }
-
-    @Override
-    public boolean isOutOfScreen(final int w, final int h) {
-        return (x + r < -SCREEN_EDGE_BUFFER)
-            || (x - r > w + SCREEN_EDGE_BUFFER)
-            || (y + r < -SCREEN_EDGE_BUFFER)
-            || (y - r > h + SCREEN_EDGE_BUFFER);
+        this(new Vector2(x, y), r, new Vector2(dx, dy));
     }
 }

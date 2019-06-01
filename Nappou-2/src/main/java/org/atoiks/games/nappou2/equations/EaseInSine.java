@@ -16,19 +16,17 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.equations;
 
-import org.atoiks.games.nappou2.Vector2;
+public final class EaseInSine implements IEquation {
 
-import org.atoiks.games.nappou2.entities.ITrackable;
+    public static final EaseInSine INSTANCE = new EaseInSine();
 
-import org.atoiks.games.nappou2.pathway.TrackingPathway;
+    private EaseInSine() {
+    }
 
-public final class TrackPointBullet extends PathwayPointBullet {
-
-    private static final long serialVersionUID = -7627798838031610672L;
-
-    public TrackPointBullet(float x, float y, float r, ITrackable entity, float pathScale, float moveTime, float delay) {
-        super(r, new TrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
+    @Override
+    public float compute(float t) {
+        return 1.0f - (float) Math.cos(Math.PI / 2 * t);
     }
 }
