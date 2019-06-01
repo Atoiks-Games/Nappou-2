@@ -31,8 +31,9 @@ public final class StutterBullet extends PathwayPointBullet {
         super(r, new WigglePathway(
                 new Vector2(x, y),
                 Vector2.ONE.mul(speed),
-                Vector2.fromPolar(amplitude, direction),
+                Vector2.ONE.mul(amplitude),
                 wspd,
-                (float) -Math.PI / 2));
+                (float) -Math.PI / 2,
+                Vector2.fromPolar(1, direction)));
     }
 }
