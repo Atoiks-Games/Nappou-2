@@ -213,8 +213,8 @@ public final class TutorialScene extends AbstractGameScene {
                     displayMessage(POSTBOSS_MSG);
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
-                        // Jump to title scene directly
-                        return SceneManager.switchToScene("TitleScene");
+                        // Jump to LevelOneScene directly
+                        return SceneManager.switchToScene("LevelOneScene");
                     }
                     break;
             }

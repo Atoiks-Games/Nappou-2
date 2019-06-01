@@ -110,9 +110,11 @@ public final class LevelOneScene extends AbstractGameScene {
 
         prebossMsgPhase = -1;
 
+        final SaveData sData = ResourceManager.get("./saves.dat");
+
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) SceneManager.resources().get("shield"));
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, sData.getSheild());
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 
@@ -124,7 +126,6 @@ public final class LevelOneScene extends AbstractGameScene {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        final SaveData sData = ResourceManager.get("./saves.dat");
         switch (sData.getCheck()){
             case 1:
                 wave = 5;

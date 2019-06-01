@@ -29,6 +29,7 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Difficulty;
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 public final class DiffOptionScene extends CenteringScene {
@@ -96,6 +97,10 @@ public final class DiffOptionScene extends CenteringScene {
     @Override
     public void leave() {
         SceneManager.resources().put("difficulty", getDiffFromOption());
+
+        final SaveData sData = ResourceManager.get("./saves.dat");
+        sData.setDif(getDiffFromOption());
+
 
         bgm.stop();
     }

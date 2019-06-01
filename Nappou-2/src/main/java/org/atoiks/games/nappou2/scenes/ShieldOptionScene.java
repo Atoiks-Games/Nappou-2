@@ -29,6 +29,7 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.SaveData;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -66,14 +67,14 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (skipSelection) {
-            return SceneManager.switchToScene("LevelOneScene");
+            return SceneManager.switchToScene("TutorialScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("LevelOneScene");
+            return SceneManager.switchToScene("TutorialScene");
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -109,6 +110,9 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public void leave() {
         SceneManager.resources().put("shield", getShieldFromOption());
+
+        final SaveData sData = ResourceManager.get("./saves.dat");
+        sData.setShield(getShieldFromOption());
 
         if (bgm != null) bgm.stop();
     }
