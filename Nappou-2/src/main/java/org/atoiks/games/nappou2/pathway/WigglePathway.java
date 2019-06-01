@@ -29,15 +29,20 @@ public final class WigglePathway implements UnboundPathway {
     private final Vector2 amplitude;
     private final float afreq;
     private final float phase;
-    private Vector2 position = Vector2.ZERO;
+    private Vector2 position;
 
     private float time;
 
-    public WigglePathway(Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
+    public WigglePathway(Vector2 pos, Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
         this.velocity = velocity;
         this.amplitude = amplitude;
         this.afreq = afreq;
         this.phase = phase;
+        this.position = pos;
+    }
+
+    public WigglePathway(Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
+        this(Vector2.ZERO, velocity, amplitude, afreq, phase);
     }
 
     public void setPosition(Vector2 pos) {
