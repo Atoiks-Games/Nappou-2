@@ -141,7 +141,7 @@ public final class LevelOneScene extends AbstractGameScene {
     public boolean postUpdate(float dt) {
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-        //    return SceneManager.gotoNextScene();
+        //    return SceneManager.switchToScene("LevelTwoScene");
         //}
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
