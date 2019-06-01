@@ -41,7 +41,7 @@ public final class TitleScene extends CenteringScene {
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selectorY
     private static final String[] OPT_MSG = {
-        "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
+        "Continue", "New Game", "Highscore", "Settings", "Credits", "Quit"
     };
     private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
     private static final String[] sceneDest = {
