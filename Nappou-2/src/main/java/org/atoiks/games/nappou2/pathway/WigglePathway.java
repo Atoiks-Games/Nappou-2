@@ -21,10 +21,14 @@ package org.atoiks.games.nappou2.pathway;
 import org.atoiks.games.nappou2.Vector2;
 
 /**
- * Pathway that follows a trackable entity. The path it takes is linear.
+ * A pathway that is modeled by:
+ *
+ * position += factor * dt * (velocity + amplitude * cos(afreq * time + phase))
+ *   where factor, velocity, amplitude, afreq, phase are constants
  */
 public final class WigglePathway implements UnboundPathway {
 
+    private final Vector2 factor;
     private final Vector2 velocity;
     private final Vector2 amplitude;
     private final float afreq;
@@ -33,7 +37,8 @@ public final class WigglePathway implements UnboundPathway {
 
     private float time;
 
-    public WigglePathway(Vector2 pos, Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
+    public WigglePathway(Vector2 pos, Vector2 velocity, Vector2 amplitude, float afreq, float phase, Vector2 factor) {
+        this.factor = factor;
         this.velocity = velocity;
         this.amplitude = amplitude;
         this.afreq = afreq;
@@ -41,8 +46,16 @@ public final class WigglePathway implements UnboundPathway {
         this.position = pos;
     }
 
+    public WigglePathway(Vector2 pos, Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
+        this(pos, velocity, amplitude, afreq, phase, Vector2.ONE);
+    }
+
+    public WigglePathway(Vector2 velocity, Vector2 amplitude, float afreq, float phase, Vector2 factor) {
+        this(Vector2.ZERO, velocity, amplitude, afreq, phase, factor);
+    }
+
     public WigglePathway(Vector2 velocity, Vector2 amplitude, float afreq, float phase) {
-        this(Vector2.ZERO, velocity, amplitude, afreq, phase);
+        this(Vector2.ZERO, velocity, amplitude, afreq, phase, Vector2.ONE);
     }
 
     public void setPosition(Vector2 pos) {
@@ -58,9 +71,8 @@ public final class WigglePathway implements UnboundPathway {
     public void update(final float dt) {
         this.time += dt;
 
-        // position += dt * (velocity + amplitude * cos(afreq * time + phase))
         final float cosVal = (float) Math.cos(this.afreq * this.time + this.phase);
-        this.position = this.position.add(velocity.add(amplitude.mul(cosVal)).mul(dt));
+        this.position = Vector2.muladd(factor.mul(dt), velocity.add(amplitude.mul(cosVal)), this.position);
     }
 
     @Override
