@@ -142,4 +142,11 @@ public final class Vector2 {
                 Utils.lerp(start.x, end.x, frac),
                 Utils.lerp(start.y, end.y, frac));
     }
+
+    public static boolean inRangeExclusive(final Vector2 v, final Vector2 min, final Vector2 max) {
+        final float x = v.getX();
+        final float y = v.getY();
+        return min.getX() < x && x < max.getX()
+            && min.getY() < y && y < max.getY();
+    }
 }
