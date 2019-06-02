@@ -21,8 +21,13 @@ package org.atoiks.games.nappou2.levels.tutorial;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
@@ -63,6 +68,13 @@ public final class Preface implements ILevelState {
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, new FixedTimeShield(3.5f, 2, 50));
         game.player.setHp(5);
         game.setScore(0);
+
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+            final Clip bgm = ResourceManager.get("/music/Awakening.wav");
+            bgm.setMicrosecondPosition(0);
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     @Override

@@ -18,6 +18,12 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
+import javax.sound.sampled.Clip;
+
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.GameConfig;
+
 import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
@@ -40,6 +46,13 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
     public void enter(final ILevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
+
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+            final Clip bgm = ResourceManager.get("/music/Unlocked.wav");
+            bgm.setMicrosecondPosition(0);
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
 
         this.firstRun = true;
     }

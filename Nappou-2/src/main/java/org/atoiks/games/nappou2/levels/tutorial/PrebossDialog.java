@@ -21,7 +21,10 @@ package org.atoiks.games.nappou2.levels.tutorial;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
@@ -58,6 +61,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         ctx.disableDamage();
         ctx.shouldSkipPlayerUpdate(true);
         ctx.getGame().clearBullets();
+
+        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
 
         this.line = 0;
         this.resetMsg = true;
