@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class ImmediateEnemySpawner implements ISpawner {
+public final class EnemySpawner implements ISpawner {
 
     private final IEnemy[] enemies;
     private final float delay;
@@ -30,7 +30,7 @@ public final class ImmediateEnemySpawner implements ISpawner {
     private float time;
     private int index;
 
-    public ImmediateEnemySpawner(float delay, IEnemy... enemies) {
+    public EnemySpawner(float delay, IEnemy... enemies) {
         this.delay = delay;
         this.enemies = enemies;
     }

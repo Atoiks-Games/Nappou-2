@@ -25,7 +25,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.equations.*;
 
-import org.atoiks.games.nappou2.spawner.ImmediateEnemySpawner;
+import org.atoiks.games.nappou2.spawner.EnemySpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
@@ -73,7 +73,7 @@ public final class Utils {
 
                 array[j] = enemy;
             }
-            game.addEnemySpawner(new ImmediateEnemySpawner(0.17f, array));
+            game.addEnemySpawner(new EnemySpawner(0.17f, array));
         }
     }
 
