@@ -58,7 +58,7 @@ public class App {
                 .setFps(120.0f);
 
         SceneManager.loadScenes(new LoadingScene(),
-                new SaveHighscoreScene(), new TitleScene(), new TutorialScene(),
+                new SaveHighscoreScene(), new TitleScene(), new RefittedGameScene(),
                 new ScoreScene(), new CreditsScene(), new ConfigScene(),
                 new DiffOptionScene(), new ShieldOptionScene(),
                 new LevelOneScene(), new LevelTwoScene());
