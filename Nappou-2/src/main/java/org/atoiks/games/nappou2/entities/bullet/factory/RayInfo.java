@@ -20,27 +20,34 @@ package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.bullet.Ray;
 
-public final class BeamInfo implements BulletFactory {
+public final class RayInfo implements BulletFactory {
 
-    public final float thickness;
-    public final float length;
+    public final float growthRate;
+    public final float width;
+    public final float maxLength;
     public final float speed;
 
-    public BeamInfo(float thickness, float length, float speed) {
-        this.thickness = thickness;
-        this.length = length;
+    public RayInfo(float maxLength, float width, final float speed) {
+        // uses speed as growth rate
+        this(maxLength, speed, width, speed);
+    }
+
+    public RayInfo(float maxLength, float growthRate, float width, float speed) {
+        this.growthRate = growthRate;
+        this.width = width;
+        this.maxLength = maxLength;
         this.speed = speed;
     }
 
     @Override
-    public Beam createBullet(Vector2 position, float angle) {
-        return new Beam(position, thickness, length, Vector2.fromPolar(speed, angle));
+    public Ray createBullet(Vector2 pos, float angle) {
+        return new Ray(pos, maxLength, growthRate, width, Vector2.fromPolar(speed, angle));
     }
 
     @Override
-    public Beam createBullet(float x, float y, float angle) {
-        return new Beam(x, y, thickness, length, angle, speed);
+    public Ray createBullet(float x, float y, float angle) {
+        return createBullet(new Vector2(x, y), angle);
     }
 }

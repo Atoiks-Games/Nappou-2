@@ -16,23 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.spawner;
 
-import java.awt.Color;
+import org.atoiks.games.nappou2.entities.Game;
 
-/* package */ abstract class AbstractBullet implements IBullet {
+public interface ISpawner {
 
-    private static final long serialVersionUID = 12837435231L;
+    public void onUpdate(Game game, float dt);
 
-    protected Color color = Color.white;
-
-    @Override
-    public final void setColor(Color newColor) {
-        this.color = newColor;
-    }
-
-    @Override
-    public final Color getColor() {
-        return this.color;
-    }
+    public boolean isDoneSpawning();
 }

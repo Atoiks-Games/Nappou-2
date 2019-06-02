@@ -19,6 +19,7 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.bullet.Ray;
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class CAITutorial extends ManualEnemy {
@@ -53,11 +54,11 @@ public final class CAITutorial extends ManualEnemy {
                 game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle - Math.PI / 12), 1000));
                 game.addEnemyBullet(new Beam(x, y, 2, 10, (float) (angle + Math.PI / 12), 1000));
             } else {
-                game.addEnemyBullet(new Beam(x, y, 10, 100, (float) (angle), 600));
-                game.addEnemyBullet(new Beam(x, y, 10, 1000, (float) (angle + Math.PI / 4), 500));
-                game.addEnemyBullet(new Beam(x, y, 10, 1000, (float) (angle - Math.PI / 4), 500));
-                game.addEnemyBullet(new Beam(x, y, 5, 100, (float) (angle + Math.PI / 6), 750));
-                game.addEnemyBullet(new Beam(x, y, 5, 100, (float) (angle - Math.PI / 6), 750));
+                game.addEnemyBullet(new Ray(x, y, 100, 600, 10, 600 * (float) Math.cos(angle), 600 * (float) Math.sin(angle)));
+                game.addEnemyBullet(new Ray(x, y, 500, 750, 10, 750 * (float) Math.cos(angle + Math.PI / 4), 750 * (float) Math.sin(angle + Math.PI / 4)));
+                game.addEnemyBullet(new Ray(x, y, 500, 750, 10, 750 * (float) Math.cos(angle - Math.PI / 4), 750 * (float) Math.sin(angle - Math.PI / 4)));
+                game.addEnemyBullet(new Ray(x, y, 100, 750, 5, 750 * (float) Math.cos(angle + Math.PI / 6), 750 * (float) Math.sin(angle + Math.PI / 6)));
+                game.addEnemyBullet(new Ray(x, y, 100, 750, 5, 750 * (float) Math.cos(angle - Math.PI / 6), 750 * (float) Math.sin(angle - Math.PI / 6)));
             }
         }
     }
