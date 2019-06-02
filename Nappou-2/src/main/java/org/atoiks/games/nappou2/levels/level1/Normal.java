@@ -54,13 +54,8 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
 
 public final class Normal implements ILevelState {
 
-    private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.NORMAL);
-
     private int cycles;
     private int wave;
-    private int phase;
-
-    private int prebossMsgPhase;
 
     private Clip bgm;
 
@@ -71,9 +66,6 @@ public final class Normal implements ILevelState {
 
         this.cycles = 0;
         this.wave = 0;
-        this.phase = 0;
-
-        this.prebossMsgPhase = -1;
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
@@ -96,21 +88,9 @@ public final class Normal implements ILevelState {
         bgm.stop();
     }
 
-    private boolean displayNextPrebossDialogue(final ILevelContext ctx) {
-        if (++prebossMsgPhase < PREBOSS_MSG.length) {
-            ctx.displayMessage(PREBOSS_MSG[prebossMsgPhase]);
-            return true;
-        }
-
-        // no more dialogs, must clear out player portrait
-        ctx.clearMessage();
-        return false;
-    }
-
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
-        final Drifter drift = ctx.getDrifter();
 
         ++cycles;
         switch (wave) {
@@ -208,71 +188,65 @@ public final class Normal implements ILevelState {
                     tweenRadialGroupPattern(game, w4eX, w4eR);
                 }
                 if (cycles > 680 && game.noMoreEnemies()) {
-                    wave++;
-                    cycles = 0;
-                    bgm.stop();
-                    ctx.disableDamage();
-                    ctx.shouldSkipPlayerUpdate(true);
-                    game.clearBullets();
-                    bgm = ResourceManager.get("/music/Level_One_Boss.wav");
-                    if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-                        bgm.setMicrosecondPosition(0);
-                        bgm.start();
-                        bgm.setLoopPoints(BOSS_LOOP, -1);
-                        bgm.loop(Clip.LOOP_CONTINUOUSLY);
-                    }
-                    displayNextPrebossDialogue(ctx);
+                    ctx.setState(new PrebossDialog(new NormalBossWave()));
+                    return;
                 }
                 break;
-            case 5:
-                if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                    if (!displayNextPrebossDialogue(ctx)) {
-                        wave++;
-                        ctx.enableDamage();
-                        ctx.shouldSkipPlayerUpdate(false);
-                        cycles = 0;
-                        game.addEnemy(new Level1Normal(300, 375, -10, 20));
-                        drift.accelY = -20;
-                        drift.accelX = 20;
-                        drift.clampDx(0, 100);
-                    }
-                }
-                break;
-            case 6:
-                if (cycles % 4000 == 0) {
-                    switch (++phase) {
-                        case 0:
-                            drift.accelY = -20;
-                            drift.accelX = 20;
-                            drift.clampDx(0, 100);
-                            break;
-                        case 1:
-                            drift.accelX = -20;
-                            drift.accelY = 20;
-                            drift.clampDy(0,100);
-                            break;
-                        case 2:
-                            drift.accelY = -20;
-                            drift.clampDx(-100,0);
-                            break;
-                        case 3:
-                            drift.accelX = 20;
-                            drift.clampDy(-100,0);
-                            break;
-                    }
-                }
-                if (cycles > 40 && game.noMoreEnemies()) {
-                    bgm.stop();
-                    ctx.disableDamage();
-                    ctx.shouldSkipPlayerUpdate(true);
-                    game.clearBullets();
-                    ctx.displayMessage(POSTBOSS_MSG);
-                    if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                        ctx.setState(EXIT_STATE);
-                        return;
-                    }
-                }
-                break;
+        }
+    }
+}
+
+final class NormalBossWave implements ILevelState {
+
+    private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.NORMAL);
+
+    private int cycles;
+    private int phase;
+
+    @Override
+    public void enter(final ILevelContext ctx) {
+        ctx.enableDamage();
+        ctx.shouldSkipPlayerUpdate(false);
+    }
+
+    @Override
+    public void updateLevel(final ILevelContext ctx, final float dt) {
+        final Game game = ctx.getGame();
+        final Drifter drift = ctx.getDrifter();
+
+        if (cycles++ == 0) {
+            game.addEnemy(new Level1Normal(300, 375, -10, 20));
+            drift.accelY = -20;
+            drift.accelX = 20;
+            drift.clampDx(0, 100);
+            return;
+        }
+
+        if (cycles % 4000 == 0) {
+            switch (++phase) {
+                case 0:
+                    drift.accelY = -20;
+                    drift.accelX = 20;
+                    drift.clampDx(0, 100);
+                    break;
+                case 1:
+                    drift.accelX = -20;
+                    drift.accelY = 20;
+                    drift.clampDy(0, 100);
+                    break;
+                case 2:
+                    drift.accelY = -20;
+                    drift.clampDx(-100, 0);
+                    break;
+                case 3:
+                    drift.accelX = 20;
+                    drift.clampDy(-100, 0);
+                    break;
+            }
+        }
+        if (cycles > 40 && game.noMoreEnemies()) {
+            ctx.setState(new PostbossDialog(EXIT_STATE));
+            return;
         }
     }
 }

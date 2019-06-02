@@ -26,24 +26,8 @@ import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
 
 /* package */ final class Data {
 
-    public static final Message[] PREBOSS_MSG = {
-        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "Why are you here?"),
-        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Oh you know, humans."),
-        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I no longer find joy in another's pain."),
-        new Message("CAI.png", HorizontalAlignment.CENTER, "CAI", "Why so moody?"),
-        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "..."),
-        new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Yeah, give me a few centuries and things will be back to normal!"),
-        new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "You haven't changed at all Luma!"),
-        new Message(null      , HorizontalAlignment.RIGHT, "ELLE", "You took everything away from me. Do you know how much I suffered?"),
-    };
-
-    public static final Message POSTBOSS_MSG = new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I just want to go home...");
-
     // loop frame for level
     public static final int LEVEL_LOOP = 1229110;
-
-    // loop frame for BOSS
-    public static final int BOSS_LOOP = 1222000;
 
     // wave-number-diff-name = { bomber1A, bomber2A, bomber1B, bomber2B, ... }
     public static final float[] w1eX = {-10, 760, -7, 754, -12, 760, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755, -11, 755};
