@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.io.Serializable;
-
 import java.awt.Color;
 
 /* package */ abstract class AbstractBullet implements IBullet {
@@ -27,9 +25,6 @@ import java.awt.Color;
     private static final long serialVersionUID = 12837435231L;
 
     protected Color color = Color.white;
-
-    protected float dx;
-    protected float dy;
 
     @Override
     public final void setColor(Color newColor) {
