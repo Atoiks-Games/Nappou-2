@@ -116,7 +116,7 @@ public final class LevelTwoScene extends AbstractGameScene {
     }
 
     @Override
-    public boolean postUpdate(float dt) {
+    public void postUpdate(float dt) {
         ++cycles;
         switch (difficulty) {
             case EASY:
@@ -338,14 +338,14 @@ public final class LevelTwoScene extends AbstractGameScene {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             // SceneManager.resources().put("prompt.trans", /* whatever the next scene id should be... */);
                             SceneManager.resources().put("prompt.trans", "TitleScene");
-                            return SceneManager.switchToScene("SaveHighscoreScene");
+                            SceneManager.switchToScene("SaveHighscoreScene");
+                            return;
                         }
                     }
                     break;
             }
             break;
         }
-        return true;
     }
 
     @Override

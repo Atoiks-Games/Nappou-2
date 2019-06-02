@@ -145,7 +145,7 @@ public final class TutorialScene extends AbstractGameScene {
     }
 
     @Override
-    public boolean postUpdate(float dt) {
+    public void postUpdate(float dt) {
         if (renderControls && Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             renderControls = false;
             updateBackgroundImage(ResourceManager.get("/image/z.png"));
@@ -214,11 +214,11 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to title scene directly
-                        return SceneManager.switchToScene("TitleScene");
+                        SceneManager.switchToScene("TitleScene");
+                        return;
                     }
                     break;
             }
         }
-        return true;
     }
 }

@@ -230,5 +230,5 @@ public abstract class AbstractGameScene extends CenteringScene {
         }
     }
 
-    public abstract boolean postUpdate(float dt);
+    protected abstract void postUpdate(float dt);
 }

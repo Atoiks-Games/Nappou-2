@@ -138,10 +138,11 @@ public final class LevelOneScene extends AbstractGameScene {
     }
 
     @Override
-    public boolean postUpdate(float dt) {
+    public void postUpdate(float dt) {
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_P)) {
-        //    return SceneManager.switchToScene("LevelTwoScene");
+        //    SceneManager.switchToScene("LevelTwoScene");
+        //    return;
         //}
         //DEV CHEAT CODE
         //if (Input.isKeyPressed(java.awt.event.KeyEvent.VK_Q)) {
@@ -290,7 +291,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             SceneManager.resources().put("prompt.trans", "TitleScene");
-                            return SceneManager.switchToScene("SaveHighscoreScene");
+                            SceneManager.switchToScene("SaveHighscoreScene");
+                            return;
                         }
                     }
                     break;
@@ -455,7 +457,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             SceneManager.resources().put("prompt.trans", "TitleScene");
-                            return SceneManager.switchToScene("SaveHighscoreScene");
+                            SceneManager.switchToScene("SaveHighscoreScene");
+                            return;
                         }
                     }
                     break;
@@ -681,7 +684,8 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             SceneManager.resources().put("prompt.trans", "TitleScene");
-                            return SceneManager.switchToScene("SaveHighscoreScene");
+                            SceneManager.switchToScene("SaveHighscoreScene");
+                            return;
                         }
                     }
                     break;
@@ -953,13 +957,13 @@ public final class LevelOneScene extends AbstractGameScene {
                         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                             // Ask for name, and have PromptNameScene switch scene for us to $prompt.trans
                             SceneManager.resources().put("prompt.trans", "TitleScene");
-                            return SceneManager.switchToScene("SaveHighscoreScene");
+                            SceneManager.switchToScene("SaveHighscoreScene");
+                            return;
                         }
                     }
                     break;
                 }
             break;
         }
-        return true;
     }
 }
