@@ -21,7 +21,6 @@ package org.atoiks.games.nappou2.levels;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Drifter;
-import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Message;
@@ -30,11 +29,8 @@ public interface ILevelContext {
 
     public void setState(final ILevelState nextState);
 
-    // Create an enum containing all the possible level ids?
-    public void setLevelId(int id);
     public Game getGame();
     public Drifter getDrifter();
-    public Difficulty getDifficulty();
 
     public void shouldSkipPlayerUpdate(boolean flag);
 

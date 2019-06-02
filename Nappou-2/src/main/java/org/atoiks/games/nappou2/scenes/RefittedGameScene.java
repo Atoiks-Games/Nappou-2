@@ -29,7 +29,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
@@ -61,12 +60,8 @@ public final class RefittedGameScene extends CenteringScene implements ILevelCon
     private final Game game = new Game();
     private final Drifter drift = new Drifter();
 
-    private Difficulty difficulty;
-
     private boolean skipPlayerUpdate;
     private float playerFireLimiter;
-
-    private int sceneId = -1;
 
     private ILevelState state = NullState.INSTANCE;
 
@@ -83,11 +78,6 @@ public final class RefittedGameScene extends CenteringScene implements ILevelCon
     }
 
     @Override
-    public void setLevelId(int id) {
-        this.sceneId = id;
-    }
-
-    @Override
     public Game getGame() {
         return game;
     }
@@ -95,11 +85,6 @@ public final class RefittedGameScene extends CenteringScene implements ILevelCon
     @Override
     public Drifter getDrifter() {
         return drift;
-    }
-
-    @Override
-    public Difficulty getDifficulty() {
-        return difficulty;
     }
 
     @Override
@@ -128,8 +113,6 @@ public final class RefittedGameScene extends CenteringScene implements ILevelCon
 
     @Override
     public void enter(String prevSceneId) {
-        difficulty = (Difficulty) SceneManager.resources().get("difficulty");
-
         playerFireLimiter = 0f;
         shouldSkipPlayerUpdate(false);
 
