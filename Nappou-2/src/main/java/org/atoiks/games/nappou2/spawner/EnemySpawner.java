@@ -16,11 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.spawner;
+package org.atoiks.games.nappou2.spawner;
+
+import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class ImmediateEnemySpawner extends EnemySpawner {
+public final class EnemySpawner implements ISpawner {
 
     private final IEnemy[] enemies;
     private final float delay;
@@ -28,13 +30,13 @@ public final class ImmediateEnemySpawner extends EnemySpawner {
     private float time;
     private int index;
 
-    public ImmediateEnemySpawner(float delay, IEnemy... enemies) {
+    public EnemySpawner(float delay, IEnemy... enemies) {
         this.delay = delay;
         this.enemies = enemies;
     }
 
     @Override
-    public void update(float dt) {
+    public void onUpdate(final Game game, float dt) {
         while (index < enemies.length && (time += dt) >= delay) {
             time -= delay;
             final IEnemy enemy = enemies[index++];

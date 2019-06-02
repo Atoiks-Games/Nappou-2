@@ -27,9 +27,10 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.spawner.ISpawner;
+
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
-import org.atoiks.games.nappou2.entities.spawner.EnemySpawner;
 
 public final class Game implements Serializable {
 
@@ -38,7 +39,7 @@ public final class Game implements Serializable {
     private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
     private final LinkedList<IBullet> playerBullets = new LinkedList<>();
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
-    private final LinkedList<EnemySpawner> spawners = new LinkedList<>();
+    private final LinkedList<ISpawner> spawners = new LinkedList<>();
 
     public Player player;
 
@@ -73,9 +74,8 @@ public final class Game implements Serializable {
         enemy.attachGame(this);
     }
 
-    public void addEnemySpawner(final EnemySpawner spawner) {
+    public void addEnemySpawner(final ISpawner spawner) {
         spawners.add(spawner);
-        spawner.attachGame(this);
     }
 
     public boolean noMoreEnemies() {
@@ -106,10 +106,10 @@ public final class Game implements Serializable {
     }
 
     public void updateEnemySpawner(final float dt) {
-        final Iterator<EnemySpawner> it = spawners.iterator();
+        final Iterator<ISpawner> it = spawners.iterator();
         while (it.hasNext()) {
-            final EnemySpawner spawner = it.next();
-            spawner.update(dt);
+            final ISpawner spawner = it.next();
+            spawner.onUpdate(this, dt);
             if (spawner.isDoneSpawning()) {
                 it.remove();
             }
