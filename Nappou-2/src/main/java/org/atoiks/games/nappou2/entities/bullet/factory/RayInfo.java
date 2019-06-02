@@ -29,6 +29,11 @@ public final class RayInfo implements BulletFactory {
     public final float maxLength;
     public final float speed;
 
+    public RayInfo(float maxLength, float width, final float speed) {
+        // uses speed as growth rate
+        this(maxLength, speed, width, speed);
+    }
+
     public RayInfo(float maxLength, float growthRate, float width, float speed) {
         this.growthRate = growthRate;
         this.width = width;
