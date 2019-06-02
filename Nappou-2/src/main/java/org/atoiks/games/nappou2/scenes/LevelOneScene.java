@@ -34,10 +34,11 @@ import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.*;
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
-import org.atoiks.games.nappou2.entities.spawner.*;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SaveData;
+
+import org.atoiks.games.nappou2.spawner.FishSpawner;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.altMb1;

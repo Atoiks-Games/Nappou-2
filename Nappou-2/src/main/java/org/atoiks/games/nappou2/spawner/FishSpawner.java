@@ -16,15 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.spawner;
+package org.atoiks.games.nappou2.spawner;
 
-import org.atoiks.games.nappou2.entities.spawner.EnemySpawner;
+import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 
-public final class FishSpawner extends EnemySpawner {
-
-    private static final long serialVersionUID = 34091232L;
+public final class FishSpawner implements ISpawner {
 
     private int cycles = -1;
 
@@ -56,7 +54,7 @@ public final class FishSpawner extends EnemySpawner {
     }
 
     @Override
-    public void update(final float dt) {
+    public void onUpdate(final Game game, final float dt) {
         switch (++cycles) {
             case 0:
                 game.addEnemy(new FishPart(2, xmid, ymid, 16, speed, angle, amplitude, 10, alt));
