@@ -166,6 +166,8 @@ public final class TutorialScene extends AbstractGameScene {
             updateBackgroundImage(ResourceManager.get("/image/z.png"));
         }
 
+        final SaveData sData = ResourceManager.get("./saves.dat");
+
         if (game.noMoreEnemies()) {
             switch (waveCounter) {
                 case 0:
@@ -186,7 +188,6 @@ public final class TutorialScene extends AbstractGameScene {
                     break;
 
                 case 2:
-                    final SaveData sData = ResourceManager.get("./saves.dat");
                     sData.setCheck(1);
                     updateBackgroundImage(null);
                     disableDamage();
@@ -231,6 +232,7 @@ public final class TutorialScene extends AbstractGameScene {
                     if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                         // Score in tutorial does not get saved
                         // Jump to LevelOneScene directly
+                        sData.setCheck(2);
                         return SceneManager.switchToScene("LevelOneScene");
                     }
                     break;

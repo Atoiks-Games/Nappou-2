@@ -47,6 +47,8 @@ import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
 import static org.atoiks.games.nappou2.Utils.advancedMiniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
+import org.atoiks.games.nappou2.Difficulty;
+
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 public final class LevelOneScene extends AbstractGameScene {
@@ -68,6 +70,7 @@ public final class LevelOneScene extends AbstractGameScene {
     private int wave;
     private Clip bgm;
     private int phase;
+    private Difficulty dif;
 
     private int prebossMsgPhase;
 
@@ -111,6 +114,7 @@ public final class LevelOneScene extends AbstractGameScene {
         prebossMsgPhase = -1;
 
         final SaveData sData = ResourceManager.get("./saves.dat");
+        dif = sData.getDif();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
@@ -127,7 +131,7 @@ public final class LevelOneScene extends AbstractGameScene {
         }
 
         switch (sData.getCheck()){
-            case 1:
+            case 3:
                 wave = 5;
                 break;
             default:
@@ -172,7 +176,7 @@ public final class LevelOneScene extends AbstractGameScene {
         //}
 
         ++cycles;
-        switch (difficulty) {
+        switch (dif) {
 
             case EASY:
             switch (wave) {
@@ -280,7 +284,7 @@ public final class LevelOneScene extends AbstractGameScene {
                     }
                     if (cycles > 2040 && game.noMoreEnemies()) {
                         final SaveData sData = ResourceManager.get("./saves.dat");
-                        sData.setCheck(1);
+                        sData.setCheck(3);
                         wave++;
                         cycles = 0;
                     }
