@@ -16,34 +16,42 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.spawner;
+package org.atoiks.games.nappou2.spawner;
+
+import java.util.function.Supplier;
+
+import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class ImmediateEnemySpawner extends EnemySpawner {
+public final class LazyEnemySpawner implements ISpawner {
 
-    private final IEnemy[] enemies;
     private final float delay;
+    private final int limit;
+    private final Supplier<? extends IEnemy> supplier;
 
     private float time;
     private int index;
 
-    public ImmediateEnemySpawner(float delay, IEnemy... enemies) {
+    public LazyEnemySpawner(float delay, int limit, Supplier<? extends IEnemy> supplier) {
         this.delay = delay;
-        this.enemies = enemies;
+        this.limit = limit;
+        this.supplier = supplier;
     }
 
     @Override
-    public void update(float dt) {
-        while (index < enemies.length && (time += dt) >= delay) {
+    public void onUpdate(final Game game, float dt) {
+        while (!isDoneSpawning() && (time += dt) >= delay) {
             time -= delay;
-            final IEnemy enemy = enemies[index++];
+            index++;
+            final IEnemy enemy = supplier.get();
             if (enemy != null) game.addEnemy(enemy);
         }
     }
 
     @Override
     public boolean isDoneSpawning() {
-        return index >= enemies.length;
+        // Negative limits are used as infinite-spawners
+        return limit >= 0 && index >= limit;
     }
 }
