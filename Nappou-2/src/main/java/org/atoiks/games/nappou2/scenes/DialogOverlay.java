@@ -31,7 +31,7 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.AbstractGameScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
-/* package */ final class DialogOverlay {
+public final class DialogOverlay {
 
     private String msgSpeaker;
     private String[] msgLines;
@@ -39,6 +39,9 @@ import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
 
     private int xoffMsgImg;
     private int yoffMsgImg;
+
+    /* package */ DialogOverlay() {
+    }
 
     public void clearMessage() {
         this.imgMsg = null;
