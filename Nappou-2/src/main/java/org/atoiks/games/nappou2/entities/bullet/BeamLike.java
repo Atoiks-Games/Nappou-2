@@ -30,6 +30,8 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
     private static final long serialVersionUID = 1688306598996496965L;
 
+    private static final int SCREEN_EDGE_BUFFER = 16;
+
     private final float halfWidth;
 
     private final float angle;
@@ -138,7 +140,7 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         final Vector2 pos = this.getPosition();
         final float x = pos.getX();
         final float y = pos.getY();
-        final float hw = Math.min(length, this.halfWidth);
+        final float hw = Math.min(length, this.halfWidth) + SCREEN_EDGE_BUFFER;
 
         final float maxX = x + hw;
         final float minX = x - hw;
@@ -146,8 +148,8 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         final float minY = y - hw;
 
         return isPtOutOfScreen(maxX, maxY, w, h)
-            || isPtOutOfScreen(maxX, minY, w, h)
-            || isPtOutOfScreen(minX, minY, w, h)
-            || isPtOutOfScreen(minX, maxY, w, h);
+            && isPtOutOfScreen(maxX, minY, w, h)
+            && isPtOutOfScreen(minX, minY, w, h)
+            && isPtOutOfScreen(minX, maxY, w, h);
     }
 }
