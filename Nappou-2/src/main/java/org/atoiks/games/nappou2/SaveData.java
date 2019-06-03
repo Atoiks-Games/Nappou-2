@@ -30,29 +30,29 @@ public final class SaveData implements Serializable {
     private Difficulty dif = Difficulty.NORMAL;
     private IShield shield = new NullShield();
 
-    public void setCheck(int n){
+    public void setCheck(int n) {
         this.checkpoint = n;
     }
 
-    public int getCheck(){
+    public int getCheck() {
         return this.checkpoint;
     }
 
 
-    public void setDif(Difficulty d){
+    public void setDif(Difficulty d) {
         this.dif = d;
     }
 
 
-    public void setShield(IShield s){
+    public void setShield(IShield s) {
         this.shield = s;
     }
 
-    public Difficulty getDif(){
+    public Difficulty getDif() {
         return this.dif;
     }
 
-    public IShield getSheild(){
+    public IShield getShield() {
         return this.shield;
     }
 }
