@@ -18,7 +18,11 @@
 
 package org.atoiks.games.nappou2;
 
-public final class Vector2 {
+import java.io.Serializable;
+
+public final class Vector2 implements Serializable {
+
+    private static final long serialVersionUID = 5016983330876743514L;
 
     public static final Vector2 ZERO = new Vector2(0, 0);
     public static final Vector2 ONE = new Vector2(1, 1);
