@@ -95,7 +95,7 @@ public final class Preface implements ILevelState {
 
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
-        final int checkpoint = sData.getCheck();
+        final int checkpoint = saveData.getCheck();
 
         if (checkpoint == 1) {
             ctx.setState(new PrebossDialog());
@@ -103,7 +103,7 @@ public final class Preface implements ILevelState {
         }
 
         if (checkpoint > 1) {
-            ctx.setState(ReturnToTitleSceneState.INSTANCE);
+            ctx.setState(EndOfTutorialState.INSTANCE);
             return;
         }
 

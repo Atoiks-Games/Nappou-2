@@ -85,7 +85,7 @@ public final class Easy implements ILevelState {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        if (sData.getCheck() == 3) {
+        if (saveData.getCheck() == 3) {
             this.wave = 5;
         }
     }

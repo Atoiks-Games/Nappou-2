@@ -40,26 +40,13 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PostbossDialog extends AbstractDialogState {
 
-    public static class ReturnToTitleSceneState implements ILevelState {
-
-        public static final ReturnToTitleSceneState INSTANCE = new ReturnToTitleSceneState();
-
-        private ReturnToTitleSceneState() {
-        }
-
-        @Override
-        public void updateLevel(final ILevelContext ctx, final float dt) {
-            SceneManager.switchToScene("TitleScene");
-        }
-    }
-
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
     private boolean firstRun;
 
     public PostbossDialog() {
-        super(ReturnToTitleSceneState.INSTANCE);
+        super(EndOfTutorialState.INSTANCE);
     }
 
     @Override
