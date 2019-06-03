@@ -135,11 +135,6 @@ public final class LoadingScene implements Scene {
                     final ScoreData data = ResourceManager.loadOrDefault("./score.dat", ExternalResourceResolver.INSTANCE,
                             ObjectDecoder.getInstance(), ScoreData::new);
 
-                    if (data.data[0].length != ScoreData.LEVELS) {
-                        // amount of levels is changed, assume old score is wrong
-                        ResourceManager.replace("./score.dat", new ScoreData());
-                    }
-
                     loaded = LoadState.DONE;
                 });
                 break;
