@@ -18,41 +18,32 @@
 
 package org.atoiks.games.nappou2.levels.level1;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Message;
 
-import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PostbossDialog implements ILevelState {
+/* package */ final class PostbossDialog extends AbstractDialogState {
 
     private static final Message MESSAGE = new Message(
             "ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I just want to go home...");
 
-    private final ILevelState nextState;
-
     private boolean firstRun;
 
     public PostbossDialog(ILevelState nextState) {
-        this.nextState = nextState;
+        super(nextState);
     }
 
     @Override
     public void enter(final ILevelContext ctx) {
-        ctx.disableDamage();
-        ctx.shouldSkipPlayerUpdate(true);
-        ctx.getGame().clearBullets();
+        super.enter(ctx);
 
         ResourceManager.<Clip>get("/music/Level_One_Boss.wav").stop();
 
@@ -60,15 +51,13 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
-        if (this.firstRun) {
-            this.firstRun = false;
-            ctx.displayMessage(MESSAGE);
-        }
+    public boolean hasNext() {
+        return this.firstRun;
+    }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            ctx.setState(nextState);
-            return;
-        }
+    @Override
+    public Message next() {
+        this.firstRun = false;
+        return MESSAGE;
     }
 }

@@ -18,9 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
@@ -28,13 +25,13 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Message;
 
-import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PrebossDialog implements ILevelState {
+/* package */ final class PrebossDialog extends AbstractDialogState {
 
     public static final PrebossDialog INSTANCE = new PrebossDialog();
 
@@ -51,38 +48,26 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     };
 
     private int line;
-    private boolean resetMsg;
 
     private PrebossDialog() {
+        super(BossWave.INSTANCE);
     }
 
     @Override
     public void enter(final ILevelContext ctx) {
-        ctx.disableDamage();
-        ctx.shouldSkipPlayerUpdate(true);
-        ctx.getGame().clearBullets();
-
-        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
+        super.enter(ctx);
 
         this.line = 0;
-        this.resetMsg = true;
+        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
-        if (this.resetMsg) {
-            this.resetMsg = false;
-            ctx.displayMessage(LINES[this.line]);
-        }
+    public boolean hasNext() {
+        return line < LINES.length;
+    }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            if (++this.line < LINES.length) {
-                this.resetMsg = true;
-            } else {
-                ctx.clearMessage();
-                ctx.setState(BossWave.INSTANCE);
-                return;
-            }
-        }
+    @Override
+    public Message next() {
+        return LINES[line++];
     }
 }
