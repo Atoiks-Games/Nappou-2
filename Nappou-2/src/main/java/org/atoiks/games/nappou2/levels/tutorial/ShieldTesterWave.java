@@ -40,16 +40,11 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class ShieldTesterWave implements ILevelState {
 
-    public static final ShieldTesterWave INSTANCE = new ShieldTesterWave();
-
     private Image img;
     private int imgY;
     private int imgX;
 
     private boolean firstRun;
-
-    private ShieldTesterWave() {
-    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -75,7 +70,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
                 game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                 game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
             } else {
-                ctx.setState(PrebossDialog.INSTANCE);
+                ctx.setState(new PrebossDialog());
                 return;
             }
         }

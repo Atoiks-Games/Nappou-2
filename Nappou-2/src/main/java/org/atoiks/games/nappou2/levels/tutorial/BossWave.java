@@ -35,12 +35,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 /* package */ final class BossWave implements ILevelState {
 
-    public static final BossWave INSTANCE = new BossWave();
-
     private boolean firstRun;
-
-    private BossWave() {
-    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -65,7 +60,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
                 firstRun = false;
                 game.addEnemy(new CAITutorial(50, 375, -10, 20));
             } else {
-                ctx.setState(PostbossDialog.INSTANCE);
+                ctx.setState(new PostbossDialog());
                 return;
             }
         }

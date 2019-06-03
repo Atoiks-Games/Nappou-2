@@ -84,7 +84,7 @@ public final class TitleScene extends CenteringScene {
                     // selector 0 points to tutorial stage, so we put in the
                     // entry state for the tutorial stage.
                     SceneManager.resources().put("level.state",
-                            org.atoiks.games.nappou2.levels.tutorial.Preface.INSTANCE);
+                            new org.atoiks.games.nappou2.levels.tutorial.Preface());
                 }
                 return SceneManager.switchToScene(sceneDest[selector]);
             }

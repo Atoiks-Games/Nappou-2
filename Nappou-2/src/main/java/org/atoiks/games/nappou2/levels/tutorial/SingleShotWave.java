@@ -38,14 +38,9 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class SingleShotWave implements ILevelState {
 
-    public static final SingleShotWave INSTANCE = new SingleShotWave();
-
     private Image img;
     private int imgY;
     private int imgX;
-
-    private SingleShotWave() {
-    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -68,7 +63,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
                 game.addEnemy(singleShotEnemy(1, 250, -10, 8, false));
                 game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
             } else {
-                ctx.setState(ShieldTesterWave.INSTANCE);
+                ctx.setState(new ShieldTesterWave());
                 return;
             }
         }

@@ -33,8 +33,6 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PrebossDialog extends AbstractDialogState {
 
-    public static final PrebossDialog INSTANCE = new PrebossDialog();
-
     private static final Message[] LINES = {
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
         new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "What?"),
@@ -49,8 +47,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private int line;
 
-    private PrebossDialog() {
-        super(BossWave.INSTANCE);
+    public PrebossDialog() {
+        super(new BossWave());
     }
 
     @Override

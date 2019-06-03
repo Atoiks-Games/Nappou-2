@@ -46,8 +46,6 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Preface implements ILevelState {
 
-    public static final Preface INSTANCE = new Preface();
-
     private static final String[][] INFO_MSG = {
         { "Arrow Keys", "= Move" },
         { "Shift", "= Focus" },
@@ -56,9 +54,6 @@ public final class Preface implements ILevelState {
         { "Escape", "= Pause" },
         { "Enter", "= Select" }
     };
-
-    private Preface() {
-    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -96,7 +91,7 @@ public final class Preface implements ILevelState {
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            ctx.setState(SingleShotWave.INSTANCE);
+            ctx.setState(new SingleShotWave());
             return;
         }
     }

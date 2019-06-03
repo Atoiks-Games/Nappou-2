@@ -53,14 +53,12 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         }
     }
 
-    public static final PostbossDialog INSTANCE = new PostbossDialog();
-
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
     private boolean firstRun;
 
-    private PostbossDialog() {
+    public PostbossDialog() {
         super(ReturnToTitleSceneState.INSTANCE);
     }
 
