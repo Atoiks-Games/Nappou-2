@@ -131,14 +131,14 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
     @Override
     public final boolean isOutOfScreen(final int w, final int h) {
-        // Extrude the tail of the ray by Math.min(length, this.halfWidth).
+        // Extrude the tail of the ray by Math.max(length, this.halfWidth).
         // Now it would be a square. If such square is out of the screen,
         // then the ray must be as well.
 
         final Vector2 pos = this.getPosition();
         final float x = pos.getX();
         final float y = pos.getY();
-        final float hw = Math.min(length, this.halfWidth);
+        final float hw = Math.max(length, this.halfWidth);
 
         final float maxX = x + hw;
         final float minX = x - hw;
