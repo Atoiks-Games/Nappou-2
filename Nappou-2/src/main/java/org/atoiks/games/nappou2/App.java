@@ -60,8 +60,7 @@ public class App {
         SceneManager.loadScenes(new LoadingScene(),
                 new SaveHighscoreScene(), new TitleScene(), new RefittedGameScene(),
                 new ScoreScene(), new CreditsScene(), new ConfigScene(),
-                new DiffOptionScene(), new ShieldOptionScene(),
-                new LevelTwoScene());
+                new DiffOptionScene(), new ShieldOptionScene());
 
         try (final Frame frame = new Frame(info)) {
             SceneManager.switchToScene("LoadingScene");
