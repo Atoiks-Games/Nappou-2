@@ -77,6 +77,7 @@ public class App {
             oos.writeObject(gameCfg);
         } catch (IOException ex) {
             // Next time, game will launch with default configurations
+            ex.printStackTrace();
         }
 
         // Saves user score
@@ -84,6 +85,7 @@ public class App {
             oos.writeObject(scoreDat);
         } catch (IOException ex) {
             // Oh well... to bad... the user's score does not get saved...
+            ex.printStackTrace();
         }
 
         // Saves user saves
@@ -91,6 +93,7 @@ public class App {
             oos.writeObject(saveDat);
         } catch (IOException ex) {
             // Oh well... to bad... the user's saves do not get saved...
+            ex.printStackTrace();
         }
     }
 }
