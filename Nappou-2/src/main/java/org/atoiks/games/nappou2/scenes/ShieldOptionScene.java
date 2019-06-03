@@ -67,14 +67,14 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (skipSelection) {
-            return SceneManager.switchToScene("TutorialScene");
+            return startGame();
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             return SceneManager.switchToScene("TitleScene");
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("TutorialScene");
+            return startGame();
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -84,6 +84,10 @@ public final class ShieldOptionScene extends CenteringScene {
             if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
         }
         return true;
+    }
+
+    private boolean startGame() {
+        return SceneManager.switchToScene("GameLevelScene");
     }
 
     @Override

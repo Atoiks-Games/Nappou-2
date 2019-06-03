@@ -27,9 +27,9 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-import static org.atoiks.games.nappou2.scenes.AbstractGameScene.WIDTH;
-import static org.atoiks.games.nappou2.scenes.AbstractGameScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 /* package */ final class StatusOverlay {
 

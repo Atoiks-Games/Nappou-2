@@ -55,8 +55,8 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SoundEffect;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
-import static org.atoiks.games.nappou2.scenes.LevelOneScene.WIDTH;
-import static org.atoiks.games.nappou2.scenes.LevelOneScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 
 public final class LoadingScene implements Scene {
 

@@ -32,6 +32,10 @@ import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
+import org.atoiks.games.nappou2.levels.ILevelState;
+
+import org.atoiks.games.nappou2.levels.level1.*;
+
 public final class DiffOptionScene extends CenteringScene {
 
     private static final Difficulty[] DIFFS = Difficulty.values();
@@ -40,7 +44,6 @@ public final class DiffOptionScene extends CenteringScene {
 
     private Clip bgm;
     private int diffSel;
-    private Difficulty difficulty;
 
     @Override
     public void render(IGraphics g) {
@@ -84,11 +87,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void enter(String previousSceneId) {
-        difficulty = (Difficulty) SceneManager.resources().getOrDefault("difficulty", Difficulty.NORMAL);
-
-        final GameConfig cfg = ResourceManager.get("./game.cfg");
-
-        if (cfg.bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
@@ -96,13 +95,30 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-        SceneManager.resources().put("difficulty", getDiffFromOption());
-
-        final SaveData sData = ResourceManager.get("./saves.dat");
-        sData.setDif(getDiffFromOption());
-
-
         bgm.stop();
+
+        final Difficulty diff = getDiffFromOption();
+        final SaveData sData = ResourceManager.get("./saves.dat");
+        sData.setDif(diff);
+
+        final ILevelState state;
+        switch (diff) {
+            case EASY:
+                state = new Easy();
+                break;
+            case NORMAL:
+                state = new Normal();
+                break;
+            case HARD:
+                state = new Hard();
+                break;
+            case INSANE:
+                state = new Insane();
+                break;
+            default:
+                throw new AssertionError("Unhandled difficulty: " + diff);
+        }
+        SceneManager.resources().put("level.state", state);
     }
 
     private Difficulty getDiffFromOption() {

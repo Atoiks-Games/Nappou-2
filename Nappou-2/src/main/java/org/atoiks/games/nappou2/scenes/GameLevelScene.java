@@ -29,7 +29,10 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.Difficulty;
+
+import org.atoiks.games.nappou2.levels.NullState;
+import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.ILevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
@@ -38,7 +41,7 @@ import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
 
-public abstract class AbstractGameScene extends CenteringScene {
+public final class GameLevelScene extends CenteringScene implements ILevelContext {
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
@@ -54,37 +57,48 @@ public abstract class AbstractGameScene extends CenteringScene {
     private final StatusOverlay statusOverlay = new StatusOverlay();
     private final DialogOverlay dialogOverlay = new DialogOverlay();
 
-    protected final Game game = new Game();
-    protected final Drifter drift = new Drifter();
-
-    protected Difficulty difficulty;
+    private final Game game = new Game();
+    private final Drifter drift = new Drifter();
 
     private boolean skipPlayerUpdate;
     private float playerFireLimiter;
 
-    public final int sceneId;
+    private ILevelState state = NullState.INSTANCE;
 
-    protected AbstractGameScene(int id) {
-        sceneId = id;
+    @Override
+    public void setState(ILevelState nextState) {
+        this.state.exit();
+
+        if (nextState == null) {
+            nextState = NullState.INSTANCE;
+        }
+
+        nextState.enter(this);
+        this.state = nextState;
     }
 
-    protected final void disableDamage() {
-        game.player.setIgnoreHpChange(true);
+    @Override
+    public Game getGame() {
+        return game;
     }
 
-    protected final void enableDamage() {
-        game.player.setIgnoreHpChange(false);
+    @Override
+    public Drifter getDrifter() {
+        return drift;
     }
 
-    protected final void shouldSkipPlayerUpdate(final boolean flag) {
+    @Override
+    public void shouldSkipPlayerUpdate(final boolean flag) {
         skipPlayerUpdate = flag;
     }
 
-    protected final void clearMessage() {
+    @Override
+    public void clearMessage() {
         dialogOverlay.clearMessage();
     }
 
-    protected final void displayMessage(final Message msg) {
+    @Override
+    public void displayMessage(final Message msg) {
         dialogOverlay.displayMessage(msg);
     }
 
@@ -99,22 +113,24 @@ public abstract class AbstractGameScene extends CenteringScene {
 
     @Override
     public void enter(String prevSceneId) {
-        difficulty = (Difficulty) SceneManager.resources().get("difficulty");
-
         playerFireLimiter = 0f;
         shouldSkipPlayerUpdate(false);
+
+        setState((ILevelState) SceneManager.resources().get("level.state"));
     }
 
     @Override
     public void leave() {
-        SceneManager.resources().put("level.id", sceneId);
-        SceneManager.resources().put("level.score", game.getScore());
+        // Make sure exit is called
+        setState(NullState.INSTANCE);
         game.cleanup();
     }
 
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
+
+        state.renderBackground(g);
     }
 
     @Override
@@ -173,7 +189,7 @@ public abstract class AbstractGameScene extends CenteringScene {
             return;
         }
 
-        postUpdate(dtDiv5);
+        state.updateLevel(this, dt);
     }
 
     private void processPlayerTime(final float dt) {
@@ -229,6 +245,4 @@ public abstract class AbstractGameScene extends CenteringScene {
             game.player.shield.activate();
         }
     }
-
-    public abstract boolean postUpdate(float dt);
 }
