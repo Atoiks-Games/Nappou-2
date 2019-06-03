@@ -19,9 +19,15 @@
 package org.atoiks.games.nappou2.levels.tutorial;
 
 import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.SaveData;
+import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+
+import org.atoiks.games.nappou2.levels.level1.*;
 
 /* package */ class EndOfTutorialState implements ILevelState {
 
@@ -31,7 +37,35 @@ import org.atoiks.games.nappou2.levels.ILevelContext;
     }
 
     @Override
+    public void enter(final ILevelContext ctx) {
+        // Reset context so game can actually be played
+        // (the stages themselves do not reset the context)
+        ctx.enableDamage();
+        ctx.shouldSkipPlayerUpdate(false);
+    }
+
+    @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
-        SceneManager.switchToScene("TitleScene");
+        final Difficulty diff = ResourceManager.<SaveData>get("./saves.dat").getDif();
+        final ILevelState state;
+        switch (diff) {
+            case EASY:
+                state = new Easy();
+                break;
+            case NORMAL:
+                state = new Normal();
+                break;
+            case HARD:
+                state = new Hard();
+                break;
+            case INSANE:
+                state = new Insane();
+                break;
+            default:
+                throw new AssertionError("Unhandled difficulty: " + diff);
+        }
+
+        ctx.setState(state);
+        return;
     }
 }

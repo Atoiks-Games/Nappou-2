@@ -97,28 +97,10 @@ public final class DiffOptionScene extends CenteringScene {
     public void leave() {
         bgm.stop();
 
-        final Difficulty diff = getDiffFromOption();
-        final SaveData sData = ResourceManager.get("./saves.dat");
-        sData.setDif(diff);
+        ResourceManager.<SaveData>get("./saves.dat").setDif(getDiffFromOption());
 
-        final ILevelState state;
-        switch (diff) {
-            case EASY:
-                state = new Easy();
-                break;
-            case NORMAL:
-                state = new Normal();
-                break;
-            case HARD:
-                state = new Hard();
-                break;
-            case INSANE:
-                state = new Insane();
-                break;
-            default:
-                throw new AssertionError("Unhandled difficulty: " + diff);
-        }
-        SceneManager.resources().put("level.state", state);
+        SceneManager.resources().put("level.state",
+                new org.atoiks.games.nappou2.levels.tutorial.Preface());
     }
 
     private Difficulty getDiffFromOption() {
