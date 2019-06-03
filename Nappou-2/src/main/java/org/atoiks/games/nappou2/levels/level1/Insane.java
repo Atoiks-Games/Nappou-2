@@ -51,8 +51,8 @@ import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Insane implements ILevelState {
 

@@ -33,7 +33,7 @@ import org.atoiks.games.nappou2.entities.enemy.ShieldTesterEnemy;
 import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignVertical;
 import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignHorizontal;
 
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;

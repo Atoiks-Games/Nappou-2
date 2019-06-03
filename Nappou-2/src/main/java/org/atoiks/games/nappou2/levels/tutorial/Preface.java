@@ -41,8 +41,8 @@ import static org.atoiks.games.nappou2.App.SANS_FONT;
 
 import static org.atoiks.games.nappou2.scenes.TitleScene.OPTION_FONT;
 
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.RefittedGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Preface implements ILevelState {
 

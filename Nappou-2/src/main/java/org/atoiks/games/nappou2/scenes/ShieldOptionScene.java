@@ -86,7 +86,7 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        return SceneManager.switchToScene("RefittedGameScene");
+        return SceneManager.switchToScene("GameLevelScene");
     }
 
     @Override

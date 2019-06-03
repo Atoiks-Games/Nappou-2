@@ -45,7 +45,7 @@ public final class TitleScene extends CenteringScene {
     };
     private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
     private static final String[] sceneDest = {
-        "RefittedGameScene", "DiffOptionScene", "ScoreScene", "ConfigScene", "CreditsScene"
+        "GameLevelScene", "DiffOptionScene", "ScoreScene", "ConfigScene", "CreditsScene"
     };
     private static final int OPT_HEIGHT = 30;
 
@@ -80,7 +80,7 @@ public final class TitleScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             if (selector < sceneDest.length) {
                 if (selector == 0) {
-                    // RefittedGameScene will fetch the level from level.state
+                    // GameLevelScene will fetch the level from level.state
                     // selector 0 points to tutorial stage, so we put in the
                     // entry state for the tutorial stage.
                     SceneManager.resources().put("level.state",

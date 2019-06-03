@@ -28,8 +28,8 @@ import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.App.SANS_FONT;
 
-import static org.atoiks.games.nappou2.scenes.AbstractGameScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.AbstractGameScene.GAME_BORDER;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class DialogOverlay {
 
