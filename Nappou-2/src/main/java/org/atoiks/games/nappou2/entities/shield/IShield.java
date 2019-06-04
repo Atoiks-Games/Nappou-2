@@ -37,4 +37,6 @@ public interface IShield extends Serializable {
 
     public void update(float dt);
     public void render(IGraphics g);
+
+    public IShield copy();
 }

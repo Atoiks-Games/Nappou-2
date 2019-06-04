@@ -45,4 +45,9 @@ public final class FixedTimeShield extends TimeBasedShield {
             super.activate();
         }
     }
+
+    @Override
+    public FixedTimeShield copy() {
+        return new FixedTimeShield(timeout, reloadTime, r);
+    }
 }

@@ -70,4 +70,11 @@ public final class NullShield implements IShield {
     public boolean isReady() {
         return false;
     }
+
+    @Override
+    public NullShield copy() {
+        // Yes, returning this is not copying
+        // but then NullShield is state free
+        return this;
+    }
 }

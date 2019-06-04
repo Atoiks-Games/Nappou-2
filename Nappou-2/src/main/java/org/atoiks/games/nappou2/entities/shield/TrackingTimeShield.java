@@ -25,4 +25,9 @@ public final class TrackingTimeShield extends TimeBasedShield {
     public TrackingTimeShield(float timeout, float reloadTime, float r) {
         super(timeout, reloadTime, r);
     }
+
+    @Override
+    public TrackingTimeShield copy() {
+        return new TrackingTimeShield(timeout, reloadTime, r);
+    }
 }
