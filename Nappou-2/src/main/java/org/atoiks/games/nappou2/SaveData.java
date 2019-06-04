@@ -44,15 +44,15 @@ public final class SaveData implements Serializable {
     }
 
 
-    public void setShield(IShield s) {
-        this.shield = s;
+    public void setShield(final IShield s) {
+        this.shield = s != null ? s : new NullShield();
     }
 
     public Difficulty getDif() {
         return this.dif;
     }
 
-    public IShield getShield() {
-        return this.shield;
+    public IShield getShieldCopy() {
+        return this.shield.copy();
     }
 }
