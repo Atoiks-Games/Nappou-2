@@ -42,6 +42,8 @@ import org.atoiks.games.nappou2.levels.level1.*;
         // (the stages themselves do not reset the context)
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
+
+        ctx.getGame().cleanup();
     }
 
     @Override
