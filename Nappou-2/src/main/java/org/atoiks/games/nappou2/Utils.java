@@ -154,13 +154,7 @@ public final class Utils {
 
         final float ab2 = abx * abx + aby * aby;
         final float acab = acx * abx + acy * aby;
-        float t = acab / ab2;
-
-        if (t < 0) {
-            t = 0;
-        } else if (t > 1) {
-            t = 1;
-        }
+        final float t = clamp01(acab / ab2);
 
         final float hx = (abx * t) + x1 - cx;
         final float hy = (aby * t) + y1 - cy;
