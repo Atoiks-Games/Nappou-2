@@ -135,6 +135,11 @@ public final class Vector2 implements Serializable {
         return new Vector2(u.x * v.x + w.x, u.y * v.y + w.y);
     }
 
+    public static Vector2 muladd(final float u, final Vector2 v, final Vector2 w) {
+        // (u * v) + w
+        return new Vector2(u * v.x + w.x, u * v.y + w.y);
+    }
+
     public static Vector2 clamp(final Vector2 v, final Vector2 min, final Vector2 max) {
         return new Vector2(
                 Utils.clamp(v.x, min.x, max.x),
