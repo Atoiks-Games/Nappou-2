@@ -76,7 +76,7 @@ public final class Player implements ITrackable, Serializable {
     }
 
     public void update(final float dt) {
-        this.position = this.position.add(this.velocity.mul(this.speedScale * dt));
+        this.position = Vector2.muladd(this.speedScale * dt, this.velocity, this.position);
 
         this.shield.update(dt);
         this.shield.setPosition(position);

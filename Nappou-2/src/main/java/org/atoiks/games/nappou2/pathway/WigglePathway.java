@@ -55,7 +55,7 @@ public final class WigglePathway implements UnboundPathway {
 
         // position += dt * (velocity + amplitude * cos(afreq * time + phase))
         final float cosVal = (float) Math.cos(this.afreq * this.time + this.phase);
-        this.position = this.position.add(velocity.add(amplitude.mul(cosVal)).mul(dt));
+        this.position = Vector2.muladd(dt, Vector2.muladd(cosVal, amplitude, velocity), position);
     }
 
     @Override
