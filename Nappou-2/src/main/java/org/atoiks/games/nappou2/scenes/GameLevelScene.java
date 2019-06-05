@@ -234,8 +234,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private void processPlayerAttack(final float dt) {
         if ((playerFireLimiter -= dt) <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
             final Player player = game.player;
-            game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(
-                    player.getX(), player.getY(), (float) (-Math.PI / 2)));
+            game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(player.getPosition(), (float) (-Math.PI / 2)));
             playerFireLimiter = MIN_FIRE_DELAY;
         }
     }
