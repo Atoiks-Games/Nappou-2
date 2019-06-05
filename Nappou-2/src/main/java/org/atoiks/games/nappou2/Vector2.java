@@ -148,19 +148,19 @@ public final class Vector2 implements Serializable {
     }
 
     public static float angleBetween(final Vector2 u, final Vector2 v) {
-        return (float) Math.atan2(v.getY() - u.getY(), v.getX() - u.getX());
+        return (float) Math.atan2(v.y - u.y, v.x - u.x);
     }
 
     public static float distanceBetween(final Vector2 u, final Vector2 v) {
-        final float dx = v.getX() - u.getX();
-        final float dy = v.getY() - u.getY();
+        final float dx = v.x - u.x;
+        final float dy = v.y - u.y;
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 
     public static boolean inRangeExclusive(final Vector2 v, final Vector2 min, final Vector2 max) {
-        final float x = v.getX();
-        final float y = v.getY();
-        return min.getX() < x && x < max.getX()
-            && min.getY() < y && y < max.getY();
+        final float x = v.x;
+        final float y = v.y;
+        return min.x < x && x < max.x
+            && min.y < y && y < max.y;
     }
 }
