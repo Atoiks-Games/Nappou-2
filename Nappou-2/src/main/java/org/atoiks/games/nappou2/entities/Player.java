@@ -134,12 +134,10 @@ public final class Player implements ITrackable, Serializable {
         return this.position;
     }
 
-    @Override
     public float getX() {
         return this.position.getX();
     }
 
-    @Override
     public float getY() {
         return this.position.getY();
     }

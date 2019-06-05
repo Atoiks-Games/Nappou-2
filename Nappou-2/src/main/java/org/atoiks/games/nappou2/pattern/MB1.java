@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
@@ -41,8 +43,9 @@ public final class MB1 implements IAttackPattern {
         time++;
 
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
+        final Vector2 pos = enemy.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
         if (time % limiter == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {

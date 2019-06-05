@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
@@ -36,11 +38,10 @@ public final class MultiAnglePattern implements IAttackPattern {
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
+        final Vector2 pos = enemy.getPosition();
 
         for (final float angle : angles) {
-            game.addEnemyBullet(factory.createBullet(x, y, angle));
+            game.addEnemyBullet(factory.createBullet(pos, angle));
         }
     }
 }

@@ -66,14 +66,4 @@ public abstract class PathwayBullet implements IBullet {
     public Vector2 getPosition() {
         return this.pathway.getPosition().add(drift);
     }
-
-    @Override
-    public final float getX() {
-        return this.getPosition().getX();
-    }
-
-    @Override
-    public final float getY() {
-        return this.getPosition().getY();
-    }
 }

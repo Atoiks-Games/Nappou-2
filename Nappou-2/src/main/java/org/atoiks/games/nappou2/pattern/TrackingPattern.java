@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
@@ -54,11 +56,12 @@ public final class TrackingPattern implements IAttackPattern {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
             final Game game = enemy.getAssocGame();
-            final float x = enemy.getX();
-            final float y = enemy.getY();
+            final Vector2 pos = enemy.getPosition();
+            final float x = pos.getX();
+            final float y = pos.getY();
 
             final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
-            game.addEnemyBullet(factory.createBullet(x, y, angle));
+            game.addEnemyBullet(factory.createBullet(pos, angle));
             ++bulletId;
             time = 0;
         }

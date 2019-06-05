@@ -36,9 +36,7 @@ public final class FixedAnglePattern implements IAttackPattern {
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
 
-        game.addEnemyBullet(factory.createBullet(x, y, angle));
+        game.addEnemyBullet(factory.createBullet(enemy.getPosition(), angle));
     }
 }

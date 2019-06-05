@@ -20,6 +20,8 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
@@ -65,13 +67,15 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
-        return fastCircleCollision(getX(), getY(), getR(), x1, y1, r1);
+        final Vector2 pos = this.getPosition();
+        return fastCircleCollision(pos.getX(), pos.getY(), getR(), x1, y1, r1);
     }
 
     @Override
     public boolean isOutOfScreen(final int w, final int h) {
-        final float x = getX();
-        final float y = getY();
+        final Vector2 pos = this.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
         final float r = getR();
         return (x + r < -SCREEN_EDGE_BUFFER)
             || (x - r > w + SCREEN_EDGE_BUFFER)

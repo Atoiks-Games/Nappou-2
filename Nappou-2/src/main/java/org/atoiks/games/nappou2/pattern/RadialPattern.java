@@ -57,10 +57,8 @@ public final class RadialPattern implements IAttackPattern {
             if (time >= fireInterval) bulletId = 0;
         } else if (time > delay) {
             final Game game = enemy.getAssocGame();
-            final float x = enemy.getX();
-            final float y = enemy.getY();
 
-            game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
+            game.addEnemyBullet(factory.createBullet(enemy.getPosition(), initialAngle + bulletId * anglePerInterval));
             ++bulletId;
             time = 0;
         }
