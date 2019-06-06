@@ -23,7 +23,7 @@ import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MB1 implements IAttackPattern {
+public final class MB1Pattern implements IAttackPattern {
 
     private static final double PI_DIV_6 = Math.PI / 6;
     private static final int ROTATIONS = 7;
@@ -32,7 +32,7 @@ public final class MB1 implements IAttackPattern {
 
     private int time;
 
-    public MB1(int limiter) {
+    public MB1Pattern(int limiter) {
         this.limiter = limiter;
     }
 

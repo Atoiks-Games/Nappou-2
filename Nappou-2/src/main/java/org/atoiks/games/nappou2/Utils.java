@@ -130,8 +130,8 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.ignoreDrift(true);
         enemy.setR(r);
-        enemy.setPathway(new mb1Pathway(x, y));
-        enemy.setAttackPattern(new MB1(600));
+        enemy.setPathway(new MB1Pathway(x, y));
+        enemy.setAttackPattern(new MB1Pattern(600));
         return enemy;
     }
 
@@ -140,7 +140,7 @@ public final class Utils {
         enemy.ignoreDrift(true);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300));
-        enemy.setAttackPattern(new MB1(200));
+        enemy.setAttackPattern(new MB1Pattern(200));
         return enemy;
     }
 
@@ -246,27 +246,5 @@ public final class Utils {
      */
     public static float clamp(final float val, final float low, final float high) {
         return val < low ? low : (val > high ? high : val);
-    }
-}
-
-// Used by Utils.mb1(...)
-final class mb1Pathway implements UnboundPathway {
-
-    private Vector2 position;
-
-    public mb1Pathway(float x, float y) {
-        this.position = new Vector2(x, y);
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void update(float dt) {
-        if (this.position.getY() <= 150) {
-            this.position = new Vector2(0, dt * 300).add(this.position);
-        }
     }
 }
