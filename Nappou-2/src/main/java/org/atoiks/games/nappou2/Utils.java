@@ -252,23 +252,21 @@ public final class Utils {
 // Used by Utils.mb1(...)
 final class mb1Pathway implements UnboundPathway {
 
-    private final float x;
-    private float y;
+    private Vector2 position;
 
     public mb1Pathway(float x, float y) {
-        this.x = x;
-        this.y = y;
+        this.position = new Vector2(x, y);
     }
 
     @Override
     public Vector2 getPosition() {
-        return new Vector2(x, y);
+        return this.position;
     }
 
     @Override
     public void update(float dt) {
-        if (y <= 150) {
-            y += 300 * dt;
+        if (this.position.getY() <= 150) {
+            this.position = new Vector2(0, dt * 300).add(this.position);
         }
     }
 }

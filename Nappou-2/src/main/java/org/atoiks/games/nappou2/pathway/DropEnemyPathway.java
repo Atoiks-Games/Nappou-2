@@ -24,26 +24,22 @@ public final class DropEnemyPathway implements UnboundPathway {
 
     private final float signY;
 
-    private float x;
-    private float y;
+    private Vector2 position;
 
     public DropEnemyPathway(float x, float y, boolean inverted) {
-        this.x = x;
-        this.y = y;
-
+        this.position = new Vector2(x, y);
         this.signY = inverted ? -1 : 1;
     }
 
     @Override
     public Vector2 getPosition() {
-        return new Vector2(x, y);
+        return this.position;
     }
 
     @Override
     public void update(final float dt) {
-        final float signX = Math.signum(375 - x);
-
-        x += signX * 170 * dt;
-        y += signY * 400 * dt;
+        final float signX = Math.signum(375 - this.position.getX());
+        this.position = new Vector2(dt * signX * 170, dt * signY * 400)
+                .add(this.position);
     }
 }
