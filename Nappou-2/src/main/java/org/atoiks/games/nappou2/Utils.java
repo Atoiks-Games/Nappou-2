@@ -78,6 +78,14 @@ public final class Utils {
         }
     }
 
+    public static PathwayEnemy dropEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new DropEnemyPathway(x, y, inverted));
+        enemy.setAttackPattern(new DropEnemyPattern(inverted));
+        return enemy;
+    }
+
     public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setR(r);

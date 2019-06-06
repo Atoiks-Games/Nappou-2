@@ -35,6 +35,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
+import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.leapEnemy;
 import static org.atoiks.games.nappou2.Utils.shiftEnemy;
 import static org.atoiks.games.nappou2.Utils.starShotEnemy;
@@ -84,8 +85,8 @@ public final class Easy implements ILevelState {
                         game.addEnemy(new DummyEnemy(2, 760, 320, 20, 500, 1, false));
                         break;
                     case 120:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
                         game.addEnemy(new DummyEnemy(2, -10, 280, 20, 500, 1, true));
                         game.addEnemy(new DummyEnemy(2, 760, 280, 20, 500, 1, false));
                         game.addEnemy(new DummyEnemy(2, -10, 380, 20, 500, 1, true));
@@ -96,8 +97,8 @@ public final class Easy implements ILevelState {
                         game.addEnemy(new DummyEnemy(2, 760, 580, 20, 500, 1, false));
                         break;
                     case 220:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
                         game.addEnemy(new DummyEnemy(1, -10, 30, 10, 500, 1, true));
                         game.addEnemy(new DummyEnemy(1, 760, 30, 10, 500, 1, false));
                         game.addEnemy(new DummyEnemy(1, -10, 70, 10, 500, 1, true));
@@ -119,8 +120,8 @@ public final class Easy implements ILevelState {
                         game.addEnemy(new DummyEnemy(1, 760, 470, 10, 1000, 1, false));
                         break;
                     case 600:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
                         game.addEnemy(new DummyEnemy(1, -10, 200, 10, 1000, 1, true));
                         game.addEnemy(new DummyEnemy(1, 760, 200, 10, 1000, 1, false));
                         game.addEnemy(new DummyEnemy(1, -10, 240, 10, 1000, 1, true));
@@ -173,7 +174,7 @@ public final class Easy implements ILevelState {
             case 2:
                 switch (cycles) {
                     case 10:
-                        game.addEnemy(new DropEnemy(1, 750, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 750, -10, 8, false));
                         game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, false));
                         break;
                     case 100:
@@ -189,7 +190,7 @@ public final class Easy implements ILevelState {
                         game.addEnemy(starShotEnemy(1, 450, -10, 5, false));
                         break;
                     case 510:
-                        game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
+                        game.addEnemy(dropEnemy(1, 0, 610, 8, true));
                         game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, false));
                         break;
                     case 600:

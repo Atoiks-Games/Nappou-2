@@ -42,6 +42,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
+import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
@@ -103,8 +104,8 @@ public final class Easy implements ILevelState {
                         game.addEnemy(singleShotEnemy(1, 450 + k, -10, 8, false));
                         break;
                     case 440:
-                        game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
                         break;
                 }
                 if (cycles > 440 && game.noMoreEnemies()) {
@@ -115,12 +116,12 @@ public final class Easy implements ILevelState {
             case 1:
                 switch (cycles) {
                     case 40:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
                         break;
                     case 1880:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
                         break;
                     case 80:
                     case 280:
