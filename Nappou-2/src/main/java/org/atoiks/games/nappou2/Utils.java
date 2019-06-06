@@ -38,6 +38,7 @@ public final class Utils {
 
     private static final BulletFactory DEFAULT_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(2, 1000);
     private static final BulletFactory RADIAL_GROUP_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(15, 300);
+    private static final BulletFactory SHIFT_ENEMY_INFO = PathwayPointBulletInfo.createLegacyPointBullet(3, 175);
 
     private static final FixedAnglePattern MINI_BOMBER_PATTERN =
             new FixedAnglePattern(DEFAULT_BULLET_INFO, (float) (Math.PI / 2));
@@ -140,6 +141,14 @@ public final class Utils {
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
         // XXX: currently has no attack pattern
+        return enemy;
+    }
+
+    public static PathwayEnemy shiftEnemy(int hp, float x, float y, float r, float offset, boolean alt) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 300, 0));
+        enemy.setAttackPattern(new TimedDropPattern(offset, alt, SHIFT_ENEMY_INFO));
         return enemy;
     }
 

@@ -36,6 +36,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
 import static org.atoiks.games.nappou2.Utils.leapEnemy;
+import static org.atoiks.games.nappou2.Utils.shiftEnemy;
 import static org.atoiks.games.nappou2.Utils.starShotEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 
@@ -173,10 +174,10 @@ public final class Easy implements ILevelState {
                 switch (cycles) {
                     case 10:
                         game.addEnemy(new DropEnemy(1, 750, -10, 8, false));
-                        game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
+                        game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, false));
                         break;
                     case 100:
-                        game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
+                        game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, true));
                         break;
                     case 200:
                     case 300:
@@ -189,10 +190,10 @@ public final class Easy implements ILevelState {
                         break;
                     case 510:
                         game.addEnemy(new DropEnemy(1, 0, 610, 8, true));
-                        game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, false));
+                        game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, false));
                         break;
                     case 600:
-                        game.addEnemy(new ShiftEnemy(5, 0, 10, 10, 0.325f, true));
+                        game.addEnemy(shiftEnemy(5, 0, 10, 10, 0.325f, true));
                         break;
                     }
                 if (cycles > 600) {
