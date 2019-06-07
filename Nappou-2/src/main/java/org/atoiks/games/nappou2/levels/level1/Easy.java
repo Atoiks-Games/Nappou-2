@@ -26,6 +26,7 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
@@ -41,6 +42,11 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.enemy.*;
+
+import org.atoiks.games.nappou2.pathway.*;
+
+import org.atoiks.games.nappou2.pattern.*;
+import org.atoiks.games.nappou2.TrigConstants;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
@@ -212,7 +218,64 @@ public final class Easy implements ILevelState {
                 }
                 break;
             case 5:
-                // XXX: Placeholder
+                switch (cycles) {
+                    case 40:
+                        PathwayEnemy e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(8);
+                        game.addEnemy(e);
+                        break;
+                    case 80:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, Math.PI), NullPattern.INSTANCE);
+                        e.setR(10);
+                        game.addEnemy(e);
+                        break;
+                    case 280:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(20);
+                        game.addEnemy(e);
+                        break;
+                    case 380:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                        e.setR(6);
+                        game.addEnemy(e);
+                        break;
+                    case 580:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(8);
+                        game.addEnemy(e);
+                        break;
+                    case 600:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                        e.setR(8);
+                        game.addEnemy(e);
+                        break;
+                    case 880:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, -1, 0), NullPattern.INSTANCE);
+                        e.setR(6);
+                        game.addEnemy(e);
+                        break;
+                    case 1000:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(10);
+                        game.addEnemy(e);
+                        break;
+                    case 1200:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(12);
+                        game.addEnemy(e);
+                        break;
+                    case 1250:
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e.setR(8);
+                        game.addEnemy(e);
+                        break;
+                }
+                if (cycles > 1250 && game.noMoreEnemies()) {
+                    wave++;
+                    cycles = 0;
+                }
+                break;
+            case 10:
                 ctx.setState(new PrebossDialog(new EasyBossWave()));
                 return;
         }
