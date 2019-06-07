@@ -42,6 +42,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
+import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
@@ -106,8 +107,8 @@ public final class Normal implements ILevelState {
                         game.addEnemy(singleShotEnemy(1, 450 + k, -10, 8, false));
                         break;
                     case 220:
-                        game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
                         break;
                     case 600:
                         game.addEnemy(circularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
@@ -122,16 +123,16 @@ public final class Normal implements ILevelState {
             case 1:
                 switch (cycles) {
                     case 40:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 50, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 700, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 50, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 700, -10, 8, false));
                         break;
                     case 1880:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 650, -10, 8, false));   // FALLTHROUGH
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 100, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 650, -10, 8, false));   // FALLTHROUGH
                     case 80:
                     case 280:
                     case 480:

@@ -23,29 +23,18 @@ import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class RadialPattern extends TimedCounter {
+public final class TimedDropPattern extends TimedCounter {
 
     private final BulletFactory factory;
 
-    private final float initialAngle;
-    private final float anglePerInterval;
-
-    public RadialPattern(float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BulletFactory factory) {
-        super(intervals, fireInterval, delay, immediateFire ? TimedCounter.InitialState.DO_PAUSE : TimedCounter.InitialState.COUNTER_RESET);
-
+    public TimedDropPattern(float offset, boolean alt, BulletFactory factory) {
+        super(6, offset, 0.05f, alt ? TimedCounter.InitialState.DO_PAUSE : TimedCounter.InitialState.COUNTER_RESET);
         this.factory = factory;
-
-        this.initialAngle = initialAngle;
-        this.anglePerInterval = anglePerInterval;
     }
 
     @Override
     protected void onTimerUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
-        final int bulletId = this.getCount();
-
-        game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
+        game.addEnemyBullet(factory.createBullet(enemy.getPosition(), (float) (Math.PI / 2)));
     }
 }

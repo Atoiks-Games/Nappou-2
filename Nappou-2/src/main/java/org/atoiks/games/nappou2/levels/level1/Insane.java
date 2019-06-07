@@ -43,6 +43,7 @@ import org.atoiks.games.nappou2.entities.shield.IShield;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.altMb1;
+import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
@@ -119,8 +120,8 @@ public final class Insane implements ILevelState {
                     case 400:
                     case 500:
                     case 600:
-                        game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
                         game.addEnemy(circularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                         game.addEnemy(circularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                         break;
@@ -144,8 +145,8 @@ public final class Insane implements ILevelState {
                     case 1000:
                     case 1100:
                     case 1200:
-                        game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
                         game.addEnemy(circularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                         game.addEnemy(circularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                         break;
@@ -169,8 +170,8 @@ public final class Insane implements ILevelState {
                     case 1600:
                     case 1700:
                     case 1800:
-                        game.addEnemy(new DropEnemy(1, -10, 10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 760, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
+                        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
                         game.addEnemy(circularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
                         game.addEnemy(circularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
                         break;
@@ -192,10 +193,10 @@ public final class Insane implements ILevelState {
                     case 740:
                     case 840:
                     case 940:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 50, 610, 8, true));
-                        game.addEnemy(new DropEnemy(1, 700, 610, 8, true));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 50, 610, 8, true));
+                        game.addEnemy(dropEnemy(1, 700, 610, 8, true));
                         final int offset = (cycles / 4 / 5 - 4) / 5;
                         game.addEnemy(advancedMiniBomberEnemy(1, w1eX[offset + 0], w1eY[offset + 0], 8, 1, 100));
                         game.addEnemy(advancedMiniBomberEnemy(1, w1eX[offset + 1], w1eY[offset + 1], 8, -1, 100));
@@ -287,10 +288,10 @@ public final class Insane implements ILevelState {
                     case 1440:
                     case 1640:
                     case 1840:
-                        game.addEnemy(new DropEnemy(1, 30, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 100, -10, 8, false));
-                        game.addEnemy(new DropEnemy(1, 720, 610, 8, true));
-                        game.addEnemy(new DropEnemy(1, 650, 610, 8, true));
+                        game.addEnemy(dropEnemy(1, 30, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 100, -10, 8, false));
+                        game.addEnemy(dropEnemy(1, 720, 610, 8, true));
+                        game.addEnemy(dropEnemy(1, 650, 610, 8, true));
                         game.addEnemy(singleShotEnemy(1, 10, 610, 8, true));
                         game.addEnemy(singleShotEnemy(1, 740, -10, 8, false));
                         game.addEnemy(singleShotEnemy(1, 450, 610, 8, true));
