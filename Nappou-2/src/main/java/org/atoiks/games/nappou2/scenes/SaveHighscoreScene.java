@@ -21,9 +21,6 @@ package org.atoiks.games.nappou2.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
@@ -51,9 +48,6 @@ public final class SaveHighscoreScene extends CenteringScene {
         ".", "`", "!", "?", "@", ":", ";", "[", "]", "(", ")", "_", "/",
         "{", "}", "|", "~", "^", "#", "$", "%", "&", "*", "\u2610", "BS", "DONE",
     };
-
-    private static final Comparator<ScoreData.Pair> NULLS_FIRST_CMP =
-            Comparator.nullsFirst(Comparator.naturalOrder());
 
     private static final String NAME_LENGTH_CAP_MSG =
             "Names over " + NAME_LENGTH_CAP + " characters will be truncated";
@@ -143,11 +137,8 @@ public final class SaveHighscoreScene extends CenteringScene {
                     final String name = currentStr.length() > NAME_LENGTH_CAP
                             ? currentStr.substring(0, NAME_LENGTH_CAP) : currentStr;
 
-                    final ScoreData.Pair[] alias = scoreDat.data[challengeMode ? 1 : 0][levelId][levelDiff];
-                    final ScoreData.Pair[] a = Arrays.copyOf(alias, alias.length + 1);
-                    a[a.length - 1] = new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore);
-                    Arrays.sort(a, NULLS_FIRST_CMP);
-                    System.arraycopy(a, 1, alias, 0, a.length - 1);
+                    scoreDat.updateScores(challengeMode, levelId, levelDiff,
+                            new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore));
 
                     // Then transition to correct scene
                     return SceneManager.switchToScene(transition);

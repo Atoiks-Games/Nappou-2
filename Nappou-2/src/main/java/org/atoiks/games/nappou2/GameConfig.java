@@ -18,14 +18,31 @@
 
 package org.atoiks.games.nappou2;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Externalizable;
 
-public final class GameConfig implements Serializable {
+public final class GameConfig implements Externalizable {
 
-    private static final long serialVersionUID = 5166684758360261197L;
+    private static final long serialVersionUID = -2916105168250234328L;
 
     // Default values = default settings
     public boolean bgm = true;
     public boolean challengeMode = false;
     public boolean fullscreen = false;
+
+    @Override
+    public void readExternal(final ObjectInput stream) throws IOException {
+        this.bgm = stream.readBoolean();
+        this.challengeMode = stream.readBoolean();
+        this.fullscreen = stream.readBoolean();
+    }
+
+    @Override
+    public void writeExternal(final ObjectOutput stream) throws IOException {
+        stream.writeBoolean(this.bgm);
+        stream.writeBoolean(this.challengeMode);
+        stream.writeBoolean(this.fullscreen);
+    }
 }

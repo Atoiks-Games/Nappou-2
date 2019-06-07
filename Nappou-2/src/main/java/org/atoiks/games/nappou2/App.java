@@ -73,14 +73,14 @@ public class App {
 
         // Saves config
         try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./game.cfg"))) {
-            oos.writeObject(gameCfg);
+            gameCfg.writeExternal(oos);
         } catch (IOException ex) {
             // Next time, game will launch with default configurations
         }
 
         // Saves user score
         try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./score.dat"))) {
-            oos.writeObject(scoreDat);
+            scoreDat.writeExternal(oos);
         } catch (IOException ex) {
             // Oh well... to bad... the user's score does not get saved...
         }
