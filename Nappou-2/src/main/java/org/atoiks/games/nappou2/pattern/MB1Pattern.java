@@ -18,12 +18,14 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MB1 implements IAttackPattern {
+public final class MB1Pattern implements IAttackPattern {
 
     private static final double PI_DIV_6 = Math.PI / 6;
     private static final int ROTATIONS = 7;
@@ -32,7 +34,7 @@ public final class MB1 implements IAttackPattern {
 
     private int time;
 
-    public MB1(int limiter) {
+    public MB1Pattern(int limiter) {
         this.limiter = limiter;
     }
 
@@ -41,8 +43,9 @@ public final class MB1 implements IAttackPattern {
         time++;
 
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
+        final Vector2 pos = enemy.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
         if (time % limiter == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {

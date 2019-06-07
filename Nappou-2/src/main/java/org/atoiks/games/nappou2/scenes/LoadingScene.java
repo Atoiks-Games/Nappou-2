@@ -44,8 +44,9 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.decoder.ImageDecoder;
 import org.atoiks.games.framework2d.decoder.AudioDecoder;
-import org.atoiks.games.framework2d.decoder.ObjectDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
+import org.atoiks.games.framework2d.decoder.SerializableDecoder;
+import org.atoiks.games.framework2d.decoder.ExternalizableDecoder;
 
 import org.atoiks.games.framework2d.resolver.ExternalResourceResolver;
 
@@ -128,22 +129,17 @@ public final class LoadingScene implements Scene {
                     }
 
                     // Load configuration file from "current" directory
-                    final GameConfig cfg = ResourceManager.loadOrDefault("./game.cfg", ExternalResourceResolver.INSTANCE,
-                            ObjectDecoder.getInstance(), GameConfig::new);
+                    final GameConfig cfg = ResourceManager.load("./game.cfg", ExternalResourceResolver.INSTANCE,
+                            ExternalizableDecoder.forInstance(GameConfig::new));
                     enterFullscreen = cfg.fullscreen;
 
                     // Load score file from "current" directory
-                    final ScoreData data = ResourceManager.loadOrDefault("./score.dat", ExternalResourceResolver.INSTANCE,
-                            ObjectDecoder.getInstance(), ScoreData::new);
-
-                    if (data.data[0].length != ScoreData.LEVELS) {
-                        // amount of levels is changed, assume old score is wrong
-                        ResourceManager.replace("./score.dat", new ScoreData());
-                    }
+                    final ScoreData data = ResourceManager.load("./score.dat", ExternalResourceResolver.INSTANCE,
+                            ExternalizableDecoder.forInstance(ScoreData::new));
 
                     // Load save file from "current" directory
                     final SaveData saves = ResourceManager.loadOrDefault("./saves.dat", ExternalResourceResolver.INSTANCE,
-                            ObjectDecoder.getInstance(), SaveData::new);
+                            SerializableDecoder.forType(SaveData.class), SaveData::new);
 
                     loaded = LoadState.DONE;
                 });

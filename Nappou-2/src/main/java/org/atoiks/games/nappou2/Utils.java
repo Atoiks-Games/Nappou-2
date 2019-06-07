@@ -38,6 +38,7 @@ public final class Utils {
 
     private static final BulletFactory DEFAULT_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(2, 1000);
     private static final BulletFactory RADIAL_GROUP_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(15, 300);
+    private static final BulletFactory SHIFT_ENEMY_INFO = PathwayPointBulletInfo.createLegacyPointBullet(3, 175);
 
     private static final FixedAnglePattern MINI_BOMBER_PATTERN =
             new FixedAnglePattern(DEFAULT_BULLET_INFO, (float) (Math.PI / 2));
@@ -75,6 +76,14 @@ public final class Utils {
             }
             game.addEnemySpawner(new EnemySpawner(0.17f, array));
         }
+    }
+
+    public static PathwayEnemy dropEnemy(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new DropEnemyPathway(x, y, inverted));
+        enemy.setAttackPattern(new DropEnemyPattern(inverted));
+        return enemy;
     }
 
     public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
@@ -121,8 +130,8 @@ public final class Utils {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.ignoreDrift(true);
         enemy.setR(r);
-        enemy.setPathway(new mb1Pathway(x, y));
-        enemy.setAttackPattern(new MB1(600));
+        enemy.setPathway(new MB1Pathway(x, y));
+        enemy.setAttackPattern(new MB1Pattern(600));
         return enemy;
     }
 
@@ -131,7 +140,7 @@ public final class Utils {
         enemy.ignoreDrift(true);
         enemy.setR(r);
         enemy.setPathway(new FixedVelocity(x, y, 0, 300));
-        enemy.setAttackPattern(new MB1(200));
+        enemy.setAttackPattern(new MB1Pattern(200));
         return enemy;
     }
 
@@ -140,6 +149,14 @@ public final class Utils {
         enemy.setR(r);
         enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
         // XXX: currently has no attack pattern
+        return enemy;
+    }
+
+    public static PathwayEnemy shiftEnemy(int hp, float x, float y, float r, float offset, boolean alt) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setR(r);
+        enemy.setPathway(new FixedVelocity(x, y, 300, 0));
+        enemy.setAttackPattern(new TimedDropPattern(offset, alt, SHIFT_ENEMY_INFO));
         return enemy;
     }
 
@@ -154,13 +171,7 @@ public final class Utils {
 
         final float ab2 = abx * abx + aby * aby;
         final float acab = acx * abx + acy * aby;
-        float t = acab / ab2;
-
-        if (t < 0) {
-            t = 0;
-        } else if (t > 1) {
-            t = 1;
-        }
+        final float t = clamp01(acab / ab2);
 
         final float hx = (abx * t) + x1 - cx;
         final float hy = (aby * t) + y1 - cy;
@@ -229,29 +240,5 @@ public final class Utils {
      */
     public static float clamp(final float val, final float low, final float high) {
         return val < low ? low : (val > high ? high : val);
-    }
-}
-
-// Used by Utils.mb1(...)
-final class mb1Pathway implements UnboundPathway {
-
-    private final float x;
-    private float y;
-
-    public mb1Pathway(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return new Vector2(x, y);
-    }
-
-    @Override
-    public void update(float dt) {
-        if (y <= 150) {
-            y += 300 * dt;
-        }
     }
 }

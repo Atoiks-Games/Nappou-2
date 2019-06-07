@@ -41,14 +41,17 @@ public abstract class ManualEnemy extends AbstractEnemy {
         this.y += d.getY();
     }
 
-    @Override
     public final float getX() {
         return this.x;
     }
 
-    @Override
     public final float getY() {
         return this.y;
+    }
+
+    @Override
+    public final Vector2 getPosition() {
+        return new Vector2(x, y);
     }
 
     @Override

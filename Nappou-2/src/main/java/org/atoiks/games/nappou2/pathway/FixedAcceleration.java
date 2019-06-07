@@ -55,8 +55,8 @@ public final class FixedAcceleration implements UnboundPathway {
 
     @Override
     public void update(final float dt) {
-        this.velocity = this.velocity.add(this.acceleration.mul(dt));
-        this.position = this.position.add(this.velocity.mul(dt));
+        this.velocity = Vector2.muladd(dt, this.acceleration, this.velocity);
+        this.position = Vector2.muladd(dt, this.velocity, this.position);
     }
 
     @Override

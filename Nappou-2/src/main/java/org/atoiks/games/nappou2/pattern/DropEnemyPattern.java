@@ -16,31 +16,32 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.graphics;
-
-import java.awt.Image;
-
-import org.atoiks.games.framework2d.IGraphics;
+package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.entities.Game;
+
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class ImageEnemyRenderer implements IEnemyRenderer {
+import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-    private final Image image;
+public final class DropEnemyPattern extends TimedCounter {
 
-    public ImageEnemyRenderer(final Image image) {
-        this.image = image;
+    private final float signY;
+
+    public DropEnemyPattern(boolean inverted) {
+        super(9, 0.5f, 0.05f);
+
+        this.signY = inverted ? -1 : 1;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
-        // x, y are the center of the enemy
-        final float r = obj.getR();
-        final Vector2 pos = obj.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        // Draw the image over the square occupied by the enemy
-        g.drawImage(image, x - r, y - r, x + r, y + r);
+    @Override
+    protected void onTimerUpdate(final IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final Vector2 pos = enemy.getPosition();
+        final float signX = Math.signum(375 - pos.getX());
+
+        game.addEnemyBullet(new PointBullet(pos, 3, new Vector2(signX * 170, signY * 150)));
     }
 }

@@ -16,31 +16,30 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.graphics;
-
-import java.awt.Image;
-
-import org.atoiks.games.framework2d.IGraphics;
+package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+public final class DropEnemyPathway implements UnboundPathway {
 
-public final class ImageEnemyRenderer implements IEnemyRenderer {
+    private final float signY;
 
-    private final Image image;
+    private Vector2 position;
 
-    public ImageEnemyRenderer(final Image image) {
-        this.image = image;
+    public DropEnemyPathway(float x, float y, boolean inverted) {
+        this.position = new Vector2(x, y);
+        this.signY = inverted ? -1 : 1;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
-        // x, y are the center of the enemy
-        final float r = obj.getR();
-        final Vector2 pos = obj.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        // Draw the image over the square occupied by the enemy
-        g.drawImage(image, x - r, y - r, x + r, y + r);
+    @Override
+    public Vector2 getPosition() {
+        return this.position;
+    }
+
+    @Override
+    public void update(final float dt) {
+        final float signX = Math.signum(375 - this.position.getX());
+        this.position = new Vector2(dt * signX * 170, dt * signY * 400)
+                .add(this.position);
     }
 }

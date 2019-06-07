@@ -75,7 +75,7 @@ public final class TrackingPathway implements UnboundPathway {
                 moving = false;
                 time = 0;
             } else {
-                this.position = this.position.add(this.velocity.mul(dt));
+                this.position = Vector2.muladd(dt, this.velocity, this.position);
             }
         } else if (time >= delay) {
             this.calculateEndpoint();

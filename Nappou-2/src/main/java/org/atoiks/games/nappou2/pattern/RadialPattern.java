@@ -18,51 +18,35 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class RadialPattern implements IAttackPattern {
+public final class RadialPattern extends TimedCounter {
 
     private final BulletFactory factory;
 
-    private final int intervals;
-    private final float fireInterval;
-    private final float delay;
     private final float initialAngle;
     private final float anglePerInterval;
 
-    private float time;
-    private int bulletId;
-
     public RadialPattern(float fireInterval, boolean immediateFire, float delay, float initialAngle, int intervals, float anglePerInterval, BulletFactory factory) {
+        super(intervals, fireInterval, delay, immediateFire ? TimedCounter.InitialState.DO_PAUSE : TimedCounter.InitialState.COUNTER_RESET);
+
         this.factory = factory;
 
-        this.intervals = intervals;
-        this.fireInterval = fireInterval;
-        this.delay = delay;
         this.initialAngle = initialAngle;
         this.anglePerInterval = anglePerInterval;
-
-        if (!immediateFire) {
-            bulletId = intervals;
-        }
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
-        time += dt;
-        if (bulletId >= intervals) {
-            if (time >= fireInterval) bulletId = 0;
-        } else if (time > delay) {
-            final Game game = enemy.getAssocGame();
-            final float x = enemy.getX();
-            final float y = enemy.getY();
+    protected void onTimerUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final Vector2 pos = enemy.getPosition();
+        final int bulletId = this.getCount();
 
-            game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
-            ++bulletId;
-            time = 0;
-        }
+        game.addEnemyBullet(factory.createBullet(pos, initialAngle + bulletId * anglePerInterval));
     }
 }

@@ -64,7 +64,7 @@ public final class ScoreScene extends CenteringScene {
 
         g.setFont(SANS_FONT);
         final int size = SANS_FONT.getSize();
-        final ScoreData.Pair[][][] splane = score.data[plane];
+        final ScoreData.Pair[][][] splane = score.getScoreForPlane(plane);
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
@@ -76,14 +76,9 @@ public final class ScoreScene extends CenteringScene {
                     final int offset = p.length - 1 - j;
                     final ScoreData.Pair pair = p[offset];
 
-                    if (pair != null) {
-                        final String str;
-                        if (showName) {
-                            str = pair.name == null ? "" : pair.name;
-                        } else {
-                            str = pair.score == 0 ? "0" : pair.score + "000";
-                        }
-                        g.drawString(str, bw + 10, bh + (j + 2) * size);
+                    if (pair != null && pair.isValid()) {
+                        g.drawString(showName ? pair.getProcessedName() : pair.getProcessedScore(),
+                                bw + 10, bh + (j + 2) * size);
                     }
                 }
             }

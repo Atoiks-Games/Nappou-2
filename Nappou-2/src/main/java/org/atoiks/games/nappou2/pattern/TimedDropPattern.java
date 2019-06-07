@@ -16,31 +16,25 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.graphics;
+package org.atoiks.games.nappou2.pattern;
 
-import java.awt.Image;
-
-import org.atoiks.games.framework2d.IGraphics;
-
-import org.atoiks.games.nappou2.Vector2;
-
+import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
-public final class ImageEnemyRenderer implements IEnemyRenderer {
+import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-    private final Image image;
+public final class TimedDropPattern extends TimedCounter {
 
-    public ImageEnemyRenderer(final Image image) {
-        this.image = image;
+    private final BulletFactory factory;
+
+    public TimedDropPattern(float offset, boolean alt, BulletFactory factory) {
+        super(6, offset, 0.05f, alt ? TimedCounter.InitialState.DO_PAUSE : TimedCounter.InitialState.COUNTER_RESET);
+        this.factory = factory;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
-        // x, y are the center of the enemy
-        final float r = obj.getR();
-        final Vector2 pos = obj.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        // Draw the image over the square occupied by the enemy
-        g.drawImage(image, x - r, y - r, x + r, y + r);
+    @Override
+    protected void onTimerUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        game.addEnemyBullet(factory.createBullet(enemy.getPosition(), (float) (Math.PI / 2)));
     }
 }

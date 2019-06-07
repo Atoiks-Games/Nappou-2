@@ -96,16 +96,6 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
     }
 
     @Override
-    public final float getX() {
-        return this.getPosition().getX();
-    }
-
-    @Override
-    public final float getY() {
-        return this.getPosition().getY();
-    }
-
-    @Override
     public final boolean collidesWith(final float x1, final float y1, final float r1) {
         // transform the colliding entity to the ray's coordinate system
 

@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
@@ -36,12 +38,13 @@ public final class MultiTrackPattern implements IAttackPattern {
     @Override
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
+        final Vector2 pos = enemy.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
         final float base = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
         for (final float angle : angles) {
-            game.addEnemyBullet(factory.createBullet(x, y, base + angle));
+            game.addEnemyBullet(factory.createBullet(pos, base + angle));
         }
     }
 }

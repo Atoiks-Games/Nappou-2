@@ -135,6 +135,11 @@ public final class Vector2 implements Serializable {
         return new Vector2(u.x * v.x + w.x, u.y * v.y + w.y);
     }
 
+    public static Vector2 muladd(final float u, final Vector2 v, final Vector2 w) {
+        // (u * v) + w
+        return new Vector2(u * v.x + w.x, u * v.y + w.y);
+    }
+
     public static Vector2 clamp(final Vector2 v, final Vector2 min, final Vector2 max) {
         return new Vector2(
                 Utils.clamp(v.x, min.x, max.x),
@@ -147,10 +152,20 @@ public final class Vector2 implements Serializable {
                 Utils.lerp(start.y, end.y, frac));
     }
 
+    public static float angleBetween(final Vector2 u, final Vector2 v) {
+        return (float) Math.atan2(v.y - u.y, v.x - u.x);
+    }
+
+    public static float distanceBetween(final Vector2 u, final Vector2 v) {
+        final float dx = v.x - u.x;
+        final float dy = v.y - u.y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
+
     public static boolean inRangeExclusive(final Vector2 v, final Vector2 min, final Vector2 max) {
-        final float x = v.getX();
-        final float y = v.getY();
-        return min.getX() < x && x < max.getX()
-            && min.getY() < y && y < max.getY();
+        final float x = v.x;
+        final float y = v.y;
+        return min.x < x && x < max.x
+            && min.y < y && y < max.y;
     }
 }

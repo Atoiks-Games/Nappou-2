@@ -140,8 +140,7 @@ public final class Game implements Serializable {
     }
 
     public void performCollisionCheck() {
-        final float px = player.getX();
-        final float py = player.getY();
+        final Vector2 pp = player.getPosition();
 
         final boolean shieldActive = player.shield.isActive();
         final Vector2 sp = player.shield.getPosition();
@@ -151,7 +150,7 @@ public final class Game implements Serializable {
             final IBullet bullet = it.next();
             if (shieldActive && bullet.collidesWith(sp, sr)) {
                 it.remove();
-            } else if (!player.isRespawnShieldActive() && bullet.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+            } else if (!player.isRespawnShieldActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 it.remove();
                 if (player.changeHpBy(-1) <= 0) {
                     // Player is dead, no more collision can happen
@@ -166,11 +165,10 @@ public final class Game implements Serializable {
             final IEnemy enemy = outer.next();
 
             final float er = enemy.getR();
-            final float ex = enemy.getX();
-            final float ey = enemy.getY();
+            final Vector2 ep = enemy.getPosition();
 
             for (final Iterator<IBullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
-                if (inner.next().collidesWith(ex, ey, er)) {
+                if (inner.next().collidesWith(ep, er)) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
                         changeScore(enemy.getScore());
@@ -180,7 +178,7 @@ public final class Game implements Serializable {
                 }
             }
 
-            if (!player.isRespawnShieldActive() && enemy.collidesWith(px, py, Player.COLLISION_RADIUS)) {
+            if (!player.isRespawnShieldActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 if (player.changeHpBy(-1) <= 0) {
                     return;
                 }
