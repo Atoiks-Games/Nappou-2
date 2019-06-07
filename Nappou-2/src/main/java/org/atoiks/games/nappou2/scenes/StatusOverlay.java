@@ -18,14 +18,13 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
-
-import static org.atoiks.games.nappou2.App.SANS_FONT;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -37,6 +36,12 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private Game game;
     private Image hpImg;
+
+    private Font font;
+
+    public void provideFont(Font font) {
+        this.font = font.deriveFont(16f);
+    }
 
     public void attachGame(final Game game) {
         this.game = game;
@@ -53,7 +58,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         g.setColor(Color.white);
-        g.setFont(SANS_FONT);
+        g.setFont(font);
         g.drawString("HP Remaining", GAME_BORDER + 2, 16);
         g.drawString("Score", GAME_BORDER + 2, 58);
 

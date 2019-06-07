@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
@@ -29,8 +31,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
-
-import static org.atoiks.games.nappou2.App.SANS_FONT;
 
 public final class SaveHighscoreScene extends CenteringScene {
 
@@ -65,6 +65,18 @@ public final class SaveHighscoreScene extends CenteringScene {
     private int currentIdx = 0;
     private String currentStr = "";
 
+    private Font font16;
+    private Font font30;
+    private Font font80;
+
+    @Override
+    public void init() {
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
+    }
+
     @Override
     public void enter(String from) {
         transition = (String) SceneManager.resources().get("prompt.trans");
@@ -80,13 +92,13 @@ public final class SaveHighscoreScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(TitleScene.TITLE_FONT);
+        g.setFont(font80);
         g.drawString("Enter Your Name", 200, 120);
 
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(font30);
         g.drawString(currentStr, 275, 350);
 
-        g.setFont(SANS_FONT);
+        g.setFont(font16);
         if (currentStr.length() > NAME_LENGTH_CAP) {
             g.drawString(NAME_LENGTH_CAP_MSG, 14, 580);
         }

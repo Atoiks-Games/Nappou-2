@@ -31,12 +31,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
-
 public final class TitleScene extends CenteringScene {
-
-    public static final Font TITLE_FONT = SANS_FONT.deriveFont(80f);
-    public static final Font OPTION_FONT = SANS_FONT.deriveFont(30f);
 
     // Conventionally, last scene is always Quit,
     // sceneDest is always one less than the selectorY
@@ -52,6 +47,10 @@ public final class TitleScene extends CenteringScene {
     private Clip bgm;
     private int selector;
 
+    private Font font16;
+    private Font font30;
+    private Font font80;
+
     @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
@@ -59,15 +58,15 @@ public final class TitleScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(TITLE_FONT);
+        g.setFont(font80);
         g.drawString("Void Walker", 260, 178);
 
-        g.setFont(OPTION_FONT);
+        g.setFont(font30);
         for (int i = 0; i < OPT_MSG.length; ++i) {
-            g.drawString(OPT_MSG[i], 68, selectorY[i] + OPTION_FONT.getSize() - 2);
+            g.drawString(OPT_MSG[i], 68, selectorY[i] + font30.getSize() - 2);
         }
 
-        g.setFont(SANS_FONT);
+        g.setFont(font16);
         g.drawString("      Made with love by Atoiks Games", 602, 540);
         g.drawString("In association with Harvard Game Devs", 600, 560);
 
@@ -104,6 +103,11 @@ public final class TitleScene extends CenteringScene {
     @Override
     public void init() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
     }
 
     @Override

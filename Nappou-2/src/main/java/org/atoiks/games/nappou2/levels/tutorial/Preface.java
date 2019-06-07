@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -37,10 +39,6 @@ import org.atoiks.games.nappou2.entities.shield.FixedTimeShield;
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
-
-import static org.atoiks.games.nappou2.scenes.TitleScene.OPTION_FONT;
-
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
@@ -55,8 +53,15 @@ public final class Preface implements ILevelState {
         { "Enter", "= Select" }
     };
 
+    private Font font16;
+    private Font font30;
+
     @Override
     public void enter(final ILevelContext ctx) {
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+
         ctx.clearMessage();
 
         final Game game = ctx.getGame();
@@ -75,11 +80,11 @@ public final class Preface implements ILevelState {
     @Override
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.white);
-        g.setFont(OPTION_FONT);
+        g.setFont(font30);
         g.drawString("Controls", 25, 70);
-        g.setFont(SANS_FONT);
+        g.setFont(font16);
         for (int i = 0; i < INFO_MSG.length; ++i) {
-            final int h = 90 + i * (SANS_FONT.getSize() + 5);
+            final int h = 90 + i * (font16.getSize() + 5);
             g.drawString(INFO_MSG[i][0], 40, h);
             g.drawString(INFO_MSG[i][1], 120, h);
         }

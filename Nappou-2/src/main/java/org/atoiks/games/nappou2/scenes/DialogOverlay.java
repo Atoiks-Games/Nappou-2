@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 
@@ -25,8 +26,6 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.entities.Message;
-
-import static org.atoiks.games.nappou2.App.SANS_FONT;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
@@ -40,7 +39,15 @@ public final class DialogOverlay {
     private int xoffMsgImg;
     private int yoffMsgImg;
 
+    private Font font16;
+    private Font font30;
+
     /* package */ DialogOverlay() {
+    }
+
+    public void provideFont(Font font) {
+        this.font16 = font.deriveFont(16f);
+        this.font30 = font.deriveFont(30f);
     }
 
     public void clearMessage() {
@@ -77,13 +84,13 @@ public final class DialogOverlay {
 
         // Draw name inside msgbox
         g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         g.drawString(msgSpeaker, 28, HEIGHT - 162);
 
         // Draw message inside msgbox
-        g.setFont(SANS_FONT);
+        g.setFont(this.font16);
         for (int i = 0; i < msgLines.length; ++i) {
-            g.drawString(msgLines[i], 28, HEIGHT - 142 + i * (SANS_FONT.getSize()) + 10);
+            g.drawString(msgLines[i], 28, HEIGHT - 142 + i * (this.font16.getSize()) + 10);
         }
 
         // Draw footer

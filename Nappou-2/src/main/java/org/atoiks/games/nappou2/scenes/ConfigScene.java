@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -30,8 +32,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
-
 public final class ConfigScene extends CenteringScene {
 
     private static final String[] OPTION_NAMES = {
@@ -40,6 +40,9 @@ public final class ConfigScene extends CenteringScene {
     private static final int[] SELECTOR_Y = { 66, 115, 164 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
+
+    private Font font16;
+    private Font font30;
 
     private Clip bgm;
     private GameConfig config;
@@ -56,15 +59,15 @@ public final class ConfigScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         for (int i = 0; i < OPTION_NAMES.length; ++i) {
-            final int h = SELECTOR_Y[i] + TitleScene.OPTION_FONT.getSize() - 7;
+            final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
             g.drawString(OPTION_NAMES[i], 84, h);
             g.drawString("ON", 560, h);
             g.drawString("OFF", 720, h);
         }
 
-        g.setFont(SANS_FONT);
+        g.setFont(font16);
         g.drawString("Hit Escape to return to title screen", 84, 540);
 
         g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
@@ -135,6 +138,10 @@ public final class ConfigScene extends CenteringScene {
     public void init() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
         config = ResourceManager.get("./game.cfg");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
     }
 
     @Override
