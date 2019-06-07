@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import org.atoiks.games.nappou2.Vector2;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
@@ -42,10 +44,9 @@ public final class RadialPattern extends TimedCounter {
     @Override
     protected void onTimerUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
-        final float x = enemy.getX();
-        final float y = enemy.getY();
+        final Vector2 pos = enemy.getPosition();
         final int bulletId = this.getCount();
 
-        game.addEnemyBullet(factory.createBullet(x, y, initialAngle + bulletId * anglePerInterval));
+        game.addEnemyBullet(factory.createBullet(pos, initialAngle + bulletId * anglePerInterval));
     }
 }
