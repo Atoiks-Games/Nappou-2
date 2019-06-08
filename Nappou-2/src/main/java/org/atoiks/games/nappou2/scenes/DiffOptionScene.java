@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -45,6 +47,9 @@ public final class DiffOptionScene extends CenteringScene {
     private Clip bgm;
     private int diffSel;
 
+    private Font font30;
+    private Font font80;
+
     @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
@@ -52,11 +57,11 @@ public final class DiffOptionScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(TitleScene.TITLE_FONT);
+        g.setFont(this.font80);
         g.drawString("Choose Your Difficulty", 80, 120);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         for (int i = 0; i < DIFFS.length; ++i) {
-            g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + TitleScene.OPTION_FONT.getSize());
+            g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + this.font30.getSize());
         }
         g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
@@ -83,6 +88,10 @@ public final class DiffOptionScene extends CenteringScene {
     @Override
     public void init() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
     }
 
     @Override

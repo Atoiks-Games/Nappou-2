@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -46,6 +48,9 @@ public final class ShieldOptionScene extends CenteringScene {
 
     private boolean skipSelection;
 
+    private Font font30;
+    private Font font80;
+
     @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
@@ -54,11 +59,11 @@ public final class ShieldOptionScene extends CenteringScene {
 
         if (!skipSelection) {
             g.setColor(Color.white);
-            g.setFont(TitleScene.TITLE_FONT);
+            g.setFont(this.font80);
             g.drawString("Choose Your Shield", 130, 120);
-            g.setFont(TitleScene.OPTION_FONT);
+            g.setFont(this.font30);
             for (int i = 0; i < SHIELD_MSG.length; ++i) {
-                g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + TitleScene.OPTION_FONT.getSize());
+                g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + this.font30.getSize());
             }
             g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
         }
@@ -93,6 +98,10 @@ public final class ShieldOptionScene extends CenteringScene {
     @Override
     public void init() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
     }
 
     @Override

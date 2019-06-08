@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -32,7 +34,6 @@ import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 
@@ -46,9 +47,19 @@ public final class ScoreScene extends CenteringScene {
     private int plane = 0;
     private boolean showName = true;
 
+    private Font font16;
+    private Font font30;
+
     private Clip bgm;
 
     private int ticks = 0;
+
+    @Override
+    public void init() {
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -59,11 +70,11 @@ public final class ScoreScene extends CenteringScene {
         if (score == null) return;
 
         g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         g.drawString(PLANE_MSG[plane], 10, 30);
 
-        g.setFont(SANS_FONT);
-        final int size = SANS_FONT.getSize();
+        g.setFont(this.font16);
+        final int size = this.font16.getSize();
         final ScoreData.Pair[][][] splane = score.getScoreForPlane(plane);
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;

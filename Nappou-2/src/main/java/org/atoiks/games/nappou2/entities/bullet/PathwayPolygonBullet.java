@@ -106,19 +106,23 @@ public class PathwayPolygonBullet extends PathwayBullet {
     }
 
     @Override
-    public boolean isOutOfScreen(final int w, final int h) {
-        final Vector2 pos = this.getPosition();
-        final float tx = pos.getX();
-        final float ty = pos.getY();
+    public final boolean isOutOfScreen(final int w, final int h) {
+        // If the bounding box is completely out of the screen,
+        // then the polygon must be as well.
 
-        final int limit = coords.length;
-        for (int i = 0; i < limit; i += 2) {
-            final float x = tx + coords[i];
-            final float y = ty + coords[i + 1];
-            if (!isPtOutOfScreen(x, y, w, h)) {
-                return false;
-            }
-        }
-        return true;
+        final Vector2 pos = this.getPosition();
+        final float x = boundX + pos.getX();
+        final float y = boundY + pos.getY();
+        final float hw = boundR;
+
+        final float maxX = x + hw;
+        final float minX = x - hw;
+        final float maxY = y + hw;
+        final float minY = y - hw;
+
+        return isPtOutOfScreen(maxX, maxY, w, h)
+            && isPtOutOfScreen(maxX, minY, w, h)
+            && isPtOutOfScreen(minX, minY, w, h)
+            && isPtOutOfScreen(minX, maxY, w, h);
     }
 }

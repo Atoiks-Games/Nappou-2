@@ -18,7 +18,9 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -30,11 +32,19 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
-
 public final class CreditsScene extends CenteringScene {
 
     private Clip bgm;
+
+    private Font font16;
+    private Font font30;
+
+    @Override
+    public void init() {
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -43,13 +53,13 @@ public final class CreditsScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         g.drawString("Thanks folks!", 10, 30);
 
 
         g.drawString("Alexander Bimm, Jeongmin Lee, Paul Teng, Shelby Elder, Sam Markowitz", 10, 60);
 
-        g.setFont(SANS_FONT);
+        g.setFont(this.font16);
         g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
     }
 
