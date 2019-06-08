@@ -24,6 +24,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.FixedSizer;
+
 import org.atoiks.games.nappou2.pathway.IPathway;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
@@ -34,11 +37,17 @@ public class PathwayPointBullet extends PathwayBullet {
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
+    private final ISizer sizer;
     private float r;
 
-    public PathwayPointBullet(float r, IPathway pathway) {
+    public PathwayPointBullet(float r, ISizer sizer, IPathway pathway) {
         super(pathway);
+        this.sizer = sizer;
         this.r = r;
+    }
+
+    public PathwayPointBullet(float r, IPathway pathway) {
+        this(r, FixedSizer.INSTANCE, pathway);
     }
 
     @Override
@@ -51,6 +60,13 @@ public class PathwayPointBullet extends PathwayBullet {
         final float y = pos.getY();
         // x, y are the center of the bullet
         g.fillOval(x - r, y - r, x + r, y + r);
+    }
+
+    @Override
+    public void update(final float dt) {
+        super.update(dt);
+
+        this.r = this.sizer.getNextSize(r, dt);
     }
 
     @Override

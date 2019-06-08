@@ -23,6 +23,9 @@ import java.util.function.BiFunction;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.FixedSizer;
+
 import org.atoiks.games.nappou2.pathway.IPathway;
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
@@ -33,20 +36,26 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPointBullet;
 public final class PathwayPointBulletInfo implements BulletFactory {
 
     public final float radius;
+    public final Supplier<? extends ISizer> sizer;
     public final BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway;
 
     public PathwayPointBulletInfo(float radius, Supplier<? extends IPathway> pathway) {
-        this(radius, (_a, _b) -> pathway.get());
+        this(radius, () -> FixedSizer.INSTANCE, (_a, _b) -> pathway.get());
     }
 
     public PathwayPointBulletInfo(float radius, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
+        this(radius, () -> FixedSizer.INSTANCE, pathway);
+    }
+
+    public PathwayPointBulletInfo(float radius, Supplier<? extends ISizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
         this.radius = radius;
+        this.sizer = sizer;
         this.pathway = pathway;
     }
 
     @Override
     public PathwayPointBullet createBullet(Vector2 position, float angle) {
-        return new PathwayPointBullet(radius, pathway.apply(position, angle));
+        return new PathwayPointBullet(radius, sizer.get(), pathway.apply(position, angle));
     }
 
     @Override

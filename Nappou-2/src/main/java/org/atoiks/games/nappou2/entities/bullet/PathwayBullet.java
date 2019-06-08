@@ -58,7 +58,7 @@ public abstract class PathwayBullet implements IBullet {
     }
 
     @Override
-    public final void update(final float dt) {
+    public void update(final float dt) {
         this.pathway.update(dt);
     }
 
