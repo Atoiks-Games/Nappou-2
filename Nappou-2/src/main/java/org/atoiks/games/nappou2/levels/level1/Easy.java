@@ -66,6 +66,8 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Easy implements ILevelState {
 
+    private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
+
     private int cycles;
     private int wave;
 
@@ -303,7 +305,7 @@ public final class Easy implements ILevelState {
                     case 300:
                     case 400:
                     case 500:
-                        PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
                         e.setR(8);
                         game.addEnemy(e);
                         break;
@@ -314,7 +316,7 @@ public final class Easy implements ILevelState {
                     case 430:
                     case 490:
                     case 550:
-                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
                         e.setR(13);
                         game.addEnemy(e);
                         break;
@@ -323,7 +325,7 @@ public final class Easy implements ILevelState {
                     case 525:
                     case 625:
                     case 725:
-                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
                         e.setR(25);
                         game.addEnemy(e);
                     case 375:
@@ -331,7 +333,7 @@ public final class Easy implements ILevelState {
                     case 575:
                     case 675:
                     case 775:
-                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
                         e.setR(6);
                         game.addEnemy(e);
                         break;
