@@ -127,13 +127,13 @@ public final class LoadingScene implements Scene {
                     }
 
                     // Load configuration file from "current" directory
-                    final GameConfig cfg = ResourceManager.load("./game.cfg", ExternalResourceResolver.INSTANCE,
-                            ExternalizableDecoder.forInstance(GameConfig::new));
+                    final GameConfig cfg = ResourceManager.loadOrDefault("./game.cfg", ExternalResourceResolver.INSTANCE,
+                            ExternalizableDecoder.forInstance(GameConfig::new), GameConfig::new);
                     enterFullscreen = cfg.fullscreen;
 
                     // Load score file from "current" directory
-                    final ScoreData data = ResourceManager.load("./score.dat", ExternalResourceResolver.INSTANCE,
-                            ExternalizableDecoder.forInstance(ScoreData::new));
+                    final ScoreData data = ResourceManager.loadOrDefault("./score.dat", ExternalResourceResolver.INSTANCE,
+                            ExternalizableDecoder.forInstance(ScoreData::new), ScoreData::new);
 
                     loaded = LoadState.DONE;
                 });
