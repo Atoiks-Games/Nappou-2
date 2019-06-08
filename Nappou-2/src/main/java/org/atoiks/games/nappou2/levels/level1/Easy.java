@@ -42,6 +42,9 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.enemy.*;
+import org.atoiks.games.nappou2.entities.bullet.*;
+
+import org.atoiks.games.nappou2.entities.bullet.factory.RayInfo;
 
 import org.atoiks.games.nappou2.pathway.*;
 
@@ -271,6 +274,69 @@ public final class Easy implements ILevelState {
                         break;
                 }
                 if (cycles > 1250 && game.noMoreEnemies()) {
+                    wave++;
+                    cycles = 0;
+                }
+                break;
+            case 6:
+                switch (cycles) {
+                    case 40:
+                        game.addEnemy(new Squirts(10, 375, -10, 20));
+                        break;
+                    case 50:
+                    case 100:
+                    case 150:
+                    case 200:
+                        game.addEnemy(new StreamBeam(1, 10, 610, 8, true));
+                        game.addEnemy(new StreamBeam(1, 740, 610, 8, true));
+                        break;
+                }
+                if (cycles > 200 && game.noMoreEnemies()) {
+                    wave++;
+                    cycles = 0;
+                }
+                break;
+            case 7:
+                switch (cycles) {
+                    case 100:
+                    case 200:
+                    case 300:
+                    case 400:
+                    case 500:
+                        PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e.setR(8);
+                        game.addEnemy(e);
+                        break;
+                    case 190:
+                    case 250:
+                    case 310:
+                    case 370:
+                    case 430:
+                    case 490:
+                    case 550:
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e.setR(13);
+                        game.addEnemy(e);
+                        break;
+                    case 325:
+                    case 425:
+                    case 525:
+                    case 625:
+                    case 725:
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e.setR(25);
+                        game.addEnemy(e);
+                    case 375:
+                    case 475:
+                    case 575:
+                    case 675:
+                    case 775:
+                        e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, new RayInfo(25, 5, 500)));
+                        e.setR(6);
+                        game.addEnemy(e);
+                        break;
+                }
+                if (cycles > 500 && game.noMoreEnemies()) {
                     wave++;
                     cycles = 0;
                 }
