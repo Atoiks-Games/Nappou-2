@@ -20,6 +20,7 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.FontFormatException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +54,6 @@ import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SoundEffect;
 
-import static org.atoiks.games.nappou2.App.SANS_FONT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 
@@ -63,8 +63,6 @@ public final class LoadingScene implements Scene {
         WAITING, LOADING, DONE, NO_RES
     }
 
-    public static final Font LOADING_FONT = SANS_FONT.deriveFont(45f);
-
     private static final int RADIUS = 100;
 
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
@@ -72,7 +70,20 @@ public final class LoadingScene implements Scene {
     private LoadState loaded = LoadState.WAITING;
     private boolean enterFullscreen = false;
 
+    private Font font;
+
     private float time;
+
+    @Override
+    public void init() {
+        font = ResourceManager.load("/Logisoso.ttf", src -> {
+            try {
+                return Font.createFont(Font.PLAIN, src);
+            } catch (IOException | FontFormatException ex) {
+                throw new DecodeException(ex);
+            }
+        }).deriveFont(45f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -85,8 +96,8 @@ public final class LoadingScene implements Scene {
             g.drawOval(x - 5, y - 5, x + 5, y + 5);
         }
 
-        g.setFont(LOADING_FONT);
-        g.drawString("Loading", WIDTH - 200, HEIGHT - LOADING_FONT.getSize() - 10);
+        g.setFont(font);
+        g.drawString("Loading", WIDTH - 200, HEIGHT - font.getSize() - 10);
     }
 
     @Override

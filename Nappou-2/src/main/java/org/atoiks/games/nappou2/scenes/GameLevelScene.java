@@ -18,8 +18,10 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
+
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
@@ -109,6 +111,11 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
         statusOverlay.attachGame(this.game);
         statusOverlay.attachHpImg(hpImg);
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.pauseOverlay.provideFont(fnt);
+        this.statusOverlay.provideFont(fnt);
+        this.dialogOverlay.provideFont(fnt);
     }
 
     @Override

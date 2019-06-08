@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.scenes;
 
+import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -42,6 +43,14 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private boolean enabled;
 
+    private Font font30;
+    private Font font80;
+
+    public void provideFont(Font font) {
+        this.font30 = font.deriveFont(30f);
+        this.font80 = font.deriveFont(80f);
+    }
+
     public void enable() {
         this.enabled = true;
         this.selector = 0;
@@ -59,9 +68,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
         g.setColor(Color.black);
-        g.setFont(TitleScene.TITLE_FONT);
+        g.setFont(this.font80);
         g.drawString("PAUSE", 274, 202);
-        g.setFont(TitleScene.OPTION_FONT);
+        g.setFont(this.font30);
         g.drawString("Continue Game", 52, 373);
         g.drawString("Return to Title", 52, 433);
         g.drawRect(45, SELECTOR_Y[selector], 49, SELECTOR_Y[selector] + OPT_HEIGHT);
