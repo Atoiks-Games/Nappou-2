@@ -22,8 +22,6 @@ import org.atoiks.games.nappou2.Vector2;
 
 public final class Beam extends BeamLike {
 
-    private static final long serialVersionUID = -810469078842689712L;
-
     public Beam(Vector2 position, float thickness, float length, Vector2 velocity) {
         super(position, thickness, velocity);
 

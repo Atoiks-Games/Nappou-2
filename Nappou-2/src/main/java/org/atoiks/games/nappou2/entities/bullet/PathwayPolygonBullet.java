@@ -30,8 +30,6 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 public class PathwayPolygonBullet extends PathwayBullet {
 
-    private static final long serialVersionUID = -8847455331005334783L;
-
     private final float[] coords;
     private final float boundX;
     private final float boundY;

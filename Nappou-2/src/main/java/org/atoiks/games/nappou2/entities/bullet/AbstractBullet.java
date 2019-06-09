@@ -22,8 +22,6 @@ import java.awt.Color;
 
 /* package */ abstract class AbstractBullet implements IBullet {
 
-    private static final long serialVersionUID = 12837435231L;
-
     protected Color color = Color.white;
 
     @Override
