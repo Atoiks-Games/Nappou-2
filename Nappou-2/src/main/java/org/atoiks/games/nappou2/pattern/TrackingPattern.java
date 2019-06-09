@@ -57,10 +57,8 @@ public final class TrackingPattern implements IAttackPattern {
         } else if (time > delay) {
             final Game game = enemy.getAssocGame();
             final Vector2 pos = enemy.getPosition();
-            final float x = pos.getX();
-            final float y = pos.getY();
+            final float angle = Vector2.angleBetween(pos, game.player.getPosition()) + angleOffsets[bulletId];
 
-            final float angle = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x) + angleOffsets[bulletId];
             game.addEnemyBullet(factory.createBullet(pos, angle));
             ++bulletId;
             time = 0;
