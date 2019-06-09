@@ -26,42 +26,25 @@ import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class TrackingPattern implements IAttackPattern {
+public final class TrackingPattern extends TimedCounter {
 
     private final BulletFactory factory;
 
-    private final float fireInterval;
-    private final float delay;
     private final float[] angleOffsets;
 
-    private float time;
-    private int bulletId;
-
     public TrackingPattern(float fireInterval, boolean immediateFire, float delay, float[] angleOffsets, BulletFactory factory) {
+        super(angleOffsets.length, fireInterval, delay, immediateFire ? TrackingPattern.InitialState.COUNTER_RESET : TrackingPattern.InitialState.DO_PAUSE);
+
         this.factory = factory;
-
-        this.fireInterval = fireInterval;
-        this.delay = delay;
         this.angleOffsets = angleOffsets;
-
-        if (!immediateFire) {
-            bulletId = angleOffsets.length;
-        }
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
-        time += dt;
-        if (bulletId >= angleOffsets.length) {
-            if (time >= fireInterval) bulletId = 0;
-        } else if (time > delay) {
-            final Game game = enemy.getAssocGame();
-            final Vector2 pos = enemy.getPosition();
-            final float angle = Vector2.angleBetween(pos, game.player.getPosition()) + angleOffsets[bulletId];
+    protected void onTimerUpdate(IEnemy enemy, float dt) {
+        final Game game = enemy.getAssocGame();
+        final Vector2 pos = enemy.getPosition();
+        final float angle = Vector2.angleBetween(pos, game.player.getPosition()) + angleOffsets[this.getCount()];
 
-            game.addEnemyBullet(factory.createBullet(pos, angle));
-            ++bulletId;
-            time = 0;
-        }
+        game.addEnemyBullet(factory.createBullet(pos, angle));
     }
 }
