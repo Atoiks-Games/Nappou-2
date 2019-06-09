@@ -26,7 +26,5 @@ public interface BulletFactory {
 
     public IBullet createBullet(float x, float y, float angle);
 
-    public default IBullet createBullet(Vector2 pos, float angle) {
-        return createBullet(pos.getX(), pos.getY(), angle);
-    }
+    public IBullet createBullet(Vector2 pos, float angle);
 }
