@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities;
 
-import java.io.Serializable;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -32,9 +30,7 @@ import org.atoiks.games.nappou2.spawner.ISpawner;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
 
-public final class Game implements Serializable {
-
-    private static final long serialVersionUID = 62102375L;
+public final class Game {
 
     private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
     private final LinkedList<IBullet> playerBullets = new LinkedList<>();
