@@ -36,7 +36,6 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private static final int[] SELECTOR_Y = {342, 402};
     private static final int SEL_RESUME_GAME = 0;
-    private static final String[] SCENE_DEST = {"TitleScene"};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
@@ -92,7 +91,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             enabled = false;
 
             if (selector != SEL_RESUME_GAME) {
-                SceneManager.switchToScene(SCENE_DEST[selector - 1]);
+                SceneManager.swapScene(new TitleScene());
             }
             return;
         }

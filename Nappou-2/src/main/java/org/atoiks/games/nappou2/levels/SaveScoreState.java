@@ -22,6 +22,9 @@ import org.atoiks.games.framework2d.SceneManager;
 
 import org.atoiks.games.nappou2.Difficulty;
 
+import org.atoiks.games.nappou2.scenes.TitleScene;
+import org.atoiks.games.nappou2.scenes.SaveHighscoreScene;
+
 /**
  * State to transition to when it seems like a good place to prompt for a high
  * score save.
@@ -38,10 +41,10 @@ public final class SaveScoreState implements ILevelState {
 
     @Override
     public void updateLevel(ILevelContext ctx, float dt) {
-        SceneManager.resources().put("prompt.trans", "TitleScene");
-        SceneManager.resources().put("difficulty", diff);
-        SceneManager.resources().put("level.id", levelId);
-        SceneManager.resources().put("level.score", ctx.getGame().getScore());
-        SceneManager.switchToScene("SaveHighscoreScene");
+        SceneManager.swapScene(new SaveHighscoreScene(
+                new TitleScene(),
+                diff,
+                levelId,
+                ctx.getGame().getScore()));
     }
 }

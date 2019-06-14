@@ -47,18 +47,17 @@ public final class ScoreScene extends CenteringScene {
     private int plane = 0;
     private boolean showName = true;
 
-    private Font font16;
-    private Font font30;
-
-    private Clip bgm;
+    private final Font font16;
+    private final Font font30;
 
     private int ticks = 0;
 
-    @Override
-    public void init() {
+    public ScoreScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
+
+        this.score = ResourceManager.get("./score.dat");
     }
 
     @Override
@@ -108,7 +107,8 @@ public final class ScoreScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.popScene();
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_C)) {
             score.clear(plane);
@@ -120,24 +120,5 @@ public final class ScoreScene extends CenteringScene {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void enter(String previousSceneId) {
-        score = ResourceManager.get("./score.dat");
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        ticks = 0;
-        showName = true;
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
     }
 }

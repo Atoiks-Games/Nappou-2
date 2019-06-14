@@ -26,6 +26,7 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -41,16 +42,32 @@ public final class ConfigScene extends CenteringScene {
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
-    private Font font16;
-    private Font font30;
+    private final Font font16;
+    private final Font font30;
 
-    private Clip bgm;
-    private GameConfig config;
+    private final Clip bgm;
+    private final GameConfig config;
 
     private int selector;
     private float scaleFactor;
     private float transX;
     private float transY;
+
+    public ConfigScene() {
+        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+        config = ResourceManager.get("./game.cfg");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+    }
+
+    @Override
+    public void enter(Scene from) {
+        if (config.bgm) {
+            bgm.start();
+        }
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -93,7 +110,8 @@ public final class ConfigScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.swapScene(new TitleScene());
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             selector = (selector + 1) % SELECTOR_Y.length;
@@ -132,20 +150,5 @@ public final class ConfigScene extends CenteringScene {
             default:
                 throw new RuntimeException("Unknown selector index " + selector);
         }
-    }
-
-    @Override
-    public void init() {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-        config = ResourceManager.get("./game.cfg");
-
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
     }
 }

@@ -34,13 +34,10 @@ import org.atoiks.games.nappou2.GameConfig;
 
 public final class CreditsScene extends CenteringScene {
 
-    private Clip bgm;
+    private final Font font16;
+    private final Font font30;
 
-    private Font font16;
-    private Font font30;
-
-    @Override
-    public void init() {
+    public CreditsScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
@@ -66,23 +63,8 @@ public final class CreditsScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.popScene();
         }
         return true;
-    }
-
-    @Override
-    public void enter(String previousSceneId) {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
     }
 }

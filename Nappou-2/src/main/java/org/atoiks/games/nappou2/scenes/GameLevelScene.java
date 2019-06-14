@@ -67,6 +67,21 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private ILevelState state = NullState.INSTANCE;
 
+    public GameLevelScene() {
+        shouldSkipPlayerUpdate(false);
+
+        final Image hpImg = ResourceManager.get("/image/hp.png");
+        game.clipGameBorder(GAME_BORDER, HEIGHT);
+
+        statusOverlay.attachGame(this.game);
+        statusOverlay.attachHpImg(hpImg);
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.pauseOverlay.provideFont(fnt);
+        this.statusOverlay.provideFont(fnt);
+        this.dialogOverlay.provideFont(fnt);
+    }
+
     @Override
     public void setState(ILevelState nextState) {
         this.state.exit();
@@ -102,28 +117,6 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     @Override
     public void displayMessage(final Message msg) {
         dialogOverlay.displayMessage(msg);
-    }
-
-    @Override
-    public void init() {
-        final Image hpImg = ResourceManager.get("/image/hp.png");
-        game.clipGameBorder(GAME_BORDER, HEIGHT);
-
-        statusOverlay.attachGame(this.game);
-        statusOverlay.attachHpImg(hpImg);
-
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.pauseOverlay.provideFont(fnt);
-        this.statusOverlay.provideFont(fnt);
-        this.dialogOverlay.provideFont(fnt);
-    }
-
-    @Override
-    public void enter(String prevSceneId) {
-        playerFireLimiter = 0f;
-        shouldSkipPlayerUpdate(false);
-
-        setState((ILevelState) SceneManager.resources().get("level.state"));
     }
 
     @Override
@@ -192,7 +185,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
         game.performCollisionCheck();
         if (game.player.getHp() <= 0) {
-            SceneManager.switchToScene("TitleScene");
+            SceneManager.swapScene(new TitleScene());
             return;
         }
 

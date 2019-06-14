@@ -75,7 +75,7 @@ public final class LoadingScene implements Scene {
     private float time;
 
     @Override
-    public void init() {
+    public void enter(Scene from) {
         font = ResourceManager.load("/Logisoso.ttf", src -> {
             try {
                 return Font.createFont(Font.PLAIN, src);
@@ -112,7 +112,8 @@ public final class LoadingScene implements Scene {
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
                 SceneManager.frame().setFullScreen(enterFullscreen);
-                return SceneManager.switchToScene("TitleScene");
+                SceneManager.swapScene(new TitleScene());
+                return true;
             case WAITING:
                 loaded = LoadState.LOADING;
                 loader.submit(() -> {

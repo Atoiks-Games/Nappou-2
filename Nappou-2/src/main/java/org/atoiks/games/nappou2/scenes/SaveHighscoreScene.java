@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -59,30 +60,29 @@ public final class SaveHighscoreScene extends CenteringScene {
         }
     }
 
-    // This scene acts like a transitioning scene
-    private String transition;
+    private final Scene transition;
 
     private int currentIdx = 0;
     private String currentStr = "";
 
-    private Font font16;
-    private Font font30;
-    private Font font80;
+    private final Font font16;
+    private final Font font30;
+    private final Font font80;
 
-    @Override
-    public void init() {
+    private final Difficulty diff;
+    private final int levelId;
+    private final int levelScore;
+
+    public SaveHighscoreScene(Scene next, Difficulty diff, int levelId, int score) {
+        this.transition = next;
+        this.diff = diff;
+        this.levelId = levelId;
+        this.levelScore = score;
+
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
         this.font80 = fnt.deriveFont(80f);
-    }
-
-    @Override
-    public void enter(String from) {
-        transition = (String) SceneManager.resources().get("prompt.trans");
-
-        currentIdx = 0;
-        currentStr = "";
     }
 
     @Override
@@ -141,9 +141,7 @@ public final class SaveHighscoreScene extends CenteringScene {
                 case BANK_LENGTH - 1: // Done
                     // We will save the score here!
                     final boolean challengeMode = ResourceManager.<GameConfig>get("./game.cfg").challengeMode;
-                    final int levelId = (int) SceneManager.resources().get("level.id");
-                    final int levelScore = (int) SceneManager.resources().get("level.score");
-                    final int levelDiff = ((Difficulty) SceneManager.resources().get("difficulty")).ordinal();
+                    final int levelDiff = this.diff.ordinal();
 
                     final ScoreData scoreDat = ResourceManager.get("./score.dat");
                     final String name = currentStr.length() > NAME_LENGTH_CAP
@@ -153,7 +151,8 @@ public final class SaveHighscoreScene extends CenteringScene {
                             new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore));
 
                     // Then transition to correct scene
-                    return SceneManager.switchToScene(transition);
+                    SceneManager.swapScene(transition);
+                    return true;
                 default:
                     currentStr += CHAR_BANK[currentIdx];
                     break;
