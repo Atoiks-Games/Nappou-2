@@ -28,6 +28,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
 
@@ -75,10 +76,10 @@ public final class ScoreScene extends CenteringScene {
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
-            for (Difficulty diff : Difficulty.values()) {
-                final int bw = 60 + diff.ordinal() * 200;
-                final ScoreData.Pair[] p = splane[i][diff.ordinal()];
-                g.drawString(diff.toString(), bw, bh + size);
+            for (int diffId = 0; diffId < Utils.DIFF_NAMES.length; ++diffId) {
+                final int bw = 60 + diffId * 200;
+                final ScoreData.Pair[] p = splane[i][diffId];
+                g.drawString(Utils.DIFF_NAMES[diffId], bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
                     final ScoreData.Pair pair = p[offset];

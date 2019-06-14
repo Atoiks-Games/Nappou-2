@@ -28,6 +28,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
@@ -36,7 +37,6 @@ import org.atoiks.games.nappou2.levels.level1.*;
 
 public final class DiffOptionScene extends CenteringScene {
 
-    private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
 
@@ -61,8 +61,8 @@ public final class DiffOptionScene extends CenteringScene {
         g.setFont(this.font80);
         g.drawString("Choose Your Difficulty", 80, 120);
         g.setFont(this.font30);
-        for (int i = 0; i < DIFFS.length; ++i) {
-            g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + this.font30.getSize());
+        for (int i = 0; i < Utils.DIFF_NAMES.length; ++i) {
+            g.drawString(Utils.DIFF_NAMES[i], 98, diffSelY[i] + this.font30.getSize());
         }
         g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
@@ -91,7 +91,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     private Difficulty getDiffFromOption() {
         try {
-            return DIFFS[diffSel];
+            return Difficulty.values()[diffSel];
         } catch (IndexOutOfBoundsException ex) {
             return Difficulty.NORMAL;
         }
