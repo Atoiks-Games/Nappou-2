@@ -24,7 +24,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -60,8 +59,6 @@ public final class SaveHighscoreScene extends CenteringScene {
         }
     }
 
-    private final Scene transition;
-
     private int currentIdx = 0;
     private String currentStr = "";
 
@@ -73,8 +70,7 @@ public final class SaveHighscoreScene extends CenteringScene {
     private final int levelId;
     private final int levelScore;
 
-    public SaveHighscoreScene(Scene next, Difficulty diff, int levelId, int score) {
-        this.transition = next;
+    public SaveHighscoreScene(Difficulty diff, int levelId, int score) {
         this.diff = diff;
         this.levelId = levelId;
         this.levelScore = score;
@@ -151,7 +147,7 @@ public final class SaveHighscoreScene extends CenteringScene {
                             new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore));
 
                     // Then transition to correct scene
-                    SceneManager.swapScene(transition);
+                    SceneManager.popScene();
                     return true;
                 default:
                     currentStr += CHAR_BANK[currentIdx];

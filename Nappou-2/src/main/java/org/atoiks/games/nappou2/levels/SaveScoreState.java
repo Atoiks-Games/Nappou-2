@@ -41,8 +41,8 @@ public final class SaveScoreState implements ILevelState {
 
     @Override
     public void updateLevel(ILevelContext ctx, float dt) {
-        SceneManager.swapScene(new SaveHighscoreScene(
-                new TitleScene(),
+        SceneManager.swapScene(new TitleScene());
+        SceneManager.pushScene(new SaveHighscoreScene(
                 diff,
                 levelId,
                 ctx.getGame().getScore()));
