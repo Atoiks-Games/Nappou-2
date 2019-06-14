@@ -23,20 +23,9 @@ import java.awt.Color;
 import java.awt.FontFormatException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.BufferedInputStream;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
-
-import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
@@ -52,7 +41,6 @@ import org.atoiks.games.framework2d.resolver.ExternalResourceResolver;
 
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.SoundEffect;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;

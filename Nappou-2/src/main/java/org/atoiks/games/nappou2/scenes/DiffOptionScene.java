@@ -29,7 +29,6 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Difficulty;
-import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 
@@ -92,7 +91,7 @@ public final class DiffOptionScene extends CenteringScene {
 
     private Difficulty getDiffFromOption() {
         try {
-            return Difficulty.values()[diffSel];
+            return DIFFS[diffSel];
         } catch (IndexOutOfBoundsException ex) {
             return Difficulty.NORMAL;
         }
