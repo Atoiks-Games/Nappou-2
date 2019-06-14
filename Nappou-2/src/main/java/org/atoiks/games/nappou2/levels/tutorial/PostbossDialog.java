@@ -38,7 +38,6 @@ import org.atoiks.games.nappou2.entities.Message;
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-
 /* package */ final class PostbossDialog extends AbstractDialogState {
 
     // A dummy state created to allow postboss dialog to work with
