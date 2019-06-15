@@ -39,13 +39,10 @@ public final class DialogOverlay {
     private int xoffMsgImg;
     private int yoffMsgImg;
 
-    private Font font16;
-    private Font font30;
+    private final Font font16;
+    private final Font font30;
 
-    /* package */ DialogOverlay() {
-    }
-
-    public void provideFont(Font font) {
+    /* package */ DialogOverlay(Font font) {
         this.font16 = font.deriveFont(16f);
         this.font30 = font.deriveFont(30f);
     }

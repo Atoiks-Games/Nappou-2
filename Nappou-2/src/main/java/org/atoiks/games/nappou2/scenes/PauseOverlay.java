@@ -42,10 +42,10 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private boolean enabled;
 
-    private Font font30;
-    private Font font80;
+    private final Font font30;
+    private final Font font80;
 
-    public void provideFont(Font font) {
+    public PauseOverlay(Font font) {
         this.font30 = font.deriveFont(30f);
         this.font80 = font.deriveFont(80f);
     }

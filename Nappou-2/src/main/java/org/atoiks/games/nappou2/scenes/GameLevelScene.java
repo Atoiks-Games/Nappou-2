@@ -55,12 +55,12 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
 
-    private final PauseOverlay pauseOverlay = new PauseOverlay();
-    private final StatusOverlay statusOverlay = new StatusOverlay();
-    private final DialogOverlay dialogOverlay = new DialogOverlay();
-
     private final Game game = new Game();
     private final Drifter drift = new Drifter();
+
+    private final PauseOverlay pauseOverlay;
+    private final StatusOverlay statusOverlay;
+    private final DialogOverlay dialogOverlay;
 
     private boolean skipPlayerUpdate;
     private float playerFireLimiter;
@@ -73,13 +73,11 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         final Image hpImg = ResourceManager.get("/image/hp.png");
         game.clipGameBorder(GAME_BORDER, HEIGHT);
 
-        statusOverlay.attachGame(this.game);
-        statusOverlay.attachHpImg(hpImg);
-
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.pauseOverlay.provideFont(fnt);
-        this.statusOverlay.provideFont(fnt);
-        this.dialogOverlay.provideFont(fnt);
+
+        this.pauseOverlay = new PauseOverlay(fnt);
+        this.dialogOverlay = new DialogOverlay(fnt);
+        this.statusOverlay = new StatusOverlay(fnt, this.game, hpImg);
     }
 
     @Override
