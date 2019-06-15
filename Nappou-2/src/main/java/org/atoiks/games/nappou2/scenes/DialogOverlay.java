@@ -111,7 +111,7 @@ public final class DialogOverlay {
             case CENTER:
                 return (HEIGHT - imgH) / 2;
             default:
-                // Assumes center alignment, ut prints out warning
+                // Assumes above dialog alignment, prints out warning
                 System.err.println("Unknown vertical alignment: " + vAlign);
             case ABOVE_DIALOGUE:
                 return 400 - imgH;
@@ -126,7 +126,7 @@ public final class DialogOverlay {
             case RIGHT:
                 return GAME_BORDER - imgW;
             default:
-                // Assumes center alignment, ut prints out warning
+                // Assumes center alignment, prints out warning
                 System.err.println("Unknown vertical alignment: " + vAlign);
             case CENTER:
                 return (GAME_BORDER - imgW) / 2;
