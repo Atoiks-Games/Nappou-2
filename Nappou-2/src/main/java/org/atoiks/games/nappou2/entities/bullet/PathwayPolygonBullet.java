@@ -87,22 +87,28 @@ public class PathwayPolygonBullet extends PathwayBullet {
         // Colliding entity Item was (x1, y1)
         // Convert to (x1 - x, y1 - y)
         //   where x, y are the polygon's onscreen position
+
         final Vector2 pos = this.getPosition();
         final float tx = x1 - pos.getX();
         final float ty = y1 - pos.getY();
-        if (centerSquareCollision(boundX, boundY, boundR, tx, ty, r1)) {
-            final int limit = coords.length;
-            for (int i = 0; i < limit; i += 2) {
-                final float startX = coords[i];
-                final float startY = coords[i + 1];
-                final float endX   = coords[(i + 2) % limit];
-                final float endY   = coords[(i + 3) % limit];
-                if (intersectSegmentCircle(startX, startY, endX, endY, tx, ty, r1)) {
-                    return true;
-                }
+
+        if (!centerSquareCollision(boundX, boundY, boundR, tx, ty, r1)) {
+            return false;
+        }
+
+        final int length = coords.length;
+        for (int i = 0; i < length - 2; i += 2) {
+            final float startX = coords[i];
+            final float startY = coords[i + 1];
+            final float endX   = coords[i + 2];
+            final float endY   = coords[i + 3];
+            if (intersectSegmentCircle(startX, startY, endX, endY, tx, ty, r1)) {
+                return true;
             }
         }
-        return false;
+
+        return intersectSegmentCircle(coords[length - 2], coords[length - 1], coords[0], coords[1],
+                tx, ty, r1);
     }
 
     @Override
