@@ -24,8 +24,6 @@ import org.atoiks.games.nappou2.entities.Game;
 
 public abstract class ManualEnemy extends AbstractEnemy {
 
-    private static final long serialVersionUID = 2863751253611185983L;
-
     protected float x, y, r;
 
     protected ManualEnemy(int hp, float x, float y, float r) {

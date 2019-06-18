@@ -28,8 +28,6 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 /* package */ abstract class BeamLike extends AbstractBullet {
 
-    private static final long serialVersionUID = 1688306598996496965L;
-
     private final float halfWidth;
 
     private final float angle;

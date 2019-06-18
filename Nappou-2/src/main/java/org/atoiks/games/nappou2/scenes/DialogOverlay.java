@@ -39,13 +39,10 @@ public final class DialogOverlay {
     private int xoffMsgImg;
     private int yoffMsgImg;
 
-    private Font font16;
-    private Font font30;
+    private final Font font16;
+    private final Font font30;
 
-    /* package */ DialogOverlay() {
-    }
-
-    public void provideFont(Font font) {
+    /* package */ DialogOverlay(Font font) {
         this.font16 = font.deriveFont(16f);
         this.font30 = font.deriveFont(30f);
     }
@@ -114,7 +111,7 @@ public final class DialogOverlay {
             case CENTER:
                 return (HEIGHT - imgH) / 2;
             default:
-                // Assumes center alignment, ut prints out warning
+                // Assumes above dialog alignment, prints out warning
                 System.err.println("Unknown vertical alignment: " + vAlign);
             case ABOVE_DIALOGUE:
                 return 400 - imgH;
@@ -129,7 +126,7 @@ public final class DialogOverlay {
             case RIGHT:
                 return GAME_BORDER - imgW;
             default:
-                // Assumes center alignment, ut prints out warning
+                // Assumes center alignment, prints out warning
                 System.err.println("Unknown vertical alignment: " + vAlign);
             case CENTER:
                 return (GAME_BORDER - imgW) / 2;

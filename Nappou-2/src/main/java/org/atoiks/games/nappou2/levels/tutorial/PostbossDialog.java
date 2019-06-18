@@ -33,12 +33,29 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
+import org.atoiks.games.nappou2.scenes.TitleScene;
+
 import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PostbossDialog extends AbstractDialogState {
+
+    // A dummy state created to allow postboss dialog to work with
+    // AbstractDialogState
+    private static class ReturnToTitleSceneState implements ILevelState {
+
+        public static final ReturnToTitleSceneState INSTANCE = new ReturnToTitleSceneState();
+
+        private ReturnToTitleSceneState() {
+        }
+
+        @Override
+        public void updateLevel(final ILevelContext ctx, final float dt) {
+            SceneManager.swapScene(new TitleScene());
+        }
+    }
 
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");

@@ -20,6 +20,9 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.FixedSizer;
+
 import org.atoiks.games.nappou2.pattern.NullPattern;
 import org.atoiks.games.nappou2.pattern.IAttackPattern;
 
@@ -28,10 +31,9 @@ import org.atoiks.games.nappou2.pathway.FixedPosition;
 
 public final class PathwayEnemy extends AbstractEnemy {
 
-    private static final long serialVersionUID = -4022004468618519339L;
-
     private IPathway path;
     private IAttackPattern attack;
+    private ISizer sizer;
 
     private float r;
 
@@ -41,15 +43,20 @@ public final class PathwayEnemy extends AbstractEnemy {
     private final int score;
 
     public PathwayEnemy(int hp, int score) {
-        this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE);
+        this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE, FixedSizer.INSTANCE);
     }
 
     public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack) {
+        this(hp, score, path, attack, FixedSizer.INSTANCE);
+    }
+
+    public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack, final ISizer sizer) {
         super(hp);
         this.score = score;
 
         setPathway(path);
         setAttackPattern(attack);
+        setSizer(sizer);
     }
 
     public IPathway getPathway() {
@@ -68,6 +75,14 @@ public final class PathwayEnemy extends AbstractEnemy {
         this.attack = lis != null ? lis : NullPattern.INSTANCE;
     }
 
+    public ISizer getSizer() {
+        return sizer;
+    }
+
+    public void setSizer(ISizer f) {
+        this.sizer = f != null ? f : FixedSizer.INSTANCE;
+    }
+
     public void ignoreDrift(boolean flag) {
         driftFlag = !flag;
     }
@@ -80,6 +95,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     public void update(float dt) {
         path.update(dt);
         attack.onFireUpdate(this, dt);
+        this.r = sizer.getNextSize(this.r, dt);
     }
 
     @Override

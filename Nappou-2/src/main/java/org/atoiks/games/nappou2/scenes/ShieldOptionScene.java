@@ -23,15 +23,16 @@ import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
-import javax.sound.sampled.Clip;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SaveData;
+
+import org.atoiks.games.nappou2.levels.ILevelState;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -43,13 +44,22 @@ public final class ShieldOptionScene extends CenteringScene {
     private static final int[] shieldSelY = {356, 414, 498};
     private static final int OPT_HEIGHT = 37;
 
-    private Clip bgm;
     private int shieldSel;
 
     private boolean skipSelection;
 
-    private Font font30;
-    private Font font80;
+    private final ILevelState levelState;
+
+    private final Font font30;
+    private final Font font80;
+
+    public ShieldOptionScene(final ILevelState levelState) {
+        this.levelState = levelState;
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -76,7 +86,8 @@ public final class ShieldOptionScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.popScene();
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             return startGame();
@@ -92,31 +103,19 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        return SceneManager.switchToScene("GameLevelScene");
+        final GameLevelScene next = new GameLevelScene();
+        SceneManager.unwindToScene(next);
+        next.setState(levelState);
+        return true;
     }
 
     @Override
-    public void init() {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
-    }
-
-    @Override
-    public void enter(String previousSceneId) {
+    public void enter(Scene previousSceneId) {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         if ((skipSelection = cfg.challengeMode)) {
             // Challenge mode does not use NullShield
             // Also, line above is intentional assignment, not test equality
             shieldSel = shieldSelY.length - 1;
-            return;
-        }
-
-        if (cfg.bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 

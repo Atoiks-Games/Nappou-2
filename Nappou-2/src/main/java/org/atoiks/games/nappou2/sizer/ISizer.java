@@ -16,18 +16,9 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.sizer;
 
-import java.awt.Color;
+public interface ISizer {
 
-import org.atoiks.games.framework2d.IGraphics;
-
-import org.atoiks.games.nappou2.entities.IDriftEntity;
-
-public interface IBullet extends IDriftEntity {
-
-    public void setColor(Color newColor);
-    public Color getColor();
-
-    public void render(IGraphics g);
+    public float getNextSize(float prev, float dt);
 }

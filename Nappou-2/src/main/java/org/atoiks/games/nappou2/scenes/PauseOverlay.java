@@ -36,17 +36,16 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private static final int[] SELECTOR_Y = {342, 402};
     private static final int SEL_RESUME_GAME = 0;
-    private static final String[] SCENE_DEST = {"TitleScene"};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
 
     private boolean enabled;
 
-    private Font font30;
-    private Font font80;
+    private final Font font30;
+    private final Font font80;
 
-    public void provideFont(Font font) {
+    public PauseOverlay(Font font) {
         this.font30 = font.deriveFont(30f);
         this.font80 = font.deriveFont(80f);
     }
@@ -92,7 +91,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             enabled = false;
 
             if (selector != SEL_RESUME_GAME) {
-                SceneManager.switchToScene(SCENE_DEST[selector - 1]);
+                SceneManager.swapScene(new TitleScene());
             }
             return;
         }

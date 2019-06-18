@@ -19,6 +19,7 @@
 package org.atoiks.games.nappou2;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.atoiks.games.nappou2.Vector2;
@@ -53,6 +54,11 @@ public final class Utils {
     private static final MultiTrackPattern STAR_SHOT_PATTERN =
             new MultiTrackPattern(DEFAULT_BULLET_INFO,
                     0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
+
+    public static final String[] DIFF_NAMES =
+            Arrays.stream(Difficulty.values())
+                    .map(Object::toString)
+                    .toArray(String[]::new);
 
     private Utils() {
     }

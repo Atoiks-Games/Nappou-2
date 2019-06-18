@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 public final class ChargerEnemy extends ManualEnemy {
 
-    private static final long serialVersionUID = -8772366718465280623L;
-
     private float speed;
     private float timer;
     private double angle = 0;

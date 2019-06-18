@@ -18,16 +18,31 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
-
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IDriftEntity;
+import org.atoiks.games.nappou2.Vector2;
 
-public interface IBullet extends IDriftEntity {
+import org.atoiks.games.nappou2.sizer.ISizer;
 
-    public void setColor(Color newColor);
-    public Color getColor();
+public final class DynamicBeam extends BeamLike {
 
-    public void render(IGraphics g);
+    private static final long serialVersionUID = 2213459507800809235L;
+
+    private final ISizer sizer;
+
+    public DynamicBeam(final Vector2 position, final float width, final ISizer lengthSizer, final Vector2 velocity) {
+        super(position, width, velocity);
+
+        this.sizer = lengthSizer;
+    }
+
+    public DynamicBeam(final float x, final float y, final float width, final ISizer lengthSizer, final float dx, final float dy) {
+        this(new Vector2(x, y), width, lengthSizer, new Vector2(dx, dy));
+    }
+
+    @Override
+    public final void update(final float dt) {
+        this.length = this.sizer.getNextSize(this.length, dt);
+        super.update(dt);
+    }
 }

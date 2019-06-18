@@ -27,7 +27,7 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class MB1Pattern implements IAttackPattern {
 
-    private static final double PI_DIV_6 = Math.PI / 6;
+    private static final float PI_DIV_6 = (float) Math.PI / 6;
     private static final int ROTATIONS = 7;
 
     private final int limiter;
@@ -44,23 +44,21 @@ public final class MB1Pattern implements IAttackPattern {
 
         final Game game = enemy.getAssocGame();
         final Vector2 pos = enemy.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
 
         if (time % limiter == 0) {
             for (int i = 0; i < ROTATIONS; ++i) {
-                final double k = i * PI_DIV_6;
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k))));
+                final float k = i * PI_DIV_6;
+                game.addEnemyBullet(new PointBullet(pos, 3, new Vector2((float) (100 * Math.cos(k)), (float) (1000 * Math.sin(k)))));
             }
         }
 
         if ((time + limiter / 2) % limiter == 0) {
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
+            final float angle = Vector2.angleBetween(pos, game.player.getPosition());
             for (int i = 0; i < ROTATIONS; ++i) {
                 final int offset = 3 - i;
                 final int s = (4 - Math.abs(offset)) * 100;
-                final double k = angle - offset * PI_DIV_6;
-                game.addEnemyBullet(new PointBullet(x, y, 3, (float) (s * Math.cos(k)), (float) (s * Math.sin(k))));
+                final float k = angle - offset * PI_DIV_6;
+                game.addEnemyBullet(new PointBullet(pos, 3, Vector2.fromPolar(s, k)));
             }
         }
     }

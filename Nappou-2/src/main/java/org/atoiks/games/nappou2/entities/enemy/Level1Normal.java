@@ -26,8 +26,6 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 public final class Level1Normal extends ManualEnemy {
 
-    private static final long serialVersionUID = -5506264432115383492L;
-
     private final Random rnd = new Random();
 
     private float time;

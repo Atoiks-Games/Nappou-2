@@ -22,8 +22,6 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class ShieldTesterEnemy extends ManualEnemy {
 
-    private static final long serialVersionUID = -7745780469134205929L;
-
     private float time;
 
     private final int invSign;

@@ -26,8 +26,6 @@ import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
 public final class TrackPointBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = -7627798838031610672L;
-
     public TrackPointBullet(float x, float y, float r, ITrackable entity, float pathScale, float moveTime, float delay) {
         super(r, new TrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
     }

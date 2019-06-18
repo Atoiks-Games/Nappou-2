@@ -39,10 +39,8 @@ public final class MultiTrackPattern implements IAttackPattern {
     public void onFireUpdate(IEnemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
         final Vector2 pos = enemy.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
+        final float base = Vector2.angleBetween(pos, game.player.getPosition());
 
-        final float base = (float) Math.atan2(game.player.getY() - y, game.player.getX() - x);
         for (final float angle : angles) {
             game.addEnemyBullet(factory.createBullet(pos, base + angle));
         }

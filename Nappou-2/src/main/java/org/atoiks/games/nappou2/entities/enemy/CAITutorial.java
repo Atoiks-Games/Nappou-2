@@ -24,8 +24,6 @@ import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class CAITutorial extends ManualEnemy {
 
-    private static final long serialVersionUID = 3746993782761759198L;
-
     private int bulletPattern;
 
     public CAITutorial(int hp, float x, float y, float r) {

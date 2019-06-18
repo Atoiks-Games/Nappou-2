@@ -24,8 +24,6 @@ import org.atoiks.games.nappou2.Vector2;
 
 public final class Ray extends BeamLike {
 
-    private static final long serialVersionUID = 610071490807998656L;
-
     private final float maxLength;
     private final float growthRate;
 
