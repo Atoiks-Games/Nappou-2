@@ -101,7 +101,6 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-        bgm.stop();
 
         ResourceManager.<SaveData>get("./saves.dat").setDif(getDiffFromOption());
 
