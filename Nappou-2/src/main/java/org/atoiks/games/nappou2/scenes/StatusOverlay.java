@@ -34,20 +34,13 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     public static final Color BACKGROUND_COLOR = new Color(106, 106, 106);
 
-    private Game game;
-    private Image hpImg;
+    private final Font font;
+    private final Game game;
+    private final Image hpImg;
 
-    private Font font;
-
-    public void provideFont(Font font) {
+    public StatusOverlay(Font font, Game game, Image hpImg) {
         this.font = font.deriveFont(16f);
-    }
-
-    public void attachGame(final Game game) {
         this.game = game;
-    }
-
-    public void attachHpImg(final Image hpImg) {
         this.hpImg = hpImg;
     }
 

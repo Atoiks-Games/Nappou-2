@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -39,17 +40,23 @@ public final class TitleScene extends CenteringScene {
         "Tutorial", "Story Mode", "Highscore", "Settings", "Credits", "Quit"
     };
     private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
-    private static final String[] sceneDest = {
-        "GameLevelScene", "DiffOptionScene", "ScoreScene", "ConfigScene", "CreditsScene"
-    };
     private static final int OPT_HEIGHT = 30;
 
-    private Clip bgm;
+    private final Clip bgm;
     private int selector;
 
-    private Font font16;
-    private Font font30;
-    private Font font80;
+    private final Font font16;
+    private final Font font30;
+    private final Font font80;
+
+    public TitleScene() {
+        this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font16 = fnt.deriveFont(16f);
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -77,19 +84,32 @@ public final class TitleScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            if (selector < sceneDest.length) {
-                if (selector == 0) {
-                    // GameLevelScene will fetch the level from level.state
-                    // selector 0 points to tutorial stage, so we put in the
-                    // entry state for the tutorial stage.
-                    SceneManager.resources().put("level.state",
-                            new org.atoiks.games.nappou2.levels.tutorial.Preface());
+            switch (selector) {
+                case 0: {
+                    final GameLevelScene next = new GameLevelScene();
+                    SceneManager.swapScene(next);
+                    next.setState(new org.atoiks.games.nappou2.levels.tutorial.Preface());
+                    break;
                 }
-                return SceneManager.switchToScene(sceneDest[selector]);
+                case 1:
+                    SceneManager.pushScene(new DiffOptionScene());
+                    break;
+                case 2:
+                    SceneManager.pushScene(new ScoreScene());
+                    break;
+                case 3:
+                    SceneManager.swapScene(new ConfigScene());
+                    break;
+                case 4:
+                    SceneManager.pushScene(new CreditsScene());
+                    break;
+                case 5:
+                    return false;
+                default:
+                    System.err.println("Unhandled selector jump: " + selector);
+                    return false;
             }
-
-            // Quit was chosen
-            return false;
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
             if (++selector >= selectorY.length) selector = 0;
@@ -101,33 +121,14 @@ public final class TitleScene extends CenteringScene {
     }
 
     @Override
-    public void init() {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
-    }
-
-    @Override
-    public void enter(final String prevSceneId) {
+    public void enter(final Scene from) {
+        // Enter only deals with scenes that play different songs!
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            // switch-case with strings crash when value is null
-            switch (prevSceneId != null ? prevSceneId : "") {
-                case "ScoreScene":
-                case "CreditsScene":
-                case "ConfigScene":
-                case "DiffOptionScene":
-                    // These scenes continue playing music.
-                    // No need to reset playback
-                    break;
-                default:
-                    bgm.setMicrosecondPosition(0);
-                    break;
+            if (!(from instanceof ConfigScene)) {
+                bgm.setMicrosecondPosition(0);
+                bgm.start();
+                bgm.loop(Clip.LOOP_CONTINUOUSLY);
             }
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 

@@ -23,16 +23,14 @@ import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
-import javax.sound.sampled.Clip;
-
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.Difficulty;
-import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -47,18 +45,17 @@ public final class ScoreScene extends CenteringScene {
     private int plane = 0;
     private boolean showName = true;
 
-    private Font font16;
-    private Font font30;
-
-    private Clip bgm;
+    private final Font font16;
+    private final Font font30;
 
     private int ticks = 0;
 
-    @Override
-    public void init() {
+    public ScoreScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
+
+        this.score = ResourceManager.get("./score.dat");
     }
 
     @Override
@@ -79,10 +76,10 @@ public final class ScoreScene extends CenteringScene {
         for (int i = 0; i < splane.length; ++i) {
             final int bh = 55 + 8 * size * i;
             g.drawString("Level " + (i + 1), 20, bh);
-            for (Difficulty diff : Difficulty.values()) {
-                final int bw = 60 + diff.ordinal() * 200;
-                final ScoreData.Pair[] p = splane[i][diff.ordinal()];
-                g.drawString(diff.toString(), bw, bh + size);
+            for (int diffId = 0; diffId < Utils.DIFF_NAMES.length; ++diffId) {
+                final int bw = 60 + diffId * 200;
+                final ScoreData.Pair[] p = splane[i][diffId];
+                g.drawString(Utils.DIFF_NAMES[diffId], bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
                     final ScoreData.Pair pair = p[offset];
@@ -108,7 +105,8 @@ public final class ScoreScene extends CenteringScene {
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.popScene();
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_C)) {
             score.clear(plane);
@@ -120,24 +118,5 @@ public final class ScoreScene extends CenteringScene {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
         }
         return true;
-    }
-
-    @Override
-    public void enter(String previousSceneId) {
-        score = ResourceManager.get("./score.dat");
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        ticks = 0;
-        showName = true;
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
     }
 }

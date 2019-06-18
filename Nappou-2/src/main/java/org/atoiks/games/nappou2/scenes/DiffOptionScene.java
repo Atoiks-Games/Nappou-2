@@ -23,15 +23,13 @@ import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
-import javax.sound.sampled.Clip;
-
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.Difficulty;
-import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 
@@ -39,15 +37,19 @@ import org.atoiks.games.nappou2.levels.level1.*;
 
 public final class DiffOptionScene extends CenteringScene {
 
-    private static final Difficulty[] DIFFS = Difficulty.values();
     private static final int[] diffSelY = {274, 334, 393, 491};
     private static final int OPT_HEIGHT = 37;
 
-    private Clip bgm;
     private int diffSel;
 
-    private Font font30;
-    private Font font80;
+    private final Font font30;
+    private final Font font80;
+
+    public DiffOptionScene() {
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font30 = fnt.deriveFont(30f);
+        this.font80 = fnt.deriveFont(80f);
+    }
 
     @Override
     public void render(IGraphics g) {
@@ -59,8 +61,8 @@ public final class DiffOptionScene extends CenteringScene {
         g.setFont(this.font80);
         g.drawString("Choose Your Difficulty", 80, 120);
         g.setFont(this.font30);
-        for (int i = 0; i < DIFFS.length; ++i) {
-            g.drawString(DIFFS[i].toString(), 98, diffSelY[i] + this.font30.getSize());
+        for (int i = 0; i < Utils.DIFF_NAMES.length; ++i) {
+            g.drawString(Utils.DIFF_NAMES[i], 98, diffSelY[i] + this.font30.getSize());
         }
         g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
@@ -68,10 +70,13 @@ public final class DiffOptionScene extends CenteringScene {
     @Override
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            return SceneManager.switchToScene("TitleScene");
+            SceneManager.popScene();
+            return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return SceneManager.switchToScene("ShieldOptionScene");
+            SceneManager.pushScene(new ShieldOptionScene(
+                    getLevelFromDifficulty(getDiffFromOption())));
+            return true;
         }
 
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -84,53 +89,26 @@ public final class DiffOptionScene extends CenteringScene {
         return true;
     }
 
-    @Override
-    public void init() {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
-    }
-
-    @Override
-    public void enter(String previousSceneId) {
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
-
-        final ILevelState state;
-        final Difficulty diff = getDiffFromOption();
-        switch (diff) {
-            case EASY:
-                state = new Easy();
-                break;
-            case NORMAL:
-                state = new Normal();
-                break;
-            case HARD:
-                state = new Hard();
-                break;
-            case INSANE:
-                state = new Insane();
-                break;
-            default:
-                throw new AssertionError("Unhandled difficulty: " + diff);
-        }
-        SceneManager.resources().put("level.state", state);
-    }
-
     private Difficulty getDiffFromOption() {
         try {
             return Difficulty.values()[diffSel];
         } catch (IndexOutOfBoundsException ex) {
             return Difficulty.NORMAL;
+        }
+    }
+
+    private static ILevelState getLevelFromDifficulty(final Difficulty diff) {
+        switch (diff) {
+            case EASY:
+                return new Easy();
+            case NORMAL:
+                return new Normal();
+            case HARD:
+                return new Hard();
+            case INSANE:
+                return new Insane();
+            default:
+                throw new AssertionError("Unhandled difficulty: " + diff);
         }
     }
 }

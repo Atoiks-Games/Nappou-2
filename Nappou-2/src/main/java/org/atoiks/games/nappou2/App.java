@@ -28,7 +28,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.java2d.Frame;
 
-import org.atoiks.games.nappou2.scenes.*;
+import org.atoiks.games.nappou2.scenes.LoadingScene;
 
 public class App {
 
@@ -39,14 +39,9 @@ public class App {
                 .setSize(900, 600)
                 .setFps(120.0f);
 
-        SceneManager.loadScenes(new LoadingScene(),
-                new SaveHighscoreScene(), new TitleScene(), new GameLevelScene(),
-                new ScoreScene(), new CreditsScene(), new ConfigScene(),
-                new DiffOptionScene(), new ShieldOptionScene());
-
         try (final Frame frame = new Frame(info)) {
-            SceneManager.switchToScene("LoadingScene");
             frame.init();
+            SceneManager.pushScene(new LoadingScene());
             frame.loop();
         }
 

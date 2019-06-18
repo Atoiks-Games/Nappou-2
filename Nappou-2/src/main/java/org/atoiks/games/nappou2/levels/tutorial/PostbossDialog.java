@@ -31,6 +31,8 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
+import org.atoiks.games.nappou2.scenes.TitleScene;
+
 import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
@@ -49,7 +51,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
         @Override
         public void updateLevel(final ILevelContext ctx, final float dt) {
-            SceneManager.switchToScene("TitleScene");
+            SceneManager.swapScene(new TitleScene());
         }
     }
 
