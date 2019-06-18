@@ -23,8 +23,6 @@ import org.atoiks.games.nappou2.entities.bullet.FallingBullet;
 
 public final class StreamBeam extends ManualEnemy {
 
-    private static final long serialVersionUID = -5994031295806183501L;
-
     private int time;
 
     private final int invSign;

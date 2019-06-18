@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 public final class FishPart extends ManualEnemy {
 
-    private static final long serialVersionUID = 1332048478609566116L;
-
     private float direction;
     private float speed;
     private int score;
