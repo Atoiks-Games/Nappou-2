@@ -36,6 +36,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
 import org.atoiks.games.nappou2.levels.level1.*;
+import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 public final class DiffOptionScene extends CenteringScene {
 
@@ -76,8 +77,7 @@ public final class DiffOptionScene extends CenteringScene {
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            SceneManager.pushScene(new ShieldOptionScene(
-                    getLevelFromDifficulty(getDiffFromOption())));
+            SceneManager.pushScene(new ShieldOptionScene(new Preface()));
             return true;
         }
 
@@ -106,20 +106,5 @@ public final class DiffOptionScene extends CenteringScene {
 
         SceneManager.resources().put("level.state",
                 new org.atoiks.games.nappou2.levels.tutorial.Preface());
-    }
-
-    private static ILevelState getLevelFromDifficulty(final Difficulty diff) {
-        switch (diff) {
-            case EASY:
-                return new Easy();
-            case NORMAL:
-                return new Normal();
-            case HARD:
-                return new Hard();
-            case INSANE:
-                return new Insane();
-            default:
-                throw new AssertionError("Unhandled difficulty: " + diff);
-        }
     }
 }
