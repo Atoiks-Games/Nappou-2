@@ -24,8 +24,6 @@ import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
 public final class TrackPolygonBullet extends PathwayPolygonBullet {
 
-    private static final long serialVersionUID = 7756339175776671307L;
-
     public TrackPolygonBullet(float[] coords, ITrackable entity, float pathScale, float moveTime, float delay) {
         // Assumes coords is already placed at initial position.
         // In that case, pathway only needs to start from the origin

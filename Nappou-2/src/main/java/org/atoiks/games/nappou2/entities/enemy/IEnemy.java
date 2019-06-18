@@ -18,14 +18,12 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import java.io.Serializable;
-
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-public interface IEnemy extends IDriftEntity, Serializable {
+public interface IEnemy extends IDriftEntity {
 
     public boolean isDead();
     public int changeHp(int delta);

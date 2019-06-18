@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities;
 
-import java.io.Serializable;
-
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
@@ -28,9 +26,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 
-public final class Player implements ITrackable, Serializable {
-
-    private static final long serialVersionUID = 293042L;
+public final class Player implements ITrackable {
 
     private static final float RESPAWN_SHIELD_TIME = 3f;
     private static final float RESPAWN_SHIELD_OFF = -1f;

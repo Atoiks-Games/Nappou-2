@@ -18,15 +18,13 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.io.Serializable;
-
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-public interface IBullet extends IDriftEntity, Serializable {
+public interface IBullet extends IDriftEntity {
 
     public void setColor(Color newColor);
     public Color getColor();

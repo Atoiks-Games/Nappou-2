@@ -30,8 +30,6 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public final class PointBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = 8359587156439267829L;
-
     public PointBullet(final Vector2 position, float r, final Vector2 velocity) {
         super(r, new FixedVelocity(position, velocity));
     }

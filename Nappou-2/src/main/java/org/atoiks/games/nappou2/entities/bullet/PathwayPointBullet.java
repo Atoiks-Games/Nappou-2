@@ -33,8 +33,6 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PathwayPointBullet extends PathwayBullet {
 
-    private static final long serialVersionUID = -3970324591546167543L;
-
     private static final int SCREEN_EDGE_BUFFER = 16;
 
     private final ISizer sizer;

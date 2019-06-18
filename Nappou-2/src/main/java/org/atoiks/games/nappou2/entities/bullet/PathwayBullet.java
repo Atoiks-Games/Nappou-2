@@ -30,8 +30,6 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public abstract class PathwayBullet implements IBullet {
 
-    private static final long serialVersionUID = -3679348230577349581L;
-
     private final IPathway pathway;
 
     protected Vector2 drift = Vector2.ZERO;

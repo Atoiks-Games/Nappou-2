@@ -31,8 +31,6 @@ import org.atoiks.games.nappou2.pathway.FixedPosition;
 
 public final class PathwayEnemy extends AbstractEnemy {
 
-    private static final long serialVersionUID = 4632259879769823818L;
-
     private IPathway path;
     private IAttackPattern attack;
     private ISizer sizer;
