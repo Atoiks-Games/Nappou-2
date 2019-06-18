@@ -74,7 +74,9 @@ public final class Preface implements ILevelState {
         game.player.setHp(5);
         game.setScore(0);
 
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+        // checkpoint test exist just to prevent audio stuttering!
+        final int checkpoint = saveData.getCheck();
+        if (checkpoint < 1 && ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");
             bgm.setMicrosecondPosition(0);
             bgm.start();
