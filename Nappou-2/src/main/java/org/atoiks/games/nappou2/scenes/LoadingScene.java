@@ -66,7 +66,7 @@ public final class LoadingScene implements Scene {
     public void enter(Scene from) {
         font = ResourceManager.load("/Logisoso.ttf", src -> {
             try {
-                return Font.createFont(Font.PLAIN, src);
+                return Font.createFont(Font.TRUETYPE_FONT, src);
             } catch (IOException | FontFormatException ex) {
                 throw new DecodeException(ex);
             }
