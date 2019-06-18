@@ -25,8 +25,6 @@ import org.atoiks.games.nappou2.pathway.WigglePathway;
 
 public final class StutterBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = -278750928506833356L;
-
     public StutterBullet(float x, float y, float r, float speed, float direction, float amplitude, float wspd) {
         super(r, new WigglePathway(
                 new Vector2(x, y),

@@ -24,8 +24,6 @@ import org.atoiks.games.nappou2.pathway.FixedAcceleration;
 
 public final class FallingBullet extends PathwayPointBullet {
 
-    private static final long serialVersionUID = 5844654826027301562L;
-
     public FallingBullet(Vector2 pos, float r, Vector2 vel, Vector2 acc) {
         super(r, new FixedAcceleration(pos, vel, acc));
     }

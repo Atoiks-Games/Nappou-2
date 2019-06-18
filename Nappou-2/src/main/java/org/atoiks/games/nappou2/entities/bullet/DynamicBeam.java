@@ -26,8 +26,6 @@ import org.atoiks.games.nappou2.sizer.ISizer;
 
 public final class DynamicBeam extends BeamLike {
 
-    private static final long serialVersionUID = 2213459507800809235L;
-
     private final ISizer sizer;
 
     public DynamicBeam(final Vector2 position, final float width, final ISizer lengthSizer, final Vector2 velocity) {
