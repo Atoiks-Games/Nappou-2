@@ -101,10 +101,6 @@ public final class DiffOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-
         ResourceManager.<SaveData>get("./saves.dat").setDif(getDiffFromOption());
-
-        SceneManager.resources().put("level.state",
-                new org.atoiks.games.nappou2.levels.tutorial.Preface());
     }
 }
