@@ -51,8 +51,6 @@ import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
 import org.atoiks.games.nappou2.TrigConstants;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
-
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
