@@ -239,7 +239,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private void processPlayerShield(final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_X)) {
-            game.player.shield.activate();
+            game.player.getShield().activate();
         }
     }
 }

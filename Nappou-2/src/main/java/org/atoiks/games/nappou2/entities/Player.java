@@ -35,7 +35,7 @@ public final class Player implements ITrackable {
     public static final int COLLISION_RADIUS = 2;
     public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
 
-    public final IShield shield;
+    private IShield shield;
 
     private Vector2 position;
     private Vector2 velocity;
@@ -80,6 +80,14 @@ public final class Player implements ITrackable {
         if (respawnShieldTime >= 0) {
             if ((respawnShieldTime += dt) >= RESPAWN_SHIELD_TIME) respawnShieldTime = RESPAWN_SHIELD_OFF;
         }
+    }
+
+    public void applyFreshShield() {
+        this.shield = this.shield.copy();
+    }
+
+    public IShield getShield() {
+        return this.shield;
     }
 
     public void deactivateRespawnShield() {
