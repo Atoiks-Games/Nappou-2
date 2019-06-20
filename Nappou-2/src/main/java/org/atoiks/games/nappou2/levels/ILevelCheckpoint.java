@@ -18,17 +18,16 @@
 
 package org.atoiks.games.nappou2.levels;
 
+import java.io.Serializable;
+
 import org.atoiks.games.framework2d.IGraphics;
 
-public final class NullState implements ILevelCheckpoint {
+public interface ILevelCheckpoint extends ILevelState, Serializable {
 
-    public static final NullState INSTANCE = new NullState();
-
-    private NullState() {
-    }
-
-    @Override
-    public void updateLevel(ILevelContext ctx, float dt) {
-        // Do nothing
+    /**
+     * Only called when starting game with "Continue".
+     * If called, it will happen before the enter method.
+     */
+    public default void restore(ILevelContext ctx) {
     }
 }
