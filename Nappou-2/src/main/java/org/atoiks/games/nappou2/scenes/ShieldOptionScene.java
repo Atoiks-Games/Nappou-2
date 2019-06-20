@@ -29,10 +29,12 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SaveData;
+import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
+
+import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -48,14 +50,10 @@ public final class ShieldOptionScene extends CenteringScene {
 
     private boolean skipSelection;
 
-    private final ILevelState levelState;
-
     private final Font font30;
     private final Font font80;
 
-    public ShieldOptionScene(final ILevelState levelState) {
-        this.levelState = levelState;
-
+    public ShieldOptionScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font30 = fnt.deriveFont(30f);
         this.font80 = fnt.deriveFont(80f);
@@ -103,9 +101,11 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
+        final ILevelCheckpoint checkpoint = new Preface();
         final GameLevelScene next = new GameLevelScene();
         SceneManager.unwindToScene(next);
-        next.setState(levelState);
+        checkpoint.restore(next);
+        next.setState(checkpoint);
         return true;
     }
 
@@ -125,8 +125,6 @@ public final class ShieldOptionScene extends CenteringScene {
 
         final SaveData sData = ResourceManager.get("./saves.dat");
         sData.setShield(getShieldFromOption());
-        //If you are selecting your sheild, you are likely starting a new game.
-        sData.setCheck(0);
     }
 
     private IShield getShieldFromOption() {

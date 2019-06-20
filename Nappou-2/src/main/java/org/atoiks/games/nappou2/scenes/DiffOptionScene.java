@@ -33,8 +33,6 @@ import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-
 import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
@@ -77,7 +75,7 @@ public final class DiffOptionScene extends CenteringScene {
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            SceneManager.pushScene(new ShieldOptionScene(new Preface()));
+            SceneManager.pushScene(new ShieldOptionScene());
             return true;
         }
 
