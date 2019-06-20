@@ -43,8 +43,6 @@ import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
-
 public final class GameLevelScene extends CenteringScene implements ILevelContext {
 
     public static final int WIDTH = 900;
@@ -69,10 +67,10 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private ILevelState state = NullState.INSTANCE;
 
-    public GameLevelScene(IShield shield) {
+    public GameLevelScene(final Game game) {
         shouldSkipPlayerUpdate(false);
 
-        this.game = new Game(shield);
+        this.game = game;
         this.game.clipGameBorder(GAME_BORDER, HEIGHT);
 
         final Image hpImg = ResourceManager.get("/image/hp.png");

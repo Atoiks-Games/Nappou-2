@@ -33,6 +33,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
+import org.atoiks.games.nappou2.entities.Game;
+
 public final class TitleScene extends CenteringScene {
 
     // Conventionally, last scene is always Quit,
@@ -88,7 +90,7 @@ public final class TitleScene extends CenteringScene {
             switch (selector) {
                 case 0: {
                     final SaveData save = ResourceManager.get("./saves.dat");
-                    final GameLevelScene next = new GameLevelScene(save.getShieldCopy());
+                    final GameLevelScene next = new GameLevelScene(new Game(save.getShieldCopy()));
                     SceneManager.swapScene(next);
                     next.setState(new org.atoiks.games.nappou2.levels.tutorial.Preface());
                     break;

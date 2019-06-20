@@ -29,10 +29,12 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.SaveData;
+import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
+
+import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
@@ -103,7 +105,7 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final GameLevelScene next = new GameLevelScene(getShieldFromOption());
+        final GameLevelScene next = new GameLevelScene(new Game(getShieldFromOption()));
         SceneManager.unwindToScene(next);
         next.setState(levelState);
         return true;
