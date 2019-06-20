@@ -33,7 +33,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
+import org.atoiks.games.nappou2.levels.ILevelState;
 
 public final class TitleScene extends CenteringScene {
 
@@ -89,7 +89,7 @@ public final class TitleScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             switch (selector) {
                 case 0: {
-                    final ILevelCheckpoint checkpoint = ResourceManager.<SaveData>get("./saves.dat").getCheckpoint();
+                    final ILevelState checkpoint = ResourceManager.<SaveData>get("./saves.dat").getCheckpoint();
                     final GameLevelScene next = new GameLevelScene();
                     SceneManager.swapScene(next);
                     checkpoint.restore(next);

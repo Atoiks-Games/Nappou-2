@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.levels;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-public final class NullState implements ILevelCheckpoint {
+public final class NullState implements ILevelState {
 
     private static final long serialVersionUID = 2023699955695331416L;
 

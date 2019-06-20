@@ -18,9 +18,18 @@
 
 package org.atoiks.games.nappou2.levels;
 
+import java.io.Serializable;
+
 import org.atoiks.games.framework2d.IGraphics;
 
-public interface ILevelState {
+public interface ILevelState extends Serializable {
+
+    /**
+     * Only called when starting game with "Continue".
+     * If called, it will happen before the enter method.
+     */
+    public default void restore(ILevelContext ctx) {
+    }
 
     // Maybe pass in the previous state?
     public default void enter(ILevelContext ctx) {
