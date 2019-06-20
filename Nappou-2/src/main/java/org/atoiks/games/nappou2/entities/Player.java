@@ -25,15 +25,15 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
 
 public final class Player implements ITrackable {
-
-    private static final float RESPAWN_SHIELD_TIME = 3f;
-    private static final float RESPAWN_SHIELD_OFF = -1f;
 
     public static final int RADIUS = 8;
     public static final int COLLISION_RADIUS = 2;
     public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+
+    private final TrackingTimeShield respawnShield;
 
     private IShield shield;
 
@@ -41,7 +41,6 @@ public final class Player implements ITrackable {
     private Vector2 velocity;
     private float speedScale = 1;
     private int hp = 5;
-    private float respawnShieldTime = RESPAWN_SHIELD_OFF;
 
     private boolean ignoreHpChange;
 
@@ -52,16 +51,12 @@ public final class Player implements ITrackable {
     public Player(Vector2 position, IShield shield) {
         this.position = position;
         this.shield = shield;
+        this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
+        this.respawnShield.setColor(Color.red);
     }
 
     public void render(final IGraphics g) {
-        this.shield.render(g);
-        if (isRespawnShieldActive()) {
-            g.setColor(Color.red);
-        } else {
-            g.setColor(Color.cyan);
-        }
-
+        g.setColor(Color.cyan);
         final float x = position.getX();
         final float y = position.getY();
         g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
@@ -69,6 +64,9 @@ public final class Player implements ITrackable {
             g.setColor(Color.yellow);
             g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
+
+        this.shield.render(g);
+        this.respawnShield.render(g);
     }
 
     public void update(final float dt) {
@@ -76,10 +74,8 @@ public final class Player implements ITrackable {
 
         this.shield.update(dt);
         this.shield.setPosition(position);
-
-        if (respawnShieldTime >= 0) {
-            if ((respawnShieldTime += dt) >= RESPAWN_SHIELD_TIME) respawnShieldTime = RESPAWN_SHIELD_OFF;
-        }
+        this.respawnShield.update(dt);
+        this.respawnShield.setPosition(position);
     }
 
     public void applyFreshShield() {
@@ -90,16 +86,12 @@ public final class Player implements ITrackable {
         return this.shield;
     }
 
-    public void deactivateRespawnShield() {
-        respawnShieldTime = RESPAWN_SHIELD_OFF;
-    }
-
     public void activateRespawnShield() {
-        respawnShieldTime = 0;
+        this.respawnShield.activate();
     }
 
     public boolean isRespawnShieldActive() {
-        return respawnShieldTime >= 0;
+        return this.respawnShield.isActive();
     }
 
     public int getHp() {
