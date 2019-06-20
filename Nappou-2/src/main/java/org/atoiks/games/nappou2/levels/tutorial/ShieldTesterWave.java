@@ -42,11 +42,17 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private static final long serialVersionUID = -7513143424543353726L;
 
+    private final ILevelState nextState;
+
     private transient Image img;
     private transient int imgY;
     private transient int imgX;
 
     private transient boolean firstRun;
+
+    public ShieldTesterWave(ILevelState nextState) {
+        this.nextState = nextState;
+    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -72,7 +78,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
                 game.addEnemy(new ShieldTesterEnemy(200, 0, -10, 8, false));
                 game.addEnemy(new ShieldTesterEnemy(200, GAME_BORDER, -10, 8, false));
             } else {
-                ctx.setState(new PrebossDialog());
+                ctx.setState(new PrebossDialog(this.nextState));
                 return;
             }
         }

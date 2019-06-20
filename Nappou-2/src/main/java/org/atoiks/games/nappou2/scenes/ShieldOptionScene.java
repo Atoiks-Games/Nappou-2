@@ -46,6 +46,8 @@ public final class ShieldOptionScene extends CenteringScene {
     private static final int[] shieldSelY = {356, 414, 498};
     private static final int OPT_HEIGHT = 37;
 
+    private final ILevelState nextState;
+
     private int shieldSel;
 
     private boolean skipSelection;
@@ -53,7 +55,9 @@ public final class ShieldOptionScene extends CenteringScene {
     private final Font font30;
     private final Font font80;
 
-    public ShieldOptionScene() {
+    public ShieldOptionScene(ILevelState nextState) {
+        this.nextState = nextState;
+
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font30 = fnt.deriveFont(30f);
         this.font80 = fnt.deriveFont(80f);
@@ -101,7 +105,7 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final ILevelState checkpoint = new Preface();
+        final ILevelState checkpoint = new Preface(this.nextState);
         final GameLevelScene next = new GameLevelScene();
         SceneManager.unwindToScene(next);
         checkpoint.restore(next);

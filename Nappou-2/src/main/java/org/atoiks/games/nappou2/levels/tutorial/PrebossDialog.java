@@ -59,8 +59,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private transient int line;
 
-    public PrebossDialog() {
-        super(new BossWave());
+    public PrebossDialog(ILevelState next) {
+        super(new BossWave(next));
     }
 
     @Override

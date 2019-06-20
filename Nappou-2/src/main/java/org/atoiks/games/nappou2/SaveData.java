@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2;
 
 import java.io.Serializable;
 
-import org.atoiks.games.nappou2.Difficulty;
-
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
@@ -32,17 +30,11 @@ public final class SaveData implements Serializable {
     private static final long serialVersionUID = -6315543815579288169L;
 
     private ILevelState checkpoint = NullState.INSTANCE;
-    private Difficulty dif = Difficulty.NORMAL;
     private IShield shield = new NullShield();
 
     public void setCheckpoint(final ILevelState p) {
         this.checkpoint = p != null ? p : NullState.INSTANCE;
     }
-
-    public void setDif(Difficulty d) {
-        this.dif = d;
-    }
-
 
     public void setShield(final IShield s) {
         this.shield = s != null ? s : new NullShield();
@@ -50,10 +42,6 @@ public final class SaveData implements Serializable {
 
     public ILevelState getCheckpoint() {
         return this.checkpoint;
-    }
-
-    public Difficulty getDif() {
-        return this.dif;
     }
 
     public IShield getShieldCopy() {

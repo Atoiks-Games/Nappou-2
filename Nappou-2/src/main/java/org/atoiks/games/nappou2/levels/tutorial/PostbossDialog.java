@@ -70,8 +70,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private transient boolean firstRun;
 
-    public PostbossDialog() {
-        super(new EndOfTutorialState());
+    public PostbossDialog(ILevelState nextState) {
+        super(new EndOfTutorialState(nextState));
     }
 
     @Override

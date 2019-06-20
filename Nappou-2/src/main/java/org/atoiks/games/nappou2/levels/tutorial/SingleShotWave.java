@@ -40,9 +40,15 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private static final long serialVersionUID = -8155795240502715804L;
 
+    private final ILevelState nextState;
+
     private transient Image img;
     private transient int imgY;
     private transient int imgX;
+
+    public SingleShotWave(ILevelState nextState) {
+        this.nextState = nextState;
+    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -65,7 +71,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
                 game.addEnemy(singleShotEnemy(1, 250, -10, 8, false));
                 game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
             } else {
-                ctx.setState(new ShieldTesterWave());
+                ctx.setState(new ShieldTesterWave(nextState));
                 return;
             }
         }

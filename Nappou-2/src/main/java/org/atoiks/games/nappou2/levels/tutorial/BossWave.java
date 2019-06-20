@@ -37,7 +37,13 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private static final long serialVersionUID = 8472650695750567277L;
 
+    private final ILevelState nextState;
+
     private transient boolean firstRun;
+
+    public BossWave(ILevelState nextState) {
+        this.nextState = nextState;
+    }
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -62,7 +68,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
                 firstRun = false;
                 game.addEnemy(new CAITutorial(50, 375, -10, 20));
             } else {
-                ctx.setState(new PostbossDialog());
+                ctx.setState(new PostbossDialog(this.nextState));
                 return;
             }
         }

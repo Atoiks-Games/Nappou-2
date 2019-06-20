@@ -33,6 +33,12 @@ import org.atoiks.games.nappou2.levels.level1.*;
 
     private static final long serialVersionUID = 3572095005318491718L;
 
+    private final ILevelState nextState;
+
+    public EndOfTutorialState(ILevelState nextState) {
+        this.nextState = nextState;
+    }
+
     @Override
     public void enter(final ILevelContext ctx) {
         // Reset context so game can actually be played
@@ -45,26 +51,7 @@ import org.atoiks.games.nappou2.levels.level1.*;
 
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
-        final Difficulty diff = ResourceManager.<SaveData>get("./saves.dat").getDif();
-        final ILevelState state;
-        switch (diff) {
-            case EASY:
-                state = new Easy();
-                break;
-            case NORMAL:
-                state = new Normal();
-                break;
-            case HARD:
-                state = new Hard();
-                break;
-            case INSANE:
-                state = new Insane();
-                break;
-            default:
-                throw new AssertionError("Unhandled difficulty: " + diff);
-        }
-
-        ctx.setState(state);
+        ctx.setState(this.nextState);
         return;
     }
 }

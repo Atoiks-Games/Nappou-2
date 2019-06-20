@@ -56,10 +56,14 @@ public final class Preface implements ILevelState {
         { "Enter", "= Select" }
     };
 
-    private transient SaveData saveData;
+    private final ILevelState nextState;
 
     private transient Font font16;
     private transient Font font30;
+
+    public Preface(ILevelState nextState) {
+        this.nextState = nextState;
+    }
 
     @Override
     public void restore(final ILevelContext ctx) {
@@ -78,8 +82,8 @@ public final class Preface implements ILevelState {
 
         ctx.clearMessage();
 
-        this.saveData = ResourceManager.get("./saves.dat");
-        this.saveData.setCheckpoint(this);
+        final SaveData saveData = ResourceManager.get("./saves.dat");
+        saveData.setCheckpoint(this);
 
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");
@@ -108,7 +112,7 @@ public final class Preface implements ILevelState {
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            ctx.setState(new SingleShotWave());
+            ctx.setState(new SingleShotWave(this.nextState));
             return;
         }
     }
