@@ -22,6 +22,8 @@ import org.atoiks.games.framework2d.IGraphics;
 
 public final class NullState implements ILevelCheckpoint {
 
+    private static final long serialVersionUID = 2023699955695331416L;
+
     public static final NullState INSTANCE = new NullState();
 
     private NullState() {

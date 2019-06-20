@@ -30,9 +30,9 @@ import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
@@ -55,7 +55,7 @@ import static org.atoiks.games.nappou2.levels.level1.Data.*;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Insane implements ILevelState {
+public final class Insane implements ILevelCheckpoint {
 
     private int cycles;
     private int wave;
@@ -307,7 +307,7 @@ public final class Insane implements ILevelState {
     }
 }
 
-final class InsaneBossWave implements ILevelState {
+final class InsaneBossWave implements ILevelCheckpoint {
 
     private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.INSANE);
 

@@ -31,6 +31,7 @@ import org.atoiks.games.nappou2.SaveData;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.scenes.TitleScene;
@@ -40,7 +41,7 @@ import org.atoiks.games.nappou2.entities.Message;
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PostbossDialog extends AbstractDialogState {
+/* package */ final class PostbossDialog extends AbstractDialogState implements ILevelCheckpoint {
 
     // A dummy state created to allow postboss dialog to work with
     // AbstractDialogState
@@ -60,7 +61,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
-    private boolean firstRun;
+    private transient boolean firstRun;
 
     public PostbossDialog() {
         super(EndOfTutorialState.INSTANCE);
@@ -73,7 +74,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         this.firstRun = true;
 
         ResourceManager.<Clip>get("/music/Unlocked.wav").stop();
-        ResourceManager.<SaveData>get("./saves.dat").setCheck(2);
+        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
     }
 
     @Override

@@ -25,15 +25,15 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PrebossDialog extends AbstractDialogState {
+/* package */ final class PrebossDialog extends AbstractDialogState implements ILevelCheckpoint {
 
     private static final Message[] LINES = {
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
@@ -47,7 +47,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "There's always time for senseless violence!"),
     };
 
-    private int line;
+    private transient int line;
 
     public PrebossDialog() {
         super(new BossWave());
@@ -59,7 +59,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
         this.line = 0;
         ResourceManager.<Clip>get("/music/Awakening.wav").stop();
-        ResourceManager.<SaveData>get("./saves.dat").setCheck(1);
+        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
     }
 
     @Override

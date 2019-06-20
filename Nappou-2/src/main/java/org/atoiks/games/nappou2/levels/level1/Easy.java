@@ -32,9 +32,9 @@ import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import org.atoiks.games.nappou2.spawner.FishSpawner;
 
@@ -64,9 +64,7 @@ import static org.atoiks.games.nappou2.levels.level1.Data.*;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Easy implements ILevelState {
-
-    private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
+public final class Easy implements ILevelCheckpoint {
 
     private int cycles;
     private int wave;
@@ -95,10 +93,6 @@ public final class Easy implements ILevelState {
             bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        if (saveData.getCheck() == 3) {
-            this.wave = 5;
         }
     }
 
@@ -216,12 +210,57 @@ public final class Easy implements ILevelState {
                         break;
                 }
                 if (cycles > 2040 && game.noMoreEnemies()) {
-                    final SaveData sData = ResourceManager.get("./saves.dat");
-                    sData.setCheck(3);
-                    wave++;
-                    cycles = 0;
+                    ctx.setState(new EasyWave5(bgm.getMicrosecondPosition()));
+                    return;
                 }
                 break;
+        }
+    }
+}
+
+final class EasyWave5 implements ILevelCheckpoint {
+
+    private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
+
+    private long songOffset;
+
+    private transient int cycles;
+    private transient int wave;
+
+    private transient Clip bgm;
+
+    public EasyWave5(long pos) {
+        this.songOffset = pos;
+    }
+
+    @Override
+    public void enter(final ILevelContext ctx) {
+        this.cycles = 0;
+        this.wave = 5;
+
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
+        bgm = ResourceManager.get("/music/Level_One.wav");
+        if (cfg.bgm) {
+            bgm.setMicrosecondPosition(this.songOffset);
+            bgm.start();
+            bgm.setLoopPoints(LEVEL_LOOP, -1);
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+
+        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
+    }
+
+    @Override
+    public void exit() {
+        bgm.stop();
+    }
+
+    @Override
+    public void updateLevel(final ILevelContext ctx, final float dt) {
+        final Game game = ctx.getGame();
+
+        ++cycles;
+        switch (wave) {
             case 5:
                 switch (cycles) {
                     case 40:
@@ -350,7 +389,7 @@ public final class Easy implements ILevelState {
     }
 }
 
-final class EasyBossWave implements ILevelState {
+final class EasyBossWave implements ILevelCheckpoint {
 
     private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.EASY);
 

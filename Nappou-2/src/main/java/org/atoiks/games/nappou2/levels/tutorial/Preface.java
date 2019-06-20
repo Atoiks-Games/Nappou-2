@@ -37,13 +37,13 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.FixedTimeShield;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Preface implements ILevelState {
+public final class Preface implements ILevelCheckpoint {
 
     private static final String[][] INFO_MSG = {
         { "Arrow Keys", "= Move" },
@@ -54,10 +54,10 @@ public final class Preface implements ILevelState {
         { "Enter", "= Select" }
     };
 
-    private SaveData saveData;
+    private transient SaveData saveData;
 
-    private Font font16;
-    private Font font30;
+    private transient Font font16;
+    private transient Font font30;
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -68,15 +68,14 @@ public final class Preface implements ILevelState {
         ctx.clearMessage();
 
         this.saveData = ResourceManager.get("./saves.dat");
+        this.saveData.setCheckpoint(this);
 
         final Game game = ctx.getGame();
         game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, saveData.getShieldCopy());
         game.player.setHp(5);
         game.setScore(0);
 
-        // checkpoint test exist just to prevent audio stuttering!
-        final int checkpoint = saveData.getCheck();
-        if (checkpoint < 1 && ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");
             bgm.setMicrosecondPosition(0);
             bgm.start();
@@ -102,18 +101,6 @@ public final class Preface implements ILevelState {
 
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
-        final int checkpoint = saveData.getCheck();
-
-        if (checkpoint == 1) {
-            ctx.setState(new PrebossDialog());
-            return;
-        }
-
-        if (checkpoint > 1) {
-            ctx.setState(EndOfTutorialState.INSTANCE);
-            return;
-        }
-
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             ctx.setState(new SingleShotWave());
             return;
