@@ -31,6 +31,8 @@ import org.atoiks.games.nappou2.scenes.SaveHighscoreScene;
  */
 public final class SaveScoreState implements ILevelState {
 
+    private static final long serialVersionUID = -2383669267335286411L;
+
     private final int levelId;
     private final Difficulty diff;
 

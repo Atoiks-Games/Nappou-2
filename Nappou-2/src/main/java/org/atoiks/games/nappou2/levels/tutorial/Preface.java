@@ -37,13 +37,15 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.FixedTimeShield;
 
+import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Preface implements ILevelCheckpoint {
+public final class Preface implements ILevelState {
+
+    private static final long serialVersionUID = 4928495316273389216L;
 
     private static final String[][] INFO_MSG = {
         { "Arrow Keys", "= Move" },
@@ -60,6 +62,15 @@ public final class Preface implements ILevelCheckpoint {
     private transient Font font30;
 
     @Override
+    public void restore(final ILevelContext ctx) {
+        final Game game = ctx.getGame();
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5,
+                ResourceManager.<SaveData>get("./saves.dat").getShieldCopy());
+        game.player.setHp(5);
+        game.setScore(0);
+    }
+
+    @Override
     public void enter(final ILevelContext ctx) {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
@@ -69,11 +80,6 @@ public final class Preface implements ILevelCheckpoint {
 
         this.saveData = ResourceManager.get("./saves.dat");
         this.saveData.setCheckpoint(this);
-
-        final Game game = ctx.getGame();
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, saveData.getShieldCopy());
-        game.player.setHp(5);
-        game.setScore(0);
 
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");

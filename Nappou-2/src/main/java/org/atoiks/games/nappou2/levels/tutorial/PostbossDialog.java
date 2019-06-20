@@ -31,26 +31,30 @@ import org.atoiks.games.nappou2.SaveData;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.scenes.TitleScene;
 
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
+
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PostbossDialog extends AbstractDialogState implements ILevelCheckpoint {
+/* package */ final class PostbossDialog extends AbstractDialogState implements ILevelState {
+
+    private static final long serialVersionUID = 942221556144923194L;
 
     // A dummy state created to allow postboss dialog to work with
     // AbstractDialogState
     private static class ReturnToTitleSceneState implements ILevelState {
 
-        public static final ReturnToTitleSceneState INSTANCE = new ReturnToTitleSceneState();
+        private static final long serialVersionUID = 8131202334284865310L;
 
-        private ReturnToTitleSceneState() {
-        }
 
         @Override
         public void updateLevel(final ILevelContext ctx, final float dt) {
@@ -61,15 +65,31 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
+    private int restoreScore;
+    private int restoreHp;
+
     private transient boolean firstRun;
 
     public PostbossDialog() {
-        super(EndOfTutorialState.INSTANCE);
+        super(new EndOfTutorialState());
+    }
+
+    @Override
+    public void restore(final ILevelContext ctx) {
+        final Game game = ctx.getGame();
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5,
+                ResourceManager.<SaveData>get("./saves.dat").getShieldCopy());
+        game.player.setHp(restoreHp);
+        game.setScore(restoreScore);
     }
 
     @Override
     public void enter(final ILevelContext ctx) {
         super.enter(ctx);
+
+        final Game game = ctx.getGame();
+        this.restoreHp = game.player.getHp();
+        this.restoreScore = game.getScore();
 
         this.firstRun = true;
 

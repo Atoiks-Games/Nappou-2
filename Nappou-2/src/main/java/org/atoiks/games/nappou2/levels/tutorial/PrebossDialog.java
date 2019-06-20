@@ -25,15 +25,20 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
 
+import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
+
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PrebossDialog extends AbstractDialogState implements ILevelCheckpoint {
+/* package */ final class PrebossDialog extends AbstractDialogState {
 
     private static final Message[] LINES = {
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "Good morning! You're dead!"),
@@ -47,6 +52,11 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         new Message("CAI.png", HorizontalAlignment.RIGHT, "CAI", "There's always time for senseless violence!"),
     };
 
+    private static final long serialVersionUID = 7508014111511836801L;
+
+    private int restoreScore;
+    private int restoreHp;
+
     private transient int line;
 
     public PrebossDialog() {
@@ -54,8 +64,21 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     }
 
     @Override
+    public void restore(final ILevelContext ctx) {
+        final Game game = ctx.getGame();
+        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5,
+                ResourceManager.<SaveData>get("./saves.dat").getShieldCopy());
+        game.player.setHp(restoreHp);
+        game.setScore(restoreScore);
+    }
+
+    @Override
     public void enter(final ILevelContext ctx) {
         super.enter(ctx);
+
+        final Game game = ctx.getGame();
+        this.restoreHp = game.player.getHp();
+        this.restoreScore = game.getScore();
 
         this.line = 0;
         ResourceManager.<Clip>get("/music/Awakening.wav").stop();

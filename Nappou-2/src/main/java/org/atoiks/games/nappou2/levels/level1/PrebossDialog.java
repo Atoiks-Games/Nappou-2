@@ -34,6 +34,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PrebossDialog extends AbstractDialogState {
 
+    private static final long serialVersionUID = 3707552362848467673L;
+
     private static final Message[] LINES = {
         new Message("ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "Why are you here?"),
         new Message("LUMA.png", HorizontalAlignment.LEFT, "LUMA", "Oh you know, humans."),
@@ -47,7 +49,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private static final int BOSS_LOOP = 1222000;
 
-    private int line;
+    private transient int line;
 
     public PrebossDialog(ILevelState nextState) {
         super(nextState);

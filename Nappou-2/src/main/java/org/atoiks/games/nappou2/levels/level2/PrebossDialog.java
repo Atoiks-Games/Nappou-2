@@ -34,6 +34,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PrebossDialog extends AbstractDialogState {
 
+    private static final long serialVersionUID = 5132826077426353897L;
+
     private static final Message[] LINES = {
         new Message("Cryo", "*Player*?! What are you doing here?!?!"),
         new Message("Pyro", "Clearly the humans betrayed her like she betrayed us. Do you even remember us, traitor?"),
@@ -48,7 +50,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         new Message("Cryo", "DENIED!!!"),
     };
 
-    private int line;
+    private transient int line;
 
     public PrebossDialog(ILevelState nextState) {
         super(nextState);

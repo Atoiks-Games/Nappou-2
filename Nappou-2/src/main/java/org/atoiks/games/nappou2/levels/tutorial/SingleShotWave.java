@@ -38,9 +38,11 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class SingleShotWave implements ILevelState {
 
-    private Image img;
-    private int imgY;
-    private int imgX;
+    private static final long serialVersionUID = -8155795240502715804L;
+
+    private transient Image img;
+    private transient int imgY;
+    private transient int imgX;
 
     @Override
     public void enter(final ILevelContext ctx) {

@@ -31,10 +31,7 @@ import org.atoiks.games.nappou2.levels.level1.*;
 
 /* package */ class EndOfTutorialState implements ILevelState {
 
-    public static final EndOfTutorialState INSTANCE = new EndOfTutorialState();
-
-    private EndOfTutorialState() {
-    }
+    private static final long serialVersionUID = 3572095005318491718L;
 
     @Override
     public void enter(final ILevelContext ctx) {

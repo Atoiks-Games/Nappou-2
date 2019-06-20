@@ -34,9 +34,11 @@ import org.atoiks.games.nappou2.entities.Message;
 
 public abstract class AbstractDialogState implements ILevelState, Iterator<Message> {
 
+    private static final long serialVersionUID = 7680013812202865154L;
+
     private final ILevelState nextState;
 
-    private boolean fetchMessage;
+    private transient boolean fetchMessage;
 
     public AbstractDialogState(ILevelState nextState) {
         this.nextState = nextState;

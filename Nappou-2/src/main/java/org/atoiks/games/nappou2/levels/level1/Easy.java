@@ -35,7 +35,6 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import org.atoiks.games.nappou2.spawner.FishSpawner;
 
@@ -67,10 +66,12 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Easy implements ILevelState {
 
-    private int cycles;
-    private int wave;
+    private static final long serialVersionUID = 1033236077109661435L;
 
-    private Clip bgm;
+    private transient int cycles;
+    private transient int wave;
+
+    private transient Clip bgm;
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -219,7 +220,9 @@ public final class Easy implements ILevelState {
     }
 }
 
-final class EasyWave5 implements ILevelCheckpoint {
+final class EasyWave5 implements ILevelState {
+
+    private static final long serialVersionUID = 5308372197610362137L;
 
     private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
 
@@ -390,12 +393,14 @@ final class EasyWave5 implements ILevelCheckpoint {
     }
 }
 
-final class EasyBossWave implements ILevelCheckpoint {
+final class EasyBossWave implements ILevelState {
+
+    private static final long serialVersionUID = 1914901384100845861L;
 
     private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.EASY);
 
-    private int cycles;
-    private int phase;
+    private transient int cycles;
+    private transient int phase;
 
     @Override
     public void enter(final ILevelContext ctx) {

@@ -32,10 +32,12 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PostbossDialog extends AbstractDialogState {
 
+    private static final long serialVersionUID = 6378909470491402086L;
+
     private static final Message MESSAGE = new Message(
             "ELLE.png", HorizontalAlignment.RIGHT, "ELLE", "I just want to go home...");
 
-    private boolean firstRun;
+    private transient boolean firstRun;
 
     public PostbossDialog(ILevelState nextState) {
         super(nextState);

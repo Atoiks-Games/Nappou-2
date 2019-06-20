@@ -34,13 +34,15 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PostbossDialog extends AbstractDialogState {
 
+    private static final long serialVersionUID = 1935177017424875199L;
+
     private static final Message[] LINES = {
         new Message("Cryo", "IS THAT ALL YOU DO?!?! SHOOT AT ANYTHING THAT MOVES?!?!"),
         new Message("CAI", "Pretty much!"),
         new Message("Pyro", "Come brother, they are not worth our time."),
     };
 
-    private int line;
+    private transient int line;
 
     public PostbossDialog(ILevelState nextState) {
         super(nextState);

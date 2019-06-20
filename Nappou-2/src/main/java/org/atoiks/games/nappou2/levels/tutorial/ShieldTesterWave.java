@@ -40,11 +40,13 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class ShieldTesterWave implements ILevelState {
 
-    private Image img;
-    private int imgY;
-    private int imgX;
+    private static final long serialVersionUID = -7513143424543353726L;
 
-    private boolean firstRun;
+    private transient Image img;
+    private transient int imgY;
+    private transient int imgX;
+
+    private transient boolean firstRun;
 
     @Override
     public void enter(final ILevelContext ctx) {

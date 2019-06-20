@@ -30,9 +30,9 @@ import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
+import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
-import org.atoiks.games.nappou2.levels.ILevelCheckpoint;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
@@ -53,12 +53,14 @@ import static org.atoiks.games.nappou2.levels.level1.Data.*;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Normal implements ILevelCheckpoint {
+public final class Normal implements ILevelState {
 
-    private int cycles;
-    private int wave;
+    private static final long serialVersionUID = -8000599825518660858L;
 
-    private Clip bgm;
+    private transient int cycles;
+    private transient int wave;
+
+    private transient Clip bgm;
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -197,12 +199,14 @@ public final class Normal implements ILevelCheckpoint {
     }
 }
 
-final class NormalBossWave implements ILevelCheckpoint {
+final class NormalBossWave implements ILevelState {
+
+    private static final long serialVersionUID = -4505613621927595705L;
 
     private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.NORMAL);
 
-    private int cycles;
-    private int phase;
+    private transient int cycles;
+    private transient int phase;
 
     @Override
     public void enter(final ILevelContext ctx) {

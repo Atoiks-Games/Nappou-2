@@ -46,8 +46,10 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Easy implements ILevelState {
 
-    private int cycles;
-    private int wave;
+    private static final long serialVersionUID = 1935810609973937620L;
+
+    private transient int cycles;
+    private transient int wave;
 
     @Override
     public void enter(final ILevelContext ctx) {
@@ -249,9 +251,11 @@ public final class Easy implements ILevelState {
 
 final class EasyBossWave implements ILevelState {
 
+    private static final long serialVersionUID = -4257651682666683051L;
+
     private static final SaveScoreState EXIT_STATE = new SaveScoreState(1, Difficulty.EASY);
 
-    private int cycles;
+    private transient int cycles;
 
     @Override
     public void enter(final ILevelContext ctx) {

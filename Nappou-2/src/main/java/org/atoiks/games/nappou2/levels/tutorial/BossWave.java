@@ -35,7 +35,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 /* package */ final class BossWave implements ILevelState {
 
-    private boolean firstRun;
+    private static final long serialVersionUID = 8472650695750567277L;
+
+    private transient boolean firstRun;
 
     @Override
     public void enter(final ILevelContext ctx) {
