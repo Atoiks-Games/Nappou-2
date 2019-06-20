@@ -38,12 +38,16 @@ public final class Game {
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
     private final LinkedList<ISpawner> spawners = new LinkedList<>();
 
-    public Player player;
+    public final Player player;
 
     private int score;
 
     private int gameWidth = Integer.MAX_VALUE;
     private int gameHeight = Integer.MAX_VALUE;
+
+    public Game(IShield shield) {
+        this.player = new Player(shield);
+    }
 
     public void render(IGraphics g) {
         if (player != null) player.render(g);

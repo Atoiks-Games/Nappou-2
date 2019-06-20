@@ -39,8 +39,6 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.enemy.*;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
-
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
@@ -71,7 +69,7 @@ public final class Normal implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         final Game game = ctx.getGame();
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, (IShield) SceneManager.resources().get("shield"));
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 

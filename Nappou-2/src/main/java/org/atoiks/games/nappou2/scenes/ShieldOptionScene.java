@@ -103,7 +103,7 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final GameLevelScene next = new GameLevelScene();
+        final GameLevelScene next = new GameLevelScene(getShieldFromOption());
         SceneManager.unwindToScene(next);
         next.setState(levelState);
         return true;

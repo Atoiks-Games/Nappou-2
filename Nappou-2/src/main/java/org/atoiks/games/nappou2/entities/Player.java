@@ -44,15 +44,12 @@ public final class Player implements ITrackable {
 
     private boolean ignoreHpChange;
 
-    public Player(float x, float y, IShield shield) {
-        this(new Vector2(x, y), shield);
-    }
-
-    public Player(Vector2 position, IShield shield) {
-        this.position = position;
+    public Player(IShield shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
+        this.velocity = Vector2.ZERO;
+        this.setPosition(Vector2.ZERO);
     }
 
     public void render(final IGraphics g) {
@@ -70,12 +67,10 @@ public final class Player implements ITrackable {
     }
 
     public void update(final float dt) {
-        this.position = Vector2.muladd(this.speedScale * dt, this.velocity, this.position);
-
         this.shield.update(dt);
-        this.shield.setPosition(position);
         this.respawnShield.update(dt);
-        this.respawnShield.setPosition(position);
+
+        this.setPosition(Vector2.muladd(this.speedScale * dt, this.velocity, this.position));
     }
 
     public void applyFreshShield() {
@@ -136,5 +131,15 @@ public final class Player implements ITrackable {
 
     public float getY() {
         return this.position.getY();
+    }
+
+    public void setPosition(final float x, final float y) {
+        this.setPosition(new Vector2(x, y));
+    }
+
+    public void setPosition(final Vector2 pos) {
+        this.position = pos;
+        this.shield.setPosition(pos);
+        this.respawnShield.setPosition(pos);
     }
 }

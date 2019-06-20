@@ -43,6 +43,8 @@ import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
 
+import org.atoiks.games.nappou2.entities.shield.IShield;
+
 public final class GameLevelScene extends CenteringScene implements ILevelContext {
 
     public static final int WIDTH = 900;
@@ -55,8 +57,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
 
-    private final Game game = new Game();
     private final Drifter drift = new Drifter();
+    private final Game game;
 
     private final PauseOverlay pauseOverlay;
     private final StatusOverlay statusOverlay;
@@ -67,12 +69,13 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private ILevelState state = NullState.INSTANCE;
 
-    public GameLevelScene() {
+    public GameLevelScene(IShield shield) {
         shouldSkipPlayerUpdate(false);
 
-        final Image hpImg = ResourceManager.get("/image/hp.png");
-        game.clipGameBorder(GAME_BORDER, HEIGHT);
+        this.game = new Game(shield);
+        this.game.clipGameBorder(GAME_BORDER, HEIGHT);
 
+        final Image hpImg = ResourceManager.get("/image/hp.png");
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
 
         this.pauseOverlay = new PauseOverlay(fnt);
