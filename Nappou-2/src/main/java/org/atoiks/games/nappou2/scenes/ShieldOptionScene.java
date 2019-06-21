@@ -33,8 +33,6 @@ import org.atoiks.games.nappou2.SaveData;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 
-import org.atoiks.games.nappou2.levels.tutorial.Preface;
-
 import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.shield.*;
@@ -100,8 +98,7 @@ public final class ShieldOptionScene extends CenteringScene {
     private boolean startGame() {
         final IShield shield = getShieldFromOption();
         ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
-        GameLevelScene.unwindAndStartLevel(
-                new Game(shield.copy()), new Preface(this.nextState));
+        GameLevelScene.unwindAndStartLevel(new Game(shield.copy()), this.nextState);
         return true;
     }
 
