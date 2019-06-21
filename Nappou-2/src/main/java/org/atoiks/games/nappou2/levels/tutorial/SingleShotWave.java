@@ -20,8 +20,12 @@ package org.atoiks.games.nappou2.levels.tutorial;
 
 import java.awt.Image;
 
+import javax.sound.sampled.Clip;
+
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -56,6 +60,15 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         this.img = image;
         this.imgY = alignVertical(VerticalAlignment.CENTER, image);
         this.imgX = alignHorizontal(HorizontalAlignment.CENTER, image);
+
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+            ResourceManager.<Clip>get("/music/Awakening.wav").start();
+        }
+    }
+
+    @Override
+    public void exit() {
+        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
     }
 
     @Override

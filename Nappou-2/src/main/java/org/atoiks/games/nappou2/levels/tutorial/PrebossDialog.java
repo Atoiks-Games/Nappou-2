@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import javax.sound.sampled.Clip;
-
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
@@ -78,7 +76,6 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         this.restoreScore = game.getScore();
 
         this.line = 0;
-        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
         ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
     }
 
