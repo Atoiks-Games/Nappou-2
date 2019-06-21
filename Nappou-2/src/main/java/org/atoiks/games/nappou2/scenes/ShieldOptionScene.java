@@ -127,8 +127,6 @@ public final class ShieldOptionScene extends CenteringScene {
 
     @Override
     public void leave() {
-        SceneManager.resources().put("shield", getShieldFromOption());
-
         final SaveData sData = ResourceManager.get("./saves.dat");
         sData.setShield(getShieldFromOption());
     }

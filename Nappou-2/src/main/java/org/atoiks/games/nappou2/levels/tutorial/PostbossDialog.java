@@ -49,19 +49,6 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private static final long serialVersionUID = 942221556144923194L;
 
-    // A dummy state created to allow postboss dialog to work with
-    // AbstractDialogState
-    private static class ReturnToTitleSceneState implements ILevelState {
-
-        private static final long serialVersionUID = 8131202334284865310L;
-
-
-        @Override
-        public void updateLevel(final ILevelContext ctx, final float dt) {
-            SceneManager.swapScene(new TitleScene());
-        }
-    }
-
     private static final Message MESSAGE = new Message(
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 

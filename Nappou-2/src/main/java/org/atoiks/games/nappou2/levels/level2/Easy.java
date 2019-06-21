@@ -21,6 +21,7 @@ package org.atoiks.games.nappou2.levels.level2;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -58,6 +59,7 @@ public final class Easy implements ILevelState {
         this.wave = 0;
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
+        final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
