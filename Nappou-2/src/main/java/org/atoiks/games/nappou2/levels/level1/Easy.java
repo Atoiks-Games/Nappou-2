@@ -82,6 +82,7 @@ public final class Easy implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         final SaveData saveData = ResourceManager.get("./saves.dat");
 
+        final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
