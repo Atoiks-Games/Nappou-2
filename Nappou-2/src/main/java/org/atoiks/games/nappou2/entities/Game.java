@@ -29,6 +29,7 @@ import org.atoiks.games.nappou2.spawner.ISpawner;
 
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
+import org.atoiks.games.nappou2.entities.shield.IShield;
 
 public final class Game {
 
@@ -37,12 +38,16 @@ public final class Game {
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
     private final LinkedList<ISpawner> spawners = new LinkedList<>();
 
-    public Player player;
+    public final Player player;
 
     private int score;
 
     private int gameWidth = Integer.MAX_VALUE;
     private int gameHeight = Integer.MAX_VALUE;
+
+    public Game(IShield shield) {
+        this.player = new Player(shield);
+    }
 
     public void render(IGraphics g) {
         if (player != null) player.render(g);
@@ -138,13 +143,12 @@ public final class Game {
     public void performCollisionCheck() {
         final Vector2 pp = player.getPosition();
 
-        final boolean shieldActive = player.shield.isActive();
-        final Vector2 sp = player.shield.getPosition();
-        final float sr = player.shield.getR();
+        final IShield shield = player.getShield();
+        final boolean shieldActive = shield.isActive();
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
-            if (shieldActive && bullet.collidesWith(sp, sr)) {
+            if (shieldActive && bullet.collidesWith(shield.getPosition(), shield.getR())) {
                 it.remove();
             } else if (!player.isRespawnShieldActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 it.remove();

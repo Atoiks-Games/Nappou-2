@@ -71,7 +71,7 @@ public final class Normal implements ILevelState {
         final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, saveData.getShieldCopy());
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 

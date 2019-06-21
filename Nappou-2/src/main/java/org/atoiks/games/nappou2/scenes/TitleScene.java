@@ -30,7 +30,10 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
+
+import org.atoiks.games.nappou2.entities.Game;
 
 public final class TitleScene extends CenteringScene {
 
@@ -86,7 +89,8 @@ public final class TitleScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             switch (selector) {
                 case 0: {
-                    final GameLevelScene next = new GameLevelScene();
+                    final SaveData save = ResourceManager.get("./saves.dat");
+                    final GameLevelScene next = new GameLevelScene(new Game(save.getShieldCopy()));
                     SceneManager.swapScene(next);
                     next.setState(new org.atoiks.games.nappou2.levels.tutorial.Preface());
                     break;
