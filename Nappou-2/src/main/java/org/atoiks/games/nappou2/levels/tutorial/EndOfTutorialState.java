@@ -18,16 +18,8 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import org.atoiks.games.framework2d.SceneManager;
-import org.atoiks.games.framework2d.ResourceManager;
-
-import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.Difficulty;
-
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
-
-import org.atoiks.games.nappou2.levels.level1.*;
 
 /* package */ class EndOfTutorialState implements ILevelState {
 

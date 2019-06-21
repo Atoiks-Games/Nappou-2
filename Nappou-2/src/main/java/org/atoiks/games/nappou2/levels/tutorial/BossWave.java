@@ -31,8 +31,6 @@ import org.atoiks.games.nappou2.levels.ILevelContext;
 
 import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
 
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
-
 /* package */ final class BossWave implements ILevelState {
 
     private static final long serialVersionUID = 8472650695750567277L;

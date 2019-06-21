@@ -18,17 +18,11 @@
 
 package org.atoiks.games.nappou2.levels;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import java.util.Iterator;
 
-import javax.sound.sampled.Clip;
-
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.ResourceManager;
-
-import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Message;
 

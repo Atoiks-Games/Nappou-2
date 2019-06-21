@@ -33,9 +33,6 @@ import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Player;
-
-import org.atoiks.games.nappou2.entities.shield.FixedTimeShield;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;

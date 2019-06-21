@@ -22,8 +22,6 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.GameConfig;
-
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;

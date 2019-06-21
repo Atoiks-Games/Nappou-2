@@ -20,10 +20,6 @@ package org.atoiks.games.nappou2.levels.level1;
 
 import java.util.Random;
 
-import org.atoiks.games.nappou2.entities.Message;
-
-import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
-
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 /* package */ final class Data {
