@@ -33,8 +33,10 @@ import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
 
-import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.ILevelState;
+
+import org.atoiks.games.nappou2.levels.level1.*;
+import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -79,13 +81,10 @@ public final class DiffOptionScene extends CenteringScene {
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            final ILevelState level = getLevelFromOption();
+            final ILevelState level = new Preface(getLevelFromOption());
             if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
                 // Challenge mode forces you to use no shields,
                 // so it there is no need to ever jump into shield-option-scene.
-                //
-                // but we also jump directly to the chosen stage since
-                // there is a part of the tutorial that requires a shield!
 
                 final NullShield shield = new NullShield();
                 ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
