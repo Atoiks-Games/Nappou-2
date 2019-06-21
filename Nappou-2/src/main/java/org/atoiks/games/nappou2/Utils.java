@@ -22,17 +22,15 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.nappou2.equations.*;
-
 import org.atoiks.games.nappou2.spawner.EnemySpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
+
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
 import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
+import org.atoiks.games.nappou2.equations.*;
 import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
