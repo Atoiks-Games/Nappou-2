@@ -243,4 +243,11 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
             game.player.getShield().activate();
         }
     }
+
+    /* package */ static void unwindAndStartLevel(Game game, ILevelState state) {
+        final GameLevelScene next = new GameLevelScene(game);
+        SceneManager.unwindToScene(next);
+        state.restore(next);
+        next.setState(state);
+    }
 }

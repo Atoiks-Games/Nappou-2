@@ -107,11 +107,8 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final ILevelState checkpoint = new Preface(this.nextState);
-        final GameLevelScene next = new GameLevelScene(new Game(getShieldFromOption()));
-        SceneManager.unwindToScene(next);
-        checkpoint.restore(next);
-        next.setState(checkpoint);
+        GameLevelScene.unwindAndStartLevel(
+                new Game(getShieldFromOption()), new Preface(this.nextState));
         return true;
     }
 
