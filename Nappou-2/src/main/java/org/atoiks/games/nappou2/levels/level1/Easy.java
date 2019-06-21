@@ -226,6 +226,9 @@ final class EasyWave5 implements ILevelState {
 
     private long songOffset;
 
+    private int restoreScore;
+    private int restoreHp;
+
     private transient int cycles;
     private transient int wave;
 
@@ -236,9 +239,21 @@ final class EasyWave5 implements ILevelState {
     }
 
     @Override
+    public void restore(final ILevelContext ctx) {
+        final Game game = ctx.getGame();
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
+        game.player.setHp(restoreHp);
+        game.setScore(restoreScore);
+    }
+
+    @Override
     public void enter(final ILevelContext ctx) {
         this.cycles = 0;
         this.wave = 5;
+
+        final Game game = ctx.getGame();
+        this.restoreHp = game.player.getHp();
+        this.restoreScore = game.getScore();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         bgm = ResourceManager.get("/music/Level_One.wav");
