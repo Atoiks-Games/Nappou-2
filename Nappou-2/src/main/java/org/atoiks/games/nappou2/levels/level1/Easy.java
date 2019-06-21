@@ -71,6 +71,17 @@ public final class Easy implements ILevelState {
 
     private transient Clip bgm;
 
+    private void performRestore(Game game, GameConfig cfg) {
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
+        game.player.setHp(cfg.challengeMode ? 1 : 5);
+        game.setScore(0);
+    }
+
+    @Override
+    public void restore(final ILevelContext ctx) {
+        performRestore(ctx.getGame(), ResourceManager.<GameConfig>get("./game.cfg"));
+    }
+
     @Override
     public void enter(final ILevelContext ctx) {
         ctx.getDrifter().clampSpeed(0, 0, 0, 0);
@@ -82,10 +93,7 @@ public final class Easy implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         final SaveData saveData = ResourceManager.get("./saves.dat");
 
-        final Game game = ctx.getGame();
-        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(cfg.challengeMode ? 1 : 5);
-        game.setScore(0);
+        performRestore(ctx.getGame(), cfg);
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
@@ -94,6 +102,8 @@ public final class Easy implements ILevelState {
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
     }
 
     @Override
