@@ -51,8 +51,6 @@ import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
 import org.atoiks.games.nappou2.TrigConstants;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
-
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
@@ -85,7 +83,7 @@ public final class Easy implements ILevelState {
         final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5, saveData.getShieldCopy());
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(cfg.challengeMode ? 1 : 5);
         game.setScore(0);
 

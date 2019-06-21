@@ -35,6 +35,8 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 
+import org.atoiks.games.nappou2.entities.Game;
+
 public final class TitleScene extends CenteringScene {
 
     // Conventionally, last scene is always Quit,
@@ -89,8 +91,9 @@ public final class TitleScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             switch (selector) {
                 case 0: {
-                    final ILevelState checkpoint = ResourceManager.<SaveData>get("./saves.dat").getCheckpoint();
-                    final GameLevelScene next = new GameLevelScene();
+                    final SaveData save = ResourceManager.get("./saves.dat");
+                    final ILevelState checkpoint = save.getCheckpoint();
+                    final GameLevelScene next = new GameLevelScene(new Game(save.getShieldCopy()));
                     SceneManager.swapScene(next);
                     checkpoint.restore(next);
                     next.setState(checkpoint);

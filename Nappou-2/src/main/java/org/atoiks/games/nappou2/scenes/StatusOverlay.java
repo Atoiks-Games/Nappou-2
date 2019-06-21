@@ -64,7 +64,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
         g.drawString(str, GAME_BORDER + 5, 74);
 
-        if (game.player.shield.isReady()) {
+        if (game.player.getShield().isReady()) {
             g.drawString("Shield Ready", GAME_BORDER + 30, 96);
         }
     }

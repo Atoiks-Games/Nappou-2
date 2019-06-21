@@ -55,8 +55,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
 
-    private final Game game = new Game();
     private final Drifter drift = new Drifter();
+    private final Game game;
 
     private final PauseOverlay pauseOverlay;
     private final StatusOverlay statusOverlay;
@@ -67,12 +67,13 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private ILevelState state = NullState.INSTANCE;
 
-    public GameLevelScene() {
+    public GameLevelScene(final Game game) {
         shouldSkipPlayerUpdate(false);
 
-        final Image hpImg = ResourceManager.get("/image/hp.png");
-        game.clipGameBorder(GAME_BORDER, HEIGHT);
+        this.game = game;
+        this.game.clipGameBorder(GAME_BORDER, HEIGHT);
 
+        final Image hpImg = ResourceManager.get("/image/hp.png");
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
 
         this.pauseOverlay = new PauseOverlay(fnt);
@@ -239,7 +240,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private void processPlayerShield(final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_X)) {
-            game.player.shield.activate();
+            game.player.getShield().activate();
         }
     }
 }

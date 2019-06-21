@@ -66,8 +66,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     @Override
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
-        game.player = new Player(GAME_BORDER / 2, HEIGHT / 6 * 5,
-                ResourceManager.<SaveData>get("./saves.dat").getShieldCopy());
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(restoreHp);
         game.setScore(restoreScore);
     }

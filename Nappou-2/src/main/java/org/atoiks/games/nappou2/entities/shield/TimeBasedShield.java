@@ -31,6 +31,7 @@ public abstract class TimeBasedShield implements IShield {
     protected final float reloadTime;
     protected final float timeout;
 
+    protected Color color = Color.orange;
     protected boolean active = false;
     protected float time = 0;
     protected float r;
@@ -61,7 +62,7 @@ public abstract class TimeBasedShield implements IShield {
     @Override
     public void render(IGraphics g) {
         if (active) {
-            g.setColor(Color.orange);
+            g.setColor(this.color);
 
             final float x = position.getX();
             final float y = position.getY();
@@ -99,5 +100,9 @@ public abstract class TimeBasedShield implements IShield {
     @Override
     public boolean isReady() {
         return time > timeout + reloadTime;
+    }
+
+    public void setColor(Color c) {
+        this.color = c != null ? c : Color.orange;
     }
 }
