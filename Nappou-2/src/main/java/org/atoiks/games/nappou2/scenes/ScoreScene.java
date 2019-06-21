@@ -30,10 +30,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.ScoreData;
-import org.atoiks.games.nappou2.Difficulty;
-
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 
 public final class ScoreScene extends CenteringScene {
 

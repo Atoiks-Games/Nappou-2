@@ -29,9 +29,8 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Utils;
-import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.GameConfig;
+import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.ILevelState;
