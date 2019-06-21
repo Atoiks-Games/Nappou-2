@@ -18,11 +18,13 @@
 
 package org.atoiks.games.nappou2.pattern;
 
+import java.util.Random;
+
 import org.atoiks.games.nappou2.entities.Game;
+
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
-import java.util.Random;
 
 public final class RandomDropPattern implements IAttackPattern {
 
