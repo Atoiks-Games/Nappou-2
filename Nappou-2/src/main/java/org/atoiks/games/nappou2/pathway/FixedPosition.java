@@ -50,9 +50,4 @@ public final class FixedPosition implements UnboundPathway {
     public void update(float dt) {
         // Do nothing
     }
-
-    @Override
-    public boolean hasFinished() {
-        return false;
-    }
 }

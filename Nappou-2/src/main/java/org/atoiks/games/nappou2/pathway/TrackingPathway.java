@@ -83,9 +83,4 @@ public final class TrackingPathway implements UnboundPathway {
             time = 0;
         }
     }
-
-    @Override
-    public boolean hasFinished() {
-        return false;
-    }
 }

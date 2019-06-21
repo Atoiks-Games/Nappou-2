@@ -74,9 +74,4 @@ public final class CollapsingOrbitalPathway implements UnboundPathway {
         final float k = mod / (10 * r) * cycles / 50 + (float) spos;
         this.position = Vector2.muladd(this.axis, Vector2.fromPolar(r, k).mul(direction), center);
     }
-
-    @Override
-    public boolean hasFinished() {
-        return false;
-    }
 }
