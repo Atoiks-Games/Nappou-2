@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.WigglePathway;

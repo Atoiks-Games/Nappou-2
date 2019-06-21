@@ -20,6 +20,7 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;

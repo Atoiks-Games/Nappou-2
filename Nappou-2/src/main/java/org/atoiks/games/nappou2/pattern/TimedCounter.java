@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.enemy.IEnemy;
 
 public abstract class TimedCounter implements IAttackPattern {

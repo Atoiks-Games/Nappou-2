@@ -72,9 +72,4 @@ public final class OrbitalPathway implements UnboundPathway {
         final float k = mod * cycles / 50 + spos * (float) Math.PI / 2;
         this.position = Vector2.muladd(axis, Vector2.fromPolar(1, k).mul(direction), center);
     }
-
-    @Override
-    public boolean hasFinished() {
-        return false;
-    }
 }

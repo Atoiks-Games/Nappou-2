@@ -18,8 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
 import org.atoiks.games.nappou2.entities.bullet.Ray;
+import org.atoiks.games.nappou2.entities.bullet.Beam;
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
 public final class CAITutorial extends ManualEnemy {

@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 import org.atoiks.games.nappou2.entities.bullet.FallingBullet;
 
 public final class StreamBeam extends ManualEnemy {

@@ -23,7 +23,8 @@ import java.io.Serializable;
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
-import org.atoiks.games.nappou2.entities.shield.*;
+import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.shield.NullShield;
 
 public final class SaveData implements Serializable {
 

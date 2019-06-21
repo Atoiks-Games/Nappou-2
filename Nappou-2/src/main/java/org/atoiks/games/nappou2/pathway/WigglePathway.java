@@ -75,11 +75,6 @@ public final class WigglePathway implements UnboundPathway {
         this.position = Vector2.muladd(factor.mul(dt), velocity.add(amplitude.mul(cosVal)), this.position);
     }
 
-    @Override
-    public boolean hasFinished() {
-        return false;
-    }
-
     public static WigglePathway horizontal(Vector2 position, Vector2 velocity, float m, float s) {
         final WigglePathway pathway = new WigglePathway(velocity, Vector2.UNIT_X.mul(m), s, 0);
         pathway.setPosition(position);

@@ -18,16 +18,11 @@
 
 package org.atoiks.games.nappou2.levels.level1;
 
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
-import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -36,18 +31,15 @@ import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.enemy.*;
 
 import static org.atoiks.games.nappou2.Utils.mb1;
 import static org.atoiks.games.nappou2.Utils.altMb1;
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
-import static org.atoiks.games.nappou2.Utils.miniBomberEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
 import static org.atoiks.games.nappou2.Utils.advancedMiniBomberEnemy;
-import static org.atoiks.games.nappou2.Utils.tweenRadialGroupPattern;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
@@ -72,7 +64,6 @@ public final class Insane implements ILevelState {
         this.wave = 0;
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
-        final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);

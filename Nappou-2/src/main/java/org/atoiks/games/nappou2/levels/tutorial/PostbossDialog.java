@@ -18,13 +18,8 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
@@ -33,16 +28,12 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
-import org.atoiks.games.nappou2.scenes.TitleScene;
-
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
 /* package */ final class PostbossDialog extends AbstractDialogState implements ILevelState {
