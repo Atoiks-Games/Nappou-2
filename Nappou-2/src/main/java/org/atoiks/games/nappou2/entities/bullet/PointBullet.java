@@ -18,15 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
-
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
-
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public final class PointBullet extends PathwayPointBullet {
 
