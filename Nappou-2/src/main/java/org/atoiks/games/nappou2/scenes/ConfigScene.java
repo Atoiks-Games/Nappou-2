@@ -26,7 +26,6 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -60,13 +59,6 @@ public final class ConfigScene extends CenteringScene {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
-    }
-
-    @Override
-    public void enter(Scene from) {
-        if (config.bgm) {
-            bgm.start();
-        }
     }
 
     @Override
