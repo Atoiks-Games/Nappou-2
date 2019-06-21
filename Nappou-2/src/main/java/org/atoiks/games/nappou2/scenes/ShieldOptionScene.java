@@ -98,15 +98,11 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
+        final IShield shield = getShieldFromOption();
+        ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
         GameLevelScene.unwindAndStartLevel(
-                new Game(getShieldFromOption()), new Preface(this.nextState));
+                new Game(shield.copy()), new Preface(this.nextState));
         return true;
-    }
-
-    @Override
-    public void leave() {
-        final SaveData sData = ResourceManager.get("./saves.dat");
-        sData.setShield(getShieldFromOption());
     }
 
     private IShield getShieldFromOption() {
