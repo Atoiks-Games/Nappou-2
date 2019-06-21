@@ -101,16 +101,8 @@ public final class ConfigScene extends CenteringScene {
 
     @Override
     public boolean update(float dt) {
-        if (config.bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        } else {
-            bgm.stop();
-            bgm.setMicrosecondPosition(0);
-        }
-
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            SceneManager.swapScene(new TitleScene());
+            SceneManager.popScene();
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -139,7 +131,12 @@ public final class ConfigScene extends CenteringScene {
     private void setValueAtSelector(final boolean newValue) {
         switch (selector) {
             case 0:
-                config.bgm = newValue;
+                if ((config.bgm = newValue)) {
+                    bgm.start();
+                    bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                } else {
+                    bgm.stop();
+                }
                 break;
             case 1:
                 config.challengeMode = newValue;
