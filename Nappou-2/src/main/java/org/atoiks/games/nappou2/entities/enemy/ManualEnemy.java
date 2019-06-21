@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.Game;
-
 public abstract class ManualEnemy extends AbstractEnemy {
 
     protected float x, y, r;

@@ -20,7 +20,6 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 import org.atoiks.games.nappou2.entities.bullet.FallingBullet;
 
 public final class Squirts extends ManualEnemy {
