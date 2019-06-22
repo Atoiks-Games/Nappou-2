@@ -80,7 +80,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         if (game.noMoreEnemies()) {
-            if (game.getScore() < 6) {
+            if (game.getScoreCounter().getScore() < 6) {
                 game.addEnemy(singleShotEnemy(1, 250, -10, 8, false));
                 game.addEnemy(singleShotEnemy(1, 500, -10, 8, false));
             } else {

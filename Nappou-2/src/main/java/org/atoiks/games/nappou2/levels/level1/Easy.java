@@ -72,7 +72,7 @@ public final class Easy implements ILevelState {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
-        game.setScore(0);
+        game.getScoreCounter().reset();
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
@@ -232,7 +232,7 @@ final class EasyWave5 implements ILevelState {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(restoreTo);
-        game.setScore(restoreScore);
+        game.getScoreCounter().restoreTo(restoreScore);
     }
 
     @Override
@@ -242,7 +242,7 @@ final class EasyWave5 implements ILevelState {
 
         final Game game = ctx.getGame();
         this.restoreTo = game.player.getHpCounter().getHp();
-        this.restoreScore = game.getScore();
+        this.restoreScore = game.getScoreCounter().getScore();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         bgm = ResourceManager.get("/music/Level_One.wav");

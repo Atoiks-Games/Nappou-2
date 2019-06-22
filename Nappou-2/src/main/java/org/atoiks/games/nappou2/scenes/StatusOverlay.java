@@ -24,7 +24,10 @@ import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.ScoreCounter;
+
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -35,12 +38,14 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     public static final Color BACKGROUND_COLOR = new Color(106, 106, 106);
 
     private final Font font;
-    private final Game game;
+    private final Player player;
+    private final ScoreCounter scoreCounter;
     private final Image hpImg;
 
-    public StatusOverlay(Font font, Game game, Image hpImg) {
+    public StatusOverlay(Font font, final Game game, Image hpImg) {
         this.font = font.deriveFont(16f);
-        this.game = game;
+        this.player = game.player;
+        this.scoreCounter = game.getScoreCounter();
         this.hpImg = hpImg;
     }
 
@@ -55,16 +60,17 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawString("HP Remaining", GAME_BORDER + 2, 16);
         g.drawString("Score", GAME_BORDER + 2, 58);
 
-        final int hp = game.player.getHpCounter().getHp();
+        final int hp = player.getHpCounter().getHp();
         final int w = hpImg.getWidth(null);
         for (int i = 0; i < hp; ++i) {
             g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
         }
 
-        final String str = game.getScore() == 0 ? "0" : Integer.toString(game.getScore()) + "000";
+        final int rawScore = this.scoreCounter.getScore();
+        final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
         g.drawString(str, GAME_BORDER + 5, 74);
 
-        if (game.player.getShield().isReady()) {
+        if (player.getShield().isReady()) {
             g.drawString("Shield Ready", GAME_BORDER + 30, 96);
         }
     }

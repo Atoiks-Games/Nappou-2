@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.ScoreCounter;
 
 import org.atoiks.games.nappou2.spawner.ISpawner;
 
@@ -40,7 +41,7 @@ public final class Game {
 
     public final Player player;
 
-    private int score;
+    private final ScoreCounter scoreCounter = new ScoreCounter();
 
     private int gameWidth = Integer.MAX_VALUE;
     private int gameHeight = Integer.MAX_VALUE;
@@ -91,16 +92,8 @@ public final class Game {
         return enemies.isEmpty() && spawners.isEmpty();
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int changeScore(int delta) {
-        return this.score += delta;
+    public ScoreCounter getScoreCounter() {
+        return this.scoreCounter;
     }
 
     public void clearBullets() {
@@ -180,7 +173,7 @@ public final class Game {
                 if (inner.next().collidesWith(ep, er)) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
-                        changeScore(enemy.getScore());
+                        this.scoreCounter.changeBy(enemy.getScore());
                         outer.remove();
                         continue enemy_loop;
                     }
@@ -193,7 +186,7 @@ public final class Game {
                 }
                 respawnShield.activate();
                 if (enemy.changeHp(-1) <= 0) {
-                    changeScore(enemy.getScore());
+                    this.scoreCounter.changeBy(enemy.getScore());
                     outer.remove();
                 }
             }
