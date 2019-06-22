@@ -23,6 +23,7 @@ import java.awt.Color;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
