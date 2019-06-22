@@ -44,7 +44,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
             "CAI.png", HorizontalAlignment.RIGHT, "CAI", "Alright now we are ready for whomever we come across!");
 
     private int restoreScore;
-    private int restoreTo;
+    private int restoreHp;
 
     private transient boolean firstRun;
 
@@ -56,7 +56,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(restoreTo);
+        game.player.getHpCounter().restoreTo(restoreHp);
         game.getScoreCounter().restoreTo(restoreScore);
     }
 
@@ -65,7 +65,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         super.enter(ctx);
 
         final Game game = ctx.getGame();
-        this.restoreTo = game.player.getHpCounter().getHp();
+        this.restoreHp = game.player.getHpCounter().getHp();
         this.restoreScore = game.getScoreCounter().getScore();
 
         this.firstRun = true;
