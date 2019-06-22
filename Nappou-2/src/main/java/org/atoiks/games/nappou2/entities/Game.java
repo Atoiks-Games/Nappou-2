@@ -152,7 +152,7 @@ public final class Game {
                 it.remove();
             } else if (!player.isRespawnShieldActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 it.remove();
-                if (player.changeHpBy(-1) <= 0) {
+                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     // Player is dead, no more collision can happen
                     return;
                 }
@@ -179,7 +179,7 @@ public final class Game {
             }
 
             if (!player.isRespawnShieldActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
-                if (player.changeHpBy(-1) <= 0) {
+                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     return;
                 }
                 player.activateRespawnShield();

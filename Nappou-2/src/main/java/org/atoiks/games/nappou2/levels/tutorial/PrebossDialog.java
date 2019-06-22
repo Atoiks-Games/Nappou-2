@@ -51,7 +51,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     private static final long serialVersionUID = 7508014111511836801L;
 
     private int restoreScore;
-    private int restoreHp;
+    private int restoreTo;
 
     private transient int line;
 
@@ -63,7 +63,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(restoreHp);
+        game.player.getHpCounter().restoreTo(restoreTo);
         game.setScore(restoreScore);
     }
 
@@ -72,7 +72,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         super.enter(ctx);
 
         final Game game = ctx.getGame();
-        this.restoreHp = game.player.getHp();
+        this.restoreTo = game.player.getHpCounter().getHp();
         this.restoreScore = game.getScore();
 
         this.line = 0;

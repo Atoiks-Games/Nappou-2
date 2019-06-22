@@ -55,7 +55,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawString("HP Remaining", GAME_BORDER + 2, 16);
         g.drawString("Score", GAME_BORDER + 2, 58);
 
-        final int hp = game.player.getHp();
+        final int hp = game.player.getHpCounter().getHp();
         final int w = hpImg.getWidth(null);
         for (int i = 0; i < hp; ++i) {
             g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);

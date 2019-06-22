@@ -34,20 +34,19 @@ public final class Player implements ITrackable {
     public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
 
     private final TrackingTimeShield respawnShield;
+    private final HitpointCounter hpCounter;
 
     private IShield shield;
 
     private Vector2 position;
     private Vector2 velocity;
     private float speedScale = 1;
-    private int hp = 5;
-
-    private boolean ignoreHpChange;
 
     public Player(IShield shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
+        this.hpCounter = new HitpointCounter();
         this.velocity = Vector2.ZERO;
         this.setPosition(Vector2.ZERO);
     }
@@ -89,23 +88,8 @@ public final class Player implements ITrackable {
         return this.respawnShield.isActive();
     }
 
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int changeHpBy(int delta) {
-        if (!ignoreHpChange) {
-            this.hp += delta;
-        }
-        return this.hp;
-    }
-
-    public void setIgnoreHpChange(boolean flag) {
-        ignoreHpChange = flag;
+    public HitpointCounter getHpCounter() {
+        return this.hpCounter;
     }
 
     public void setSpeedScale(float scale) {

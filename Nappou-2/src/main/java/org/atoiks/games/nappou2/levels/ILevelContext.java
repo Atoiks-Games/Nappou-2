@@ -38,10 +38,10 @@ public interface ILevelContext {
     public void displayMessage(Message msg);
 
     public default void disableDamage() {
-        getGame().player.setIgnoreHpChange(true);
+        getGame().player.getHpCounter().setIgnoreHpChange(true);
     }
 
     public default void enableDamage() {
-        getGame().player.setIgnoreHpChange(false);
+        getGame().player.getHpCounter().setIgnoreHpChange(false);
     }
 }

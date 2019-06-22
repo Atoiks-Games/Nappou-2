@@ -183,7 +183,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         game.updatePlayerBulletPosition(dtDiv5, disp);
 
         game.performCollisionCheck();
-        if (game.player.getHp() <= 0) {
+        if (game.player.getHpCounter().isOutOfHp()) {
             SceneManager.swapScene(new TitleScene());
             return;
         }
