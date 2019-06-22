@@ -80,12 +80,8 @@ public final class Player implements ITrackable {
         return this.shield;
     }
 
-    public void activateRespawnShield() {
-        this.respawnShield.activate();
-    }
-
-    public boolean isRespawnShieldActive() {
-        return this.respawnShield.isActive();
+    public IShield getRespawnShield() {
+        return this.respawnShield;
     }
 
     public HitpointCounter getHpCounter() {

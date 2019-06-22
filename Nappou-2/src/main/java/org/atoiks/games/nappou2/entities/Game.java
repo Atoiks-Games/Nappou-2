@@ -145,18 +145,19 @@ public final class Game {
 
         final IShield shield = player.getShield();
         final boolean shieldActive = shield.isActive();
+        final IShield respawnShield = player.getRespawnShield();
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
             if (shieldActive && bullet.collidesWith(shield.getPosition(), shield.getR())) {
                 it.remove();
-            } else if (!player.isRespawnShieldActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
+            } else if (!respawnShield.isActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 it.remove();
                 if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     // Player is dead, no more collision can happen
                     return;
                 }
-                player.activateRespawnShield();
+                respawnShield.activate();
             }
         }
 
@@ -178,11 +179,11 @@ public final class Game {
                 }
             }
 
-            if (!player.isRespawnShieldActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
+            if (!respawnShield.isActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     return;
                 }
-                player.activateRespawnShield();
+                respawnShield.activate();
                 if (enemy.changeHp(-1) <= 0) {
                     changeScore(enemy.getScore());
                     outer.remove();
