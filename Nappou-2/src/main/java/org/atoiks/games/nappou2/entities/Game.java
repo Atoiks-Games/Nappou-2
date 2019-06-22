@@ -62,6 +62,14 @@ public final class Game {
         gameHeight = h;
     }
 
+    public int getBorderHeight() {
+        return this.gameHeight;
+    }
+
+    public int getBorderWidth() {
+        return this.gameWidth;
+    }
+
     public void addEnemyBullet(final IBullet bullet) {
         enemyBullets.add(bullet);
     }
