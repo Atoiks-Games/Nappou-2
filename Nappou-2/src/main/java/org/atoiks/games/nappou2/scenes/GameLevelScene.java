@@ -40,9 +40,6 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.PlayerController;
 
-import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
-import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
-
 public final class GameLevelScene extends CenteringScene implements ILevelContext {
 
     public static final int WIDTH = 900;
