@@ -36,8 +36,7 @@ public final class Player implements ITrackable {
 
     private final TrackingTimeShield respawnShield;
     private final HitpointCounter hpCounter;
-
-    private IShield shield;
+    private final IShield shield;
 
     private Vector2 position;
     private Vector2 velocity;
@@ -71,10 +70,6 @@ public final class Player implements ITrackable {
         this.respawnShield.update(dt);
 
         this.setPosition(Vector2.muladd(this.speedScale * dt, this.velocity, this.position));
-    }
-
-    public void applyFreshShield() {
-        this.shield = this.shield.copy();
     }
 
     public IShield getShield() {
