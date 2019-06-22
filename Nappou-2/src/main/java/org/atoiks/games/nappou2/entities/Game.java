@@ -51,7 +51,7 @@ public final class Game {
     }
 
     public void render(IGraphics g) {
-        if (player != null) player.render(g);
+        player.render(g);
 
         for (final IBullet bullet : enemyBullets) bullet.render(g);
         for (final IBullet bullet : playerBullets) bullet.render(g);
