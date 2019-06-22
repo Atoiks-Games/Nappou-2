@@ -107,7 +107,19 @@ public final class Game {
         spawners.clear();
     }
 
-    public void updateEnemySpawner(final float dt) {
+    public void update(final float dt, final Vector2 displacement) {
+        updateEnemySpawner(dt);
+        updateEnemyPosition(dt, displacement);
+        updateEnemyBulletPosition(dt, displacement);
+        updatePlayerBulletPosition(dt, displacement);
+        performCollisionCheck();
+    }
+
+    private void updateEnemySpawner(final float dt) {
+        if (spawners.isEmpty()) {
+            return;
+        }
+
         final Iterator<ISpawner> it = spawners.iterator();
         while (it.hasNext()) {
             final ISpawner spawner = it.next();
@@ -129,19 +141,19 @@ public final class Game {
         }
     }
 
-    public void updateEnemyPosition(final float dt, final Vector2 drift) {
+    private void updateEnemyPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(enemies.iterator(), dt, drift);
     }
 
-    public void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
+    private void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(enemyBullets.iterator(), dt, drift);
     }
 
-    public void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
+    private void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
     }
 
-    public void performCollisionCheck() {
+    private void performCollisionCheck() {
         final Vector2 pp = player.getPosition();
 
         final IShield shield = player.getShield();

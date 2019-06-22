@@ -169,13 +169,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         // the *5 things*, so it uses the un-partitioned dt.
         this.playerController.update(dt, driftVelocity);
 
-        final Vector2 disp = driftVelocity.mul(dtDiv5);
-        game.updateEnemySpawner(dtDiv5);
-        game.updateEnemyPosition(dtDiv5, disp);
-        game.updateEnemyBulletPosition(dtDiv5, disp);
-        game.updatePlayerBulletPosition(dtDiv5, disp);
+        game.update(dtDiv5, driftVelocity.mul(dtDiv5));
 
-        game.performCollisionCheck();
         if (game.player.getHpCounter().isOutOfHp()) {
             SceneManager.swapScene(new TitleScene());
             return;
