@@ -18,11 +18,7 @@
 
 package org.atoiks.games.nappou2;
 
-import java.io.Serializable;
-
-public final class HitpointCounter implements Serializable {
-
-    private static final long serialVersionUID = -4506647453350092214L;
+public final class HitpointCounter {
 
     // The lowest value is capped at zero
     private int hitpoints;
