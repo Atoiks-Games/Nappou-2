@@ -26,6 +26,8 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
+import org.atoiks.games.nappou2.entities.ICollidable;
+
 import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
@@ -33,8 +35,9 @@ import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
 public final class Player implements ITrackable {
 
     public static final int RADIUS = 8;
-    public static final int COLLISION_RADIUS = 2;
-    public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+
+    private static final int COLLISION_RADIUS = 2;
+    private static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
     private final HitpointCounter hpCounter = new HitpointCounter();
@@ -124,5 +127,9 @@ public final class Player implements ITrackable {
         this.position = pos;
         this.shield.setPosition(pos);
         this.respawnShield.setPosition(pos);
+    }
+
+    public boolean collidesWith(ICollidable col) {
+        return col.collidesWith(this.position, Player.COLLISION_RADIUS);
     }
 }

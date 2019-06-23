@@ -138,8 +138,6 @@ public final class Game {
     }
 
     private void performCollisionCheck() {
-        final Vector2 pp = player.getPosition();
-
         final IShield shield = player.getShield();
         final boolean shieldActive = shield.isActive();
         final IShield respawnShield = player.getRespawnShield();
@@ -148,7 +146,7 @@ public final class Game {
             final IBullet bullet = it.next();
             if (shieldActive && shield.collidesWith(bullet)) {
                 it.remove();
-            } else if (!respawnShield.isActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
+            } else if (!respawnShield.isActive() && player.collidesWith(bullet)) {
                 it.remove();
                 if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     // Player is dead, no more collision can happen
@@ -176,7 +174,7 @@ public final class Game {
                 }
             }
 
-            if (!respawnShield.isActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
+            if (!respawnShield.isActive() && player.collidesWith(enemy)) {
                 if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     return;
                 }
