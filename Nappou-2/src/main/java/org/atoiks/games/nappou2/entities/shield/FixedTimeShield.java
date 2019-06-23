@@ -24,7 +24,7 @@ public final class FixedTimeShield extends TimeBasedShield {
 
     private static final long serialVersionUID = 259728713501591561L;
 
-    private boolean relocate = false;
+    private transient boolean relocate;
 
     public FixedTimeShield(float timeout, float reloadTime, float r) {
         super(timeout, reloadTime, r);

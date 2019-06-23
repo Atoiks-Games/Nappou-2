@@ -32,10 +32,11 @@ public abstract class TimeBasedShield implements IShield {
     protected final float timeout;
 
     protected Color color = Color.orange;
-    protected boolean active = false;
-    protected float time = 0;
     protected float r;
-    protected Vector2 position;
+
+    protected transient boolean active;
+    protected transient Vector2 position;
+    protected transient float time;
 
     protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
         this.timeout = timeout;
