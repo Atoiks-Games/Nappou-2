@@ -100,16 +100,16 @@ public final class Easy implements ILevelState {
                 switch (cycles) {
                     //Fish group 1
                     case 400:
-                        game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
-                        game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
+                        game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
+                        game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
                         break;
 
                     //Fish group 2
                     case 455:
-                        game.addEnemySpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
-                        game.addEnemySpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
-                        game.addEnemySpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
-                        game.addEnemySpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
+                        game.addSpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
+                        game.addSpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
+                        game.addSpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
+                        game.addSpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
                 }
                 if (cycles > 605 && game.noMoreEnemies()) {
                     wave++;
@@ -165,8 +165,8 @@ public final class Easy implements ILevelState {
             case 2:
                 if (cycles == 40) {
                     game.addEnemy(new Ripple(10, 375, -10, 20, 500, (float) Math.PI / 2));
-                    game.addEnemySpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
-                    game.addEnemySpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
+                    game.addSpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+                    game.addSpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
                 }
                 if (cycles > 40 && game.noMoreEnemies()) {
                     wave++;

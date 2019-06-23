@@ -78,7 +78,7 @@ public final class Utils {
 
                 array[j] = enemy;
             }
-            game.addEnemySpawner(new EnemySpawner(0.17f, array));
+            game.addSpawner(new EnemySpawner(0.17f, array));
         }
     }
 

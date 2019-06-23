@@ -73,7 +73,7 @@ public final class Game {
         enemy.attachGame(this);
     }
 
-    public void addEnemySpawner(final ISpawner spawner) {
+    public void addSpawner(final ISpawner spawner) {
         spawners.add(spawner);
     }
 
