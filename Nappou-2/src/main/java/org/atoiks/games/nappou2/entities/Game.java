@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.ScoreCounter;
 
 import org.atoiks.games.nappou2.spawner.ISpawner;
 
