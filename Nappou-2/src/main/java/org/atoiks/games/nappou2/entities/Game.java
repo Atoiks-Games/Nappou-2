@@ -42,9 +42,7 @@ public final class Game {
     public final Player player;
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
-
-    private int gameWidth = Integer.MAX_VALUE;
-    private int gameHeight = Integer.MAX_VALUE;
+    private final Border border = new Border();
 
     public Game(IShield shield) {
         this.player = new Player(shield);
@@ -58,17 +56,8 @@ public final class Game {
         for (final IEnemy enemy : enemies) enemy.render(g);
     }
 
-    public void clipGameBorder(int w, int h) {
-        gameWidth = w;
-        gameHeight = h;
-    }
-
-    public int getBorderHeight() {
-        return this.gameHeight;
-    }
-
-    public int getBorderWidth() {
-        return this.gameWidth;
+    public Border getBorder() {
+        return this.border;
     }
 
     public void addEnemyBullet(final IBullet bullet) {
@@ -135,7 +124,7 @@ public final class Game {
             final IDriftEntity entity = it.next();
             entity.update(dt);
             entity.drift(drift);
-            if (entity.isOutOfScreen(gameWidth, gameHeight)) {
+            if (!this.border.containsCollidable(entity)) {
                 it.remove();
             }
         }

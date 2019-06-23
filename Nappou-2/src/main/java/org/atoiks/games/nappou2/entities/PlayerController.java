@@ -24,6 +24,7 @@ import org.atoiks.games.framework2d.Input;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
 
@@ -37,6 +38,7 @@ public final class PlayerController {
 
     private final Player player;
     private final Game game;
+    private final Border border;
 
     private boolean ignoreUpdateFlag;
     private float playerFireLimiter;
@@ -44,6 +46,7 @@ public final class PlayerController {
     public PlayerController(final Game game) {
         this.game = game;
         this.player = this.game.player;
+        this.border = this.game.getBorder();
     }
 
     public Player getAssociatedPlayer() {
@@ -74,7 +77,7 @@ public final class PlayerController {
         final float tmpY = player.getY();
         if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpDy += DEFAULT_DY;
         if (Input.isKeyDown(KeyEvent.VK_UP))    tmpDy -= DEFAULT_DY;
-        if ((tmpY + Player.RADIUS >= game.getBorderHeight() && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
+        if ((tmpY + Player.RADIUS >= this.border.getHeight() && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
             tmpDy = 0;
         }
 
@@ -83,7 +86,7 @@ public final class PlayerController {
         final float tmpX = player.getX();
         if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpDx += DEFAULT_DX;
         if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpDx -= DEFAULT_DX;
-        if ((tmpX + Player.RADIUS >= game.getBorderWidth() && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
+        if ((tmpX + Player.RADIUS >= this.border.getWidth() && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
             tmpDx = 0;
         }
 

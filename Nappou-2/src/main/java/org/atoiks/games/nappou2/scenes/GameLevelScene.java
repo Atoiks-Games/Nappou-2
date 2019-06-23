@@ -58,7 +58,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     public GameLevelScene(final Game game) {
         this.game = game;
-        this.game.clipGameBorder(GAME_BORDER, HEIGHT);
+        this.game.getBorder().clip(GAME_BORDER, HEIGHT);
 
         this.playerController = new PlayerController(this.game);
 
