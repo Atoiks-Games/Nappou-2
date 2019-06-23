@@ -18,6 +18,10 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
@@ -31,7 +35,7 @@ public abstract class TimeBasedShield implements IShieldEntity {
     protected final float reloadTime;
     protected final float timeout;
 
-    protected Color color = Color.orange;
+    protected transient Color color = Color.orange; // see read/writeObject
     protected float r;
 
     protected transient boolean active;
@@ -105,5 +109,30 @@ public abstract class TimeBasedShield implements IShieldEntity {
 
     public void setColor(Color c) {
         this.color = c != null ? c : Color.orange;
+    }
+
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        // Have java serialize as much as possible
+        s.defaultWriteObject();
+
+        // Write r, g, b, a as floats
+        final float[] buffer = new float[4];
+        this.color.getRGBComponents(buffer);
+        s.writeFloat(buffer[0]);
+        s.writeFloat(buffer[1]);
+        s.writeFloat(buffer[2]);
+        s.writeFloat(buffer[3]);
+    }
+
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        // Have java deserialize as much as possible
+        s.defaultReadObject();
+
+        // Read r, g, b, a as floats
+        final float r = s.readFloat();
+        final float g = s.readFloat();
+        final float b = s.readFloat();
+        final float a = s.readFloat();
+        this.color = new Color(r, g, b, a);
     }
 }
