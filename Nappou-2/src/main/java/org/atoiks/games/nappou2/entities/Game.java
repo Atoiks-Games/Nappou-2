@@ -41,7 +41,6 @@ public final class Game {
 
     public final Player player;
 
-    private final ScoreCounter scoreCounter = new ScoreCounter();
     private final Border border = new Border();
 
     public Game(IShield shield) {
@@ -79,10 +78,6 @@ public final class Game {
 
     public boolean noMoreEnemies() {
         return enemies.isEmpty() && spawners.isEmpty();
-    }
-
-    public ScoreCounter getScoreCounter() {
-        return this.scoreCounter;
     }
 
     public void clearBullets() {
@@ -174,7 +169,7 @@ public final class Game {
                 if (inner.next().collidesWith(ep, er)) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
-                        this.scoreCounter.changeBy(enemy.getScore());
+                        this.player.getScoreCounter().changeBy(enemy.getScore());
                         outer.remove();
                         continue enemy_loop;
                     }
@@ -187,7 +182,7 @@ public final class Game {
                 }
                 respawnShield.activate();
                 if (enemy.changeHp(-1) <= 0) {
-                    this.scoreCounter.changeBy(enemy.getScore());
+                    this.player.getScoreCounter().changeBy(enemy.getScore());
                     outer.remove();
                 }
             }

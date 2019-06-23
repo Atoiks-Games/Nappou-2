@@ -68,7 +68,7 @@ public final class Insane implements ILevelState {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
-        game.getScoreCounter().reset();
+        game.player.getScoreCounter().reset();
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {

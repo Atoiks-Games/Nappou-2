@@ -47,6 +47,6 @@ public final class SaveScoreState implements ILevelState {
         SceneManager.pushScene(new SaveHighscoreScene(
                 diff,
                 levelId,
-                ctx.getGame().getScoreCounter().getScore()));
+                ctx.getGame().player.getScoreCounter().getScore()));
     }
 }

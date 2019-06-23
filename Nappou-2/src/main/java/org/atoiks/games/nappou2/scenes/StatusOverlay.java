@@ -25,9 +25,11 @@ import java.awt.Image;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.ScoreCounter;
+import org.atoiks.games.nappou2.HitpointCounter;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
+
+import org.atoiks.games.nappou2.entities.shield.IShield;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -38,14 +40,16 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     public static final Color BACKGROUND_COLOR = new Color(106, 106, 106);
 
     private final Font font;
-    private final Player player;
     private final ScoreCounter scoreCounter;
+    private final HitpointCounter hpCounter;
+    private final IShield shield;
     private final Image hpImg;
 
-    public StatusOverlay(Font font, final Game game, Image hpImg) {
+    public StatusOverlay(Font font, final Player player, Image hpImg) {
         this.font = font.deriveFont(16f);
-        this.player = game.player;
-        this.scoreCounter = game.getScoreCounter();
+        this.hpCounter = player.getHpCounter();
+        this.scoreCounter = player.getScoreCounter();
+        this.shield = player.getShield();
         this.hpImg = hpImg;
     }
 
@@ -60,7 +64,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawString("HP Remaining", GAME_BORDER + 2, 16);
         g.drawString("Score", GAME_BORDER + 2, 58);
 
-        final int hp = player.getHpCounter().getHp();
+        final int hp = this.hpCounter.getHp();
         final int w = hpImg.getWidth(null);
         for (int i = 0; i < hp; ++i) {
             g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
@@ -70,7 +74,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
         g.drawString(str, GAME_BORDER + 5, 74);
 
-        if (player.getShield().isReady()) {
+        if (this.shield.isReady()) {
             g.drawString("Shield Ready", GAME_BORDER + 30, 96);
         }
     }

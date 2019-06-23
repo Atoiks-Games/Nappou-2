@@ -57,7 +57,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(restoreHp);
-        game.getScoreCounter().restoreTo(restoreScore);
+        game.player.getScoreCounter().restoreTo(restoreScore);
     }
 
     @Override
@@ -66,7 +66,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
         final Game game = ctx.getGame();
         this.restoreHp = game.player.getHpCounter().getHp();
-        this.restoreScore = game.getScoreCounter().getScore();
+        this.restoreScore = game.player.getScoreCounter().getScore();
 
         this.firstRun = true;
 

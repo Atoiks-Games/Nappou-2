@@ -23,6 +23,7 @@ import java.awt.Color;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
@@ -34,8 +35,10 @@ public final class Player implements ITrackable {
     public static final int COLLISION_RADIUS = 2;
     public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
 
+    private final ScoreCounter scoreCounter = new ScoreCounter();
+    private final HitpointCounter hpCounter = new HitpointCounter();
+
     private final TrackingTimeShield respawnShield;
-    private final HitpointCounter hpCounter;
     private final IShield shield;
 
     private Vector2 position;
@@ -46,7 +49,6 @@ public final class Player implements ITrackable {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
-        this.hpCounter = new HitpointCounter();
         this.velocity = Vector2.ZERO;
         this.setPosition(Vector2.ZERO);
     }
@@ -78,6 +80,10 @@ public final class Player implements ITrackable {
 
     public IShield getRespawnShield() {
         return this.respawnShield;
+    }
+
+    public ScoreCounter getScoreCounter() {
+        return this.scoreCounter;
     }
 
     public HitpointCounter getHpCounter() {
