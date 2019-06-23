@@ -24,7 +24,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-public abstract class TimeBasedShield implements IShield {
+public abstract class TimeBasedShield implements IShieldEntity {
 
     private static final long serialVersionUID = 172635916L;
 

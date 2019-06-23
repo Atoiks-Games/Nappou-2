@@ -27,6 +27,7 @@ import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
 
 public final class Player implements ITrackable {
@@ -39,13 +40,13 @@ public final class Player implements ITrackable {
     private final HitpointCounter hpCounter = new HitpointCounter();
 
     private final TrackingTimeShield respawnShield;
-    private final IShield shield;
+    private final IShieldEntity shield;
 
     private Vector2 position;
     private Vector2 velocity;
     private float speedScale = 1;
 
-    public Player(IShield shield) {
+    public Player(IShieldEntity shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);

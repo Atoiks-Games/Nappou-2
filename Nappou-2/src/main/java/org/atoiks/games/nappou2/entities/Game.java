@@ -43,8 +43,8 @@ public final class Game {
 
     private final Border border = new Border();
 
-    public Game(IShield shield) {
-        this.player = new Player(shield);
+    public Game(Player player) {
+        this.player = player;
     }
 
     public void render(IGraphics g) {
@@ -146,7 +146,7 @@ public final class Game {
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
-            if (shieldActive && bullet.collidesWith(shield.getPosition(), shield.getR())) {
+            if (shieldActive && shield.collidesWith(bullet)) {
                 it.remove();
             } else if (!respawnShield.isActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
                 it.remove();

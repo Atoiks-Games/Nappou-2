@@ -23,21 +23,21 @@ import java.io.Serializable;
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.shield.NullShield;
+import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 
 public final class SaveData implements Serializable {
 
     private static final long serialVersionUID = -6315543815579288169L;
 
     private ILevelState checkpoint = NullState.INSTANCE;
-    private IShield shield = new NullShield();
+    private IShieldEntity shield = new NullShield();
 
     public void setCheckpoint(final ILevelState p) {
         this.checkpoint = p != null ? p : NullState.INSTANCE;
     }
 
-    public void setShield(final IShield s) {
+    public void setShield(final IShieldEntity s) {
         this.shield = s != null ? s : new NullShield();
     }
 
@@ -45,7 +45,7 @@ public final class SaveData implements Serializable {
         return this.checkpoint;
     }
 
-    public IShield getShieldCopy() {
+    public IShieldEntity getShieldCopy() {
         return this.shield.copy();
     }
 }
