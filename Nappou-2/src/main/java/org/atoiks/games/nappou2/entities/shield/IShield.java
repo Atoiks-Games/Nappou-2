@@ -18,11 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
-import java.io.Serializable;
-
 import org.atoiks.games.nappou2.entities.ICollidable;
 
-public interface IShield extends Serializable {
+public interface IShield {
 
     public void activate();
     public void deactivate();

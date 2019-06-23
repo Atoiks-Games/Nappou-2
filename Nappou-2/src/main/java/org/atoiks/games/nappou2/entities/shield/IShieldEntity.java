@@ -18,13 +18,15 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
+import java.io.Serializable;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.ICollidable;
 
-public interface IShieldEntity extends IShield {
+public interface IShieldEntity extends IShield, Serializable {
 
     public float getR();
     public Vector2 getPosition();
