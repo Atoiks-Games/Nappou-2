@@ -37,6 +37,8 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Border;
+import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.PlayerController;
 
@@ -47,6 +49,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     public static final int GAME_BORDER = 750;
 
     private final Drifter drift = new Drifter();
+    private final Border border = new Border(GAME_BORDER, HEIGHT);
     private final Game game;
     private final PlayerController playerController;
 
@@ -56,11 +59,9 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     private ILevelState state = NullState.INSTANCE;
 
-    public GameLevelScene(final Game game) {
-        this.game = game;
-        this.game.getBorder().clip(GAME_BORDER, HEIGHT);
-
-        this.playerController = new PlayerController(this.game);
+    public GameLevelScene(final Player player) {
+        this.game = new Game(player, this.border);
+        this.playerController = new PlayerController(this.game, this.border);
 
         final Image hpImg = ResourceManager.get("/image/hp.png");
         final Font fnt = ResourceManager.get("/Logisoso.ttf");

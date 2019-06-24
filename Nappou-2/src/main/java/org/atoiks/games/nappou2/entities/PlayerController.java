@@ -43,10 +43,10 @@ public final class PlayerController {
     private boolean ignoreUpdateFlag;
     private float playerFireLimiter;
 
-    public PlayerController(final Game game) {
+    public PlayerController(final Game game, Border border) {
         this.game = game;
         this.player = this.game.player;
-        this.border = this.game.getBorder();
+        this.border = border;
     }
 
     public Player getAssociatedPlayer() {

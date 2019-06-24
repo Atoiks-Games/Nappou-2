@@ -36,7 +36,6 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 
 import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.*;
@@ -109,8 +108,7 @@ public final class ShieldOptionScene extends CenteringScene {
 
     private boolean startGame() {
         final ILevelState checkpoint = new Preface(this.nextState);
-        final GameLevelScene next = new GameLevelScene(new Game(
-                new Player(getShieldFromOption())));
+        final GameLevelScene next = new GameLevelScene(new Player(getShieldFromOption()));
         SceneManager.unwindToScene(next);
         checkpoint.restore(next);
         next.setState(checkpoint);

@@ -36,7 +36,6 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
 
-import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Player;
 
 public final class TitleScene extends CenteringScene {
@@ -95,8 +94,7 @@ public final class TitleScene extends CenteringScene {
                 case 0: {
                     final SaveData save = ResourceManager.get("./saves.dat");
                     final ILevelState checkpoint = save.getCheckpoint();
-                    final GameLevelScene next = new GameLevelScene(new Game(
-                            new Player(save.getShieldCopy())));
+                    final GameLevelScene next = new GameLevelScene(new Player(save.getShieldCopy()));
                     SceneManager.swapScene(next);
                     checkpoint.restore(next);
                     next.setState(checkpoint);

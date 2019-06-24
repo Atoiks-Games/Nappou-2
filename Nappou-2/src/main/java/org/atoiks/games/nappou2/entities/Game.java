@@ -40,10 +40,11 @@ public final class Game {
 
     public final Player player;
 
-    private final Border border = new Border();
+    private final Border border;
 
-    public Game(Player player) {
+    public Game(Player player, Border border) {
         this.player = player;
+        this.border = border;
     }
 
     public void render(IGraphics g) {
@@ -52,10 +53,6 @@ public final class Game {
         for (final IBullet bullet : enemyBullets) bullet.render(g);
         for (final IBullet bullet : playerBullets) bullet.render(g);
         for (final IEnemy enemy : enemies) enemy.render(g);
-    }
-
-    public Border getBorder() {
-        return this.border;
     }
 
     public void addEnemyBullet(final IBullet bullet) {
