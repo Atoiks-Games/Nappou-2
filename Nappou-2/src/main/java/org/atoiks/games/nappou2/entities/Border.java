@@ -25,6 +25,13 @@ public final class Border {
     private int width;
     private int height;
 
+    public Border() {
+    }
+
+    public Border(int w, int h) {
+        this.clip(w, h);
+    }
+
     public void clip(int w, int h) {
         this.width = Math.max(0, w);
         this.height = Math.max(0, h);
