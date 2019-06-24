@@ -143,6 +143,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     public boolean update(final float dt) {
         if (pauseOverlay.isEnabled()) {
             pauseOverlay.update(dt);
+        } else if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            pauseOverlay.enable();
         } else {
             levelUpdate(dt);
         }
@@ -150,11 +152,6 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     }
 
     private void levelUpdate(final float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            pauseOverlay.enable();
-            return;
-        }
-
         // At some point, the update sequence was split up so
         // each update frame only did one thing. It was divided
         // into 5 things.
