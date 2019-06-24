@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.Drifter;
 
 import org.atoiks.games.nappou2.spawner.ISpawner;
 
@@ -38,6 +39,7 @@ public final class Game {
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
     private final LinkedList<ISpawner> spawners = new LinkedList<>();
 
+    public final Drifter drifter = new Drifter();
     public final Player player;
 
     private final Border border;

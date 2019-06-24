@@ -48,7 +48,6 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     public static final int HEIGHT = 600;
     public static final int GAME_BORDER = 750;
 
-    private final Drifter drift = new Drifter();
     private final Border border = new Border(GAME_BORDER, HEIGHT);
     private final Game game;
     private final PlayerController playerController;
@@ -90,7 +89,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
     @Override
     public Drifter getDrifter() {
-        return drift;
+        return game.drifter;
     }
 
     @Override
@@ -160,8 +159,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         // each update frame only did one thing. It was divided
         // into 5 things.
         final float dtDiv5 = dt / 5;
-        drift.update(dtDiv5);
-        final Vector2 driftVelocity = drift.getDrift();
+        this.game.drifter.update(dtDiv5);
+        final Vector2 driftVelocity = this.game.drifter.getDrift();
 
         // And strangely enough, player updates were not part of
         // the *5 things*, so it uses the un-partitioned dt.
