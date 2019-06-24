@@ -68,7 +68,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
         this.pauseOverlay = new PauseOverlay(fnt);
         this.dialogOverlay = new DialogOverlay(fnt);
-        this.statusOverlay = new StatusOverlay(fnt, this.game.player, hpImg);
+        this.statusOverlay = new StatusOverlay(fnt, player, hpImg);
     }
 
     @Override
