@@ -164,11 +164,8 @@ public final class Game {
         for (final Iterator<IEnemy> outer = enemies.iterator(); outer.hasNext(); ) {
             final IEnemy enemy = outer.next();
 
-            final float er = enemy.getR();
-            final Vector2 ep = enemy.getPosition();
-
             for (final Iterator<IBullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
-                if (inner.next().collidesWith(ep, er)) {
+                if (enemy.collidesWith(inner.next())) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
                         this.player.getScoreCounter().changeBy(enemy.getScore());

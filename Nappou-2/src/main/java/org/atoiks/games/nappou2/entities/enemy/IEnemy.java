@@ -21,6 +21,7 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.ICollidable;
 import org.atoiks.games.nappou2.entities.IDriftEntity;
 
 public interface IEnemy extends IDriftEntity {
@@ -36,4 +37,8 @@ public interface IEnemy extends IDriftEntity {
     public Game getAssocGame();
 
     public void render(IGraphics g);
+
+    public default boolean collidesWith(ICollidable col) {
+        return col.collidesWith(this.getPosition(), this.getR());
+    }
 }
