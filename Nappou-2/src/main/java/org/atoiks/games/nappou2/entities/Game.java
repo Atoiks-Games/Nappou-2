@@ -89,12 +89,18 @@ public final class Game {
         spawners.clear();
     }
 
-    public void update(final float dt, final Vector2 displacement) {
+    public boolean shouldAbort() {
+        return this.player.getHpCounter().isOutOfHp();
+    }
+
+    public void update(final float dt) {
+        this.drifter.update(dt);
+        final Vector2 displacement = this.drifter.getDrift().mul(dt);
+
         updateEnemySpawner(dt);
         updateEnemyPosition(dt, displacement);
         updateEnemyBulletPosition(dt, displacement);
         updatePlayerBulletPosition(dt, displacement);
-        performCollisionCheck();
     }
 
     private void updateEnemySpawner(final float dt) {
@@ -135,7 +141,7 @@ public final class Game {
         updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
     }
 
-    private void performCollisionCheck() {
+    public void performCollisionCheck() {
         final IShield shield = player.getShield();
         final boolean shieldActive = shield.isActive();
         final IShield respawnShield = player.getRespawnShield();

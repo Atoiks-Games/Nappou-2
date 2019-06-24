@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 import org.atoiks.games.framework2d.Input;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.Drifter;
 
 import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
@@ -39,6 +40,7 @@ public final class PlayerController {
     private final Player player;
     private final Game game;
     private final Border border;
+    private final Drifter drifter;
 
     private boolean ignoreUpdateFlag;
     private float playerFireLimiter;
@@ -46,6 +48,7 @@ public final class PlayerController {
     public PlayerController(final Game game, Border border) {
         this.game = game;
         this.player = this.game.player;
+        this.drifter = this.game.drifter;
         this.border = border;
     }
 
@@ -61,17 +64,19 @@ public final class PlayerController {
         this.ignoreUpdateFlag = flag;
     }
 
-    public void update(float dt, Vector2 driftVelocity) {
+    public void update(final float dt) {
         if (ignoreUpdateFlag) {
             return;
         }
 
-        processPlayerMovement(dt, driftVelocity);
+        processPlayerMovement(dt);
         processPlayerAttack(dt);
         processPlayerShield(dt);
     }
 
-    private void processPlayerMovement(final float dt, final Vector2 disp) {
+    private void processPlayerMovement(final float dt) {
+        final Vector2 disp = drifter.getDrift();
+
         // Calculate player's unscaled speed in y
         float tmpDy = disp.getY();
         final float tmpY = player.getY();

@@ -155,17 +155,14 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         // At some point, the update sequence was split up so
         // each update frame only did one thing. It was divided
         // into 5 things.
-        final float dtDiv5 = dt / 5;
-        this.game.drifter.update(dtDiv5);
-        final Vector2 driftVelocity = this.game.drifter.getDrift();
+        this.game.update(dt / 5);
 
         // And strangely enough, player updates were not part of
         // the *5 things*, so it uses the un-partitioned dt.
-        this.playerController.update(dt, driftVelocity);
+        this.playerController.update(dt);
 
-        game.update(dtDiv5, driftVelocity.mul(dtDiv5));
-
-        if (game.player.getHpCounter().isOutOfHp()) {
+        this.game.performCollisionCheck();
+        if (this.game.shouldAbort()) {
             SceneManager.swapScene(new TitleScene());
             return;
         }
