@@ -88,11 +88,6 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     }
 
     @Override
-    public Drifter getDrifter() {
-        return game.drifter;
-    }
-
-    @Override
     public void shouldSkipPlayerUpdate(final boolean flag) {
         this.playerController.setIgnoreUpdate(flag);
     }

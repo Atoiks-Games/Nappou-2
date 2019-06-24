@@ -49,7 +49,6 @@ public final class Easy implements ILevelState {
 
     @Override
     public void enter(final ILevelContext ctx) {
-        ctx.getDrifter().clampSpeed(0, 0, 0, 0);
         ctx.clearMessage();
 
         this.cycles = 0;
@@ -58,6 +57,7 @@ public final class Easy implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         final Game game = ctx.getGame();
+        game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
         game.player.getScoreCounter().reset();

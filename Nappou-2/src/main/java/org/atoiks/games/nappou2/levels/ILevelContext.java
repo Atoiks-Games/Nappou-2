@@ -30,7 +30,6 @@ public interface ILevelContext {
     public void setState(final ILevelState nextState);
 
     public Game getGame();
-    public Drifter getDrifter();
 
     public void shouldSkipPlayerUpdate(boolean flag);
 
