@@ -128,14 +128,9 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         final float y = pos.getY();
         final float hw = Math.max(length, this.halfWidth);
 
-        final float maxX = x + hw;
-        final float minX = x - hw;
-        final float maxY = y + hw;
-        final float minY = y - hw;
-
-        return isPtOutOfScreen(maxX, maxY, w, h)
-            && isPtOutOfScreen(maxX, minY, w, h)
-            && isPtOutOfScreen(minX, minY, w, h)
-            && isPtOutOfScreen(minX, maxY, w, h);
+        return x > w
+            || x + hw < 0
+            || y > h
+            || y + hw < 0;
     }
 }
