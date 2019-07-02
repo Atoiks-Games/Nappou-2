@@ -27,6 +27,7 @@ import org.atoiks.games.nappou2.sizer.FixedSizer;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
+import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PathwayPointBullet extends PathwayBullet {
@@ -73,14 +74,6 @@ public class PathwayPointBullet extends PathwayBullet {
 
     @Override
     public boolean isOutOfScreen(final int w, final int h) {
-        final Vector2 pos = this.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        final float hw = this.r;
-
-        return x - hw > w
-            || x + hw < 0
-            || y - hw > h
-            || y + hw < 0;
+        return isSquareOutOfScreen(this.getPosition(), this.r, w, h);
     }
 }

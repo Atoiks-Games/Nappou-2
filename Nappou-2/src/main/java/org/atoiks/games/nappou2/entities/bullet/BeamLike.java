@@ -22,6 +22,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
@@ -122,14 +123,6 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         // Now it would be a square. If such square is out of the screen,
         // then the ray must be as well.
 
-        final Vector2 pos = this.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        final float hw = Math.max(length, this.halfWidth);
-
-        return x - hw > w
-            || x + hw < 0
-            || y - hw > h
-            || y + hw < 0;
+        return isSquareOutOfScreen(this.getPosition(), Math.max(this.length, this.halfWidth), w, h);
     }
 }
