@@ -20,10 +20,12 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.pathway.WigglePathway;
+
 import static org.atoiks.games.nappou2.pathway.WigglePathway.vertical;
 import static org.atoiks.games.nappou2.pathway.WigglePathway.horizontal;
 
-public final class WiggleBullet extends PathwayPointBullet {
+public final class WiggleBullet extends PathwayPointBullet<WigglePathway> {
 
     public WiggleBullet(Vector2 pos, float r, Vector2 vel, boolean d, float m, float s) {
         super(r, d ? horizontal(pos, vel, m, s) : vertical(pos, vel, m, s));

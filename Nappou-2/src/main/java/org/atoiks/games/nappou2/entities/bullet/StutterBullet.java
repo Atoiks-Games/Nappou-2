@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.WigglePathway;
 
-public final class StutterBullet extends PathwayPointBullet {
+public final class StutterBullet extends PathwayPointBullet<WigglePathway> {
 
     public StutterBullet(float x, float y, float r, float speed, float direction, float amplitude, float wspd) {
         super(r, new WigglePathway(

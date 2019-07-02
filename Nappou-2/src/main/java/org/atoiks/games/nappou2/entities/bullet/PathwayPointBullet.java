@@ -29,20 +29,20 @@ import org.atoiks.games.nappou2.pathway.IPathway;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class PathwayPointBullet extends PathwayBullet {
+public class PathwayPointBullet<T extends IPathway> extends PathwayBullet<T> {
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
     private final ISizer sizer;
     private float r;
 
-    public PathwayPointBullet(float r, ISizer sizer, IPathway pathway) {
+    public PathwayPointBullet(float r, ISizer sizer, T pathway) {
         super(pathway);
         this.sizer = sizer;
         this.r = r;
     }
 
-    public PathwayPointBullet(float r, IPathway pathway) {
+    public PathwayPointBullet(float r, T pathway) {
         this(r, FixedSizer.INSTANCE, pathway);
     }
 

@@ -24,7 +24,7 @@ import org.atoiks.games.nappou2.entities.ITrackable;
 
 import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
-public final class TrackPointBullet extends PathwayPointBullet {
+public final class TrackPointBullet extends PathwayPointBullet<TrackingPathway> {
 
     public TrackPointBullet(float x, float y, float r, ITrackable entity, float pathScale, float moveTime, float delay) {
         super(r, new TrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
