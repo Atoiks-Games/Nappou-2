@@ -214,8 +214,14 @@ public final class Utils {
         return false;
     }
 
-    public static boolean isPtOutOfScreen(final float x, final float y, final int w, final int h) {
-        return !(x > 0 && y > 0 && x < w && y < h);
+    public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h) {
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        return x + hw < 0
+            || x - hw > w
+            || y + hw < 0
+            || y - hw > h;
     }
 
     public static float lerp(final float start, final float end, final float frac) {

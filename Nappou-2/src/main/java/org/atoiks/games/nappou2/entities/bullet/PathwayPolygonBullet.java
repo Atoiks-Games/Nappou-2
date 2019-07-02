@@ -24,7 +24,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
-import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
+import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
@@ -114,19 +114,10 @@ public class PathwayPolygonBullet extends PathwayBullet {
         // If the bounding box is completely out of the screen,
         // then the polygon must be as well.
 
-        final Vector2 pos = this.getPosition();
-        final float x = boundX + pos.getX();
-        final float y = boundY + pos.getY();
-        final float hw = boundR;
+        return isSquareOutOfScreen(this.getTransformedBoundPosition(), this.boundR, w, h);
+    }
 
-        final float maxX = x + hw;
-        final float minX = x - hw;
-        final float maxY = y + hw;
-        final float minY = y - hw;
-
-        return isPtOutOfScreen(maxX, maxY, w, h)
-            && isPtOutOfScreen(maxX, minY, w, h)
-            && isPtOutOfScreen(minX, minY, w, h)
-            && isPtOutOfScreen(minX, maxY, w, h);
+    private Vector2 getTransformedBoundPosition() {
+        return new Vector2(boundX, boundY).add(this.getPosition());
     }
 }
