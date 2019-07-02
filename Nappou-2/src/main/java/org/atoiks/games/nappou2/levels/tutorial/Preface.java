@@ -90,6 +90,11 @@ public final class Preface implements ILevelState {
     }
 
     @Override
+    public void exit() {
+        ResourceManager.<Clip>get("/music/Awakening.wav").stop();
+    }
+
+    @Override
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.white);
         g.setFont(font30);

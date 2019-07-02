@@ -59,6 +59,11 @@ import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
     }
 
     @Override
+    public void exit() {
+        ResourceManager.<Clip>get("/music/Unlocked.wav").stop();
+    }
+
+    @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         if (game.noMoreEnemies()) {

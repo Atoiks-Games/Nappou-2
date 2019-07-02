@@ -70,7 +70,6 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
         this.firstRun = true;
 
-        ResourceManager.<Clip>get("/music/Unlocked.wav").stop();
         ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
     }
 
