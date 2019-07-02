@@ -26,7 +26,7 @@ import org.atoiks.games.nappou2.pathway.IPathway;
 
 public abstract class PathwayBullet<T extends IPathway> implements IBullet {
 
-    private final T pathway;
+    protected final T pathway;
 
     protected Vector2 drift = Vector2.ZERO;
 
