@@ -29,9 +29,6 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Drifter;
-import org.atoiks.games.nappou2.Vector2;
-
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
@@ -53,8 +50,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private final PlayerController playerController;
 
     private final PauseOverlay pauseOverlay;
-    private final StatusOverlay statusOverlay;
     private final DialogOverlay dialogOverlay;
+    private final StatusOverlay statusOverlay;
 
     private ILevelState state = NullState.INSTANCE;
 
