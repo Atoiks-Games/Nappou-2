@@ -127,9 +127,9 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         final float y = pos.getY();
         final float hw = Math.max(length, this.halfWidth);
 
-        return x > w
+        return x - hw > w
             || x + hw < 0
-            || y > h
+            || y - hw > h
             || y + hw < 0;
     }
 }
