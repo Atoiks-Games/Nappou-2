@@ -56,28 +56,20 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
         // Instead of shifting the ray to the screen,
         // we translate the rendering matrix.
 
-        if (length == 0) {
+        if (this.length == 0) {
             return;
         }
 
         final Vector2 pos = this.getPosition();
         final float tx = pos.getX();
         final float ty = pos.getY();
-        final float hw = Math.min(length, this.halfWidth);
-
-        // x, y pairs
-        final float[] coords = {
-            0,      -hw,
-            length, -hw,
-            length,  hw,
-            0,       hw,
-        };
+        final float hw = Math.min(this.length, this.halfWidth);
 
         g.translate(tx, ty);
         g.rotate(angle, 0, 0);
 
         g.setColor(this.color);
-        g.fillPolygon(coords);
+        g.fillRect(0, -hw, this.length, hw);
 
         g.rotate(-angle, 0, 0);
         g.translate(-tx, -ty);
