@@ -24,7 +24,6 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
-import static org.atoiks.games.nappou2.Utils.isPtOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
@@ -119,14 +118,9 @@ public class PathwayPolygonBullet extends PathwayBullet {
         final float y = boundY + pos.getY();
         final float hw = boundR;
 
-        final float maxX = x + hw;
-        final float minX = x - hw;
-        final float maxY = y + hw;
-        final float minY = y - hw;
-
-        return isPtOutOfScreen(maxX, maxY, w, h)
-            && isPtOutOfScreen(maxX, minY, w, h)
-            && isPtOutOfScreen(minX, minY, w, h)
-            && isPtOutOfScreen(minX, maxY, w, h);
+        return x - hw > w
+            || x + hw < 0
+            || y - hw > h
+            || y + hw < 0;
     }
 }
