@@ -33,38 +33,38 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPointBullet;
 
 // Angle parameter is ignored:
 //   Bullet can be rotated to an angle but not travel in that direction
-public final class PathwayPointBulletInfo implements BulletFactory {
+public final class PathwayPointBulletInfo<T extends IPathway> implements BulletFactory {
 
     public final float radius;
     public final Supplier<? extends ISizer> sizer;
-    public final BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway;
+    public final BiFunction<? super Vector2, ? super Float, ? extends T> pathway;
 
-    public PathwayPointBulletInfo(float radius, Supplier<? extends IPathway> pathway) {
+    public PathwayPointBulletInfo(float radius, Supplier<? extends T> pathway) {
         this(radius, () -> FixedSizer.INSTANCE, (_a, _b) -> pathway.get());
     }
 
-    public PathwayPointBulletInfo(float radius, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
+    public PathwayPointBulletInfo(float radius, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {
         this(radius, () -> FixedSizer.INSTANCE, pathway);
     }
 
-    public PathwayPointBulletInfo(float radius, Supplier<? extends ISizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends IPathway> pathway) {
+    public PathwayPointBulletInfo(float radius, Supplier<? extends ISizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {
         this.radius = radius;
         this.sizer = sizer;
         this.pathway = pathway;
     }
 
     @Override
-    public PathwayPointBullet createBullet(Vector2 position, float angle) {
-        return new PathwayPointBullet(radius, sizer.get(), pathway.apply(position, angle));
+    public PathwayPointBullet<? extends T> createBullet(Vector2 position, float angle) {
+        return new PathwayPointBullet<>(radius, sizer.get(), pathway.apply(position, angle));
     }
 
     @Override
-    public PathwayPointBullet createBullet(float x, float y, final float angle) {
+    public PathwayPointBullet<? extends T> createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
     }
 
-    public static PathwayPointBulletInfo createLegacyPointBullet(float radius, final float speed) {
-        return new PathwayPointBulletInfo(radius, (position, angle) ->
+    public static PathwayPointBulletInfo<FixedVelocity> createLegacyPointBullet(float radius, final float speed) {
+        return new PathwayPointBulletInfo<>(radius, (position, angle) ->
                 new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
     }
 }

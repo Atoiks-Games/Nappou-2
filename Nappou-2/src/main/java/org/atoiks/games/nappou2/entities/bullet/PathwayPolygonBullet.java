@@ -28,14 +28,14 @@ import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-public class PathwayPolygonBullet extends PathwayBullet {
+public class PathwayPolygonBullet<T extends IPathway> extends PathwayBullet<T> {
 
     private final float[] coords;
     private final float boundX;
     private final float boundY;
     private final float boundR;
 
-    public PathwayPolygonBullet(final float[] pts, final IPathway pathway) {
+    public PathwayPolygonBullet(final float[] pts, final T pathway) {
         super(pathway);
         this.coords = pts;
 
