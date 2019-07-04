@@ -34,6 +34,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
+import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -50,6 +51,9 @@ public final class TitleScene extends CenteringScene {
 
     private final Clip bgm;
     private int selector;
+
+    private SaveData saves;
+    private boolean blockContinueOption;
 
     private final Font font16;
     private final Font font30;
@@ -75,14 +79,13 @@ public final class TitleScene extends CenteringScene {
         g.drawString("Void Walker", 260, 178);
 
         g.setFont(font30);
-        for (int i = 0; i < OPT_MSG.length; ++i) {
+        for (int i = getFirstSelectableIndex(); i < OPT_MSG.length; ++i) {
             g.drawString(OPT_MSG[i], 68, selectorY[i] + font30.getSize() - 2);
         }
 
         g.setFont(font16);
         g.drawString("      Made with love by Atoiks Games", 602, 540);
         g.drawString("In association with Harvard Game Devs", 600, 560);
-
 
         g.drawRect(61, selectorY[selector], 65, selectorY[selector] + OPT_HEIGHT);
     }
@@ -91,12 +94,9 @@ public final class TitleScene extends CenteringScene {
     public boolean update(float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             switch (selector) {
-                case 0: {
-                    final SaveData save = ResourceManager.get("./saves.dat");
-                    GameLevelScene.unwindAndStartLevel(
-                            new Game(save.getShieldCopy()), save.getCheckpoint());
+                case 0:
+                    GameLevelScene.unwindAndStartLevel(new Game(this.saves.getShieldCopy()), this.saves.getCheckpoint());
                     break;
-                }
                 case 1:
                     SceneManager.pushScene(new DiffOptionScene());
                     break;
@@ -117,13 +117,22 @@ public final class TitleScene extends CenteringScene {
             }
             return true;
         }
+
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
-            if (++selector >= selectorY.length) selector = 0;
+            if (++selector >= selectorY.length) {
+                selector = getFirstSelectableIndex();
+            }
         }
         if (Input.isKeyPressed(KeyEvent.VK_UP)) {
-            if (--selector < 0) selector = selectorY.length - 1;
+            if (--selector < getFirstSelectableIndex()) {
+                selector = selectorY.length - 1;
+            }
         }
         return true;
+    }
+
+    private int getFirstSelectableIndex() {
+        return this.blockContinueOption ? 1 : 0;
     }
 
     @Override
@@ -134,6 +143,13 @@ public final class TitleScene extends CenteringScene {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        // Refetch in case SaveData was replaced
+        this.saves = ResourceManager.get("./saves.dat");
+        this.blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
+
+        // Make sure we are selecting a valid index
+        this.selector = getFirstSelectableIndex();
     }
 
     @Override
