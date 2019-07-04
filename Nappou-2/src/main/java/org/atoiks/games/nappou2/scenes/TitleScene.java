@@ -93,11 +93,8 @@ public final class TitleScene extends CenteringScene {
             switch (selector) {
                 case 0: {
                     final SaveData save = ResourceManager.get("./saves.dat");
-                    final ILevelState checkpoint = save.getCheckpoint();
-                    final GameLevelScene next = new GameLevelScene(new Game(save.getShieldCopy()));
-                    SceneManager.swapScene(next);
-                    checkpoint.restore(next);
-                    next.setState(checkpoint);
+                    GameLevelScene.unwindAndStartLevel(
+                            new Game(save.getShieldCopy()), save.getCheckpoint());
                     break;
                 }
                 case 1:
