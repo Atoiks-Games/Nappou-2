@@ -26,7 +26,6 @@ import java.awt.event.KeyEvent;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -63,13 +62,6 @@ public final class ConfigScene extends CenteringScene {
     }
 
     @Override
-    public void enter(Scene from) {
-        if (config.bgm) {
-            bgm.start();
-        }
-    }
-
-    @Override
     public void render(IGraphics g) {
         g.setClearColor(Color.black);
         g.clearGraphics();
@@ -101,16 +93,8 @@ public final class ConfigScene extends CenteringScene {
 
     @Override
     public boolean update(float dt) {
-        if (config.bgm) {
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        } else {
-            bgm.stop();
-            bgm.setMicrosecondPosition(0);
-        }
-
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            SceneManager.swapScene(new TitleScene());
+            SceneManager.popScene();
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -139,7 +123,12 @@ public final class ConfigScene extends CenteringScene {
     private void setValueAtSelector(final boolean newValue) {
         switch (selector) {
             case 0:
-                config.bgm = newValue;
+                if ((config.bgm = newValue)) {
+                    bgm.start();
+                    bgm.loop(Clip.LOOP_CONTINUOUSLY);
+                } else {
+                    bgm.stop();
+                }
                 break;
             case 1:
                 config.challengeMode = newValue;

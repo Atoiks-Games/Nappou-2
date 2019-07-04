@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
-public final class PointBullet extends PathwayPointBullet {
+public final class PointBullet extends PathwayPointBullet<FixedVelocity> {
 
     public PointBullet(final Vector2 position, float r, final Vector2 velocity) {
         super(r, new FixedVelocity(position, velocity));

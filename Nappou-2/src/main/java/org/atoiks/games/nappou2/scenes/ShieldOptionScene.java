@@ -30,11 +30,8 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.ILevelState;
-
-import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.Player;
 
@@ -51,8 +48,6 @@ public final class ShieldOptionScene extends CenteringScene {
     private final ILevelState nextState;
 
     private int shieldSel;
-
-    private boolean skipSelection;
 
     private final Font font30;
     private final Font font80;
@@ -71,24 +66,18 @@ public final class ShieldOptionScene extends CenteringScene {
         g.clearGraphics();
         super.render(g);
 
-        if (!skipSelection) {
-            g.setColor(Color.white);
-            g.setFont(this.font80);
-            g.drawString("Choose Your Shield", 130, 120);
-            g.setFont(this.font30);
-            for (int i = 0; i < SHIELD_MSG.length; ++i) {
-                g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + this.font30.getSize());
-            }
-            g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
+        g.setColor(Color.white);
+        g.setFont(this.font80);
+        g.drawString("Choose Your Shield", 130, 120);
+        g.setFont(this.font30);
+        for (int i = 0; i < SHIELD_MSG.length; ++i) {
+            g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + this.font30.getSize());
         }
+        g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
     }
 
     @Override
     public boolean update(float dt) {
-        if (skipSelection) {
-            return startGame();
-        }
-
         if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             SceneManager.popScene();
             return true;
@@ -107,28 +96,10 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final ILevelState checkpoint = new Preface(this.nextState);
-        final GameLevelScene next = new GameLevelScene(new Player(getShieldFromOption()));
-        SceneManager.unwindToScene(next);
-        checkpoint.restore(next);
-        next.setState(checkpoint);
+        final IShieldEntity shield = getShieldFromOption();
+        ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
+        GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
         return true;
-    }
-
-    @Override
-    public void enter(Scene previousSceneId) {
-        final GameConfig cfg = ResourceManager.get("./game.cfg");
-        if ((skipSelection = cfg.challengeMode)) {
-            // Challenge mode does not use NullShield
-            // Also, line above is intentional assignment, not test equality
-            shieldSel = shieldSelY.length - 1;
-        }
-    }
-
-    @Override
-    public void leave() {
-        final SaveData sData = ResourceManager.get("./saves.dat");
-        sData.setShield(getShieldFromOption());
     }
 
     private IShieldEntity getShieldFromOption() {

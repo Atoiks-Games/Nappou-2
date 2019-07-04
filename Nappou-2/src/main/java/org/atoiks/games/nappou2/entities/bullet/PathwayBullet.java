@@ -24,15 +24,15 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
-public abstract class PathwayBullet implements IBullet {
+public abstract class PathwayBullet<T extends IPathway> implements IBullet {
 
-    private final IPathway pathway;
+    protected final T pathway;
 
     protected Vector2 drift = Vector2.ZERO;
 
     protected Color color = Color.white;
 
-    protected PathwayBullet(IPathway pathway) {
+    protected PathwayBullet(T pathway) {
         this.pathway = pathway;
     }
 

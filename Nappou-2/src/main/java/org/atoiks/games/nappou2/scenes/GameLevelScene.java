@@ -161,4 +161,11 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
 
         state.updateLevel(this, dt);
     }
+
+    /* package */ static void unwindAndStartLevel(Player player, ILevelState state) {
+        final GameLevelScene next = new GameLevelScene(player);
+        SceneManager.unwindToScene(next);
+        state.restore(next);
+        next.setState(state);
+    }
 }

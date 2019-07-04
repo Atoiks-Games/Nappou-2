@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.ITrackable;
 
 import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
-public final class TrackPolygonBullet extends PathwayPolygonBullet {
+public final class TrackPolygonBullet extends PathwayPolygonBullet<TrackingPathway> {
 
     public TrackPolygonBullet(float[] coords, ITrackable entity, float pathScale, float moveTime, float delay) {
         // Assumes coords is already placed at initial position.

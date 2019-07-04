@@ -30,10 +30,16 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.SaveData;
+import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.tutorial.Preface;
+
+import org.atoiks.games.nappou2.entities.Player;
+
+import org.atoiks.games.nappou2.entities.shield.NullShield;
 
 public final class DiffOptionScene extends CenteringScene {
 
@@ -74,7 +80,17 @@ public final class DiffOptionScene extends CenteringScene {
             return true;
         }
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            SceneManager.pushScene(new ShieldOptionScene(getLevelFromOption()));
+            final ILevelState level = new Preface(getLevelFromOption());
+            if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
+                // Challenge mode forces you to use no shields,
+                // so there is no need to jump into shield-option-scene.
+
+                final NullShield shield = new NullShield();
+                ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
+                GameLevelScene.unwindAndStartLevel(new Player(shield), level);
+            } else {
+                SceneManager.pushScene(new ShieldOptionScene(level));
+            }
             return true;
         }
 
