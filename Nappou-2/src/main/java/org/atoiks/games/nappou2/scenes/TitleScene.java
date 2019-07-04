@@ -104,7 +104,7 @@ public final class TitleScene extends CenteringScene {
                     SceneManager.pushScene(new ScoreScene());
                     break;
                 case 3:
-                    SceneManager.swapScene(new ConfigScene());
+                    SceneManager.pushScene(new ConfigScene());
                     break;
                 case 4:
                     SceneManager.pushScene(new CreditsScene());
@@ -130,11 +130,9 @@ public final class TitleScene extends CenteringScene {
     public void enter(final Scene from) {
         // Enter only deals with scenes that play different songs!
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            if (!(from instanceof ConfigScene)) {
-                bgm.setMicrosecondPosition(0);
-                bgm.start();
-                bgm.loop(Clip.LOOP_CONTINUOUSLY);
-            }
+            bgm.setMicrosecondPosition(0);
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 
