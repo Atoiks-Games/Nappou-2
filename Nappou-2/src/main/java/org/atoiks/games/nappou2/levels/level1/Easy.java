@@ -68,11 +68,12 @@ public final class Easy implements ILevelState {
         this.wave = 0;
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
+        final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
         game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
+        game.player.getHpCounter().restoreTo(saveData.isChallengeMode() ? 1 : 5);
         game.player.getScoreCounter().reset();
 
         bgm = ResourceManager.get("/music/Level_One.wav");
@@ -83,7 +84,7 @@ public final class Easy implements ILevelState {
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
-        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
+        saveData.setCheckpoint(this);
     }
 
     @Override

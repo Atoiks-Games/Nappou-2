@@ -19,7 +19,9 @@
 package org.atoiks.games.nappou2.levels;
 
 import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.scenes.TitleScene;
@@ -43,10 +45,13 @@ public final class SaveScoreState implements ILevelState {
 
     @Override
     public void updateLevel(ILevelContext ctx, float dt) {
+        final boolean mode = ResourceManager.<SaveData>get("./saves.dat").isChallengeMode();
+
         SceneManager.swapScene(new TitleScene());
         SceneManager.pushScene(new SaveHighscoreScene(
                 diff,
                 levelId,
-                ctx.getGame().player.getScoreCounter().getScore()));
+                ctx.getGame().player.getScoreCounter().getScore(),
+                mode));
     }
 }
