@@ -29,7 +29,6 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.ScoreData;
-import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
 
 public final class SaveHighscoreScene extends CenteringScene {
@@ -69,11 +68,13 @@ public final class SaveHighscoreScene extends CenteringScene {
     private final Difficulty diff;
     private final int levelId;
     private final int levelScore;
+    private final boolean mode;
 
-    public SaveHighscoreScene(Difficulty diff, int levelId, int score) {
+    public SaveHighscoreScene(Difficulty diff, int levelId, int score, boolean mode) {
         this.diff = diff;
         this.levelId = levelId;
         this.levelScore = score;
+        this.mode = mode;
 
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
@@ -136,15 +137,14 @@ public final class SaveHighscoreScene extends CenteringScene {
                     break;
                 case BANK_LENGTH - 1: // Done
                     // We will save the score here!
-                    final boolean challengeMode = ResourceManager.<GameConfig>get("./game.cfg").challengeMode;
                     final int levelDiff = this.diff.ordinal();
 
                     final ScoreData scoreDat = ResourceManager.get("./score.dat");
                     final String name = currentStr.length() > NAME_LENGTH_CAP
                             ? currentStr.substring(0, NAME_LENGTH_CAP) : currentStr;
 
-                    scoreDat.updateScores(challengeMode, levelId, levelDiff,
-                            new ScoreData.Pair(name, (challengeMode ? 2 : 1) * levelScore));
+                    scoreDat.updateScores(mode, levelId, levelDiff,
+                            new ScoreData.Pair(name, (mode ? 2 : 1) * levelScore));
 
                     // Then transition to correct scene
                     SceneManager.popScene();
