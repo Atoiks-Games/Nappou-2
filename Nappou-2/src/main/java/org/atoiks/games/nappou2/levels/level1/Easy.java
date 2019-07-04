@@ -244,7 +244,7 @@ final class EasyWave5 implements ILevelState {
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
-        if (this.bgm != null) {
+        if (this.bgm == null) {
             bgm = ResourceManager.get("/music/Level_One.wav");
         }
 
