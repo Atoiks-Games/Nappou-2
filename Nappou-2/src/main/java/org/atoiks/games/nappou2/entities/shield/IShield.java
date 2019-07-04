@@ -18,25 +18,14 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
-import java.io.Serializable;
+import org.atoiks.games.nappou2.entities.ICollidable;
 
-import org.atoiks.games.framework2d.IGraphics;
-
-import org.atoiks.games.nappou2.Vector2;
-
-public interface IShield extends Serializable {
-
-    public float getR();
-    public Vector2 getPosition();
-    public void setPosition(Vector2 v);
+public interface IShield {
 
     public void activate();
     public void deactivate();
     public boolean isActive();
     public boolean isReady();
 
-    public void update(float dt);
-    public void render(IGraphics g);
-
-    public IShield copy();
+    public boolean collidesWith(ICollidable col);
 }

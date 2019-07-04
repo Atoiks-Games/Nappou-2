@@ -37,7 +37,7 @@ import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
-import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.NullShield;
 
@@ -87,7 +87,7 @@ public final class DiffOptionScene extends CenteringScene {
 
                 final NullShield shield = new NullShield();
                 ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
-                GameLevelScene.unwindAndStartLevel(new Game(shield), level);
+                GameLevelScene.unwindAndStartLevel(new Player(shield), level);
             } else {
                 SceneManager.pushScene(new ShieldOptionScene(level));
             }

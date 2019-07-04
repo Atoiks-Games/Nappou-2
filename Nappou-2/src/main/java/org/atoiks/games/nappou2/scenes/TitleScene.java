@@ -37,7 +37,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 
-import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Player;
 
 public final class TitleScene extends CenteringScene {
 
@@ -95,7 +95,7 @@ public final class TitleScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             switch (selector) {
                 case 0:
-                    GameLevelScene.unwindAndStartLevel(new Game(this.saves.getShieldCopy()), this.saves.getCheckpoint());
+                    GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint());
                     break;
                 case 1:
                     SceneManager.pushScene(new DiffOptionScene());

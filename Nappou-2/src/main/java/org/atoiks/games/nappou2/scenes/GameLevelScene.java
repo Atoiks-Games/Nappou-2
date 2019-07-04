@@ -29,19 +29,15 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Drifter;
-import org.atoiks.games.nappou2.Vector2;
-
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.levels.ILevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
-
-import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
-import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
+import org.atoiks.games.nappou2.entities.PlayerController;
 
 public final class GameLevelScene extends CenteringScene implements ILevelContext {
 
@@ -49,36 +45,26 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     public static final int HEIGHT = 600;
     public static final int GAME_BORDER = 750;
 
-    public static final float DEFAULT_DX = 300f;
-    public static final float DEFAULT_DY = 300f;
-
-    private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
-    private static final float MIN_FIRE_DELAY = 0.2f;
-
-    private final Drifter drift = new Drifter();
+    private final Border border = new Border(GAME_BORDER, HEIGHT);
     private final Game game;
+    private final PlayerController playerController;
 
     private final PauseOverlay pauseOverlay;
-    private final StatusOverlay statusOverlay;
     private final DialogOverlay dialogOverlay;
-
-    private boolean skipPlayerUpdate;
-    private float playerFireLimiter;
+    private final StatusOverlay statusOverlay;
 
     private ILevelState state = NullState.INSTANCE;
 
-    public GameLevelScene(final Game game) {
-        shouldSkipPlayerUpdate(false);
-
-        this.game = game;
-        this.game.clipGameBorder(GAME_BORDER, HEIGHT);
+    public GameLevelScene(final Player player) {
+        this.game = new Game(player, this.border);
+        this.playerController = new PlayerController(this.game, this.border);
 
         final Image hpImg = ResourceManager.get("/image/hp.png");
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
 
         this.pauseOverlay = new PauseOverlay(fnt);
         this.dialogOverlay = new DialogOverlay(fnt);
-        this.statusOverlay = new StatusOverlay(fnt, this.game, hpImg);
+        this.statusOverlay = new StatusOverlay(fnt, player, hpImg);
     }
 
     @Override
@@ -99,13 +85,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     }
 
     @Override
-    public Drifter getDrifter() {
-        return drift;
-    }
-
-    @Override
     public void shouldSkipPlayerUpdate(final boolean flag) {
-        skipPlayerUpdate = flag;
+        this.playerController.setIgnoreUpdate(flag);
     }
 
     @Override
@@ -154,6 +135,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     public boolean update(final float dt) {
         if (pauseOverlay.isEnabled()) {
             pauseOverlay.update(dt);
+        } else if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+            pauseOverlay.enable();
         } else {
             levelUpdate(dt);
         }
@@ -161,29 +144,17 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     }
 
     private void levelUpdate(final float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            pauseOverlay.enable();
-            return;
-        }
-
-        // And strangely enough, if you have read the next comment
-        // already, player updates were not part of the *5
-        // things*, so it uses the un-partitioned dt.
-        processPlayerTime(dt);
-
-        // At some point, the update sequence used to be split up
-        // so each update frame only did one thing. It was divided
+        // At some point, the update sequence was split up so
+        // each update frame only did one thing. It was divided
         // into 5 things.
-        final float dtDiv5 = dt / 5;
-        drift.update(dtDiv5);
-        final Vector2 disp = drift.getDrift().mul(dtDiv5);
-        game.updateEnemySpawner(dtDiv5);
-        game.updateEnemyPosition(dtDiv5, disp);
-        game.updateEnemyBulletPosition(dtDiv5, disp);
-        game.updatePlayerBulletPosition(dtDiv5, disp);
+        this.game.update(dt / 5);
 
-        game.performCollisionCheck();
-        if (game.player.getHp() <= 0) {
+        // And strangely enough, player updates were not part of
+        // the *5 things*, so it uses the un-partitioned dt.
+        this.playerController.update(dt);
+
+        this.game.performCollisionCheck();
+        if (this.game.shouldAbort()) {
             SceneManager.swapScene(new TitleScene());
             return;
         }
@@ -191,61 +162,8 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         state.updateLevel(this, dt);
     }
 
-    private void processPlayerTime(final float dt) {
-        if (skipPlayerUpdate) {
-            return;
-        }
-
-        processPlayerMovement(dt);
-        processPlayerAttack(dt);
-        processPlayerShield(dt);
-    }
-
-    private void processPlayerMovement(final float dt) {
-        final Player player = game.player;
-
-        final Vector2 disp = drift.getDrift();
-
-        // Calculate player's unscaled speed in y
-        float tmpDy = disp.getY();
-        final float tmpY = player.getY();
-        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpDy += DEFAULT_DY;
-        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpDy -= DEFAULT_DY;
-        if ((tmpY + Player.RADIUS >= HEIGHT && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
-            tmpDy = 0;
-        }
-
-        // Calculate player's unscaled speed in x
-        float tmpDx = disp.getX();
-        final float tmpX = player.getX();
-        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpDx += DEFAULT_DX;
-        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpDx -= DEFAULT_DX;
-        if ((tmpX + Player.RADIUS >= GAME_BORDER && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
-            tmpDx = 0;
-        }
-
-        player.setVelocity(new Vector2(tmpDx, tmpDy));
-
-        player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
-        player.update(dt);
-    }
-
-    private void processPlayerAttack(final float dt) {
-        if ((playerFireLimiter -= dt) <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
-            final Player player = game.player;
-            game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(player.getPosition(), (float) (-Math.PI / 2)));
-            playerFireLimiter = MIN_FIRE_DELAY;
-        }
-    }
-
-    private void processPlayerShield(final float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_X)) {
-            game.player.getShield().activate();
-        }
-    }
-
-    /* package */ static void unwindAndStartLevel(Game game, ILevelState state) {
-        final GameLevelScene next = new GameLevelScene(game);
+    /* package */ static void unwindAndStartLevel(Player player, ILevelState state) {
+        final GameLevelScene next = new GameLevelScene(player);
         SceneManager.unwindToScene(next);
         state.restore(next);
         next.setState(state);

@@ -16,31 +16,27 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels;
+package org.atoiks.games.nappou2;
 
-import org.atoiks.games.framework2d.IGraphics;
+public final class ScoreCounter {
 
-import org.atoiks.games.nappou2.Drifter;
+    // The lowest value is capped at zero
+    private int score;
 
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Message;
-
-public interface ILevelContext {
-
-    public void setState(final ILevelState nextState);
-
-    public Game getGame();
-
-    public void shouldSkipPlayerUpdate(boolean flag);
-
-    public void clearMessage();
-    public void displayMessage(Message msg);
-
-    public default void disableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(true);
+    public int getScore() {
+        return this.score;
     }
 
-    public default void enableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(false);
+    public void restoreTo(int score) {
+        this.score = Math.max(0, score);
+    }
+
+    public void reset() {
+        this.score = 0;
+    }
+
+    public ScoreCounter changeBy(int delta) {
+        this.score = Math.max(0, this.score + delta);
+        return this;
     }
 }

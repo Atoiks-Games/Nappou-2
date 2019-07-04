@@ -59,7 +59,6 @@ public final class Hard implements ILevelState {
 
     @Override
     public void enter(final ILevelContext ctx) {
-        ctx.getDrifter().clampSpeed(0, 0, 0, 0);
         ctx.clearMessage();
 
         this.cycles = 0;
@@ -68,9 +67,10 @@ public final class Hard implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         final Game game = ctx.getGame();
+        game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(cfg.challengeMode ? 1 : 5);
-        game.setScore(0);
+        game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
+        game.player.getScoreCounter().reset();
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
@@ -89,7 +89,6 @@ public final class Hard implements ILevelState {
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
-        final Drifter drift = ctx.getDrifter();
 
         ++cycles;
         switch (wave) {
@@ -275,7 +274,7 @@ final class HardBossWave implements ILevelState {
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
-        final Drifter drift = ctx.getDrifter();
+        final Drifter drift = game.drifter;
 
         if (cycles++ == 0) {
             game.addEnemy(new Level1Hard(300, 375, -10, 20));

@@ -16,31 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels;
+package org.atoiks.games.nappou2.entities.shield;
+
+import java.io.Serializable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Drifter;
+import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Message;
+import org.atoiks.games.nappou2.entities.ICollidable;
 
-public interface ILevelContext {
+public interface IShieldEntity extends IShield, Serializable {
 
-    public void setState(final ILevelState nextState);
+    public float getR();
+    public Vector2 getPosition();
+    public void setPosition(Vector2 v);
 
-    public Game getGame();
+    public void update(float dt);
+    public void render(IGraphics g);
 
-    public void shouldSkipPlayerUpdate(boolean flag);
+    public IShieldEntity copy();
 
-    public void clearMessage();
-    public void displayMessage(Message msg);
-
-    public default void disableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(true);
-    }
-
-    public default void enableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(false);
+    @Override
+    public default boolean collidesWith(ICollidable col) {
+        return col.collidesWith(getPosition(), getR());
     }
 }

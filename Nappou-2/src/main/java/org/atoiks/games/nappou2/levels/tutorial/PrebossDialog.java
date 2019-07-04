@@ -63,8 +63,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(restoreHp);
-        game.setScore(restoreScore);
+        game.player.getHpCounter().restoreTo(restoreHp);
+        game.player.getScoreCounter().restoreTo(restoreScore);
     }
 
     @Override
@@ -72,8 +72,8 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         super.enter(ctx);
 
         final Game game = ctx.getGame();
-        this.restoreHp = game.player.getHp();
-        this.restoreScore = game.getScore();
+        this.restoreHp = game.player.getHpCounter().getHp();
+        this.restoreScore = game.player.getScoreCounter().getScore();
 
         this.line = 0;
         ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);

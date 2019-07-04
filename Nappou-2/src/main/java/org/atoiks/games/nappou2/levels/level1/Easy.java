@@ -61,7 +61,6 @@ public final class Easy implements ILevelState {
 
     @Override
     public void enter(final ILevelContext ctx) {
-        ctx.getDrifter().clampSpeed(0, 0, 0, 0);
         ctx.clearMessage();
 
         this.cycles = 0;
@@ -70,9 +69,10 @@ public final class Easy implements ILevelState {
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
         final Game game = ctx.getGame();
+        game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(cfg.challengeMode ? 1 : 5);
-        game.setScore(0);
+        game.player.getHpCounter().restoreTo(cfg.challengeMode ? 1 : 5);
+        game.player.getScoreCounter().reset();
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
@@ -100,16 +100,16 @@ public final class Easy implements ILevelState {
                 switch (cycles) {
                     //Fish group 1
                     case 400:
-                        game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
-                        game.addEnemySpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
+                        game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
+                        game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
                         break;
 
                     //Fish group 2
                     case 455:
-                        game.addEnemySpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
-                        game.addEnemySpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
-                        game.addEnemySpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
-                        game.addEnemySpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
+                        game.addSpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
+                        game.addSpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
+                        game.addSpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
+                        game.addSpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
                 }
                 if (cycles > 605 && game.noMoreEnemies()) {
                     wave++;
@@ -165,8 +165,8 @@ public final class Easy implements ILevelState {
             case 2:
                 if (cycles == 40) {
                     game.addEnemy(new Ripple(10, 375, -10, 20, 500, (float) Math.PI / 2));
-                    game.addEnemySpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
-                    game.addEnemySpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
+                    game.addSpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+                    game.addSpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
                 }
                 if (cycles > 40 && game.noMoreEnemies()) {
                     wave++;
@@ -225,8 +225,8 @@ final class EasyWave5 implements ILevelState {
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.setHp(restoreHp);
-        game.setScore(restoreScore);
+        game.player.getHpCounter().restoreTo(restoreHp);
+        game.player.getScoreCounter().restoreTo(restoreScore);
 
         // Restart music if we resume
         this.bgm = ResourceManager.get("/music/Level_One.wav");
@@ -239,8 +239,8 @@ final class EasyWave5 implements ILevelState {
         this.wave = 5;
 
         final Game game = ctx.getGame();
-        this.restoreHp = game.player.getHp();
-        this.restoreScore = game.getScore();
+        this.restoreHp = game.player.getHpCounter().getHp();
+        this.restoreScore = game.player.getScoreCounter().getScore();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 
@@ -414,7 +414,7 @@ final class EasyBossWave implements ILevelState {
     @Override
     public void updateLevel(final ILevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
-        final Drifter drift = ctx.getDrifter();
+        final Drifter drift = game.drifter;
 
         if (cycles++ == 0) {
             game.addEnemy(new Level1Easy(300, 375, -10, 20));

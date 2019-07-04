@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.Drifter;
 
 import org.atoiks.games.nappou2.spawner.ISpawner;
 
@@ -38,28 +39,22 @@ public final class Game {
     private final LinkedList<IEnemy> enemies = new LinkedList<>();
     private final LinkedList<ISpawner> spawners = new LinkedList<>();
 
+    public final Drifter drifter = new Drifter();
     public final Player player;
 
-    private int score;
+    private final Border border;
 
-    private int gameWidth = Integer.MAX_VALUE;
-    private int gameHeight = Integer.MAX_VALUE;
-
-    public Game(IShield shield) {
-        this.player = new Player(shield);
+    public Game(Player player, Border border) {
+        this.player = player;
+        this.border = border;
     }
 
     public void render(IGraphics g) {
-        if (player != null) player.render(g);
+        player.render(g);
 
         for (final IBullet bullet : enemyBullets) bullet.render(g);
         for (final IBullet bullet : playerBullets) bullet.render(g);
         for (final IEnemy enemy : enemies) enemy.render(g);
-    }
-
-    public void clipGameBorder(int w, int h) {
-        gameWidth = w;
-        gameHeight = h;
     }
 
     public void addEnemyBullet(final IBullet bullet) {
@@ -75,24 +70,12 @@ public final class Game {
         enemy.attachGame(this);
     }
 
-    public void addEnemySpawner(final ISpawner spawner) {
+    public void addSpawner(final ISpawner spawner) {
         spawners.add(spawner);
     }
 
     public boolean noMoreEnemies() {
         return enemies.isEmpty() && spawners.isEmpty();
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int changeScore(int delta) {
-        return this.score += delta;
     }
 
     public void clearBullets() {
@@ -106,7 +89,25 @@ public final class Game {
         spawners.clear();
     }
 
-    public void updateEnemySpawner(final float dt) {
+    public boolean shouldAbort() {
+        return this.player.getHpCounter().isOutOfHp();
+    }
+
+    public void update(final float dt) {
+        this.drifter.update(dt);
+        final Vector2 displacement = this.drifter.getDrift().mul(dt);
+
+        updateEnemySpawner(dt);
+        updateEnemyPosition(dt, displacement);
+        updateEnemyBulletPosition(dt, displacement);
+        updatePlayerBulletPosition(dt, displacement);
+    }
+
+    private void updateEnemySpawner(final float dt) {
+        if (spawners.isEmpty()) {
+            return;
+        }
+
         final Iterator<ISpawner> it = spawners.iterator();
         while (it.hasNext()) {
             final ISpawner spawner = it.next();
@@ -122,41 +123,40 @@ public final class Game {
             final IDriftEntity entity = it.next();
             entity.update(dt);
             entity.drift(drift);
-            if (entity.isOutOfScreen(gameWidth, gameHeight)) {
+            if (!this.border.containsCollidable(entity)) {
                 it.remove();
             }
         }
     }
 
-    public void updateEnemyPosition(final float dt, final Vector2 drift) {
+    private void updateEnemyPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(enemies.iterator(), dt, drift);
     }
 
-    public void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
+    private void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(enemyBullets.iterator(), dt, drift);
     }
 
-    public void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
+    private void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
         updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
     }
 
     public void performCollisionCheck() {
-        final Vector2 pp = player.getPosition();
-
         final IShield shield = player.getShield();
         final boolean shieldActive = shield.isActive();
+        final IShield respawnShield = player.getRespawnShield();
 
         for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
             final IBullet bullet = it.next();
-            if (shieldActive && bullet.collidesWith(shield.getPosition(), shield.getR())) {
+            if (shieldActive && shield.collidesWith(bullet)) {
                 it.remove();
-            } else if (!player.isRespawnShieldActive() && bullet.collidesWith(pp, Player.COLLISION_RADIUS)) {
+            } else if (!respawnShield.isActive() && player.collidesWith(bullet)) {
                 it.remove();
-                if (player.changeHpBy(-1) <= 0) {
+                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     // Player is dead, no more collision can happen
                     return;
                 }
-                player.activateRespawnShield();
+                respawnShield.activate();
             }
         }
 
@@ -164,27 +164,24 @@ public final class Game {
         for (final Iterator<IEnemy> outer = enemies.iterator(); outer.hasNext(); ) {
             final IEnemy enemy = outer.next();
 
-            final float er = enemy.getR();
-            final Vector2 ep = enemy.getPosition();
-
             for (final Iterator<IBullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
-                if (inner.next().collidesWith(ep, er)) {
+                if (enemy.collidesWith(inner.next())) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {
-                        changeScore(enemy.getScore());
+                        this.player.getScoreCounter().changeBy(enemy.getScore());
                         outer.remove();
                         continue enemy_loop;
                     }
                 }
             }
 
-            if (!player.isRespawnShieldActive() && enemy.collidesWith(pp, Player.COLLISION_RADIUS)) {
-                if (player.changeHpBy(-1) <= 0) {
+            if (!respawnShield.isActive() && player.collidesWith(enemy)) {
+                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
                     return;
                 }
-                player.activateRespawnShield();
+                respawnShield.activate();
                 if (enemy.changeHp(-1) <= 0) {
-                    changeScore(enemy.getScore());
+                    this.player.getScoreCounter().changeBy(enemy.getScore());
                     outer.remove();
                 }
             }

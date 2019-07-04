@@ -22,7 +22,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-public final class NullShield implements IShield {
+import org.atoiks.games.nappou2.entities.ICollidable;
+
+public final class NullShield implements IShieldEntity {
 
     private static final long serialVersionUID = -6024720306180805901L;
 
@@ -76,5 +78,11 @@ public final class NullShield implements IShield {
         // Yes, returning this is not copying
         // but then NullShield is state free
         return this;
+    }
+
+    @Override
+    public boolean collidesWith(ICollidable col) {
+        // It is impossible for this shield to collide with anything.
+        return false;
     }
 }

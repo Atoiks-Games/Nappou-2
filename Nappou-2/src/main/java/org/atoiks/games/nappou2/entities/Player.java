@@ -23,28 +23,33 @@ import java.awt.Color;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.ScoreCounter;
+import org.atoiks.games.nappou2.HitpointCounter;
+
+import org.atoiks.games.nappou2.entities.ICollidable;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
 
 public final class Player implements ITrackable {
 
     public static final int RADIUS = 8;
-    public static final int COLLISION_RADIUS = 2;
-    public static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+
+    private static final int COLLISION_RADIUS = 2;
+    private static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+
+    private final ScoreCounter scoreCounter = new ScoreCounter();
+    private final HitpointCounter hpCounter = new HitpointCounter();
 
     private final TrackingTimeShield respawnShield;
-
-    private IShield shield;
+    private final IShieldEntity shield;
 
     private Vector2 position;
     private Vector2 velocity;
     private float speedScale = 1;
-    private int hp = 5;
 
-    private boolean ignoreHpChange;
-
-    public Player(IShield shield) {
+    public Player(IShieldEntity shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
@@ -73,39 +78,20 @@ public final class Player implements ITrackable {
         this.setPosition(Vector2.muladd(this.speedScale * dt, this.velocity, this.position));
     }
 
-    public void applyFreshShield() {
-        this.shield = this.shield.copy();
-    }
-
     public IShield getShield() {
         return this.shield;
     }
 
-    public void activateRespawnShield() {
-        this.respawnShield.activate();
+    public IShield getRespawnShield() {
+        return this.respawnShield;
     }
 
-    public boolean isRespawnShieldActive() {
-        return this.respawnShield.isActive();
+    public ScoreCounter getScoreCounter() {
+        return this.scoreCounter;
     }
 
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int changeHpBy(int delta) {
-        if (!ignoreHpChange) {
-            this.hp += delta;
-        }
-        return this.hp;
-    }
-
-    public void setIgnoreHpChange(boolean flag) {
-        ignoreHpChange = flag;
+    public HitpointCounter getHpCounter() {
+        return this.hpCounter;
     }
 
     public void setSpeedScale(float scale) {
@@ -141,5 +127,9 @@ public final class Player implements ITrackable {
         this.position = pos;
         this.shield.setPosition(pos);
         this.respawnShield.setPosition(pos);
+    }
+
+    public boolean collidesWith(ICollidable col) {
+        return col.collidesWith(this.position, Player.COLLISION_RADIUS);
     }
 }
