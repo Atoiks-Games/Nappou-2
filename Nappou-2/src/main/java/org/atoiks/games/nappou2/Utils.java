@@ -215,13 +215,17 @@ public final class Utils {
     }
 
     public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h) {
+        return isSquareOutOfScreen(pos, hw, w, h, 0);
+    }
+
+    public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h, final int buffer) {
         final float x = pos.getX();
         final float y = pos.getY();
 
-        return x + hw < 0
-            || x - hw > w
-            || y + hw < 0
-            || y - hw > h;
+        return x + hw < -buffer
+            || x - hw > w + buffer
+            || y + hw < -buffer
+            || y - hw > h + buffer;
     }
 
     public static float lerp(final float start, final float end, final float frac) {

@@ -32,6 +32,8 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PathwayPointBullet extends PathwayBullet {
 
+    private static final int SCREEN_EDGE_BUFFER = 16;
+
     private final ISizer sizer;
     private float r;
 
@@ -74,6 +76,6 @@ public class PathwayPointBullet extends PathwayBullet {
 
     @Override
     public boolean isOutOfScreen(final int w, final int h) {
-        return isSquareOutOfScreen(this.getPosition(), this.r, w, h);
+        return isSquareOutOfScreen(this.getPosition(), this.r, w, h, SCREEN_EDGE_BUFFER);
     }
 }
