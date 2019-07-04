@@ -32,6 +32,12 @@ public final class SaveData implements Serializable {
 
     private ILevelState checkpoint = NullState.INSTANCE;
     private IShieldEntity shield = new NullShield();
+    private boolean challengeMode = false;
+
+    public void setCheckpoint(final ILevelState p, boolean m) {
+        this.setCheckpoint(p);
+        this.challengeMode = m;
+    }
 
     public void setCheckpoint(final ILevelState p) {
         this.checkpoint = p != null ? p : NullState.INSTANCE;
@@ -39,6 +45,10 @@ public final class SaveData implements Serializable {
 
     public void setShield(final IShieldEntity s) {
         this.shield = s != null ? s : new NullShield();
+    }
+
+    public boolean isChallengeMode() {
+        return this.challengeMode;
     }
 
     public ILevelState getCheckpoint() {
