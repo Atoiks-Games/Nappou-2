@@ -20,7 +20,6 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Image;
 
 import java.awt.event.KeyEvent;
 
@@ -59,12 +58,11 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         this.game = new Game(player, this.border);
         this.playerController = new PlayerController(this.game, this.border);
 
-        final Image hpImg = ResourceManager.get("/image/hp.png");
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
 
         this.pauseOverlay = new PauseOverlay(fnt);
         this.dialogOverlay = new DialogOverlay(fnt);
-        this.statusOverlay = new StatusOverlay(fnt, player, hpImg);
+        this.statusOverlay = new StatusOverlay(fnt, player);
     }
 
     @Override
