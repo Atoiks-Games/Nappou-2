@@ -58,6 +58,10 @@ public final class Preface implements ILevelState {
     private transient Font font16;
     private transient Font font30;
 
+    // Current hack to make sure you cannot enable challenge mode
+    // part way through the game play via continue!
+    private boolean shouldSaveChallengeMode = true;
+
     public Preface(ILevelState nextState) {
         this.nextState = nextState;
     }
@@ -78,10 +82,22 @@ public final class Preface implements ILevelState {
 
         ctx.clearMessage();
 
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
         final SaveData saveData = ResourceManager.get("./saves.dat");
-        saveData.setCheckpoint(this);
 
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+        // Only save the challenge-mode flag when we first enter. Any
+        // other time, we do not read from that flag directly since
+        // the user could have quit the game, change it in settings,
+        // and restore it (which at this point, the value is
+        // inconsistent and this can cause incorrect hp restores!)
+        if (this.shouldSaveChallengeMode) {
+            this.shouldSaveChallengeMode = false;
+            saveData.setCheckpoint(this, cfg.challengeMode);
+        } else {
+            saveData.setCheckpoint(this);
+        }
+
+        if (cfg.bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");
             bgm.setMicrosecondPosition(0);
             bgm.start();
