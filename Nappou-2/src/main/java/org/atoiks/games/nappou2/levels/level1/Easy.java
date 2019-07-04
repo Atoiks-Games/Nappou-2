@@ -199,7 +199,7 @@ public final class Easy implements ILevelState {
                         break;
                 }
                 if (cycles > 2040 && game.noMoreEnemies()) {
-                    ctx.setState(new EasyWave5(bgm.getMicrosecondPosition()));
+                    ctx.setState(new EasyWave5());
                     return;
                 }
                 break;
@@ -213,8 +213,6 @@ final class EasyWave5 implements ILevelState {
 
     private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
 
-    private long songOffset;
-
     private int restoreScore;
     private int restoreHp;
 
@@ -223,16 +221,16 @@ final class EasyWave5 implements ILevelState {
 
     private transient Clip bgm;
 
-    public EasyWave5(long pos) {
-        this.songOffset = pos;
-    }
-
     @Override
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.setHp(restoreHp);
         game.setScore(restoreScore);
+
+        // Restart music if we resume
+        this.bgm = ResourceManager.get("/music/Level_One.wav");
+        this.bgm.setMicrosecondPosition(0);
     }
 
     @Override
@@ -245,9 +243,12 @@ final class EasyWave5 implements ILevelState {
         this.restoreScore = game.getScore();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
-        bgm = ResourceManager.get("/music/Level_One.wav");
+
+        if (this.bgm != null) {
+            bgm = ResourceManager.get("/music/Level_One.wav");
+        }
+
         if (cfg.bgm) {
-            bgm.setMicrosecondPosition(this.songOffset);
             bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
