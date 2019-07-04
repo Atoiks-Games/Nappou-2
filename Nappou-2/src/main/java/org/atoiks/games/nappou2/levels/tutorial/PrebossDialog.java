@@ -28,6 +28,7 @@ import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Message;
+import org.atoiks.games.nappou2.entities.DefaultRestoreData;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
@@ -50,8 +51,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private static final long serialVersionUID = 7508014111511836801L;
 
-    private int restoreScore;
-    private int restoreHp;
+    private final DefaultRestoreData data = new DefaultRestoreData();
 
     private transient int line;
 
@@ -63,8 +63,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(restoreHp);
-        game.player.getScoreCounter().restoreTo(restoreScore);
+        this.data.restore(game);
     }
 
     @Override
@@ -72,8 +71,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         super.enter(ctx);
 
         final Game game = ctx.getGame();
-        this.restoreHp = game.player.getHpCounter().getHp();
-        this.restoreScore = game.player.getScoreCounter().getScore();
+        this.data.fetch(game);
 
         this.line = 0;
         ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);

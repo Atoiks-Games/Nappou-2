@@ -35,6 +35,7 @@ import org.atoiks.games.nappou2.levels.SaveScoreState;
 import org.atoiks.games.nappou2.spawner.FishSpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.DefaultRestoreData;
 
 import org.atoiks.games.nappou2.entities.enemy.*;
 import org.atoiks.games.nappou2.entities.bullet.*;
@@ -213,8 +214,7 @@ final class EasyWave5 implements ILevelState {
 
     private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
 
-    private int restoreScore;
-    private int restoreHp;
+    private final DefaultRestoreData data = new DefaultRestoreData();
 
     private transient int cycles;
     private transient int wave;
@@ -225,8 +225,7 @@ final class EasyWave5 implements ILevelState {
     public void restore(final ILevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(restoreHp);
-        game.player.getScoreCounter().restoreTo(restoreScore);
+        this.data.restore(game);
 
         // Restart music if we resume
         this.bgm = ResourceManager.get("/music/Level_One.wav");
@@ -239,8 +238,7 @@ final class EasyWave5 implements ILevelState {
         this.wave = 5;
 
         final Game game = ctx.getGame();
-        this.restoreHp = game.player.getHpCounter().getHp();
-        this.restoreScore = game.player.getScoreCounter().getScore();
+        this.data.fetch(game);
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");
 

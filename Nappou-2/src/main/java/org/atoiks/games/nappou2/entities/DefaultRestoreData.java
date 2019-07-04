@@ -31,13 +31,13 @@ public final class DefaultRestoreData implements Externalizable {
     private int score;
 
     public void restore(Game game) {
-        game.setScore(score);
-        game.player.setHp(hp);
+        game.player.getHpCounter().restoreTo(this.hp);
+        game.player.getScoreCounter().restoreTo(this.score);
     }
 
     public void fetch(Game game) {
-        this.score = game.getScore();
-        this.hp = game.player.getHp();
+        this.hp = game.player.getHpCounter().getHp();
+        this.score = game.player.getScoreCounter().getScore();
     }
 
     public void readExternal(ObjectInput s) throws IOException, ClassNotFoundException {
