@@ -22,7 +22,7 @@ import java.util.Random;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-/* package */ final class Data {
+public final class Data {
 
     public static final Random rnd = new Random();
 
