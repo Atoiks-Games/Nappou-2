@@ -33,15 +33,20 @@ public abstract class TimeBasedShield implements IShieldEntity {
     private static final long serialVersionUID = 172635916L;
 
     // see read/writeObject
-    protected transient Color color = Color.orange;
-    protected transient float r;
-
+    private transient Color color = Color.orange;
     private transient float reloadTime;
     private transient float timeout;
+
+    protected transient float r;
 
     protected transient boolean active;
     protected transient Vector2 position;
     protected transient float time;
+
+    protected TimeBasedShield(final TimeBasedShield from) {
+        this(from.timeout, from.reloadTime, from.r);
+        this.color = from.color;
+    }
 
     protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
         this.timeout = timeout;
@@ -110,6 +115,10 @@ public abstract class TimeBasedShield implements IShieldEntity {
 
     public void setColor(Color c) {
         this.color = c != null ? c : Color.orange;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     protected final float getReloadTime() {

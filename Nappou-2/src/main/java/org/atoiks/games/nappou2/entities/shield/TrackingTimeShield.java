@@ -22,14 +22,16 @@ public final class TrackingTimeShield extends TimeBasedShield {
 
     private static final long serialVersionUID = 3069364776967448434L;
 
+    private TrackingTimeShield(TrackingTimeShield from) {
+        super(from);
+    }
+
     public TrackingTimeShield(float timeout, float reloadTime, float r) {
         super(timeout, reloadTime, r);
     }
 
     @Override
     public TrackingTimeShield copy() {
-        final TrackingTimeShield s = new TrackingTimeShield(getTimeout(), getReloadTime(), r);
-        s.setColor(this.color);
-        return s;
+        return new TrackingTimeShield(this);
     }
 }
