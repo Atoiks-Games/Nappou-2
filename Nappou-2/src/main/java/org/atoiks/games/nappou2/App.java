@@ -67,7 +67,7 @@ public class App {
 
         // Saves user saves
         try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./saves.dat"))) {
-            oos.writeObject(saveDat);
+            saveDat.writeExternal(oos);
         } catch (IOException ex) {
             // Oh well... to bad... the user's saves do not get saved...
             ex.printStackTrace();
