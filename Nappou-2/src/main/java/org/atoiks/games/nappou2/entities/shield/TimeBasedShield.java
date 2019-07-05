@@ -114,25 +114,14 @@ public abstract class TimeBasedShield implements IShieldEntity {
     private void writeObject(ObjectOutputStream s) throws IOException {
         // Have java serialize as much as possible
         s.defaultWriteObject();
-
-        // Write r, g, b, a as floats
-        final float[] buffer = new float[4];
-        this.color.getRGBComponents(buffer);
-        s.writeFloat(buffer[0]);
-        s.writeFloat(buffer[1]);
-        s.writeFloat(buffer[2]);
-        s.writeFloat(buffer[3]);
+        // Write color as packed bytes a, r, g, b
+        s.writeInt(this.color.getRGB());
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         // Have java deserialize as much as possible
         s.defaultReadObject();
-
-        // Read r, g, b, a as floats
-        final float r = s.readFloat();
-        final float g = s.readFloat();
-        final float b = s.readFloat();
-        final float a = s.readFloat();
-        this.color = new Color(r, g, b, a);
+        // Read color as packed bytes a, r, g, b
+        this.color = new Color(s.readInt(), true);
     }
 }
