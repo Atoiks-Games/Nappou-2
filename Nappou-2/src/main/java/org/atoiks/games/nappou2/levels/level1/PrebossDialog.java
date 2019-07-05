@@ -32,7 +32,7 @@ import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PrebossDialog extends AbstractDialogState {
+public final class PrebossDialog extends AbstractDialogState {
 
     private static final long serialVersionUID = 3707552362848467673L;
 
