@@ -28,6 +28,8 @@ public final class TrackingTimeShield extends TimeBasedShield {
 
     @Override
     public TrackingTimeShield copy() {
-        return new TrackingTimeShield(timeout, reloadTime, r);
+        final TrackingTimeShield s = new TrackingTimeShield(timeout, reloadTime, r);
+        s.setColor(this.color);
+        return s;
     }
 }
