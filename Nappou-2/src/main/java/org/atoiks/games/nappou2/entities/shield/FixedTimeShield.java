@@ -48,7 +48,7 @@ public final class FixedTimeShield extends TimeBasedShield {
 
     @Override
     public FixedTimeShield copy() {
-        final FixedTimeShield s = new FixedTimeShield(timeout, reloadTime, r);
+        final FixedTimeShield s = new FixedTimeShield(getTimeout(), getReloadTime(), r);
         s.setColor(this.color);
         return s;
     }

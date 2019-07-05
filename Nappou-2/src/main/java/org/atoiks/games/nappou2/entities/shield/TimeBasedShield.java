@@ -32,11 +32,12 @@ public abstract class TimeBasedShield implements IShieldEntity {
 
     private static final long serialVersionUID = 172635916L;
 
-    protected final float reloadTime;
-    protected final float timeout;
+    // see read/writeObject
+    protected transient Color color = Color.orange;
+    protected transient float r;
 
-    protected transient Color color = Color.orange; // see read/writeObject
-    protected float r;
+    private transient float reloadTime;
+    private transient float timeout;
 
     protected transient boolean active;
     protected transient Vector2 position;
@@ -111,17 +112,35 @@ public abstract class TimeBasedShield implements IShieldEntity {
         this.color = c != null ? c : Color.orange;
     }
 
+    protected final float getReloadTime() {
+        return this.reloadTime;
+    }
+
+    protected final float getTimeout() {
+        return this.timeout;
+    }
+
     private void writeObject(ObjectOutputStream s) throws IOException {
         // Have java serialize as much as possible
         s.defaultWriteObject();
+
         // Write color as packed bytes a, r, g, b
         s.writeInt(this.color.getRGB());
+
+        s.writeFloat(this.r);
+        s.writeFloat(this.reloadTime);
+        s.writeFloat(this.timeout);
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         // Have java deserialize as much as possible
         s.defaultReadObject();
+
         // Read color as packed bytes a, r, g, b
         this.color = new Color(s.readInt(), true);
+
+        this.r = s.readFloat();
+        this.reloadTime = s.readFloat();
+        this.timeout = s.readFloat();
     }
 }
