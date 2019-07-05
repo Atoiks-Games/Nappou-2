@@ -64,8 +64,8 @@ public final class SaveData implements Externalizable {
 
     @Override
     public void readExternal(final ObjectInput stream) throws IOException, ClassNotFoundException {
-        this.checkpoint = (ILevelState) stream.readObject();
-        this.shield = (IShieldEntity) stream.readObject();
+        this.setCheckpoint((ILevelState) stream.readObject());
+        this.setShield((IShieldEntity) stream.readObject());
         this.challengeMode = stream.readBoolean();
     }
 
