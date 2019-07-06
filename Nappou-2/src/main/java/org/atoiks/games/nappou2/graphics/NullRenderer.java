@@ -20,17 +20,19 @@ package org.atoiks.games.nappou2.graphics;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.Vector2;
 
-public final class NullEnemyRenderer implements IEnemyRenderer {
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-    public static final NullEnemyRenderer INSTANCE = new NullEnemyRenderer();
+public final class NullRenderer implements Renderer {
 
-    private NullEnemyRenderer() {
+    public static final NullRenderer INSTANCE = new NullRenderer();
+
+    private NullRenderer() {
         //
     }
 
-    public void render(IGraphics g, IEnemy enemy) {
+    public void render(IGraphics g, Shape shape, Vector2 pos) {
         // Do nothing
     }
 }

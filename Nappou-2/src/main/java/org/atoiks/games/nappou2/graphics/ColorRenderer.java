@@ -18,11 +18,32 @@
 
 package org.atoiks.games.nappou2.graphics;
 
+import java.awt.Color;
+
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.Vector2;
 
-public interface IEnemyRenderer {
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-    public void render(IGraphics g, IEnemy enemy);
+public final class ColorRenderer implements Renderer {
+
+    public static final ColorRenderer DEFAULT = new ColorRenderer(Color.white);
+
+    private final Color color;
+
+    public ColorRenderer(Color color) {
+        this.color = color;
+    }
+
+    public void render(IGraphics g, Shape shape, Vector2 pos) {
+        final float x = pos.getX();
+        final float y = pos.getY();
+        g.translate(x, y);
+
+        g.setColor(color);
+        shape.draw(g);
+
+        g.translate(-x, -y);
+    }
 }

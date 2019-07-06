@@ -18,31 +18,29 @@
 
 package org.atoiks.games.nappou2.graphics;
 
-import java.awt.Color;
+import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public final class ColorEnemyRenderer implements IEnemyRenderer {
+public final class ImageRenderer implements Renderer {
 
-    public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
+    private final Image image;
 
-    private final Color color;
-
-    public ColorEnemyRenderer(Color color) {
-        this.color = color;
+    public ImageRenderer(final Image image) {
+        this.image = image;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
-        g.setColor(color);
-        // x, y are the center of the enemy
-        final float r = obj.getRadius();
-        final Vector2 pos = obj.getPosition();
+    public void render(IGraphics g, Shape shape, Vector2 pos) {
         final float x = pos.getX();
         final float y = pos.getY();
-        g.drawOval(x - r, y - r, x + r, y + r);
+        g.translate(x, y);
+
+        shape.renderTexture(g, image);
+
+        g.translate(-x, -y);
     }
 }
