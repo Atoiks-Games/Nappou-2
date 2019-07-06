@@ -23,7 +23,7 @@ import org.atoiks.games.nappou2.Vector2;
 /**
  * Follows a cubic bezier curve
  */
-public final class CubicBezierPathway implements IPathway {
+public final class CubicBezierPathway implements Pathway {
 
     private final Vector2 p1;
     private final Vector2 p2;

@@ -25,8 +25,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.spawner.FishSpawner;
 
@@ -39,7 +39,7 @@ import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Easy implements ILevelState {
+public final class Easy implements LevelState {
 
     private static final long serialVersionUID = 1033236077109661435L;
 
@@ -48,7 +48,7 @@ public final class Easy implements ILevelState {
     private transient Clip bgm;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.clearMessage();
 
         this.cycles = 0;
@@ -79,7 +79,7 @@ public final class Easy implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         switch (++cycles) {
             //Fish group 1
             case 400: {

@@ -16,13 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public interface IDriftEntity extends ITrackable, ICollidable {
+public interface AttackPattern {
 
-    public void drift(Vector2 displacement);
-
-    public void update(float dt);
+    public void onFireUpdate(Enemy enemy, float dt);
 }

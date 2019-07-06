@@ -22,11 +22,11 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class MultiTrackPattern implements IAttackPattern {
+public final class MultiTrackPattern implements AttackPattern {
 
     private final float[] angles;
     private final BulletFactory factory;
@@ -37,7 +37,7 @@ public final class MultiTrackPattern implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
         final Vector2 pos = enemy.getPosition();
         final float base = Vector2.angleBetween(pos, game.player.getPosition());

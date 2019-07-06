@@ -24,8 +24,8 @@ import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -41,7 +41,7 @@ import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Easy implements ILevelState {
+public final class Easy implements LevelState {
 
     private static final long serialVersionUID = 1935810609973937620L;
 
@@ -49,7 +49,7 @@ public final class Easy implements ILevelState {
     private transient int wave;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.clearMessage();
 
         this.cycles = 0;
@@ -66,7 +66,7 @@ public final class Easy implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
 
         ++cycles;
@@ -247,7 +247,7 @@ public final class Easy implements ILevelState {
     }
 }
 
-final class EasyBossWave implements ILevelState {
+final class EasyBossWave implements LevelState {
 
     private static final long serialVersionUID = -4257651682666683051L;
 
@@ -256,13 +256,13 @@ final class EasyBossWave implements ILevelState {
     private transient int cycles;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
 
         if (cycles++ == 0) {

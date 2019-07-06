@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
@@ -40,7 +40,7 @@ public final class TrackingPattern extends TimedCounter {
     }
 
     @Override
-    protected void onTimerUpdate(IEnemy enemy, float dt) {
+    protected void onTimerUpdate(Enemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
         final Vector2 pos = enemy.getPosition();
         final float angle = Vector2.angleBetween(pos, game.player.getPosition()) + angleOffsets[this.getCount()];

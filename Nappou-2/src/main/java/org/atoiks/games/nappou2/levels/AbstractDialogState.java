@@ -26,20 +26,20 @@ import org.atoiks.games.framework2d.Input;
 
 import org.atoiks.games.nappou2.entities.Message;
 
-public abstract class AbstractDialogState implements ILevelState, Iterator<Message> {
+public abstract class AbstractDialogState implements LevelState, Iterator<Message> {
 
     private static final long serialVersionUID = 7680013812202865154L;
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
     private transient boolean fetchMessage;
 
-    public AbstractDialogState(ILevelState nextState) {
+    public AbstractDialogState(LevelState nextState) {
         this.nextState = nextState;
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.disableDamage();
         ctx.shouldSkipPlayerUpdate(true);
         ctx.getGame().clearBullets();
@@ -48,7 +48,7 @@ public abstract class AbstractDialogState implements ILevelState, Iterator<Messa
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         if (this.fetchMessage) {
             if (this.hasNext()) {
                 this.fetchMessage = false;

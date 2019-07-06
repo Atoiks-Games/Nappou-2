@@ -22,9 +22,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.ICollidable;
+import org.atoiks.games.nappou2.entities.Collidable;
 
-public final class NullShield implements IShieldEntity {
+public final class NullShield implements ShieldEntity {
 
     private static final long serialVersionUID = -6024720306180805901L;
 
@@ -81,7 +81,7 @@ public final class NullShield implements IShieldEntity {
     }
 
     @Override
-    public boolean collidesWith(ICollidable col) {
+    public boolean collidesWith(Collidable col) {
         // It is impossible for this shield to collide with anything.
         return false;
     }

@@ -29,8 +29,8 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.levels.NullState;
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Border;
@@ -38,7 +38,7 @@ import org.atoiks.games.nappou2.entities.Player;
 import org.atoiks.games.nappou2.entities.Message;
 import org.atoiks.games.nappou2.entities.PlayerController;
 
-public final class GameLevelScene extends CenteringScene implements ILevelContext {
+public final class GameLevelScene extends CenteringScene implements LevelContext {
 
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
@@ -52,7 +52,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     private final DialogOverlay dialogOverlay;
     private final StatusOverlay statusOverlay;
 
-    private ILevelState state = NullState.INSTANCE;
+    private LevelState state = NullState.INSTANCE;
 
     public GameLevelScene(final Player player) {
         this.game = new Game(player, this.border);
@@ -66,7 +66,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
     }
 
     @Override
-    public void setState(ILevelState nextState) {
+    public void setState(LevelState nextState) {
         this.state.exit();
 
         if (nextState == null) {
@@ -160,7 +160,7 @@ public final class GameLevelScene extends CenteringScene implements ILevelContex
         state.updateLevel(this, dt);
     }
 
-    /* package */ static void unwindAndStartLevel(Player player, ILevelState state) {
+    /* package */ static void unwindAndStartLevel(Player player, LevelState state) {
         final GameLevelScene next = new GameLevelScene(player);
         SceneManager.unwindToScene(next);
         state.restore(next);

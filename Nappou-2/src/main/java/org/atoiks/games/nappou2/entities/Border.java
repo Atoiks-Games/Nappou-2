@@ -57,7 +57,7 @@ public final class Border {
         return new Vector2(this.width, this.height);
     }
 
-    public boolean containsCollidable(final ICollidable entity) {
+    public boolean containsCollidable(final Collidable entity) {
         return !entity.isOutOfScreen(this.width, this.height);
     }
 

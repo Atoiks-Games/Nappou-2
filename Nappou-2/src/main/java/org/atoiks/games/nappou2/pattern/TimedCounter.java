@@ -18,9 +18,9 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public abstract class TimedCounter implements IAttackPattern {
+public abstract class TimedCounter implements AttackPattern {
 
     public enum InitialState {
         COUNTER_RESET, DO_PAUSE, DO_ACTION;
@@ -71,7 +71,7 @@ public abstract class TimedCounter implements IAttackPattern {
     }
 
     @Override
-    public final void onFireUpdate(IEnemy enemy, float dt) {
+    public final void onFireUpdate(Enemy enemy, float dt) {
         this.time += dt;
 
         // 1
@@ -90,5 +90,5 @@ public abstract class TimedCounter implements IAttackPattern {
         return this.counter;
     }
 
-    protected abstract void onTimerUpdate(IEnemy enemy, float dt);
+    protected abstract void onTimerUpdate(Enemy enemy, float dt);
 }

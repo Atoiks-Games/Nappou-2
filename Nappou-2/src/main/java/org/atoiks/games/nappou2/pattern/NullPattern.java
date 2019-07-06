@@ -18,9 +18,9 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class NullPattern implements IAttackPattern {
+public final class NullPattern implements AttackPattern {
 
     public static final NullPattern INSTANCE = new NullPattern();
 
@@ -29,7 +29,7 @@ public final class NullPattern implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         // Do nothing
     }
 }

@@ -26,13 +26,13 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
-import org.atoiks.games.nappou2.entities.ICollidable;
+import org.atoiks.games.nappou2.entities.Collidable;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
-import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
+import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.ShieldEntity;
 import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
 
-public final class Player implements ITrackable {
+public final class Player implements Trackable {
 
     public static final int RADIUS = 8;
 
@@ -43,12 +43,12 @@ public final class Player implements ITrackable {
     private final HitpointCounter hpCounter = new HitpointCounter();
 
     private final TrackingTimeShield respawnShield;
-    private final IShieldEntity shield;
+    private final ShieldEntity shield;
 
     private Vector2 position;
     private boolean focusedMode;
 
-    public Player(IShieldEntity shield) {
+    public Player(ShieldEntity shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
@@ -74,11 +74,11 @@ public final class Player implements ITrackable {
         this.respawnShield.update(dt);
     }
 
-    public IShield getShield() {
+    public Shield getShield() {
         return this.shield;
     }
 
-    public IShield getRespawnShield() {
+    public Shield getRespawnShield() {
         return this.respawnShield;
     }
 
@@ -117,7 +117,7 @@ public final class Player implements ITrackable {
         this.respawnShield.setPosition(pos);
     }
 
-    public boolean collidesWith(ICollidable col) {
+    public boolean collidesWith(Collidable col) {
         return col.collidesWith(this.position, Player.COLLISION_RADIUS);
     }
 }

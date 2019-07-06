@@ -20,20 +20,20 @@ package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.Sizer;
 import org.atoiks.games.nappou2.sizer.FixedSizer;
 
 import org.atoiks.games.nappou2.pattern.NullPattern;
-import org.atoiks.games.nappou2.pattern.IAttackPattern;
+import org.atoiks.games.nappou2.pattern.AttackPattern;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 import org.atoiks.games.nappou2.pathway.FixedPosition;
 
 public final class PathwayEnemy extends AbstractEnemy {
 
-    private IPathway path;
-    private IAttackPattern attack;
-    private ISizer sizer;
+    private Pathway path;
+    private AttackPattern attack;
+    private Sizer sizer;
 
     private float r;
 
@@ -46,11 +46,11 @@ public final class PathwayEnemy extends AbstractEnemy {
         this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE, FixedSizer.INSTANCE);
     }
 
-    public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack) {
+    public PathwayEnemy(int hp, int score, final Pathway path, final AttackPattern attack) {
         this(hp, score, path, attack, FixedSizer.INSTANCE);
     }
 
-    public PathwayEnemy(int hp, int score, final IPathway path, final IAttackPattern attack, final ISizer sizer) {
+    public PathwayEnemy(int hp, int score, final Pathway path, final AttackPattern attack, final Sizer sizer) {
         super(hp);
         this.score = score;
 
@@ -59,27 +59,27 @@ public final class PathwayEnemy extends AbstractEnemy {
         setSizer(sizer);
     }
 
-    public IPathway getPathway() {
+    public Pathway getPathway() {
         return path;
     }
 
-    public void setPathway(IPathway p) {
+    public void setPathway(Pathway p) {
         this.path = p != null ? p : FixedPosition.DEFAULT;
     }
 
-    public IAttackPattern getUpdateListener() {
+    public AttackPattern getUpdateListener() {
         return attack;
     }
 
-    public void setAttackPattern(IAttackPattern lis) {
+    public void setAttackPattern(AttackPattern lis) {
         this.attack = lis != null ? lis : NullPattern.INSTANCE;
     }
 
-    public ISizer getSizer() {
+    public Sizer getSizer() {
         return sizer;
     }
 
-    public void setSizer(ISizer f) {
+    public void setSizer(Sizer f) {
         this.sizer = f != null ? f : FixedSizer.INSTANCE;
     }
 

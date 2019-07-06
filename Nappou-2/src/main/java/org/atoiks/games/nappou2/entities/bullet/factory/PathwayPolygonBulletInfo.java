@@ -23,7 +23,7 @@ import java.util.function.BiFunction;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
 import org.atoiks.games.nappou2.entities.bullet.PathwayPolygonBullet;
@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPolygonBullet;
 // Angle parameter is ignored:
 //   Bullet can be rotated to an angle but not travel in that direction
 //   (we do not bother rotating the polygon at all)
-public final class PathwayPolygonBulletInfo<T extends IPathway> implements BulletFactory<PathwayPolygonBullet<T>> {
+public final class PathwayPolygonBulletInfo<T extends Pathway> implements BulletFactory<PathwayPolygonBullet<T>> {
 
     public final float[] coords;
     public final BiFunction<? super Vector2, ? super Float, ? extends T> pathway;

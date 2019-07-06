@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.pathway;
 
-public interface UnboundPathway extends IPathway {
+public interface UnboundPathway extends Pathway {
 
     public default boolean hasFinished() {
         // It is unbounded... so it better never finish!

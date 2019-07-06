@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.Player;
 
-import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.shield.Shield;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -44,7 +44,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final Font font;
     private final ScoreCounter scoreCounter;
     private final HitpointCounter hpCounter;
-    private final IShield shield;
+    private final Shield shield;
     private final Image hpImg;
     private final SaveData save;
 

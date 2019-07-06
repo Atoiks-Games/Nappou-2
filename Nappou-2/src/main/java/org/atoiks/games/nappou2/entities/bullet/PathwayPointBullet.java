@@ -22,22 +22,22 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.Sizer;
 import org.atoiks.games.nappou2.sizer.FixedSizer;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class PathwayPointBullet<T extends IPathway> extends PathwayBullet<T> {
+public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> {
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
-    private final ISizer sizer;
+    private final Sizer sizer;
     private float r;
 
-    public PathwayPointBullet(float r, ISizer sizer, T pathway) {
+    public PathwayPointBullet(float r, Sizer sizer, T pathway) {
         super(pathway);
         this.sizer = sizer;
         this.r = r;

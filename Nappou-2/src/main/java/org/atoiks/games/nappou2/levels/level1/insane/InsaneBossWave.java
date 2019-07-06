@@ -25,8 +25,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
 import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
@@ -37,7 +37,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-public class InsaneBossWave implements ILevelState {
+public class InsaneBossWave implements LevelState {
 
     private static final long serialVersionUID = -4184588301058618848L;
 
@@ -47,13 +47,13 @@ public class InsaneBossWave implements ILevelState {
     private transient int phase;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         final Drifter drift = game.drifter;
 

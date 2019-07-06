@@ -24,14 +24,14 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-public class EasyWave1 implements ILevelState {
+public class EasyWave1 implements LevelState {
 
     private static final long serialVersionUID = 9135918145681392179L;
 
@@ -40,7 +40,7 @@ public class EasyWave1 implements ILevelState {
     private transient Clip bgm;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         this.cycles = 0;
 
         this.bgm = ResourceManager.get("/music/Level_One.wav");
@@ -55,7 +55,7 @@ public class EasyWave1 implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         switch (++cycles) {
             case 50:
             case 100:

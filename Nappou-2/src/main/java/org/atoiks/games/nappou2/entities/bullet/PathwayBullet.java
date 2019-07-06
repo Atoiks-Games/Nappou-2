@@ -22,9 +22,9 @@ import java.awt.Color;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 
-public abstract class PathwayBullet<T extends IPathway> implements IBullet {
+public abstract class PathwayBullet<T extends Pathway> implements Bullet {
 
     protected final T pathway;
 

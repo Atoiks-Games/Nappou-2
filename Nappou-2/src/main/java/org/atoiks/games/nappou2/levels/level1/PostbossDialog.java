@@ -22,8 +22,8 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Message;
@@ -39,12 +39,12 @@ public final class PostbossDialog extends AbstractDialogState {
 
     private transient boolean firstRun;
 
-    public PostbossDialog(ILevelState nextState) {
+    public PostbossDialog(LevelState nextState) {
         super(nextState);
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
         ResourceManager.<Clip>get("/music/Level_One_Boss.wav").stop();

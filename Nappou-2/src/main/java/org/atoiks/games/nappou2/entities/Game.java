@@ -26,18 +26,18 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
 
-import org.atoiks.games.nappou2.spawner.ISpawner;
+import org.atoiks.games.nappou2.spawner.Spawner;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
-import org.atoiks.games.nappou2.entities.bullet.IBullet;
-import org.atoiks.games.nappou2.entities.shield.IShield;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
+import org.atoiks.games.nappou2.entities.bullet.Bullet;
+import org.atoiks.games.nappou2.entities.shield.Shield;
 
 public final class Game {
 
-    private final LinkedList<IBullet> enemyBullets = new LinkedList<>();
-    private final LinkedList<IBullet> playerBullets = new LinkedList<>();
-    private final LinkedList<IEnemy> enemies = new LinkedList<>();
-    private final LinkedList<ISpawner> spawners = new LinkedList<>();
+    private final LinkedList<Bullet> enemyBullets = new LinkedList<>();
+    private final LinkedList<Bullet> playerBullets = new LinkedList<>();
+    private final LinkedList<Enemy> enemies = new LinkedList<>();
+    private final LinkedList<Spawner> spawners = new LinkedList<>();
 
     public final Drifter drifter = new Drifter();
     public final Player player;
@@ -52,25 +52,25 @@ public final class Game {
     public void render(IGraphics g) {
         player.render(g);
 
-        for (final IBullet bullet : enemyBullets) bullet.render(g);
-        for (final IBullet bullet : playerBullets) bullet.render(g);
-        for (final IEnemy enemy : enemies) enemy.render(g);
+        for (final Bullet bullet : enemyBullets) bullet.render(g);
+        for (final Bullet bullet : playerBullets) bullet.render(g);
+        for (final Enemy enemy : enemies) enemy.render(g);
     }
 
-    public void addEnemyBullet(final IBullet bullet) {
+    public void addEnemyBullet(final Bullet bullet) {
         enemyBullets.add(bullet);
     }
 
-    public void addPlayerBullet(final IBullet bullet) {
+    public void addPlayerBullet(final Bullet bullet) {
         playerBullets.add(bullet);
     }
 
-    public void addEnemy(final IEnemy enemy) {
+    public void addEnemy(final Enemy enemy) {
         enemies.add(enemy);
         enemy.attachGame(this);
     }
 
-    public void addSpawner(final ISpawner spawner) {
+    public void addSpawner(final Spawner spawner) {
         spawners.add(spawner);
     }
 
@@ -108,9 +108,9 @@ public final class Game {
             return;
         }
 
-        final Iterator<ISpawner> it = spawners.iterator();
+        final Iterator<Spawner> it = spawners.iterator();
         while (it.hasNext()) {
-            final ISpawner spawner = it.next();
+            final Spawner spawner = it.next();
             spawner.onUpdate(this, dt);
             if (spawner.isDoneSpawning()) {
                 it.remove();
@@ -118,9 +118,9 @@ public final class Game {
         }
     }
 
-    private void updateDriftEntityIterator(final Iterator<? extends IDriftEntity> it, final float dt, final Vector2 drift) {
+    private void updateDriftEntityIterator(final Iterator<? extends DriftEntity> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
-            final IDriftEntity entity = it.next();
+            final DriftEntity entity = it.next();
             entity.update(dt);
             entity.drift(drift);
             if (!this.border.containsCollidable(entity)) {
@@ -142,12 +142,12 @@ public final class Game {
     }
 
     public void performCollisionCheck() {
-        final IShield shield = player.getShield();
+        final Shield shield = player.getShield();
         final boolean shieldActive = shield.isActive();
-        final IShield respawnShield = player.getRespawnShield();
+        final Shield respawnShield = player.getRespawnShield();
 
-        for (final Iterator<IBullet> it = enemyBullets.iterator(); it.hasNext(); ) {
-            final IBullet bullet = it.next();
+        for (final Iterator<Bullet> it = enemyBullets.iterator(); it.hasNext(); ) {
+            final Bullet bullet = it.next();
             if (shieldActive && shield.collidesWith(bullet)) {
                 it.remove();
             } else if (!respawnShield.isActive() && player.collidesWith(bullet)) {
@@ -161,10 +161,10 @@ public final class Game {
         }
 
         enemy_loop:
-        for (final Iterator<IEnemy> outer = enemies.iterator(); outer.hasNext(); ) {
-            final IEnemy enemy = outer.next();
+        for (final Iterator<Enemy> outer = enemies.iterator(); outer.hasNext(); ) {
+            final Enemy enemy = outer.next();
 
-            for (final Iterator<IBullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
+            for (final Iterator<Bullet> inner = playerBullets.iterator(); inner.hasNext(); ) {
                 if (enemy.collidesWith(inner.next())) {
                     inner.remove();
                     if (enemy.changeHp(-1) <= 0) {

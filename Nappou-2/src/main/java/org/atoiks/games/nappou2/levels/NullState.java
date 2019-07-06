@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.levels;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-public final class NullState implements ILevelState {
+public final class NullState implements LevelState {
 
     private static final long serialVersionUID = 2023699955695331416L;
 
@@ -30,7 +30,7 @@ public final class NullState implements ILevelState {
     }
 
     @Override
-    public void updateLevel(ILevelContext ctx, float dt) {
+    public void updateLevel(LevelContext ctx, float dt) {
         // Do nothing
     }
 }

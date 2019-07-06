@@ -20,11 +20,11 @@ package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class FixedAnglePattern implements IAttackPattern {
+public final class FixedAnglePattern implements AttackPattern {
 
     private final float angle;
     private final BulletFactory factory;
@@ -35,7 +35,7 @@ public final class FixedAnglePattern implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
 
         game.addEnemyBullet(factory.createBullet(enemy.getPosition(), angle));

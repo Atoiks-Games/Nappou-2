@@ -18,11 +18,11 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class SineFireGate implements IAttackPattern {
+public final class SineFireGate implements AttackPattern {
 
-    private final IAttackPattern delegate;
+    private final AttackPattern delegate;
 
     private final float afreq;
     private final float phase;
@@ -31,7 +31,7 @@ public final class SineFireGate implements IAttackPattern {
     private float time;
     private boolean fireGate;
 
-    public SineFireGate(float afreq, float phase, double limit, IAttackPattern delegate) {
+    public SineFireGate(float afreq, float phase, double limit, AttackPattern delegate) {
         this.afreq = afreq;
         this.phase = phase;
         this.limit = limit;
@@ -40,7 +40,7 @@ public final class SineFireGate implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         time += dt;
         final double cosSpdTime = Math.cos(afreq * time + phase);
         if (!fireGate && cosSpdTime < limit) {

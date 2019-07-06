@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.levels.level1;
 
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.levels.level1.insane.InsaneWave1;
 
@@ -29,13 +29,13 @@ public final class Insane extends AbstractWave0 {
     private transient int cycles;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         super.enter(ctx);
         this.cycles = 0;
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         ++cycles;
         switch (cycles) {
             case 20:

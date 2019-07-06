@@ -16,13 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.spawner;
+package org.atoiks.games.nappou2.entities.shield;
 
-import org.atoiks.games.nappou2.entities.Game;
+import java.io.Serializable;
 
-public interface ISpawner {
+import org.atoiks.games.framework2d.IGraphics;
 
-    public void onUpdate(Game game, float dt);
+import org.atoiks.games.nappou2.Vector2;
 
-    public boolean isDoneSpawning();
+import org.atoiks.games.nappou2.entities.Collidable;
+
+public interface ShieldEntity extends Shield, Serializable {
+
+    public float getR();
+    public Vector2 getPosition();
+    public void setPosition(Vector2 v);
+
+    public void update(float dt);
+    public void render(IGraphics g);
+
+    public ShieldEntity copy();
+
+    @Override
+    public default boolean collidesWith(Collidable col) {
+        return col.collidesWith(getPosition(), getR());
+    }
 }

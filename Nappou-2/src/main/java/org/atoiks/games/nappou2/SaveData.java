@@ -24,29 +24,29 @@ import java.io.ObjectOutput;
 import java.io.Externalizable;
 
 import org.atoiks.games.nappou2.levels.NullState;
-import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.LevelState;
 
 import org.atoiks.games.nappou2.entities.shield.NullShield;
-import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
+import org.atoiks.games.nappou2.entities.shield.ShieldEntity;
 
 public final class SaveData implements Externalizable {
 
     private static final long serialVersionUID = -6315543815579288169L;
 
-    private ILevelState checkpoint = NullState.INSTANCE;
-    private IShieldEntity shield = new NullShield();
+    private LevelState checkpoint = NullState.INSTANCE;
+    private ShieldEntity shield = new NullShield();
     private boolean challengeMode = false;
 
-    public void setCheckpoint(final ILevelState p, boolean m) {
+    public void setCheckpoint(final LevelState p, boolean m) {
         this.setCheckpoint(p);
         this.challengeMode = m;
     }
 
-    public void setCheckpoint(final ILevelState p) {
+    public void setCheckpoint(final LevelState p) {
         this.checkpoint = p != null ? p : NullState.INSTANCE;
     }
 
-    public void setShield(final IShieldEntity s) {
+    public void setShield(final ShieldEntity s) {
         this.shield = s != null ? s : new NullShield();
     }
 
@@ -54,18 +54,18 @@ public final class SaveData implements Externalizable {
         return this.challengeMode;
     }
 
-    public ILevelState getCheckpoint() {
+    public LevelState getCheckpoint() {
         return this.checkpoint;
     }
 
-    public IShieldEntity getShieldCopy() {
+    public ShieldEntity getShieldCopy() {
         return this.shield.copy();
     }
 
     @Override
     public void readExternal(final ObjectInput stream) throws IOException, ClassNotFoundException {
-        this.setCheckpoint((ILevelState) stream.readObject());
-        this.setShield((IShieldEntity) stream.readObject());
+        this.setCheckpoint((LevelState) stream.readObject());
+        this.setShield((ShieldEntity) stream.readObject());
         this.challengeMode = stream.readBoolean();
     }
 

@@ -16,16 +16,31 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.levels;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.framework2d.IGraphics;
 
-public interface ICollidable {
+import org.atoiks.games.nappou2.Drifter;
 
-    public boolean isOutOfScreen(int width, int height);
-    public boolean collidesWith(float x, float y, float r);
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Message;
 
-    public default boolean collidesWith(final Vector2 position, float r) {
-        return collidesWith(position.getX(), position.getY(), r);
+public interface LevelContext {
+
+    public void setState(final LevelState nextState);
+
+    public Game getGame();
+
+    public void shouldSkipPlayerUpdate(boolean flag);
+
+    public void clearMessage();
+    public void displayMessage(Message msg);
+
+    public default void disableDamage() {
+        getGame().player.getHpCounter().setIgnoreHpChange(true);
+    }
+
+    public default void enableDamage() {
+        getGame().player.getHpCounter().setIgnoreHpChange(false);
     }
 }

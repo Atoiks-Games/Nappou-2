@@ -21,8 +21,8 @@ package org.atoiks.games.nappou2.levels.level1.easy;
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.entities.enemy.Level1Easy;
 
 import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
 
-public class EasyBossWave implements ILevelState {
+public class EasyBossWave implements LevelState {
 
     private static final long serialVersionUID = 1914901384100845861L;
 
@@ -41,13 +41,13 @@ public class EasyBossWave implements ILevelState {
     private transient int phase;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         final Drifter drift = game.drifter;
 

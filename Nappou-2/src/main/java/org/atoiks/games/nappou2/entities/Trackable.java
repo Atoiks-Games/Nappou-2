@@ -16,9 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.sizer;
+package org.atoiks.games.nappou2.entities;
 
-public interface ISizer {
+import org.atoiks.games.nappou2.Vector2;
 
-    public float getNextSize(float prev, float dt);
+public interface Trackable {
+
+    public Vector2 getPosition();
 }

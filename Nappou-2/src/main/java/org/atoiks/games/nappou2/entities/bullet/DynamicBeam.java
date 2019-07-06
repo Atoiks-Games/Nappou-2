@@ -20,19 +20,19 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.Sizer;
 
 public final class DynamicBeam extends BeamLike {
 
-    private final ISizer sizer;
+    private final Sizer sizer;
 
-    public DynamicBeam(final Vector2 position, final float width, final ISizer lengthSizer, final Vector2 velocity) {
+    public DynamicBeam(final Vector2 position, final float width, final Sizer lengthSizer, final Vector2 velocity) {
         super(position, width, velocity);
 
         this.sizer = lengthSizer;
     }
 
-    public DynamicBeam(final float x, final float y, final float width, final ISizer lengthSizer, final float dx, final float dy) {
+    public DynamicBeam(final float x, final float y, final float width, final Sizer lengthSizer, final float dx, final float dy) {
         this(new Vector2(x, y), width, lengthSizer, new Vector2(dx, dy));
     }
 

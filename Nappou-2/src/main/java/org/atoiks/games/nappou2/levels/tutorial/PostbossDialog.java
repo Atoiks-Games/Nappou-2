@@ -24,8 +24,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -37,7 +37,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class PostbossDialog extends AbstractDialogState implements ILevelState {
+/* package */ final class PostbossDialog extends AbstractDialogState implements LevelState {
 
     private static final long serialVersionUID = 942221556144923194L;
 
@@ -48,19 +48,19 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private transient boolean firstRun;
 
-    public PostbossDialog(ILevelState nextState) {
+    public PostbossDialog(LevelState nextState) {
         super(new EndOfTutorialState(nextState));
     }
 
     @Override
-    public void restore(final ILevelContext ctx) {
+    public void restore(final LevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         this.data.restore(game);
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
         final Game game = ctx.getGame();

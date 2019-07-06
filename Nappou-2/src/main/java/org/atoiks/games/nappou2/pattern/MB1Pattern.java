@@ -22,11 +22,11 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class MB1Pattern implements IAttackPattern {
+public final class MB1Pattern implements AttackPattern {
 
     private static final float PI_DIV_6 = (float) Math.PI / 6;
     private static final int ROTATIONS = 7;
@@ -40,7 +40,7 @@ public final class MB1Pattern implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         time++;
 
         final Game game = enemy.getAssocGame();

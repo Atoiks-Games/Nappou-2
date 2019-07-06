@@ -16,11 +16,30 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.levels;
 
-import org.atoiks.games.nappou2.Vector2;
+import java.io.Serializable;
 
-public interface ITrackable {
+import org.atoiks.games.framework2d.IGraphics;
 
-    public Vector2 getPosition();
+public interface LevelState extends Serializable {
+
+    /**
+     * Only called when starting game with "Continue".
+     * If called, it will happen before the enter method.
+     */
+    public default void restore(LevelContext ctx) {
+    }
+
+    // Maybe pass in the previous state?
+    public default void enter(LevelContext ctx) {
+    }
+
+    public default void exit() {
+    }
+
+    public default void renderBackground(final IGraphics g) {
+    }
+
+    public void updateLevel(LevelContext ctx, float dt);
 }

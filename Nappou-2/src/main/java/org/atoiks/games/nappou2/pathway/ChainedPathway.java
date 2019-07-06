@@ -27,13 +27,13 @@ import org.atoiks.games.nappou2.Vector2;
  * can actually finish depends on the sequence of pathways. If an unlimited
  * pathway is passed to this, it will never return true for hasFinished!
  */
-public final class ChainedPathway implements IPathway {
+public final class ChainedPathway implements Pathway {
 
-    private final Iterator<? extends IPathway> it;
+    private final Iterator<? extends Pathway> it;
 
-    private IPathway currentPath;
+    private Pathway currentPath;
 
-    public ChainedPathway(Iterator<? extends IPathway> it) {
+    public ChainedPathway(Iterator<? extends Pathway> it) {
         this.it = it;
         if (it.hasNext()) {
             currentPath = it.next();

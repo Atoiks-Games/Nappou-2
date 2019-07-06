@@ -16,16 +16,18 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.shield;
+package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.nappou2.entities.ICollidable;
+import java.awt.Color;
 
-public interface IShield {
+import org.atoiks.games.framework2d.IGraphics;
 
-    public void activate();
-    public void deactivate();
-    public boolean isActive();
-    public boolean isReady();
+import org.atoiks.games.nappou2.entities.DriftEntity;
 
-    public boolean collidesWith(ICollidable col);
+public interface Bullet extends DriftEntity {
+
+    public void setColor(Color newColor);
+    public Color getColor();
+
+    public void render(IGraphics g);
 }

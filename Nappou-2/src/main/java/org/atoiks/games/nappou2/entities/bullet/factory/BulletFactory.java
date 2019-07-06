@@ -20,9 +20,9 @@ package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.bullet.IBullet;
+import org.atoiks.games.nappou2.entities.bullet.Bullet;
 
-public interface BulletFactory<T extends IBullet> {
+public interface BulletFactory<T extends Bullet> {
 
     public T createBullet(float x, float y, float angle);
 

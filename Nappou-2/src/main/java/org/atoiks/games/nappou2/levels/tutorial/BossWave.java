@@ -26,25 +26,25 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
 
-/* package */ final class BossWave implements ILevelState {
+/* package */ final class BossWave implements LevelState {
 
     private static final long serialVersionUID = 8472650695750567277L;
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
     private transient boolean firstRun;
 
-    public BossWave(ILevelState nextState) {
+    public BossWave(LevelState nextState) {
         this.nextState = nextState;
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
 
@@ -64,7 +64,7 @@ import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         if (game.noMoreEnemies()) {
             if (firstRun) {

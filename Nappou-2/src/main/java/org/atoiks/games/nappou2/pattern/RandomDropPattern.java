@@ -22,11 +22,11 @@ import java.util.Random;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
-public final class RandomDropPattern implements IAttackPattern {
+public final class RandomDropPattern implements AttackPattern {
 
     public static final Random rnd = new Random();
 
@@ -48,7 +48,7 @@ public final class RandomDropPattern implements IAttackPattern {
     }
 
     @Override
-    public void onFireUpdate(IEnemy enemy, float dt) {
+    public void onFireUpdate(Enemy enemy, float dt) {
         this.time += dt;
 
         if (this.time > this.fire) {

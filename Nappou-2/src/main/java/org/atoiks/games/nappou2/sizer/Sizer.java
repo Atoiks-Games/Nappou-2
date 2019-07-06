@@ -16,31 +16,9 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels;
+package org.atoiks.games.nappou2.sizer;
 
-import org.atoiks.games.framework2d.IGraphics;
+public interface Sizer {
 
-import org.atoiks.games.nappou2.Drifter;
-
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Message;
-
-public interface ILevelContext {
-
-    public void setState(final ILevelState nextState);
-
-    public Game getGame();
-
-    public void shouldSkipPlayerUpdate(boolean flag);
-
-    public void clearMessage();
-    public void displayMessage(Message msg);
-
-    public default void disableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(true);
-    }
-
-    public default void enableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(false);
-    }
+    public float getNextSize(float prev, float dt);
 }

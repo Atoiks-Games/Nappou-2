@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.scenes.SaveHighscoreScene;
  * State to transition to when it seems like a good place to prompt for a high
  * score save.
  */
-public final class SaveScoreState implements ILevelState {
+public final class SaveScoreState implements LevelState {
 
     private static final long serialVersionUID = -2383669267335286411L;
 
@@ -44,7 +44,7 @@ public final class SaveScoreState implements ILevelState {
     }
 
     @Override
-    public void updateLevel(ILevelContext ctx, float dt) {
+    public void updateLevel(LevelContext ctx, float dt) {
         final boolean mode = ResourceManager.<SaveData>get("./saves.dat").isChallengeMode();
 
         SceneManager.swapScene(new TitleScene());

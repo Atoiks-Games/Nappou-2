@@ -21,7 +21,7 @@ package org.atoiks.games.nappou2.equations;
 import static org.atoiks.games.nappou2.Utils.lerp;
 import static org.atoiks.games.nappou2.Utils.clamp01;
 
-public final class CubicBezier implements IEquation {
+public final class CubicBezier implements Equation {
 
     public final float t1;
     public final float y1;

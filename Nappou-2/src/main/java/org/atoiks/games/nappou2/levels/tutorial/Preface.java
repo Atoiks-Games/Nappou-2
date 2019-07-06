@@ -34,13 +34,13 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Preface implements ILevelState {
+public final class Preface implements LevelState {
 
     private static final long serialVersionUID = 4928495316273389216L;
 
@@ -53,7 +53,7 @@ public final class Preface implements ILevelState {
         { "Enter", "= Select" }
     };
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
     private transient Font font16;
     private transient Font font30;
@@ -62,12 +62,12 @@ public final class Preface implements ILevelState {
     // part way through the game play via continue!
     private boolean shouldSaveChallengeMode = true;
 
-    public Preface(ILevelState nextState) {
+    public Preface(LevelState nextState) {
         this.nextState = nextState;
     }
 
     @Override
-    public void restore(final ILevelContext ctx) {
+    public void restore(final LevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(5);
@@ -75,7 +75,7 @@ public final class Preface implements ILevelState {
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
@@ -127,7 +127,7 @@ public final class Preface implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             ctx.setState(new SingleShotWave(this.nextState));
             return;

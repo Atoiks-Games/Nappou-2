@@ -29,8 +29,8 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 
@@ -40,22 +40,22 @@ import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignHorizontal;
 import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-/* package */ final class SingleShotWave implements ILevelState {
+/* package */ final class SingleShotWave implements LevelState {
 
     private static final long serialVersionUID = -8155795240502715804L;
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
     private transient Image img;
     private transient int imgY;
     private transient int imgX;
 
-    public SingleShotWave(ILevelState nextState) {
+    public SingleShotWave(LevelState nextState) {
         this.nextState = nextState;
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         final Image image = ResourceManager.get("/image/z.png");
         this.img = image;
         this.imgY = alignVertical(VerticalAlignment.CENTER, image);
@@ -77,7 +77,7 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
         if (game.noMoreEnemies()) {
             if (game.player.getScoreCounter().getScore() < 6) {

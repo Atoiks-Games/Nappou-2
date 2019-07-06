@@ -24,9 +24,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class ImageEnemyRenderer implements IEnemyRenderer {
+public final class ImageEnemyRenderer implements EnemyRenderer {
 
     private final Image image;
 
@@ -34,7 +34,7 @@ public final class ImageEnemyRenderer implements IEnemyRenderer {
         this.image = image;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
+    public void render(IGraphics g, Enemy obj) {
         // x, y are the center of the enemy
         final float r = obj.getR();
         final Vector2 pos = obj.getPosition();

@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.pattern;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
 
@@ -34,7 +34,7 @@ public final class TimedDropPattern extends TimedCounter {
     }
 
     @Override
-    protected void onTimerUpdate(IEnemy enemy, float dt) {
+    protected void onTimerUpdate(Enemy enemy, float dt) {
         final Game game = enemy.getAssocGame();
         game.addEnemyBullet(factory.createBullet(enemy.getPosition(), (float) (Math.PI / 2)));
     }

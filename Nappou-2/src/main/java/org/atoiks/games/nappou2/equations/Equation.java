@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.equations;
 
-public interface IEquation {
+public interface Equation {
 
     public float compute(float t);
 }

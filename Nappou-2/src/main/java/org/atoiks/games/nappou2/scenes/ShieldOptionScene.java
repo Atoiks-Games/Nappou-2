@@ -31,7 +31,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.LevelState;
 
 import org.atoiks.games.nappou2.entities.Player;
 
@@ -45,14 +45,14 @@ public final class ShieldOptionScene extends CenteringScene {
     private static final int[] shieldSelY = {356, 414, 498};
     private static final int OPT_HEIGHT = 37;
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
     private int shieldSel;
 
     private final Font font30;
     private final Font font80;
 
-    public ShieldOptionScene(ILevelState nextState) {
+    public ShieldOptionScene(LevelState nextState) {
         this.nextState = nextState;
 
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
@@ -96,13 +96,13 @@ public final class ShieldOptionScene extends CenteringScene {
     }
 
     private boolean startGame() {
-        final IShieldEntity shield = getShieldFromOption();
+        final ShieldEntity shield = getShieldFromOption();
         ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
         GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
         return true;
     }
 
-    private IShieldEntity getShieldFromOption() {
+    private ShieldEntity getShieldFromOption() {
         switch (shieldSel) {
             default:
             case 0: return new FixedTimeShield(3.5f, 2, 50);

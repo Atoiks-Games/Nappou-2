@@ -18,13 +18,13 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.nappou2.entities.ITrackable;
+import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.pathway.TrackingPathway;
 
 public final class TrackPolygonBullet extends PathwayPolygonBullet<TrackingPathway> {
 
-    public TrackPolygonBullet(float[] coords, ITrackable entity, float pathScale, float moveTime, float delay) {
+    public TrackPolygonBullet(float[] coords, Trackable entity, float pathScale, float moveTime, float delay) {
         // Assumes coords is already placed at initial position.
         // In that case, pathway only needs to start from the origin
         // since the actual position is (coords + pathway + drift)

@@ -22,17 +22,17 @@ import java.util.function.Supplier;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.Sizer;
 
 import org.atoiks.games.nappou2.entities.bullet.DynamicBeam;
 
 public final class DynamicBeamInfo implements BulletFactory<DynamicBeam> {
 
     public final float thickness;
-    public final Supplier<? extends ISizer> sizerSupplier;
+    public final Supplier<? extends Sizer> sizerSupplier;
     public final float speed;
 
-    public DynamicBeamInfo(float thickness, Supplier<? extends ISizer> sizerSupplier, float speed) {
+    public DynamicBeamInfo(float thickness, Supplier<? extends Sizer> sizerSupplier, float speed) {
         this.thickness = thickness;
         this.sizerSupplier = sizerSupplier;
         this.speed = speed;

@@ -18,21 +18,21 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
-/* package */ class EndOfTutorialState implements ILevelState {
+/* package */ class EndOfTutorialState implements LevelState {
 
     private static final long serialVersionUID = 3572095005318491718L;
 
-    private final ILevelState nextState;
+    private final LevelState nextState;
 
-    public EndOfTutorialState(ILevelState nextState) {
+    public EndOfTutorialState(LevelState nextState) {
         this.nextState = nextState;
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         // Reset context so game can actually be played
         // (the stages themselves do not reset the context)
         ctx.enableDamage();
@@ -42,7 +42,7 @@ import org.atoiks.games.nappou2.levels.ILevelContext;
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         ctx.setState(this.nextState);
         return;
     }

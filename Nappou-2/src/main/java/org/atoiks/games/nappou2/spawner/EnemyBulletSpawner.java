@@ -20,17 +20,17 @@ package org.atoiks.games.nappou2.spawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.bullet.IBullet;
+import org.atoiks.games.nappou2.entities.bullet.Bullet;
 
-public final class EnemyBulletSpawner implements ISpawner {
+public final class EnemyBulletSpawner implements Spawner {
 
-    private final IBullet[] bullets;
+    private final Bullet[] bullets;
     private final float delay;
 
     private float time;
     private int index;
 
-    public EnemyBulletSpawner(float delay, IBullet... bullets) {
+    public EnemyBulletSpawner(float delay, Bullet... bullets) {
         this.delay = delay;
         this.bullets = bullets;
     }
@@ -39,7 +39,7 @@ public final class EnemyBulletSpawner implements ISpawner {
     public void onUpdate(final Game game, float dt) {
         while (index < bullets.length && (time += dt) >= delay) {
             time -= delay;
-            final IBullet bullet = bullets[index++];
+            final Bullet bullet = bullets[index++];
             if (bullet != null) game.addEnemyBullet(bullet);
         }
     }

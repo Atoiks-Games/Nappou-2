@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.sizer;
 
-public final class FixedSizer implements ISizer {
+public final class FixedSizer implements Sizer {
 
     public static final FixedSizer INSTANCE = new FixedSizer();
 

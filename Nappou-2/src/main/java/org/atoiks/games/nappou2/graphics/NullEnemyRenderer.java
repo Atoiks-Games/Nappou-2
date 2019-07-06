@@ -20,9 +20,9 @@ package org.atoiks.games.nappou2.graphics;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class NullEnemyRenderer implements IEnemyRenderer {
+public final class NullEnemyRenderer implements EnemyRenderer {
 
     public static final NullEnemyRenderer INSTANCE = new NullEnemyRenderer();
 
@@ -30,7 +30,7 @@ public final class NullEnemyRenderer implements IEnemyRenderer {
         //
     }
 
-    public void render(IGraphics g, IEnemy enemy) {
+    public void render(IGraphics g, Enemy enemy) {
         // Do nothing
     }
 }

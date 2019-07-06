@@ -16,30 +16,16 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels;
+package org.atoiks.games.nappou2.pathway;
 
-import java.io.Serializable;
+import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.framework2d.IGraphics;
+public interface Pathway {
 
-public interface ILevelState extends Serializable {
+    public Vector2 getPosition();
 
-    /**
-     * Only called when starting game with "Continue".
-     * If called, it will happen before the enter method.
-     */
-    public default void restore(ILevelContext ctx) {
-    }
+    // might want to return the amount of unprocessed time left
+    public void update(float dt);
 
-    // Maybe pass in the previous state?
-    public default void enter(ILevelContext ctx) {
-    }
-
-    public default void exit() {
-    }
-
-    public default void renderBackground(final IGraphics g) {
-    }
-
-    public void updateLevel(ILevelContext ctx, float dt);
+    public boolean hasFinished();
 }

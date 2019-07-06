@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 
-public final class FishSpawner implements ISpawner {
+public final class FishSpawner implements Spawner {
 
     private int cycles = -1;
 

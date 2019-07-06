@@ -16,11 +16,16 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.pattern;
+package org.atoiks.games.nappou2.entities.shield;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface IAttackPattern {
+public interface Shield {
 
-    public void onFireUpdate(IEnemy enemy, float dt);
+    public void activate();
+    public void deactivate();
+    public boolean isActive();
+    public boolean isReady();
+
+    public boolean collidesWith(Collidable col);
 }

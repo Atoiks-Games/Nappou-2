@@ -22,13 +22,13 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-public class PathwayPolygonBullet<T extends IPathway> extends PathwayBullet<T> {
+public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> {
 
     private final float[] coords;
     private final float boundX;

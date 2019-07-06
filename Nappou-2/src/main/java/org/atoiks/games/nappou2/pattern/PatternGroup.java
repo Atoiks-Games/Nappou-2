@@ -18,19 +18,19 @@
 
 package org.atoiks.games.nappou2.pattern;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class PatternGroup implements IAttackPattern {
+public final class PatternGroup implements AttackPattern {
 
-    private final Iterable<? extends IAttackPattern> patterns;
+    private final Iterable<? extends AttackPattern> patterns;
 
-    public PatternGroup(Iterable<? extends IAttackPattern> patterns) {
+    public PatternGroup(Iterable<? extends AttackPattern> patterns) {
         this.patterns = patterns;
     }
 
     @Override
-    public void onFireUpdate(final IEnemy enemy, final float dt) {
-        for (final IAttackPattern pattern : patterns) {
+    public void onFireUpdate(final Enemy enemy, final float dt) {
+        for (final AttackPattern pattern : patterns) {
             pattern.onFireUpdate(enemy, dt);
         }
     }

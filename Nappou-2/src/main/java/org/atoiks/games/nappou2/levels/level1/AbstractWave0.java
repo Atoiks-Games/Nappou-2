@@ -25,8 +25,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -39,14 +39,14 @@ import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public abstract class AbstractWave0 implements ILevelState {
+public abstract class AbstractWave0 implements LevelState {
 
     private static final long serialVersionUID = 2073727756645267798L;
 
     private transient Clip bgm;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         ctx.clearMessage();
 
         final GameConfig cfg = ResourceManager.get("./game.cfg");

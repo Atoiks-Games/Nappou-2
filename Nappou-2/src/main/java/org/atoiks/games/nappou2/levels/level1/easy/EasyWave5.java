@@ -26,8 +26,8 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.DefaultRestoreData;
@@ -47,7 +47,7 @@ import static org.atoiks.games.nappou2.levels.level1.Data.*;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public class EasyWave5 implements ILevelState {
+public class EasyWave5 implements LevelState {
 
     private static final long serialVersionUID = 5308372197610362137L;
 
@@ -61,7 +61,7 @@ public class EasyWave5 implements ILevelState {
     private transient Clip bgm;
 
     @Override
-    public void restore(final ILevelContext ctx) {
+    public void restore(final LevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         this.data.restore(game);
@@ -72,7 +72,7 @@ public class EasyWave5 implements ILevelState {
     }
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         this.cycles = 0;
         this.wave = 5;
 
@@ -100,7 +100,7 @@ public class EasyWave5 implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         final Game game = ctx.getGame();
 
         ++cycles;

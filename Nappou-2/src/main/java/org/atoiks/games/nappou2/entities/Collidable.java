@@ -16,16 +16,16 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.pathway;
+package org.atoiks.games.nappou2.entities;
 
 import org.atoiks.games.nappou2.Vector2;
 
-public interface IPathway {
+public interface Collidable {
 
-    public Vector2 getPosition();
+    public boolean isOutOfScreen(int width, int height);
+    public boolean collidesWith(float x, float y, float r);
 
-    // might want to return the amount of unprocessed time left
-    public void update(float dt);
-
-    public boolean hasFinished();
+    public default boolean collidesWith(final Vector2 position, float r) {
+        return collidesWith(position.getX(), position.getY(), r);
+    }
 }

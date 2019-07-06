@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.equations;
 
-public final class EaseInOutSine implements IEquation {
+public final class EaseInOutSine implements Equation {
 
     public static final EaseInOutSine INSTANCE = new EaseInOutSine();
 

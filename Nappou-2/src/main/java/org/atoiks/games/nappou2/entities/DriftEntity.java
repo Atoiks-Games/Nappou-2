@@ -16,13 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.graphics;
+package org.atoiks.games.nappou2.entities;
 
-import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+public interface DriftEntity extends Trackable, Collidable {
 
-public interface IEnemyRenderer {
+    public void drift(Vector2 displacement);
 
-    public void render(IGraphics g, IEnemy enemy);
+    public void update(float dt);
 }

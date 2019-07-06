@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.ITrackable;
+import org.atoiks.games.nappou2.entities.Trackable;
 
 /**
  * Pathway that follows a trackable entity. The path it takes is linear.
@@ -28,7 +28,7 @@ import org.atoiks.games.nappou2.entities.ITrackable;
 public final class TrackingPathway implements UnboundPathway {
 
     // Should this be a weak reference?
-    private final ITrackable entity;
+    private final Trackable entity;
     private final float scale;
     private final float moveTime;
     private final float delay;
@@ -39,11 +39,11 @@ public final class TrackingPathway implements UnboundPathway {
     private float time;
     private boolean moving;
 
-    public TrackingPathway(ITrackable entity, float pathScale, float moveTime, float delay) {
+    public TrackingPathway(Trackable entity, float pathScale, float moveTime, float delay) {
         this(Vector2.ZERO, entity, pathScale, moveTime, delay);
     }
 
-    public TrackingPathway(Vector2 pos, ITrackable entity, float pathScale, float moveTime, float delay) {
+    public TrackingPathway(Vector2 pos, Trackable entity, float pathScale, float moveTime, float delay) {
         this.entity = entity;
         this.scale = pathScale;
         this.moveTime = moveTime;

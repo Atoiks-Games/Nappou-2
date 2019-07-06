@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.equations;
 
 import static org.atoiks.games.nappou2.Utils.lerp;
 
-public final class EaseInOutQuad implements IEquation {
+public final class EaseInOutQuad implements Equation {
 
     public static final EaseInOutQuad INSTANCE = new EaseInOutQuad();
 

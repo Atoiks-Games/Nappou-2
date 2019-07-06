@@ -23,20 +23,20 @@ import java.util.function.BiFunction;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.ISizer;
+import org.atoiks.games.nappou2.sizer.Sizer;
 import org.atoiks.games.nappou2.sizer.FixedSizer;
 
-import org.atoiks.games.nappou2.pathway.IPathway;
+import org.atoiks.games.nappou2.pathway.Pathway;
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
 import org.atoiks.games.nappou2.entities.bullet.PathwayPointBullet;
 
 // Angle parameter is ignored:
 //   Bullet can be rotated to an angle but not travel in that direction
-public final class PathwayPointBulletInfo<T extends IPathway> implements BulletFactory<PathwayPointBullet<T>> {
+public final class PathwayPointBulletInfo<T extends Pathway> implements BulletFactory<PathwayPointBullet<T>> {
 
     public final float radius;
-    public final Supplier<? extends ISizer> sizer;
+    public final Supplier<? extends Sizer> sizer;
     public final BiFunction<? super Vector2, ? super Float, ? extends T> pathway;
 
     public PathwayPointBulletInfo(float radius, Supplier<? extends T> pathway) {
@@ -47,7 +47,7 @@ public final class PathwayPointBulletInfo<T extends IPathway> implements BulletF
         this(radius, () -> FixedSizer.INSTANCE, pathway);
     }
 
-    public PathwayPointBulletInfo(float radius, Supplier<? extends ISizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {
+    public PathwayPointBulletInfo(float radius, Supplier<? extends Sizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {
         this.radius = radius;
         this.sizer = sizer;
         this.pathway = pathway;

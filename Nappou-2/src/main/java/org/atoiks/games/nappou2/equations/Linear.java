@@ -18,7 +18,7 @@
 
 package org.atoiks.games.nappou2.equations;
 
-public final class Linear implements IEquation {
+public final class Linear implements Equation {
 
     public static final Linear INSTANCE = new Linear();
 

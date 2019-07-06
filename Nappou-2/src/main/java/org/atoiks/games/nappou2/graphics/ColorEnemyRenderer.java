@@ -24,9 +24,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.enemy.IEnemy;
+import org.atoiks.games.nappou2.entities.enemy.Enemy;
 
-public final class ColorEnemyRenderer implements IEnemyRenderer {
+public final class ColorEnemyRenderer implements EnemyRenderer {
 
     public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
 
@@ -36,7 +36,7 @@ public final class ColorEnemyRenderer implements IEnemyRenderer {
         this.color = color;
     }
 
-    public void render(IGraphics g, IEnemy obj) {
+    public void render(IGraphics g, Enemy obj) {
         g.setColor(color);
         // x, y are the center of the enemy
         final float r = obj.getR();

@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import java.awt.Color;
 
-/* package */ abstract class AbstractBullet implements IBullet {
+/* package */ abstract class AbstractBullet implements Bullet {
 
     protected Color color = Color.white;
 

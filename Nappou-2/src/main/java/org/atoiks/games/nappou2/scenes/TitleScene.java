@@ -35,7 +35,7 @@ import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.NullState;
-import org.atoiks.games.nappou2.levels.ILevelState;
+import org.atoiks.games.nappou2.levels.LevelState;
 
 import org.atoiks.games.nappou2.entities.Player;
 

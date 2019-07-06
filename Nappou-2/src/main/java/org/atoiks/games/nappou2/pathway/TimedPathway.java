@@ -23,7 +23,7 @@ import org.atoiks.games.nappou2.Vector2;
 /**
  * Used to put a time limit on unbounded pathways (like FixedPathway)
  */
-public final class TimedPathway implements IPathway {
+public final class TimedPathway implements Pathway {
 
     private final UnboundPathway path;
     private final float limit;

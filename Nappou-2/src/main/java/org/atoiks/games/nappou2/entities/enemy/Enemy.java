@@ -16,18 +16,29 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
-
-import java.awt.Color;
+package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.IDriftEntity;
+import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Collidable;
+import org.atoiks.games.nappou2.entities.DriftEntity;
 
-public interface IBullet extends IDriftEntity {
+public interface Enemy extends DriftEntity {
 
-    public void setColor(Color newColor);
-    public Color getColor();
+    public boolean isDead();
+    public int changeHp(int delta);
+
+    public float getR();
+
+    public int getScore();
+
+    public void attachGame(Game game);
+    public Game getAssocGame();
 
     public void render(IGraphics g);
+
+    public default boolean collidesWith(Collidable col) {
+        return col.collidesWith(this.getPosition(), this.getR());
+    }
 }

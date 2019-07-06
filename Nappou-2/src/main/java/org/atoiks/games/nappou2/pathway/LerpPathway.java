@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.equations.IEquation;
+import org.atoiks.games.nappou2.equations.Equation;
 
 import static org.atoiks.games.nappou2.Utils.lerp;
 import static org.atoiks.games.nappou2.Utils.clamp01;
@@ -30,7 +30,7 @@ import static org.atoiks.games.nappou2.Utils.clamp01;
 /**
  * Uses linear interpolation
  */
-public final class LerpPathway implements IPathway {
+public final class LerpPathway implements Pathway {
 
     public static class LerpEquation {
 
@@ -38,11 +38,11 @@ public final class LerpPathway implements IPathway {
         public final float end;
         public final float limit;
 
-        public final IEquation eqn;
+        public final Equation eqn;
 
         private float elapsed;
 
-        public LerpEquation(float start, float end, float limit, IEquation eqn) {
+        public LerpEquation(float start, float end, float limit, Equation eqn) {
             this.start = start;
             this.end = end;
             this.limit = limit;

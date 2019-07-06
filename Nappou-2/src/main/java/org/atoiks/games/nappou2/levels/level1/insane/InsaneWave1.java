@@ -24,8 +24,8 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.ILevelState;
-import org.atoiks.games.nappou2.levels.ILevelContext;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -36,7 +36,7 @@ import static org.atoiks.games.nappou2.Utils.advancedMiniBomberEnemy;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-public class InsaneWave1 implements ILevelState {
+public class InsaneWave1 implements LevelState {
 
     private static final long serialVersionUID = -2945314718064501302L;
 
@@ -45,7 +45,7 @@ public class InsaneWave1 implements ILevelState {
     private transient Clip bgm;
 
     @Override
-    public void enter(final ILevelContext ctx) {
+    public void enter(final LevelContext ctx) {
         this.cycles = 0;
 
         this.bgm = ResourceManager.get("/music/Level_One.wav");
@@ -60,7 +60,7 @@ public class InsaneWave1 implements ILevelState {
     }
 
     @Override
-    public void updateLevel(final ILevelContext ctx, final float dt) {
+    public void updateLevel(final LevelContext ctx, final float dt) {
         ++cycles;
         switch (cycles) {
             case 40:

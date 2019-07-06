@@ -16,29 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
-
-import org.atoiks.games.framework2d.IGraphics;
+package org.atoiks.games.nappou2.spawner;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.ICollidable;
-import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-public interface IEnemy extends IDriftEntity {
+public interface Spawner {
 
-    public boolean isDead();
-    public int changeHp(int delta);
+    public void onUpdate(Game game, float dt);
 
-    public float getR();
-
-    public int getScore();
-
-    public void attachGame(Game game);
-    public Game getAssocGame();
-
-    public void render(IGraphics g);
-
-    public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(this.getPosition(), this.getR());
-    }
+    public boolean isDoneSpawning();
 }
