@@ -21,10 +21,11 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Collidable;
 import org.atoiks.games.nappou2.entities.Driftable;
+import org.atoiks.games.nappou2.entities.Trackable;
+import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface Enemy extends Driftable {
+public interface Enemy extends Driftable, Trackable, Collidable {
 
     public boolean isDead();
     public int changeHp(int delta);

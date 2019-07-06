@@ -20,7 +20,7 @@ package org.atoiks.games.nappou2.entities;
 
 import org.atoiks.games.nappou2.Vector2;
 
-public interface Driftable extends Trackable, Collidable {
+public interface Driftable {
 
     public void drift(Vector2 displacement);
 

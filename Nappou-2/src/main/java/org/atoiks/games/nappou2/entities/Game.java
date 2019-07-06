@@ -118,9 +118,9 @@ public final class Game {
         }
     }
 
-    private void updateDriftableIterator(final Iterator<? extends Driftable> it, final float dt, final Vector2 drift) {
+    private <T extends Driftable & Collidable> void updateDriftableIterator(final Iterator<? extends T> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
-            final Driftable entity = it.next();
+            final T entity = it.next();
             entity.update(dt);
             entity.drift(drift);
             if (!this.border.containsCollidable(entity)) {
