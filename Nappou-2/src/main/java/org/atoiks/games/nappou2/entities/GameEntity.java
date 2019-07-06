@@ -16,25 +16,14 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities;
 
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.GameEntity;
+import org.atoiks.games.nappou2.Updatable;
+import org.atoiks.games.nappou2.Renderable;
+
+import org.atoiks.games.nappou2.entities.Driftable;
+import org.atoiks.games.nappou2.entities.Trackable;
 import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface Enemy extends GameEntity {
-
-    public boolean isDead();
-    public int changeHp(int delta);
-
-    public float getR();
-
-    public int getScore();
-
-    public void attachGame(Game game);
-    public Game getAssocGame();
-
-    public default boolean collidesWith(Collidable col) {
-        return col.collidesWith(this.getPosition(), this.getR());
-    }
+public interface GameEntity extends Driftable, Trackable, Updatable, Collidable, Renderable {
 }
