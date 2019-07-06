@@ -28,12 +28,12 @@ import org.atoiks.games.nappou2.graphics.NullRenderer;
 
     private Renderer renderer = FillRenderer.DEFAULT;
 
-    public final void setRenderer(Renderer renderer) {
-        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
+    @Override
+    public final Renderer getRenderer() {
+        return this.renderer;
     }
 
-    @Override
-    public final void render(IGraphics g) {
-        this.renderer.render(g, this, this.getPosition());
+    public final void setRenderer(Renderer renderer) {
+        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
     }
 }

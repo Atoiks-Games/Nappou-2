@@ -20,13 +20,13 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import java.awt.Color;
 
-import org.atoiks.games.framework2d.IGraphics;
-
+import org.atoiks.games.nappou2.entities.Drawable;
 import org.atoiks.games.nappou2.entities.IDriftEntity;
+
+import org.atoiks.games.nappou2.graphics.Renderer;
 
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public interface IBullet extends IDriftEntity, Shape {
+public interface IBullet extends Drawable, IDriftEntity {
 
-    public void render(IGraphics g);
 }

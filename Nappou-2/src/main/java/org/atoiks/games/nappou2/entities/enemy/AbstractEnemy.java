@@ -55,8 +55,8 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
     }
 
     @Override
-    public final void render(IGraphics g) {
-        compRenderer.render(g, this, this.getPosition());
+    public final Renderer getRenderer() {
+        return this.compRenderer;
     }
 
     public final void setRenderer(Renderer renderer) {

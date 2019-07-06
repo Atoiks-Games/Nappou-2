@@ -52,9 +52,9 @@ public final class Game {
     public void render(IGraphics g) {
         player.render(g);
 
-        for (final IBullet bullet : enemyBullets) bullet.render(g);
-        for (final IBullet bullet : playerBullets) bullet.render(g);
-        for (final IEnemy enemy : enemies) enemy.render(g);
+        for (final Drawable bullet : enemyBullets) bullet.render(g);
+        for (final Drawable bullet : playerBullets) bullet.render(g);
+        for (final Drawable enemy : enemies) enemy.render(g);
     }
 
     public void addEnemyBullet(final IBullet bullet) {

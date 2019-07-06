@@ -16,30 +16,19 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.enemy;
+package org.atoiks.games.nappou2.entities;
 
-import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.Drawable;
-import org.atoiks.games.nappou2.entities.ICollidable;
-import org.atoiks.games.nappou2.entities.IDriftEntity;
+import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
 
-import org.atoiks.games.nappou2.graphics.shapes.Circular;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public interface IEnemy extends Drawable, IDriftEntity, Circular {
-
-    public boolean isDead();
-    public int changeHp(int delta);
-
-    public int getScore();
-
-    public void attachGame(Game game);
-    public Game getAssocGame();
+public interface Drawable extends Shape, ITrackable {
 
     public Renderer getRenderer();
 
-    public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(this.getPosition(), this.getRadius());
+    public default void render(IGraphics g) {
+        this.getRenderer().render(g, this, this.getPosition());
     }
 }
