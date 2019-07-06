@@ -111,11 +111,11 @@ public final class PathwayEnemy extends AbstractEnemy {
     }
 
     @Override
-    public float getR() {
+    public float getRadius() {
         return this.r;
     }
 
-    public void setR(float r) {
+    public void setRadius(float r) {
         this.r = r;
     }
 

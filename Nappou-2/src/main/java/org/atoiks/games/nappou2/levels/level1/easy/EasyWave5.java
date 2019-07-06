@@ -109,52 +109,52 @@ public class EasyWave5 implements ILevelState {
                 switch (cycles) {
                     case 40:
                         PathwayEnemy e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(8);
+                        e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 80:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, Math.PI), NullPattern.INSTANCE);
-                        e.setR(10);
+                        e.setRadius(10);
                         game.addEnemy(e);
                         break;
                     case 280:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(20);
+                        e.setRadius(20);
                         game.addEnemy(e);
                         break;
                     case 380:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
-                        e.setR(6);
+                        e.setRadius(6);
                         game.addEnemy(e);
                         break;
                     case 580:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(8);
+                        e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 600:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
-                        e.setR(8);
+                        e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 880:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, -1, 0), NullPattern.INSTANCE);
-                        e.setR(6);
+                        e.setRadius(6);
                         game.addEnemy(e);
                         break;
                     case 1000:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(10);
+                        e.setRadius(10);
                         game.addEnemy(e);
                         break;
                     case 1200:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(12);
+                        e.setRadius(12);
                         game.addEnemy(e);
                         break;
                     case 1250:
                         e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
-                        e.setR(8);
+                        e.setRadius(8);
                         game.addEnemy(e);
                         break;
                 }
@@ -189,7 +189,7 @@ public class EasyWave5 implements ILevelState {
                     case 400:
                     case 500:
                         PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
-                        e.setR(8);
+                        e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 190:
@@ -200,7 +200,7 @@ public class EasyWave5 implements ILevelState {
                     case 490:
                     case 550:
                         e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
-                        e.setR(13);
+                        e.setRadius(13);
                         game.addEnemy(e);
                         break;
                     case 325:
@@ -209,7 +209,7 @@ public class EasyWave5 implements ILevelState {
                     case 625:
                     case 725:
                         e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
-                        e.setR(25);
+                        e.setRadius(25);
                         game.addEnemy(e);
                     case 375:
                     case 475:
@@ -217,7 +217,7 @@ public class EasyWave5 implements ILevelState {
                     case 675:
                     case 775:
                         e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
-                        e.setR(6);
+                        e.setRadius(6);
                         game.addEnemy(e);
                         break;
                 }

@@ -24,12 +24,12 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.ICollidable;
 import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-public interface IEnemy extends IDriftEntity {
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+
+public interface IEnemy extends IDriftEntity, Circular {
 
     public boolean isDead();
     public int changeHp(int delta);
-
-    public float getR();
 
     public int getScore();
 
@@ -39,6 +39,6 @@ public interface IEnemy extends IDriftEntity {
     public void render(IGraphics g);
 
     public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(this.getPosition(), this.getR());
+        return col.collidesWith(this.getPosition(), this.getRadius());
     }
 }

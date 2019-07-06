@@ -39,7 +39,7 @@ public final class ColorEnemyRenderer implements IEnemyRenderer {
     public void render(IGraphics g, IEnemy obj) {
         g.setColor(color);
         // x, y are the center of the enemy
-        final float r = obj.getR();
+        final float r = obj.getRadius();
         final Vector2 pos = obj.getPosition();
         final float x = pos.getX();
         final float y = pos.getY();

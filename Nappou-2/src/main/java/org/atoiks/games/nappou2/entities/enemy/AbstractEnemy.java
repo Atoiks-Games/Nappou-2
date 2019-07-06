@@ -24,9 +24,9 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.graphics.IEnemyRenderer;
-import org.atoiks.games.nappou2.graphics.NullEnemyRenderer;
-import org.atoiks.games.nappou2.graphics.ColorEnemyRenderer;
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.ColorRenderer;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
@@ -34,7 +34,7 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
-    private IEnemyRenderer compRenderer = ColorEnemyRenderer.DEFAULT;
+    private Renderer compRenderer = ColorRenderer.DEFAULT;
 
     protected int hp;
 
@@ -56,17 +56,17 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     @Override
     public final void render(IGraphics g) {
-        compRenderer.render(g, this);
+        compRenderer.render(g, this, this.getPosition().sub(this.getCenterPoint()));
     }
 
-    public final void setRenderer(IEnemyRenderer renderer) {
-        this.compRenderer = renderer != null ? renderer : NullEnemyRenderer.INSTANCE;
+    public final void setRenderer(Renderer renderer) {
+        this.compRenderer = renderer != null ? renderer : NullRenderer.INSTANCE;
     }
 
     @Override
     public boolean collidesWith(final float x1, final float y1, final float r1) {
         final Vector2 pos = this.getPosition();
-        return fastCircleCollision(pos.getX(), pos.getY(), getR(), x1, y1, r1);
+        return fastCircleCollision(pos.getX(), pos.getY(), getRadius(), x1, y1, r1);
     }
 
     @Override
@@ -74,7 +74,7 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
         final Vector2 pos = this.getPosition();
         final float x = pos.getX();
         final float y = pos.getY();
-        final float r = getR();
+        final float r = getRadius();
         return (x + r < -SCREEN_EDGE_BUFFER)
             || (x - r > w + SCREEN_EDGE_BUFFER)
             || (y + r < -SCREEN_EDGE_BUFFER)
