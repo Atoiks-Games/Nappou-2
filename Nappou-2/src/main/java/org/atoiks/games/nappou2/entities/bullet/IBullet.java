@@ -24,10 +24,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.IDriftEntity;
 
-public interface IBullet extends IDriftEntity {
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-    public void setColor(Color newColor);
-    public Color getColor();
+public interface IBullet extends IDriftEntity, Shape {
 
     public void render(IGraphics g);
 }

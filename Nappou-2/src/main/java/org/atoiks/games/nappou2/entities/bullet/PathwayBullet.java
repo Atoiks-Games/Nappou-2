@@ -18,19 +18,15 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
-
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
-public abstract class PathwayBullet<T extends IPathway> implements IBullet {
+public abstract class PathwayBullet<T extends IPathway> extends AbstractBullet {
 
     protected final T pathway;
 
     protected Vector2 drift = Vector2.ZERO;
-
-    protected Color color = Color.white;
 
     protected PathwayBullet(T pathway) {
         this.pathway = pathway;
@@ -39,16 +35,6 @@ public abstract class PathwayBullet<T extends IPathway> implements IBullet {
     @Override
     public void drift(Vector2 d) {
         this.drift = this.drift.add(d);
-    }
-
-    @Override
-    public final void setColor(Color newColor) {
-        this.color = newColor;
-    }
-
-    @Override
-    public final Color getColor() {
-        return this.color;
     }
 
     @Override

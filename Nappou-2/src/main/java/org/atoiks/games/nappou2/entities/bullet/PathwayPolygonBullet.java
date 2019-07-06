@@ -18,17 +18,21 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
+import java.awt.Image;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
+import org.atoiks.games.nappou2.graphics.shapes.Polygonal;
+
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-public class PathwayPolygonBullet<T extends IPathway> extends PathwayBullet<T> {
+public class PathwayPolygonBullet<T extends IPathway> extends PathwayBullet<T> implements Polygonal {
 
     private final float[] coords;
     private final float boundX;
@@ -62,18 +66,13 @@ public class PathwayPolygonBullet<T extends IPathway> extends PathwayBullet<T> {
     }
 
     @Override
-    public void render(final IGraphics g) {
-        // Instead of shifting the polygon to the screen,
-        // we translate the rendering matrix.
-        // (polygon coordinates are fixed at origin)
+    public float[] getPoints() {
+        return this.coords;
+    }
 
-        final Vector2 pos = this.getPosition();
-        final float tx = pos.getX();
-        final float ty = pos.getY();
-        g.translate(tx, ty);
-        g.setColor(color);
-        g.fillPolygon(coords);
-        g.translate(-tx, -ty);
+    @Override
+    public void renderTexture(IGraphics g, Image img) {
+        g.drawImage(img, 0, 0, this.boundX, this.boundY);
     }
 
     @Override

@@ -18,19 +18,22 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Color;
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.FillRenderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
 
 /* package */ abstract class AbstractBullet implements IBullet {
 
-    protected Color color = Color.white;
+    private Renderer renderer = FillRenderer.DEFAULT;
 
-    @Override
-    public final void setColor(Color newColor) {
-        this.color = newColor;
+    public final void setRenderer(Renderer renderer) {
+        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
     }
 
     @Override
-    public final Color getColor() {
-        return this.color;
+    public final void render(IGraphics g) {
+        this.renderer.render(g, this, this.getPosition());
     }
 }

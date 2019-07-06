@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.ISizer;
@@ -27,10 +25,12 @@ import org.atoiks.games.nappou2.sizer.FixedSizer;
 
 import org.atoiks.games.nappou2.pathway.IPathway;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
-public class PathwayPointBullet<T extends IPathway> extends PathwayBullet<T> {
+public class PathwayPointBullet<T extends IPathway> extends PathwayBullet<T> implements Circular {
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
@@ -48,15 +48,8 @@ public class PathwayPointBullet<T extends IPathway> extends PathwayBullet<T> {
     }
 
     @Override
-    public void render(final IGraphics g) {
-        // Can change this to using textures later
-        g.setColor(color);
-
-        final Vector2 pos = this.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        // x, y are the center of the bullet
-        g.fillOval(x - r, y - r, x + r, y + r);
+    public float getRadius() {
+        return this.r;
     }
 
     @Override
