@@ -99,9 +99,9 @@ public final class Game {
         final Vector2 displacement = this.drifter.getDrift().mul(dt);
 
         updateEnemySpawner(dt);
-        updateEnemyPosition(dt, displacement);
-        updateEnemyBulletPosition(dt, displacement);
-        updatePlayerBulletPosition(dt, displacement);
+        updateEnemies(dt, displacement);
+        updateEnemyBullets(dt, displacement);
+        updatePlayerBullets(dt, displacement);
     }
 
     private void updateEnemySpawner(final float dt) {
@@ -119,27 +119,48 @@ public final class Game {
         }
     }
 
-    private <T extends Driftable & Collidable & Updatable> void updateDriftableIterator(final Iterator<? extends T> it, final float dt, final Vector2 drift) {
+    private void performEntityUpdate(final Iterator<? extends Updatable> it, final float dt) {
         while (it.hasNext()) {
-            final T entity = it.next();
-            entity.update(dt);
-            entity.drift(drift);
-            if (!this.border.containsCollidable(entity)) {
+            it.next().update(dt);
+        }
+    }
+
+    private void performEntityDrift(final Iterator<? extends Driftable> it, final Vector2 drift) {
+        while (it.hasNext()) {
+            it.next().drift(drift);
+        }
+    }
+
+    private void performEntityScreenCheck(final Iterator<? extends Collidable> it) {
+        while (it.hasNext()) {
+            if (!this.border.containsCollidable(it.next())) {
                 it.remove();
             }
         }
     }
 
-    private void updateEnemyPosition(final float dt, final Vector2 drift) {
-        updateDriftableIterator(enemies.iterator(), dt, drift);
+    private void updateEnemies(final float dt, final Vector2 drift) {
+        if (!enemies.isEmpty()) {
+            this.performEntityUpdate(enemies.iterator(), dt);
+            this.performEntityDrift(enemies.iterator(), drift);
+            this.performEntityScreenCheck(enemies.iterator());
+        }
     }
 
-    private void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
-        updateDriftableIterator(enemyBullets.iterator(), dt, drift);
+    private void updateEnemyBullets(final float dt, final Vector2 drift) {
+        if (!enemyBullets.isEmpty()) {
+            this.performEntityUpdate(enemyBullets.iterator(), dt);
+            this.performEntityDrift(enemyBullets.iterator(), drift);
+            this.performEntityScreenCheck(enemyBullets.iterator());
+        }
     }
 
-    private void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
-        updateDriftableIterator(playerBullets.iterator(), dt, drift);
+    private void updatePlayerBullets(final float dt, final Vector2 drift) {
+        if (!playerBullets.isEmpty()) {
+            this.performEntityUpdate(playerBullets.iterator(), dt);
+            this.performEntityDrift(playerBullets.iterator(), drift);
+            this.performEntityScreenCheck(playerBullets.iterator());
+        }
     }
 
     public void performCollisionCheck() {
