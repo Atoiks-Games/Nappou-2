@@ -22,9 +22,9 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Collidable;
-import org.atoiks.games.nappou2.entities.DriftEntity;
+import org.atoiks.games.nappou2.entities.Driftable;
 
-public interface Enemy extends DriftEntity {
+public interface Enemy extends Driftable {
 
     public boolean isDead();
     public int changeHp(int delta);

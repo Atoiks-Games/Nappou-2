@@ -22,9 +22,9 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.DriftEntity;
+import org.atoiks.games.nappou2.entities.Driftable;
 
-public interface Bullet extends DriftEntity {
+public interface Bullet extends Driftable {
 
     public void setColor(Color newColor);
     public Color getColor();

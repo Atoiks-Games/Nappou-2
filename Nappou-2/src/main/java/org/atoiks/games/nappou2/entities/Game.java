@@ -118,9 +118,9 @@ public final class Game {
         }
     }
 
-    private void updateDriftEntityIterator(final Iterator<? extends DriftEntity> it, final float dt, final Vector2 drift) {
+    private void updateDriftableIterator(final Iterator<? extends Driftable> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
-            final DriftEntity entity = it.next();
+            final Driftable entity = it.next();
             entity.update(dt);
             entity.drift(drift);
             if (!this.border.containsCollidable(entity)) {
@@ -130,15 +130,15 @@ public final class Game {
     }
 
     private void updateEnemyPosition(final float dt, final Vector2 drift) {
-        updateDriftEntityIterator(enemies.iterator(), dt, drift);
+        updateDriftableIterator(enemies.iterator(), dt, drift);
     }
 
     private void updateEnemyBulletPosition(final float dt, final Vector2 drift) {
-        updateDriftEntityIterator(enemyBullets.iterator(), dt, drift);
+        updateDriftableIterator(enemyBullets.iterator(), dt, drift);
     }
 
     private void updatePlayerBulletPosition(final float dt, final Vector2 drift) {
-        updateDriftEntityIterator(playerBullets.iterator(), dt, drift);
+        updateDriftableIterator(playerBullets.iterator(), dt, drift);
     }
 
     public void performCollisionCheck() {
