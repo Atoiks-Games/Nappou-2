@@ -16,21 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
-
-import java.awt.Color;
+package org.atoiks.games.nappou2;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Updatable;
-import org.atoiks.games.nappou2.Renderable;
+public interface Renderable {
 
-import org.atoiks.games.nappou2.entities.Driftable;
-import org.atoiks.games.nappou2.entities.Trackable;
-import org.atoiks.games.nappou2.entities.Collidable;
-
-public interface Bullet extends Driftable, Trackable, Updatable, Collidable, Renderable {
-
-    public void setColor(Color newColor);
-    public Color getColor();
+    public void render(IGraphics g);
 }

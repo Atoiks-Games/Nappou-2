@@ -21,13 +21,14 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Updatable;
+import org.atoiks.games.nappou2.Renderable;
 
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Driftable;
 import org.atoiks.games.nappou2.entities.Trackable;
 import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface Enemy extends Driftable, Trackable, Updatable, Collidable {
+public interface Enemy extends Driftable, Trackable, Updatable, Collidable, Renderable {
 
     public boolean isDead();
     public int changeHp(int delta);
@@ -38,8 +39,6 @@ public interface Enemy extends Driftable, Trackable, Updatable, Collidable {
 
     public void attachGame(Game game);
     public Game getAssocGame();
-
-    public void render(IGraphics g);
 
     public default boolean collidesWith(Collidable col) {
         return col.collidesWith(this.getPosition(), this.getR());
