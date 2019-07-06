@@ -26,7 +26,7 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
 import org.atoiks.games.nappou2.graphics.NullRenderer;
-import org.atoiks.games.nappou2.graphics.ColorRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
 
 import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
@@ -34,7 +34,7 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     private static final int SCREEN_EDGE_BUFFER = 16;
 
-    private Renderer compRenderer = ColorRenderer.DEFAULT;
+    private Renderer compRenderer = OutlineRenderer.DEFAULT;
 
     protected int hp;
 
@@ -56,7 +56,7 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
     @Override
     public final void render(IGraphics g) {
-        compRenderer.render(g, this, this.getPosition().sub(this.getCenterPoint()));
+        compRenderer.render(g, this, this.getPosition());
     }
 
     public final void setRenderer(Renderer renderer) {
