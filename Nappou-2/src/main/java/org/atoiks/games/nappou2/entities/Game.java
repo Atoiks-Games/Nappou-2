@@ -25,6 +25,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
+import org.atoiks.games.nappou2.Updatable;
 
 import org.atoiks.games.nappou2.spawner.Spawner;
 
@@ -118,7 +119,7 @@ public final class Game {
         }
     }
 
-    private <T extends Driftable & Collidable> void updateDriftableIterator(final Iterator<? extends T> it, final float dt, final Vector2 drift) {
+    private <T extends Driftable & Collidable & Updatable> void updateDriftableIterator(final Iterator<? extends T> it, final float dt, final Vector2 drift) {
         while (it.hasNext()) {
             final T entity = it.next();
             entity.update(dt);

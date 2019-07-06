@@ -22,11 +22,13 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
+import org.atoiks.games.nappou2.Updatable;
+
 import org.atoiks.games.nappou2.entities.Driftable;
 import org.atoiks.games.nappou2.entities.Trackable;
 import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface Bullet extends Driftable, Trackable, Collidable {
+public interface Bullet extends Driftable, Trackable, Updatable, Collidable {
 
     public void setColor(Color newColor);
     public Color getColor();

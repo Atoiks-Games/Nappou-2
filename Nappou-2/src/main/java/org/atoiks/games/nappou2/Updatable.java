@@ -16,11 +16,9 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2;
 
-import org.atoiks.games.nappou2.Vector2;
+public interface Updatable {
 
-public interface Driftable {
-
-    public void drift(Vector2 displacement);
+    public void update(float dt);
 }
