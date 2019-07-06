@@ -26,13 +26,13 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public final class ColorRenderer implements Renderer {
+public final class OutlineRenderer implements Renderer {
 
-    public static final ColorRenderer DEFAULT = new ColorRenderer(Color.white);
+    public static final OutlineRenderer DEFAULT = new OutlineRenderer(Color.white);
 
     private final Color color;
 
-    public ColorRenderer(Color color) {
+    public OutlineRenderer(Color color) {
         this.color = color;
     }
 
