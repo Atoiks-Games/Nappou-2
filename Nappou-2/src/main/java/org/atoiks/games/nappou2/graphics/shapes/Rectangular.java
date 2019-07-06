@@ -30,16 +30,6 @@ public interface Rectangular extends Shape {
     public float getHeight();
 
     @Override
-    public default Rectangular getBoundingBox() {
-        return this;
-    }
-
-    @Override
-    public default Vector2 getCenterPoint() {
-        return new Vector2(getWidth() / 2, getHeight() / 2);
-    }
-
-    @Override
     public default void draw(final IGraphics g) {
         g.drawRect(0, 0, getWidth(), getHeight());
     }
@@ -52,46 +42,5 @@ public interface Rectangular extends Shape {
     @Override
     public default void renderTexture(IGraphics g, Image img) {
         g.drawImage(img, 0, 0, getWidth(), getHeight());
-    }
-}
-
-final class ImmutRectImpl implements Rectangular {
-
-    private final float w;
-    private final float h;
-
-    public ImmutRectImpl(float w, float h) {
-        this.w = w;
-        this.h = h;
-    }
-
-    @Override
-    public float getWidth() {
-        return this.w;
-    }
-
-    @Override
-    public float getHeight() {
-        return this.h;
-    }
-
-    @Override
-    public Vector2 getCenterPoint() {
-        return new Vector2(w / 2, h / 2);
-    }
-
-    @Override
-    public void draw(final IGraphics g) {
-        g.drawRect(0, 0, w, h);
-    }
-
-    @Override
-    public void fill(final IGraphics g) {
-        g.fillRect(0, 0, w, h);
-    }
-
-    @Override
-    public void renderTexture(IGraphics g, Image img) {
-        g.drawImage(img, 0, 0, w, h);
     }
 }

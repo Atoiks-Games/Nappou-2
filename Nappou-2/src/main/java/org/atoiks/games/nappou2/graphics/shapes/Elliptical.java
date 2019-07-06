@@ -30,16 +30,6 @@ public interface Elliptical extends Shape {
     public float getHeight();
 
     @Override
-    public default Rectangular getBoundingBox() {
-        return new ImmutRectImpl(getWidth(), getHeight());
-    }
-
-    @Override
-    public default Vector2 getCenterPoint() {
-        return new Vector2(getWidth() / 2, getHeight() / 2);
-    }
-
-    @Override
     public default void draw(final IGraphics g) {
         g.drawOval(0, 0, getWidth(), getHeight());
     }

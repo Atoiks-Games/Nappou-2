@@ -26,15 +26,7 @@ import org.atoiks.games.framework2d.IGraphics;
 
 public interface Shape {
 
-    public Rectangular getBoundingBox();
-
-    public Vector2 getCenterPoint();
-
     public void draw(IGraphics g);
     public void fill(IGraphics g);
-
-    public default void renderTexture(IGraphics g, Image img) {
-        final Rectangular region = this.getBoundingBox();
-        g.drawImage(img, 0, 0, region.getWidth(), region.getHeight());
-    }
+    public void renderTexture(IGraphics g, Image img);
 }

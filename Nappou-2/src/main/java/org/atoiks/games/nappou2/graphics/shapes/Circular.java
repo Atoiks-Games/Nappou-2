@@ -29,32 +29,20 @@ public interface Circular extends Shape {
     public float getRadius();
 
     @Override
-    public default Rectangular getBoundingBox() {
-        final float d = 2 * getRadius();
-        return new ImmutRectImpl(d, d);
-    }
-
-    @Override
-    public default Vector2 getCenterPoint() {
-        final float r = getRadius();
-        return new Vector2(r, r);
-    }
-
-    @Override
     public default void draw(final IGraphics g) {
-        final float d = 2 * getRadius();
-        g.drawOval(0, 0, d, d);
+        final float r = getRadius();
+        g.drawOval(-r, -r, r, r);
     }
 
     @Override
     public default void fill(final IGraphics g) {
-        final float d = 2 * getRadius();
-        g.fillOval(0, 0, d, d);
+        final float r = getRadius();
+        g.fillOval(-r, -r, r, r);
     }
 
     @Override
     public default void renderTexture(IGraphics g, Image img) {
-        final float d = 2 * getRadius();
-        g.drawImage(img, 0, 0, d, d);
+        final float r = getRadius();
+        g.drawImage(img, -r, -r, r, r);
     }
 }
