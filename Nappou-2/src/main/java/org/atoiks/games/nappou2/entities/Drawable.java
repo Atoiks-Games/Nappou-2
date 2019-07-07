@@ -28,7 +28,7 @@ public interface Drawable extends Shape, ITrackable {
 
     public Renderer getRenderer();
 
-    public default void render(IGraphics g) {
-        this.getRenderer().render(g, this, this.getPosition());
+    public static void render(IGraphics g, final Drawable drawable) {
+        drawable.getRenderer().render(g, drawable, drawable.getPosition());
     }
 }
