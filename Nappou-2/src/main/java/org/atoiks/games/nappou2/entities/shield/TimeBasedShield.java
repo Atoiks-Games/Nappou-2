@@ -28,9 +28,14 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
+
 public abstract class TimeBasedShield implements IShieldEntity {
 
     private static final long serialVersionUID = 172635916L;
+    private static final Renderer DEFAULT_RENDERER = new OutlineRenderer(Color.orange);
 
     // see read/writeObject
     private transient Color color = Color.orange;
@@ -61,25 +66,18 @@ public abstract class TimeBasedShield implements IShieldEntity {
     }
 
     @Override
-    public float getR() {
+    public float getRadius() {
         return r;
+    }
+
+    @Override
+    public Renderer getRenderer() {
+        return active ? DEFAULT_RENDERER : NullRenderer.INSTANCE;
     }
 
     @Override
     public void setPosition(Vector2 pos) {
         this.position = pos;
-    }
-
-    @Override
-    public void render(IGraphics g) {
-        if (active) {
-            g.setColor(this.color);
-
-            final float x = position.getX();
-            final float y = position.getY();
-            // x, y are the center of the shield
-            g.drawOval(x - r, y - r, x + r, y + r);
-        }
     }
 
     @Override

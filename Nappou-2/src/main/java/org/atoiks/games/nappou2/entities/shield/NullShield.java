@@ -18,9 +18,10 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.Vector2;
+
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
 
 import org.atoiks.games.nappou2.entities.ICollidable;
 
@@ -29,8 +30,8 @@ public final class NullShield implements IShieldEntity {
     private static final long serialVersionUID = -6024720306180805901L;
 
     @Override
-    public void render(IGraphics g) {
-        // Do nothing
+    public Renderer getRenderer() {
+        return NullRenderer.INSTANCE;
     }
 
     @Override
@@ -44,8 +45,8 @@ public final class NullShield implements IShieldEntity {
     }
 
     @Override
-    public float getR() {
-        return -1;
+    public float getRadius() {
+        return 0;
     }
 
     @Override

@@ -18,26 +18,30 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
-import java.io.Serializable;
+import java.awt.Color;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.entities.Player;
 
-import org.atoiks.games.nappou2.entities.Drawable;
-import org.atoiks.games.nappou2.entities.ICollidable;
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
 
-import org.atoiks.games.nappou2.graphics.shapes.Circular;
+public final class RespawnShield extends TimeBasedShield {
 
-public interface IShieldEntity extends IShield, Drawable, Serializable, Circular {
+    private static final long serialVersionUID = 2761514159978306296L;
+    private static final Renderer RENDERER = new OutlineRenderer(Color.red);
 
-    public Vector2 getPosition();
-    public void setPosition(Vector2 v);
-
-    public void update(float dt);
-
-    public IShieldEntity copy();
+    public RespawnShield() {
+        super(3f, 0, Player.RADIUS);
+    }
 
     @Override
-    public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(getPosition(), getRadius());
+    public Renderer getRenderer() {
+        return isActive() ? RENDERER : NullRenderer.INSTANCE;
+    }
+
+    @Override
+    public RespawnShield copy() {
+        return new RespawnShield();
     }
 }

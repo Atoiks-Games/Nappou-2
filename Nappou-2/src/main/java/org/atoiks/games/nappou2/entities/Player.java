@@ -30,7 +30,7 @@ import org.atoiks.games.nappou2.entities.ICollidable;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
-import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
+import org.atoiks.games.nappou2.entities.shield.RespawnShield;
 
 public final class Player implements ITrackable {
 
@@ -42,7 +42,7 @@ public final class Player implements ITrackable {
     private final ScoreCounter scoreCounter = new ScoreCounter();
     private final HitpointCounter hpCounter = new HitpointCounter();
 
-    private final TrackingTimeShield respawnShield;
+    private final RespawnShield respawnShield = new RespawnShield();
     private final IShieldEntity shield;
 
     private Vector2 position;
@@ -50,8 +50,6 @@ public final class Player implements ITrackable {
 
     public Player(IShieldEntity shield) {
         this.shield = shield;
-        this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
-        this.respawnShield.setColor(Color.red);
         this.setPosition(Vector2.ZERO);
     }
 
@@ -65,8 +63,8 @@ public final class Player implements ITrackable {
             g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
 
-        this.shield.render(g);
-        this.respawnShield.render(g);
+        Drawable.render(g, this.shield);
+        Drawable.render(g, this.respawnShield);
     }
 
     public void update(final float dt) {
