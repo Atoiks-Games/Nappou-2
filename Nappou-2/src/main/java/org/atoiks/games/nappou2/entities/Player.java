@@ -26,21 +26,27 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
-import org.atoiks.games.nappou2.entities.ICollidable;
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.FillRenderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
+
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import org.atoiks.games.nappou2.entities.shield.IShield;
 import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 import org.atoiks.games.nappou2.entities.shield.RespawnShield;
 
-public final class Player implements ITrackable {
+public final class Player implements Drawable, Circular {
 
     public static final int RADIUS = 8;
+    public static final int COLLISION_RADIUS = 2;
 
-    private static final int COLLISION_RADIUS = 2;
-    private static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+    private static final Renderer CYAN_RENDERER = new OutlineRenderer(Color.cyan);
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
     private final HitpointCounter hpCounter = new HitpointCounter();
+    private final SpeedHintCircle speedHint = new SpeedHintCircle(this);
 
     private final RespawnShield respawnShield = new RespawnShield();
     private final IShieldEntity shield;
@@ -54,17 +60,20 @@ public final class Player implements ITrackable {
     }
 
     public void render(final IGraphics g) {
-        g.setColor(Color.cyan);
-        final float x = position.getX();
-        final float y = position.getY();
-        g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
-        if (focusedMode) {
-            g.setColor(Color.yellow);
-            g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
-        }
-
+        Drawable.render(g, this);
+        Drawable.render(g, this.speedHint);
         Drawable.render(g, this.shield);
         Drawable.render(g, this.respawnShield);
+    }
+
+    @Override
+    public Renderer getRenderer() {
+        return CYAN_RENDERER;
+    }
+
+    @Override
+    public float getRadius() {
+        return RADIUS;
     }
 
     public void update(final float dt) {
@@ -92,6 +101,10 @@ public final class Player implements ITrackable {
         this.focusedMode = flag;
     }
 
+    public boolean isInFocusedMode() {
+        return this.focusedMode;
+    }
+
     @Override
     public Vector2 getPosition() {
         return this.position;
@@ -117,5 +130,33 @@ public final class Player implements ITrackable {
 
     public boolean collidesWith(ICollidable col) {
         return col.collidesWith(this.position, Player.COLLISION_RADIUS);
+    }
+}
+
+final class SpeedHintCircle implements Drawable, Circular {
+
+    private static final int HINT_COL_RADIUS = Player.COLLISION_RADIUS + 2;
+
+    private static final Renderer YELLOW_RENDERER = new FillRenderer(Color.yellow);
+
+    private Player player;
+
+    public SpeedHintCircle(Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public float getRadius() {
+        return HINT_COL_RADIUS;
+    }
+
+    @Override
+    public Renderer getRenderer() {
+        return this.player.isInFocusedMode() ? YELLOW_RENDERER : NullRenderer.INSTANCE;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.player.getPosition();
     }
 }
