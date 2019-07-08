@@ -72,9 +72,45 @@ public final class Keymap implements Externalizable {
         return Input.isKeyDown(this.kcShield);
     }
 
+    public void changeMoveUpKeycode(int kc) {
+        this.kcUp = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeMoveDownKeycode(int kc) {
+        this.kcDown = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeMoveLeftKeycode(int kc) {
+        this.kcLeft = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeMoveRightKeycode(int kc) {
+        this.kcRight = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeSlowDownKeycode(int kc) {
+        this.kcSlow = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeFireKeycode(int kc) {
+        this.kcFire = kc;
+        this.INFO_MSG = null;
+    }
+
+    public void changeActivateShieldKeycode(int kc) {
+        this.kcShield = kc;
+        this.INFO_MSG = null;
+    }
+
     public String[][] getInfoMessage() {
-        if (this.INFO_MSG == null) {
-            this.INFO_MSG = new String[][] {
+        String[][] ref = this.INFO_MSG;
+        if (ref == null) {
+            ref = new String[][] {
                 { "Movement:", kcToStr(this.kcUp) },
                 { "", kcToStr(this.kcDown) },
                 { "", kcToStr(this.kcLeft) },
@@ -85,9 +121,11 @@ public final class Keymap implements Externalizable {
                 {"Pause game:", kcToStr(KeyEvent.VK_ESCAPE) },
                 {"Select:", kcToStr(KeyEvent.VK_ENTER) },
             };
+            this.INFO_MSG = ref;
+            return ref;
         }
 
-        return this.INFO_MSG;
+        return ref;
     }
 
     private static String kcToStr(final int kc) {
