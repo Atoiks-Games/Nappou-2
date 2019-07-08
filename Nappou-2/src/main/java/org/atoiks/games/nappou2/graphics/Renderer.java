@@ -20,11 +20,9 @@ package org.atoiks.games.nappou2.graphics;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Vector2;
-
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
 public interface Renderer {
 
-    public void render(IGraphics g, Shape shape, Vector2 pos);
+    public void render(IGraphics g, Shape shape);
 }

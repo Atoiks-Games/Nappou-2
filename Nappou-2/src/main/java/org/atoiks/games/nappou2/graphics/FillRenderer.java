@@ -22,8 +22,6 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Vector2;
-
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
 public final class FillRenderer implements Renderer {
@@ -36,14 +34,8 @@ public final class FillRenderer implements Renderer {
         this.color = color;
     }
 
-    public void render(IGraphics g, Shape shape, Vector2 pos) {
-        final float x = pos.getX();
-        final float y = pos.getY();
-        g.translate(x, y);
-
+    public void render(IGraphics g, Shape shape) {
         g.setColor(color);
         shape.fill(g);
-
-        g.translate(-x, -y);
     }
 }

@@ -24,11 +24,11 @@ import org.atoiks.games.nappou2.graphics.Renderer;
 
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public interface Drawable extends Shape, ITrackable {
+public interface Drawable extends Shape {
 
     public Renderer getRenderer();
 
     public static void render(IGraphics g, final Drawable drawable) {
-        drawable.getRenderer().render(g, drawable, drawable.getPosition());
+        drawable.getRenderer().render(g, drawable);
     }
 }
