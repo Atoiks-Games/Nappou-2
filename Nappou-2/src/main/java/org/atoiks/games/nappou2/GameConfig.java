@@ -32,11 +32,15 @@ public final class GameConfig implements Externalizable {
     public boolean challengeMode = false;
     public boolean fullscreen = false;
 
+    public final Keymap keymap = new Keymap();
+
     @Override
     public void readExternal(final ObjectInput stream) throws IOException {
         this.bgm = stream.readBoolean();
         this.challengeMode = stream.readBoolean();
         this.fullscreen = stream.readBoolean();
+
+        this.keymap.readExternal(stream);
     }
 
     @Override
@@ -44,5 +48,7 @@ public final class GameConfig implements Externalizable {
         stream.writeBoolean(this.bgm);
         stream.writeBoolean(this.challengeMode);
         stream.writeBoolean(this.fullscreen);
+
+        this.keymap.writeExternal(stream);
     }
 }
