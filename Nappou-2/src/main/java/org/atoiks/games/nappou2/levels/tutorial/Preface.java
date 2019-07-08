@@ -44,19 +44,12 @@ public final class Preface implements LevelState {
 
     private static final long serialVersionUID = 4928495316273389216L;
 
-    private static final String[][] INFO_MSG = {
-        { "Arrow Keys", "= Move" },
-        { "Shift", "= Focus" },
-        { "Z", "= Shoot" },
-        { "X", "= Activate shield" },
-        { "Escape", "= Pause" },
-        { "Enter", "= Select" }
-    };
-
     private final LevelState nextState;
 
     private transient Font font16;
     private transient Font font30;
+
+    private transient String[][] infoMsg;
 
     // Current hack to make sure you cannot enable challenge mode
     // part way through the game play via continue!
@@ -103,6 +96,8 @@ public final class Preface implements LevelState {
             bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
+
+        this.infoMsg = cfg.keymap.getInfoMessage();
     }
 
     @Override
@@ -116,10 +111,10 @@ public final class Preface implements LevelState {
         g.setFont(font30);
         g.drawString("Controls", 25, 70);
         g.setFont(font16);
-        for (int i = 0; i < INFO_MSG.length; ++i) {
-            final int h = 90 + i * (font16.getSize() + 5);
-            g.drawString(INFO_MSG[i][0], 40, h);
-            g.drawString(INFO_MSG[i][1], 120, h);
+        for (int i = 0; i < this.infoMsg.length; ++i) {
+            final int h = 94 + i * (font16.getSize() + 5);
+            g.drawString(this.infoMsg[i][0], 40, h);
+            g.drawString(this.infoMsg[i][1], 160, h);
         }
 
         g.drawString("Survive the void", 25, 550);

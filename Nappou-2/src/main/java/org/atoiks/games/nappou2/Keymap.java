@@ -41,6 +41,9 @@ public final class Keymap implements Externalizable {
     private int kcFire = KeyEvent.VK_Z;
     private int kcShield = KeyEvent.VK_X;
 
+    // see getInfoMessage
+    private transient String[][] INFO_MSG;
+
     public boolean shouldMoveUp() {
         return Input.isKeyDown(this.kcUp);
     }
@@ -67,6 +70,33 @@ public final class Keymap implements Externalizable {
 
     public boolean shouldActivateShield() {
         return Input.isKeyDown(this.kcShield);
+    }
+
+    public String[][] getInfoMessage() {
+        if (this.INFO_MSG == null) {
+            this.INFO_MSG = new String[][] {
+                { "Movement:", kcToStr(this.kcUp) },
+                { "", kcToStr(this.kcDown) },
+                { "", kcToStr(this.kcLeft) },
+                { "", kcToStr(this.kcRight) },
+                {"Focus:", kcToStr(this.kcSlow) },
+                {"Shoot:", kcToStr(this.kcFire) },
+                {"Activate shield:", kcToStr(this.kcShield) },
+                {"Pause game:", kcToStr(KeyEvent.VK_ESCAPE) },
+                {"Select:", kcToStr(KeyEvent.VK_ENTER) },
+            };
+        }
+
+        return this.INFO_MSG;
+    }
+
+    private static String kcToStr(final int kc) {
+        switch (kc) {
+            case KeyEvent.VK_SHIFT: return "<Shift>";
+            case KeyEvent.VK_ESCAPE: return "<Escape>";
+            case KeyEvent.VK_ENTER: return "<Enter>";
+            default:    return KeyEvent.getKeyText(kc);
+        }
     }
 
     @Override
