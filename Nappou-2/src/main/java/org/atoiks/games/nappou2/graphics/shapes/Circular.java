@@ -31,18 +31,30 @@ public interface Circular extends Shape {
     @Override
     public default void draw(final IGraphics g) {
         final float r = getRadius();
-        g.drawOval(-r, -r, r, r);
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.drawOval(x - r, y - r, x + r, y + r);
     }
 
     @Override
     public default void fill(final IGraphics g) {
         final float r = getRadius();
-        g.fillOval(-r, -r, r, r);
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.fillOval(x - r, y - r, x + r, y + r);
     }
 
     @Override
     public default void renderTexture(IGraphics g, Image img) {
         final float r = getRadius();
-        g.drawImage(img, -r, -r, r, r);
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.drawImage(img, x - r, y - r, x + r, y + r);
     }
 }

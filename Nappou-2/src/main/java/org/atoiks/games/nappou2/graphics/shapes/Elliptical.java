@@ -31,16 +31,28 @@ public interface Elliptical extends Shape {
 
     @Override
     public default void draw(final IGraphics g) {
-        g.drawOval(0, 0, getWidth(), getHeight());
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.drawOval(x, y, x + getWidth(), y + getHeight());
     }
 
     @Override
     public default void fill(final IGraphics g) {
-        g.fillOval(0, 0, getWidth(), getHeight());
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.fillOval(x, y, x + getWidth(), y + getHeight());
     }
 
     @Override
     public default void renderTexture(IGraphics g, Image img) {
-        g.drawImage(img, 0, 0, getWidth(), getHeight());
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.drawImage(img, x, y, x + getWidth(), y + getHeight());
     }
 }

@@ -28,11 +28,23 @@ public interface Polygonal extends Shape {
 
     @Override
     public default void draw(final IGraphics g) {
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.translate(x, y);
         g.drawPolygon(getPoints());
+        g.translate(-x, -y);
     }
 
     @Override
     public default void fill(final IGraphics g) {
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+
+        g.translate(x, y);
         g.fillPolygon(getPoints());
+        g.translate(-x, -y);
     }
 }

@@ -35,10 +35,15 @@ public interface Line extends Shape {
         final float angle = getAngle();
         final float hw = getHalfWidth();
         final float length = getLength();
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
+        g.translate(x, y);
         g.rotate(angle, 0, 0);
         g.drawRect(0, -hw, length, hw);
         g.rotate(-angle, 0, 0);
+        g.translate(-x, -y);
     }
 
     @Override
@@ -46,10 +51,15 @@ public interface Line extends Shape {
         final float angle = getAngle();
         final float hw = getHalfWidth();
         final float length = getLength();
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
+        g.translate(x, y);
         g.rotate(angle, 0, 0);
         g.fillRect(0, -hw, length, hw);
         g.rotate(-angle, 0, 0);
+        g.translate(-x, -y);
     }
 
     @Override
@@ -57,9 +67,14 @@ public interface Line extends Shape {
         final float angle = getAngle();
         final float hw = getHalfWidth();
         final float length = getLength();
+        final Vector2 pos = getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
 
+        g.translate(x, y);
         g.rotate(angle, 0, 0);
         g.drawImage(img, 0, -hw, length, hw);
         g.rotate(-angle, 0, 0);
+        g.translate(-x, -y);
     }
 }
