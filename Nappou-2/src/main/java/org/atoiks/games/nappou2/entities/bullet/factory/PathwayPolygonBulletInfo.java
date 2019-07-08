@@ -56,9 +56,4 @@ public final class PathwayPolygonBulletInfo<T extends IPathway> implements Bulle
     public PathwayPolygonBullet<? extends T> createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
     }
-
-    public static PathwayPolygonBulletInfo<FixedVelocity> createLegacyPolygonBullet(float[] coords, final float speed) {
-        return new PathwayPolygonBulletInfo<>(coords, (position, angle) ->
-                new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
-    }
 }
