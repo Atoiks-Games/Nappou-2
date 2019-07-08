@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class LegacyPointBulletInfo implements BulletFactory {
+public final class LegacyPointBulletInfo implements BulletFactory<PointBullet> {
 
     public final float radius;
     public final float speed;

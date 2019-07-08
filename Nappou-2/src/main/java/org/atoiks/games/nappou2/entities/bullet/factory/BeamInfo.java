@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.bullet.Beam;
 
-public final class BeamInfo implements BulletFactory {
+public final class BeamInfo implements BulletFactory<Beam> {
 
     public final float thickness;
     public final float length;

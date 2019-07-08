@@ -26,7 +26,7 @@ import org.atoiks.games.nappou2.sizer.ISizer;
 
 import org.atoiks.games.nappou2.entities.bullet.DynamicBeam;
 
-public final class DynamicBeamInfo implements BulletFactory {
+public final class DynamicBeamInfo implements BulletFactory<DynamicBeam> {
 
     public final float thickness;
     public final Supplier<? extends ISizer> sizerSupplier;
