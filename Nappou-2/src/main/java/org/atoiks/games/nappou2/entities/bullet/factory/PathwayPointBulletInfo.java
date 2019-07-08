@@ -62,9 +62,4 @@ public final class PathwayPointBulletInfo<T extends IPathway> implements BulletF
     public PathwayPointBullet<? extends T> createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
     }
-
-    public static PathwayPointBulletInfo<FixedVelocity> createLegacyPointBullet(float radius, final float speed) {
-        return new PathwayPointBulletInfo<>(radius, (position, angle) ->
-                new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
-    }
 }

@@ -35,9 +35,9 @@ import org.atoiks.games.nappou2.entities.bullet.factory.*;
 
 public final class Utils {
 
-    private static final BulletFactory DEFAULT_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(2, 1000);
-    private static final BulletFactory RADIAL_GROUP_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(15, 300);
-    private static final BulletFactory SHIFT_ENEMY_INFO = PathwayPointBulletInfo.createLegacyPointBullet(3, 175);
+    private static final BulletFactory DEFAULT_BULLET_INFO = new LegacyPointBulletInfo(2, 1000);
+    private static final BulletFactory RADIAL_GROUP_BULLET_INFO = new LegacyPointBulletInfo(15, 300);
+    private static final BulletFactory SHIFT_ENEMY_INFO = new LegacyPointBulletInfo(3, 175);
 
     private static final FixedAnglePattern MINI_BOMBER_PATTERN =
             new FixedAnglePattern(DEFAULT_BULLET_INFO, (float) (Math.PI / 2));
