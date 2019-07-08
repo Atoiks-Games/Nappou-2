@@ -18,10 +18,7 @@
 
 package org.atoiks.games.nappou2.entities;
 
-import java.awt.event.KeyEvent;
-
-import org.atoiks.games.framework2d.Input;
-
+import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
 
@@ -42,15 +39,17 @@ public final class PlayerController {
     private final Game game;
     private final Border border;
     private final Drifter drifter;
+    private final Keymap keymap;
 
     private boolean ignoreUpdateFlag;
     private float playerFireLimiter;
 
-    public PlayerController(final Game game, Border border) {
+    public PlayerController(final Game game, Border border, final Keymap keymap) {
         this.game = game;
         this.player = this.game.player;
         this.drifter = this.game.drifter;
         this.border = border;
+        this.keymap = keymap;
     }
 
     public Player getAssociatedPlayer() {
@@ -79,14 +78,14 @@ public final class PlayerController {
         int signX = 0;
         int signY = 0;
 
-        if (Input.isKeyDown(KeyEvent.VK_DOWN))  ++signY;
-        if (Input.isKeyDown(KeyEvent.VK_UP))    --signY;
-        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) ++signX;
-        if (Input.isKeyDown(KeyEvent.VK_LEFT))  --signX;
+        if (this.keymap.shouldMoveDown())  ++signY;
+        if (this.keymap.shouldMoveUp())    --signY;
+        if (this.keymap.shouldMoveRight()) ++signX;
+        if (this.keymap.shouldMoveLeft())  --signX;
 
         final Vector2 velocity = new Vector2(signX * DEFAULT_DX, signY * DEFAULT_DY).add(drifter.getDrift());
 
-        final boolean focusedMode = Input.isKeyDown(KeyEvent.VK_SHIFT);
+        final boolean focusedMode = this.keymap.shouldSlowDown();
         final Vector2 newPos = Vector2.clamp(
                 Vector2.muladd((focusedMode ? 0.55f : 1) * dt, velocity, player.getPosition()),
                 PLAYER_CENTER,
@@ -98,14 +97,14 @@ public final class PlayerController {
     }
 
     private void processPlayerAttack(final float dt) {
-        if ((playerFireLimiter -= dt) <= 0 && Input.isKeyDown(KeyEvent.VK_Z)) {
+        if ((playerFireLimiter -= dt) <= 0 && this.keymap.shouldFire()) {
             game.addPlayerBullet(PLAYER_BULLET_INFO.createBullet(player.getPosition(), (float) (-Math.PI / 2)));
             playerFireLimiter = MIN_FIRE_DELAY;
         }
     }
 
     private void processPlayerShield(final float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_X)) {
+        if (this.keymap.shouldActivateShield()) {
             player.getShield().activate();
         }
     }

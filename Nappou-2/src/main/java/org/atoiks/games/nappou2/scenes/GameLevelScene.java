@@ -32,6 +32,8 @@ import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
+import org.atoiks.games.nappou2.GameConfig;
+
 import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.Player;
@@ -55,10 +57,11 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
     private LevelState state = NullState.INSTANCE;
 
     public GameLevelScene(final Player player) {
-        this.game = new Game(player, this.border);
-        this.playerController = new PlayerController(this.game, this.border);
-
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        final GameConfig config = ResourceManager.get("./game.cfg");
+
+        this.game = new Game(player, this.border);
+        this.playerController = new PlayerController(this.game, this.border, config.keymap);
 
         this.pauseOverlay = new PauseOverlay(fnt);
         this.dialogOverlay = new DialogOverlay(fnt);
