@@ -40,6 +40,6 @@ public interface IEnemy extends Drawable, IDriftEntity, Circular {
     public Renderer getRenderer();
 
     public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(this.getPosition(), this.getRadius());
+        return col.collidesWith(this);
     }
 }

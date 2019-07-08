@@ -40,13 +40,14 @@ import org.atoiks.games.nappou2.entities.shield.RespawnShield;
 public final class Player implements Drawable, Circular {
 
     public static final int RADIUS = 8;
-    public static final int COLLISION_RADIUS = 2;
 
     private static final Renderer CYAN_RENDERER = new OutlineRenderer(Color.cyan);
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
     private final HitpointCounter hpCounter = new HitpointCounter();
+
     private final SpeedHintCircle speedHint = new SpeedHintCircle(this);
+    private final CollisionCircle collider = new CollisionCircle(this);
 
     private final RespawnShield respawnShield = new RespawnShield();
     private final IShieldEntity shield;
@@ -129,13 +130,34 @@ public final class Player implements Drawable, Circular {
     }
 
     public boolean collidesWith(ICollidable col) {
-        return col.collidesWith(this.position, Player.COLLISION_RADIUS);
+        return col.collidesWith(this.collider);
+    }
+}
+
+final class CollisionCircle implements Circular {
+
+    public static final int COLLISION_RADIUS = 2;
+
+    private Player player;
+
+    public CollisionCircle(Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public float getRadius() {
+        return COLLISION_RADIUS;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.player.getPosition();
     }
 }
 
 final class SpeedHintCircle implements Drawable, Circular {
 
-    private static final int HINT_COL_RADIUS = Player.COLLISION_RADIUS + 2;
+    private static final int HINT_COL_RADIUS = CollisionCircle.COLLISION_RADIUS + 2;
 
     private static final Renderer YELLOW_RENDERER = new FillRenderer(Color.yellow);
 

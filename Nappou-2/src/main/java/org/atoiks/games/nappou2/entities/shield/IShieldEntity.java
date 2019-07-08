@@ -38,6 +38,6 @@ public interface IShieldEntity extends IShield, Drawable, Serializable, Circular
 
     @Override
     public default boolean collidesWith(ICollidable col) {
-        return col.collidesWith(getPosition(), getRadius());
+        return col.collidesWith(this);
     }
 }
