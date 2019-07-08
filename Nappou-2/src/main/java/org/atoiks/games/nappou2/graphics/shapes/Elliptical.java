@@ -30,6 +30,14 @@ public interface Elliptical extends Shape {
     public float getHeight();
 
     @Override
+    public default Rectangular getMinimumBoundingBox() {
+        return new ImmutableRectangle(
+                this.getPosition(),
+                this.getWidth(),
+                this.getHeight());
+    }
+
+    @Override
     public default void draw(final IGraphics g) {
         final Vector2 pos = getPosition();
         final float x = pos.getX();

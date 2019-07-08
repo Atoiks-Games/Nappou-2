@@ -27,6 +27,32 @@ public interface Polygonal extends Shape {
     public float[] getPoints();
 
     @Override
+    public default Rectangular getMinimumBoundingBox() {
+        final float[] pts = this.getPoints();
+
+        float minX = Float.POSITIVE_INFINITY;
+        float minY = Float.POSITIVE_INFINITY;
+        float maxX = Float.NEGATIVE_INFINITY;
+        float maxY = Float.NEGATIVE_INFINITY;
+
+        final int limit = pts.length;
+        for (int i = 0; i < limit; i += 2) {
+            final float x = pts[i];
+            final float y = pts[i + 1];
+
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+        }
+
+        final Vector2 pos = this.getPosition();
+        final Vector2 min = new Vector2(minX, minY);
+        final Vector2 max = new Vector2(maxX, maxY);
+        return ImmutableRectangle.formedBetween(pos.add(min), pos.add(max));
+    }
+
+    @Override
     public default void draw(final IGraphics g) {
         final Vector2 pos = getPosition();
         final float x = pos.getX();

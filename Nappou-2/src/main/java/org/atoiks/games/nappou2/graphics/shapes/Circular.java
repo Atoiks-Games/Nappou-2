@@ -29,6 +29,14 @@ public interface Circular extends Shape {
     public float getRadius();
 
     @Override
+    public default Rectangular getMinimumBoundingBox() {
+        final float r = getRadius();
+        final Vector2 shift = new Vector2(r, r);
+        final Vector2 pos = this.getPosition();
+        return ImmutableRectangle.formedBetween(pos.sub(shift), pos.add(shift));
+    }
+
+    @Override
     public default void draw(final IGraphics g) {
         final float r = getRadius();
         final Vector2 pos = getPosition();

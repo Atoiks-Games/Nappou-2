@@ -30,6 +30,16 @@ public interface Rectangular extends Shape {
     public float getHeight();
 
     @Override
+    public default Rectangular getMinimumBoundingBox() {
+        return this;
+    }
+
+    @Override
+    public default Rectangular getBoundingBox() {
+        return this;
+    }
+
+    @Override
     public default void draw(final IGraphics g) {
         final Vector2 pos = getPosition();
         final float x = pos.getX();
@@ -54,5 +64,16 @@ public interface Rectangular extends Shape {
         final float y = pos.getY();
 
         g.drawImage(img, x, y, x + getWidth(), y + getHeight());
+    }
+
+    public static Rectangular of(Rectangular r1, Rectangular r2) {
+        final Vector2 start1 = r1.getPosition();
+        final Vector2 end1 = start1.add(new Vector2(r1.getWidth(), r1.getHeight()));
+        final Vector2 start2 = r2.getPosition();
+        final Vector2 end2 = start2.add(new Vector2(r2.getWidth(), r2.getHeight()));
+
+        return ImmutableRectangle.formedBetween(
+                Vector2.min(start1, start2),
+                Vector2.max(end1, end2));
     }
 }

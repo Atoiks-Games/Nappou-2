@@ -47,6 +47,35 @@ public interface Line extends Shape {
     }
 
     @Override
+    public default Rectangular getBoundingBox() {
+        final float max = Math.max(this.getLength(), this.getHalfWidth());
+        final Vector2 shift = new Vector2(max, max);
+        final Vector2 pos = this.getPosition();
+        return ImmutableRectangle.formedBetween(pos.sub(shift), pos.add(shift));
+    }
+
+    @Override
+    public default Rectangular getMinimumBoundingBox() {
+        // Idea is to draw a rectangle with its diagonal corresponding to the
+        // length and direction of the line.
+        // That does part of the job because it does not account for the half-
+        // width.
+        // This computes two rectangles: one from each half-width extension
+        // then finds the minimum bounding box of these two rectangles.
+
+        final Vector2 pos = this.getPosition();
+        final float angle = this.getAngle();
+        final Vector2 v1 = Vector2.fromPolar(this.getLength(), angle);
+        final Vector2 v2 = Vector2.fromPolar(this.getHalfWidth(), angle + (float) (Math.PI / 2));
+
+        final Vector2 p1 = pos.add(v2);
+        final Vector2 p2 = pos.sub(v2);
+        return Rectangular.of(
+                ImmutableRectangle.formedBetween(p1, p1.add(v1)),
+                ImmutableRectangle.formedBetween(p2, p2.add(v1)));
+    }
+
+    @Override
     public default void fill(final IGraphics g) {
         final float angle = getAngle();
         final float hw = getHalfWidth();

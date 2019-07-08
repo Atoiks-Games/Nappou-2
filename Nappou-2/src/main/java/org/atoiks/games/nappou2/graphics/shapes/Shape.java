@@ -28,6 +28,12 @@ import org.atoiks.games.framework2d.IGraphics;
 
 public interface Shape extends ITrackable {
 
+    public Rectangular getMinimumBoundingBox();
+
+    public default Rectangular getBoundingBox() {
+        return this.getMinimumBoundingBox();
+    }
+
     public void draw(IGraphics g);
     public void fill(IGraphics g);
     public void renderTexture(IGraphics g, Image img);
