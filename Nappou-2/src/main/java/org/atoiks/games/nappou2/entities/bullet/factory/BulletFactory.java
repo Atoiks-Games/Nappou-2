@@ -22,9 +22,9 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.bullet.IBullet;
 
-public interface BulletFactory {
+public interface BulletFactory<T extends IBullet> {
 
-    public IBullet createBullet(float x, float y, float angle);
+    public T createBullet(float x, float y, float angle);
 
-    public IBullet createBullet(Vector2 pos, float angle);
+    public T createBullet(Vector2 pos, float angle);
 }
