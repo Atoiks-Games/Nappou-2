@@ -22,9 +22,11 @@ import java.awt.Image;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.entities.ITrackable;
+
 import org.atoiks.games.framework2d.IGraphics;
 
-public interface Shape {
+public interface Shape extends ITrackable {
 
     public void draw(IGraphics g);
     public void fill(IGraphics g);
