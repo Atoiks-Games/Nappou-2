@@ -35,9 +35,9 @@ import org.atoiks.games.nappou2.GameConfig;
 public final class ConfigScene extends CenteringScene {
 
     private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE", "FULLSCREEN"
+        "BGM", "CHALLENGE MODE", "FULLSCREEN", "Change in-game controls"
     };
-    private static final int[] SELECTOR_Y = { 66, 115, 164 };
+    private static final int[] SELECTOR_Y = { 66, 115, 164, 213 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
@@ -72,8 +72,11 @@ public final class ConfigScene extends CenteringScene {
         for (int i = 0; i < OPTION_NAMES.length; ++i) {
             final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
             g.drawString(OPTION_NAMES[i], 84, h);
-            g.drawString("ON", 560, h);
-            g.drawString("OFF", 720, h);
+            if (i != 3) {
+                // This corresponds to "Change in-game controls"
+                g.drawString("ON", 560, h);
+                g.drawString("OFF", 720, h);
+            }
         }
 
         g.setFont(font16);
@@ -104,9 +107,17 @@ public final class ConfigScene extends CenteringScene {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
 
-        // Only dealing with boolean values, both right and left keys only need to invert value
-        if (Input.isKeyPressed(KeyEvent.VK_RIGHT) || Input.isKeyPressed(KeyEvent.VK_LEFT)) {
-            setValueAtSelector(!getValueAtSelector());
+        if (selector == 3) {
+            // This entry invokes an overlay!
+            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                SceneManager.pushScene(new KeymapConfigScene(config.keymap));
+                return true;
+            }
+        } else {
+            // Only dealing with boolean values, both right and left keys only need to invert value
+            if (Input.isKeyPressed(KeyEvent.VK_RIGHT) || Input.isKeyPressed(KeyEvent.VK_LEFT)) {
+                setValueAtSelector(!getValueAtSelector());
+            }
         }
         return true;
     }
