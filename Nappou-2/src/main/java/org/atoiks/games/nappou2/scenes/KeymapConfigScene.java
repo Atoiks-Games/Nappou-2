@@ -37,6 +37,7 @@ public final class KeymapConfigScene extends CenteringScene {
     private final Font font30;
 
     private String[][] infoMsg;
+    private boolean[] paintRed;
 
     private int selector;
 
@@ -56,14 +57,15 @@ public final class KeymapConfigScene extends CenteringScene {
         g.clearGraphics();
         super.render(g);
 
-        g.setColor(Color.white);
         g.setFont(font30);
         for (int i = 0; i < this.infoMsg.length; ++i) {
             final int h = getHeightForIndex(i);
+            g.setColor(this.paintRed[i] ? Color.red : Color.white);
             g.drawString(this.infoMsg[i][0], 124, h);
             g.drawString(this.infoMsg[i][1], 634, h);
         }
 
+        g.setColor(Color.white);
         g.setFont(font16);
         g.drawString("Hit Escape to return to title screen", 84, 540);
         g.drawString("Hit Enter to cycle through the list", 84, 560);
@@ -90,13 +92,30 @@ public final class KeymapConfigScene extends CenteringScene {
             case KeyEvent.VK_UNDEFINED:
                 // These keys cannot be binded as input keys
                 break;
-            default:
-                this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
-                this.invalidateInfoMsg();
+            default: {
+                final boolean collidingKeycode = !this.canAssignKeycodeToIndex(this.selector, lastKey);
+                this.paintRed[this.selector] = collidingKeycode;
+                if (collidingKeycode) {
+                    // Do not change it, instead modify it locally
+                    this.infoMsg[this.selector][1] = Keymap.keycodeToString(lastKey);
+                } else {
+                    this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
+                    this.invalidateInfoMsg();
+                }
                 break;
+            }
         }
 
         this.validateInfoMsg();
+        return true;
+    }
+
+    private boolean canAssignKeycodeToIndex(int index, final int kc) {
+        if (this.keymap.keyIsAlreadyAssigned(kc)) {
+            // Check if the key is same as the existing value
+            // if that is the case, then no problem assigning
+            return this.keymap.getKeycodeOfIndex(index) == kc;
+        }
         return true;
     }
 
@@ -107,6 +126,9 @@ public final class KeymapConfigScene extends CenteringScene {
     private void validateInfoMsg() {
         if (this.infoMsg == null) {
             this.infoMsg = this.keymap.getInfoMessage();
+            if (this.paintRed == null) {
+                this.paintRed = new boolean[this.infoMsg.length];
+            }
         }
     }
 

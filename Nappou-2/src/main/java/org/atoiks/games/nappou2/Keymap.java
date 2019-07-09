@@ -97,6 +97,32 @@ public final class Keymap implements Externalizable {
         this.kcShield = kc;
     }
 
+    public boolean keyIsAlreadyAssigned(final int kc) {
+        return kc == KeyEvent.VK_ESCAPE || kc == KeyEvent.VK_ENTER
+            || kc == this.kcUp
+            || kc == this.kcDown
+            || kc == this.kcLeft
+            || kc == this.kcRight
+            || kc == this.kcSlow
+            || kc == this.kcFire
+            || kc == this.kcShield;
+    }
+
+    public int getKeycodeOfIndex(int index) {
+        // Index is based on info message format!
+        switch (index) {
+            case 0: return this.kcUp;
+            case 1: return this.kcDown;
+            case 2: return this.kcLeft;
+            case 3: return this.kcRight;
+            case 4: return this.kcSlow;
+            case 5: return this.kcFire;
+            case 6: return this.kcShield;
+            default:
+                throw new IndexOutOfBoundsException(index);
+        }
+    }
+
     public void changeKeycodeOfIndex(int index, int kc) {
         if (kc == KeyEvent.VK_UNDEFINED) {
             throw new IllegalArgumentException("Keycode cannot be undefined!");
@@ -127,7 +153,7 @@ public final class Keymap implements Externalizable {
             {"Activate shield:", keycodeToString(this.kcShield) },
             {"Pause game:", keycodeToString(KeyEvent.VK_ESCAPE) },
             {"Select:", keycodeToString(KeyEvent.VK_ENTER) },
-            };
+        };
     }
 
     public String getFireKeystr() {
