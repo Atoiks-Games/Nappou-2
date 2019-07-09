@@ -38,6 +38,8 @@ public final class KeymapConfigScene extends CenteringScene {
 
     private String[][] infoMsg;
 
+    private int selector;
+
     public KeymapConfigScene(Keymap keymap) {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
 
@@ -64,6 +66,10 @@ public final class KeymapConfigScene extends CenteringScene {
 
         g.setFont(font16);
         g.drawString("Hit Escape to return to title screen", 84, 540);
+        g.drawString("Hit Enter to cycle through the list", 84, 560);
+
+        final int selectorHeight = getHeightForIndex(selector) - 18;
+        g.drawRect(621, selectorHeight, 625, selectorHeight + 20);
     }
 
     @Override
@@ -73,6 +79,22 @@ public final class KeymapConfigScene extends CenteringScene {
             return true;
         }
 
+        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+            selector = (selector + 1) % this.getMaxOptions();
+        }
+
+        final int lastKey = Input.getLastDownKey();
+        switch (lastKey) {
+            case KeyEvent.VK_ESCAPE:
+            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_UNDEFINED:
+                // These keys cannot be binded as input keys
+                break;
+            default:
+                this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
+                break;
+        }
+
         this.infoMsg = this.keymap.getInfoMessage();
         return true;
     }
@@ -80,6 +102,9 @@ public final class KeymapConfigScene extends CenteringScene {
     private int getHeightForIndex(int i) {
         return 94 + i * font30.getSize() + 5;
     }
-}
 
-// Input.getLastDownKey(); // KeyEvent.VK_UNDEFINED
+    private int getMaxOptions() {
+        // -2 because last two entries (pause and select cannot be changed!)
+        return this.infoMsg.length - 2;
+    }
+}

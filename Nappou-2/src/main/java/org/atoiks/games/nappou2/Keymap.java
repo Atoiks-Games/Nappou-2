@@ -107,6 +107,27 @@ public final class Keymap implements Externalizable {
         this.INFO_MSG = null;
     }
 
+    public void changeKeycodeOfIndex(int index, int kc) {
+        if (kc == KeyEvent.VK_UNDEFINED) {
+            throw new IllegalArgumentException("Keycode cannot be undefined!");
+        }
+
+        // Index is based on info message format!
+        switch (index) {
+            case 0: this.kcUp = kc; break;
+            case 1: this.kcDown = kc; break;
+            case 2: this.kcLeft = kc; break;
+            case 3: this.kcRight = kc; break;
+            case 4: this.kcSlow = kc; break;
+            case 5: this.kcFire = kc; break;
+            case 6: this.kcShield = kc; break;
+            default:
+                throw new IndexOutOfBoundsException(index);
+        }
+
+        this.INFO_MSG = null;
+    }
+
     public String[][] getInfoMessage() {
         String[][] ref = this.INFO_MSG;
         if (ref == null) {
