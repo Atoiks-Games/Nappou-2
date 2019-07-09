@@ -28,7 +28,9 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.ScoreData;
+import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
 
 public final class SaveHighscoreScene extends CenteringScene {
@@ -64,6 +66,7 @@ public final class SaveHighscoreScene extends CenteringScene {
     private final Font font16;
     private final Font font30;
     private final Font font80;
+    private final Keymap keymap;
 
     private final Difficulty diff;
     private final int levelId;
@@ -80,6 +83,8 @@ public final class SaveHighscoreScene extends CenteringScene {
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
         this.font80 = fnt.deriveFont(80f);
+
+        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
     }
 
     @Override
@@ -107,17 +112,17 @@ public final class SaveHighscoreScene extends CenteringScene {
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
+        if (this.keymap.shouldSelectPrevious()) {
             currentIdx -= WRAP_LENGTH;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (this.keymap.shouldSelectNext()) {
             currentIdx += WRAP_LENGTH;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (this.keymap.shouldSelectLeft()) {
             --currentIdx;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
+        if (this.keymap.shouldSelectRight()) {
             ++currentIdx;
         }
 

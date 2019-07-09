@@ -29,7 +29,9 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Utils;
+import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.ScoreData;
+import org.atoiks.games.nappou2.GameConfig;
 
 public final class ScoreScene extends CenteringScene {
 
@@ -43,6 +45,7 @@ public final class ScoreScene extends CenteringScene {
 
     private final Font font16;
     private final Font font30;
+    private final Keymap keymap;
 
     private int ticks = 0;
 
@@ -52,6 +55,7 @@ public final class ScoreScene extends CenteringScene {
         this.font30 = fnt.deriveFont(30f);
 
         this.score = ResourceManager.get("./score.dat");
+        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
     }
 
     @Override
@@ -107,10 +111,10 @@ public final class ScoreScene extends CenteringScene {
         if (Input.isKeyPressed(KeyEvent.VK_C)) {
             score.clear(plane);
         }
-        if (Input.isKeyPressed(KeyEvent.VK_RIGHT)) {
+        if (this.keymap.shouldSelectRight()) {
             plane = (plane + 1) % PLANE_MSG.length;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (this.keymap.shouldSelectLeft()) {
             if (--plane < 0) plane = PLANE_MSG.length - 1;
         }
         return true;

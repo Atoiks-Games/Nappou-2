@@ -26,6 +26,10 @@ import java.awt.event.KeyEvent;
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
@@ -44,10 +48,13 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private final Font font30;
     private final Font font80;
+    private final Keymap keymap;
 
     public PauseOverlay(Font font) {
         this.font30 = font.deriveFont(30f);
         this.font80 = font.deriveFont(80f);
+
+        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
     }
 
     public void enable() {
@@ -96,10 +103,10 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             return;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (this.keymap.shouldSelectNext()) {
             if (++selector >= SELECTOR_Y.length) selector = 0;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
+        if (this.keymap.shouldSelectPrevious()) {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
     }

@@ -41,6 +41,23 @@ public final class Keymap implements Externalizable {
     private int kcFire = KeyEvent.VK_Z;
     private int kcShield = KeyEvent.VK_X;
 
+    public boolean shouldSelectPrevious() {
+        return Input.isKeyPressed(this.kcUp);
+    }
+
+    public boolean shouldSelectNext() {
+        return Input.isKeyPressed(this.kcDown)
+            || Input.isKeyPressed(KeyEvent.VK_TAB);
+    }
+
+    public boolean shouldSelectLeft() {
+        return Input.isKeyPressed(this.kcLeft);
+    }
+
+    public boolean shouldSelectRight() {
+        return Input.isKeyPressed(this.kcRight);
+    }
+
     public boolean shouldMoveUp() {
         return Input.isKeyDown(this.kcUp);
     }

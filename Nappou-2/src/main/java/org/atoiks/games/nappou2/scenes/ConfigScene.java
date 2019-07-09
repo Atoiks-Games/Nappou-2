@@ -30,6 +30,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.GameConfig;
 
 public final class ConfigScene extends CenteringScene {
@@ -45,6 +46,7 @@ public final class ConfigScene extends CenteringScene {
     private final Font font30;
 
     private final Clip bgm;
+    private final Keymap keymap;
     private final GameConfig config;
 
     private int selector;
@@ -59,6 +61,8 @@ public final class ConfigScene extends CenteringScene {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
+
+        this.keymap = config.keymap;
     }
 
     @Override
@@ -100,10 +104,10 @@ public final class ConfigScene extends CenteringScene {
             SceneManager.popScene();
             return true;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_DOWN)) {
+        if (this.keymap.shouldSelectNext()) {
             selector = (selector + 1) % SELECTOR_Y.length;
         }
-        if (Input.isKeyPressed(KeyEvent.VK_UP)) {
+        if (this.keymap.shouldSelectPrevious()) {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
 
@@ -115,7 +119,7 @@ public final class ConfigScene extends CenteringScene {
             }
         } else {
             // Only dealing with boolean values, both right and left keys only need to invert value
-            if (Input.isKeyPressed(KeyEvent.VK_RIGHT) || Input.isKeyPressed(KeyEvent.VK_LEFT)) {
+            if (this.keymap.shouldSelectRight() || this.keymap.shouldSelectLeft()) {
                 setValueAtSelector(!getValueAtSelector());
             }
         }
