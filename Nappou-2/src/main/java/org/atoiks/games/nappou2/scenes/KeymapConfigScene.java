@@ -32,6 +32,8 @@ import org.atoiks.games.nappou2.Keymap;
 
 public final class KeymapConfigScene extends CenteringScene {
 
+    private static final int HEIGHT_RESET_ENTRY = 400;
+
     private final Keymap keymap;
     private final Font font16;
     private final Font font30;
@@ -66,13 +68,28 @@ public final class KeymapConfigScene extends CenteringScene {
         }
 
         g.setColor(Color.white);
-        g.setFont(font16);
-        g.drawString("Hit the key you want when item is selected, Red entries are not saved!", 84, 500);
-        g.drawString("Hit Escape to return to title screen", 84, 540);
-        g.drawString("Hit Enter to cycle through the list", 84, 560);
+        g.drawString("Reset to default", 634, HEIGHT_RESET_ENTRY);
 
-        final int selectorHeight = getHeightForIndex(selector) - 18;
+        g.setFont(font16);
+        g.drawString(this.getHintString(), 84, 500);
+        g.drawString("Hit Escape to return to title screen", 84, 540);
+        g.drawString("Hit Tab to cycle through the list", 84, 560);
+
+
+        final int selectorHeight = getSelectorHeightForIndex(selector);
         g.drawRect(621, selectorHeight, 625, selectorHeight + 20);
+    }
+
+    private String getHintString() {
+        if (this.isSelectingResetEntry()) {
+            return "Hit Enter to reset all keys bindings";
+        } else {
+            return "Hit the key you want when item is selected, Red entries are not saved!";
+        }
+    }
+
+    private boolean isSelectingResetEntry() {
+        return this.selector == getMaxOptions() - 1;
     }
 
     @Override
@@ -82,28 +99,38 @@ public final class KeymapConfigScene extends CenteringScene {
             return true;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+
+        if (Input.isKeyPressed(KeyEvent.VK_TAB)) {
             selector = (selector + 1) % this.getMaxOptions();
         }
 
-        final int lastKey = Input.getLastDownKey();
-        switch (lastKey) {
-            case KeyEvent.VK_ESCAPE:
-            case KeyEvent.VK_ENTER:
-            case KeyEvent.VK_UNDEFINED:
-                // These keys cannot be binded as input keys
-                break;
-            default: {
-                final boolean collidingKeycode = !this.canAssignKeycodeToIndex(this.selector, lastKey);
-                this.paintRed[this.selector] = collidingKeycode;
-                if (collidingKeycode) {
-                    // Do not change it, instead modify it locally
-                    this.infoMsg[this.selector][1] = Keymap.keycodeToString(lastKey);
-                } else {
-                    this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
-                    this.invalidateInfoMsg();
+        if (this.isSelectingResetEntry()) {
+            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                this.keymap.reset();
+                this.invalidateInfoMsg();
+                this.paintRed = null;
+            }
+        } else {
+            final int lastKey = Input.getLastDownKey();
+            switch (lastKey) {
+                case KeyEvent.VK_ESCAPE:
+                case KeyEvent.VK_ENTER:
+                case KeyEvent.VK_TAB:
+                case KeyEvent.VK_UNDEFINED:
+                    // These keys cannot be binded as input keys
+                    break;
+                default: {
+                    final boolean collidingKeycode = !this.canAssignKeycodeToIndex(this.selector, lastKey);
+                    this.paintRed[this.selector] = collidingKeycode;
+                    if (collidingKeycode) {
+                        // Do not change it, instead modify it locally
+                        this.infoMsg[this.selector][1] = Keymap.keycodeToString(lastKey);
+                    } else {
+                        this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
+                        this.invalidateInfoMsg();
+                    }
+                    break;
                 }
-                break;
             }
         }
 
@@ -137,8 +164,17 @@ public final class KeymapConfigScene extends CenteringScene {
         return 94 + i * font30.getSize() + 5;
     }
 
+    private int getSelectorHeightForIndex(int i) {
+        if (i == getMaxOptions() - 1) {
+            return HEIGHT_RESET_ENTRY - 20;
+        }
+        return getHeightForIndex(i) - 18;
+    }
+
     private int getMaxOptions() {
         // -2 because last two entries (pause and select cannot be changed!)
-        return this.infoMsg.length - 2;
+        // but then +1 because of the reset entry
+        // (overall of -1)
+        return this.infoMsg.length - 1;
     }
 }

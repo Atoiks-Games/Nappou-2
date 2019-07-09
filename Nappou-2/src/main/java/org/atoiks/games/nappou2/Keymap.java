@@ -142,6 +142,20 @@ public final class Keymap implements Externalizable {
         }
     }
 
+    public void reset() {
+        this.copyFrom(new Keymap());
+    }
+
+    public void copyFrom(final Keymap map) {
+        this.kcUp = map.kcUp;
+        this.kcDown = map.kcDown;
+        this.kcLeft = map.kcLeft;
+        this.kcRight = map.kcRight;
+        this.kcSlow = map.kcSlow;
+        this.kcFire = map.kcFire;
+        this.kcShield = map.kcShield;
+    }
+
     public String[][] getInfoMessage() {
         return new String[][] {
             { "Move up:", keycodeToString(this.kcUp) },
