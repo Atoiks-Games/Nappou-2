@@ -132,10 +132,10 @@ public final class Keymap implements Externalizable {
         String[][] ref = this.INFO_MSG;
         if (ref == null) {
             ref = new String[][] {
-                { "Movement:", kcToStr(this.kcUp) },
-                { "", kcToStr(this.kcDown) },
-                { "", kcToStr(this.kcLeft) },
-                { "", kcToStr(this.kcRight) },
+                { "Move up:", kcToStr(this.kcUp) },
+                { "     down:", kcToStr(this.kcDown) },
+                { "     left:", kcToStr(this.kcLeft) },
+                { "     right:", kcToStr(this.kcRight) },
                 {"Focus:", kcToStr(this.kcSlow) },
                 {"Shoot:", kcToStr(this.kcFire) },
                 {"Activate shield:", kcToStr(this.kcShield) },
