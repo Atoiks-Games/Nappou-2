@@ -108,8 +108,6 @@ public final class LoadingScene implements Scene {
                 loader.submit(() -> {
                     try {
                         loadImageFromResources("hp.png");
-                        loadImageFromResources("z.png");
-                        loadImageFromResources("x.png");
                         loadImageFromResources("CAI.png");
                         loadImageFromResources("ELLE.png");
                         loadImageFromResources("LUMA.png");
