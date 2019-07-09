@@ -84,11 +84,11 @@ public final class PlayerController {
         if (Input.isKeyDown(KeyEvent.VK_RIGHT)) ++signX;
         if (Input.isKeyDown(KeyEvent.VK_LEFT))  --signX;
 
-        final Vector2 disp = new Vector2(signX * DEFAULT_DX, signY * DEFAULT_DY).add(drifter.getDrift());
+        final Vector2 velocity = new Vector2(signX * DEFAULT_DX, signY * DEFAULT_DY).add(drifter.getDrift());
 
         final boolean focusedMode = Input.isKeyDown(KeyEvent.VK_SHIFT);
         final Vector2 newPos = Vector2.clamp(
-                Vector2.muladd((focusedMode ? 0.55f : 1) * dt, disp, player.getPosition()),
+                Vector2.muladd((focusedMode ? 0.55f : 1) * dt, velocity, player.getPosition()),
                 PLAYER_CENTER,
                 this.border.toVector().sub(PLAYER_CENTER));
 
