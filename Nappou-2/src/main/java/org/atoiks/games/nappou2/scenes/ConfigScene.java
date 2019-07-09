@@ -55,6 +55,8 @@ public final class ConfigScene extends CenteringScene {
     private float transX;
     private float transY;
 
+    private boolean showClearScoresOption = true;
+
     public ConfigScene() {
         bgm = ResourceManager.get("/music/Enter_The_Void.wav");
         config = ResourceManager.get("./game.cfg");
@@ -74,7 +76,7 @@ public final class ConfigScene extends CenteringScene {
 
         g.setColor(Color.white);
         g.setFont(this.font30);
-        for (int i = 0; i < OPTION_NAMES.length; ++i) {
+        for (int i = 0; i < getMaxOptions(); ++i) {
             final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
             g.drawString(OPTION_NAMES[i], 84, h);
             if (i < 3) {
@@ -94,6 +96,13 @@ public final class ConfigScene extends CenteringScene {
         renderBoolValue(g, config.fullscreen, 189);
     }
 
+    private int getMaxOptions() {
+        if (this.showClearScoresOption) {
+            return OPTION_NAMES.length;
+        }
+        return OPTION_NAMES.length - 1;
+    }
+
     private void renderBoolValue(final IGraphics g, final boolean value, final float height) {
         final int offset = 2 * (value ? 0 : 1);
         g.drawLine(BOOL_SEL_X[offset], height, BOOL_SEL_X[offset + 1], height);
@@ -106,10 +115,10 @@ public final class ConfigScene extends CenteringScene {
             return true;
         }
         if (this.keymap.shouldSelectNext()) {
-            selector = (selector + 1) % SELECTOR_Y.length;
+            selector = (selector + 1) % getMaxOptions();
         }
         if (this.keymap.shouldSelectPrevious()) {
-            if (--selector < 0) selector = SELECTOR_Y.length - 1;
+            if (--selector < 0) selector = getMaxOptions() - 1;
         }
 
         switch (this.selector) {
@@ -121,8 +130,12 @@ public final class ConfigScene extends CenteringScene {
                 }
                 break;
             case 4:
-                // This just clears the score
-                ResourceManager.<ScoreData>get("./score.dat").clear();
+                // This clears the score and hides the option!
+                if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                    ResourceManager.<ScoreData>get("./score.dat").clear();
+                    this.showClearScoresOption = false;
+                    this.selector = 0;
+                }
                 break;
             default:
                 // Only dealing with boolean values, both right and left keys only need to invert value
