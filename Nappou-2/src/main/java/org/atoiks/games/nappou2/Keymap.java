@@ -149,6 +149,14 @@ public final class Keymap implements Externalizable {
         return ref;
     }
 
+    public String getFireKeystr() {
+        return kcToStr(this.kcFire);
+    }
+
+    public String getShieldKeystr() {
+        return kcToStr(this.kcShield);
+    }
+
     private static String kcToStr(final int kc) {
         switch (kc) {
             case KeyEvent.VK_SHIFT: return "<Shift>";

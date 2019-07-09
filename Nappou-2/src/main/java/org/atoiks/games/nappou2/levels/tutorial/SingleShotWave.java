@@ -18,7 +18,8 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import java.awt.Image;
+import java.awt.Font;
+import java.awt.Color;
 
 import javax.sound.sampled.Clip;
 
@@ -34,11 +35,7 @@ import org.atoiks.games.nappou2.levels.LevelContext;
 
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 
-import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignVertical;
-import static org.atoiks.games.nappou2.scenes.DialogOverlay.alignHorizontal;
-
-import static org.atoiks.games.nappou2.entities.Message.VerticalAlignment;
-import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
+import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 
 /* package */ final class SingleShotWave implements LevelState {
 
@@ -46,22 +43,23 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     private final LevelState nextState;
 
-    private transient Image img;
-    private transient int imgY;
-    private transient int imgX;
+    private transient final Font font75;
+
+    private transient String fireKey;
 
     public SingleShotWave(LevelState nextState) {
         this.nextState = nextState;
+
+        final Font fnt = ResourceManager.get("/Logisoso.ttf");
+        this.font75 = fnt.deriveFont(75f);
     }
 
     @Override
     public void enter(final LevelContext ctx) {
-        final Image image = ResourceManager.get("/image/z.png");
-        this.img = image;
-        this.imgY = alignVertical(VerticalAlignment.CENTER, image);
-        this.imgX = alignHorizontal(HorizontalAlignment.CENTER, image);
+        final GameConfig cfg = ResourceManager.get("./game.cfg");
+        this.fireKey = cfg.keymap.getFireKeystr();
 
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+        if (cfg.bgm) {
             ResourceManager.<Clip>get("/music/Awakening.wav").start();
         }
     }
@@ -73,7 +71,9 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
     @Override
     public void renderBackground(final IGraphics g) {
-        g.drawImage(img, imgX, imgY);
+        g.setColor(Color.green);
+        g.setFont(this.font75);
+        g.drawString(this.fireKey, 20, HEIGHT - 30);
     }
 
     @Override
