@@ -18,7 +18,10 @@
 
 package org.atoiks.games.nappou2;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Externalizable;
 
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.ILevelState;
@@ -26,7 +29,7 @@ import org.atoiks.games.nappou2.levels.ILevelState;
 import org.atoiks.games.nappou2.entities.shield.NullShield;
 import org.atoiks.games.nappou2.entities.shield.IShieldEntity;
 
-public final class SaveData implements Serializable {
+public final class SaveData implements Externalizable {
 
     private static final long serialVersionUID = -6315543815579288169L;
 
@@ -57,5 +60,19 @@ public final class SaveData implements Serializable {
 
     public IShieldEntity getShieldCopy() {
         return this.shield.copy();
+    }
+
+    @Override
+    public void readExternal(final ObjectInput stream) throws IOException, ClassNotFoundException {
+        this.setCheckpoint((ILevelState) stream.readObject());
+        this.setShield((IShieldEntity) stream.readObject());
+        this.challengeMode = stream.readBoolean();
+    }
+
+    @Override
+    public void writeExternal(final ObjectOutput stream) throws IOException {
+        stream.writeObject(this.checkpoint);
+        stream.writeObject(this.shield);
+        stream.writeBoolean(this.challengeMode);
     }
 }

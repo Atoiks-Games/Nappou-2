@@ -35,7 +35,6 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.framework2d.decoder.ImageDecoder;
 import org.atoiks.games.framework2d.decoder.AudioDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
-import org.atoiks.games.framework2d.decoder.SerializableDecoder;
 import org.atoiks.games.framework2d.decoder.ExternalizableDecoder;
 
 import org.atoiks.games.framework2d.resolver.ExternalResourceResolver;
@@ -139,7 +138,7 @@ public final class LoadingScene implements Scene {
 
                     // Load save file from "current" directory
                     final SaveData saves = ResourceManager.loadOrDefault("./saves.dat", ExternalResourceResolver.INSTANCE,
-                            SerializableDecoder.forType(SaveData.class), SaveData::new);
+                            ExternalizableDecoder.forInstance(SaveData::new), SaveData::new);
 
                     loaded = LoadState.DONE;
                 });

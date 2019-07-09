@@ -26,6 +26,10 @@ public final class FixedTimeShield extends TimeBasedShield {
 
     private transient boolean relocate;
 
+    private FixedTimeShield(FixedTimeShield from) {
+        super(from);
+    }
+
     public FixedTimeShield(float timeout, float reloadTime, float r) {
         super(timeout, reloadTime, r);
     }
@@ -48,6 +52,6 @@ public final class FixedTimeShield extends TimeBasedShield {
 
     @Override
     public FixedTimeShield copy() {
-        return new FixedTimeShield(timeout, reloadTime, r);
+        return new FixedTimeShield(this);
     }
 }

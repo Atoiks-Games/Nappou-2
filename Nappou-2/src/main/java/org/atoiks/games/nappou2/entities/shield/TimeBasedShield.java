@@ -32,15 +32,21 @@ public abstract class TimeBasedShield implements IShieldEntity {
 
     private static final long serialVersionUID = 172635916L;
 
-    protected final float reloadTime;
-    protected final float timeout;
+    // see read/writeObject
+    private transient Color color = Color.orange;
+    private transient float reloadTime;
+    private transient float timeout;
 
-    protected transient Color color = Color.orange; // see read/writeObject
-    protected float r;
+    protected transient float r;
 
     protected transient boolean active;
     protected transient Vector2 position;
     protected transient float time;
+
+    protected TimeBasedShield(final TimeBasedShield from) {
+        this(from.timeout, from.reloadTime, from.r);
+        this.color = from.color;
+    }
 
     protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
         this.timeout = timeout;
@@ -111,28 +117,39 @@ public abstract class TimeBasedShield implements IShieldEntity {
         this.color = c != null ? c : Color.orange;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
+    protected final float getReloadTime() {
+        return this.reloadTime;
+    }
+
+    protected final float getTimeout() {
+        return this.timeout;
+    }
+
     private void writeObject(ObjectOutputStream s) throws IOException {
         // Have java serialize as much as possible
         s.defaultWriteObject();
 
-        // Write r, g, b, a as floats
-        final float[] buffer = new float[4];
-        this.color.getRGBComponents(buffer);
-        s.writeFloat(buffer[0]);
-        s.writeFloat(buffer[1]);
-        s.writeFloat(buffer[2]);
-        s.writeFloat(buffer[3]);
+        // Write color as packed bytes a, r, g, b
+        s.writeInt(this.color.getRGB());
+
+        s.writeFloat(this.r);
+        s.writeFloat(this.reloadTime);
+        s.writeFloat(this.timeout);
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         // Have java deserialize as much as possible
         s.defaultReadObject();
 
-        // Read r, g, b, a as floats
-        final float r = s.readFloat();
-        final float g = s.readFloat();
-        final float b = s.readFloat();
-        final float a = s.readFloat();
-        this.color = new Color(r, g, b, a);
+        // Read color as packed bytes a, r, g, b
+        this.color = new Color(s.readInt(), true);
+
+        this.r = s.readFloat();
+        this.reloadTime = s.readFloat();
+        this.timeout = s.readFloat();
     }
 }
