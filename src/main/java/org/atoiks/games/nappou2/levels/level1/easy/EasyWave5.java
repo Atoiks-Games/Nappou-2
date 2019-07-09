@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.levels.level1.easy;
 
+import org.atoiks.games.nappou2.spawner.BIGFishSpawner;
+import org.atoiks.games.nappou2.spawner.FishSpawner;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
@@ -221,7 +223,40 @@ public class EasyWave5 implements LevelState {
                         game.addEnemy(e);
                         break;
                 }
-                if (cycles > 500 && game.noMoreEnemies()) {
+                if (cycles > 775 && game.noMoreEnemies()) {
+                    wave++;
+                    cycles = 0;
+                }
+                break;
+            case 8:
+                switch (cycles) {
+                    case 40:
+                        for (int i = 0; i < 24; ++i) {
+                            game.addEnemyBullet(new StutterBullet(0, 0, 8, 250, i * (float) Math.PI / 12, 500, 10));
+                            game.addEnemyBullet(new StutterBullet(750, 0, 8, 250, i * (float) Math.PI / 12, 500, 10));
+                        }
+                        break;
+                    case 50:
+                        PathwayEnemy e = new PathwayEnemy(5, 5, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                        e.setR(20);
+                        game.addEnemy(e);
+                        PathwayEnemy f = new PathwayEnemy(5, 5, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), -1, 1, Math.PI), NullPattern.INSTANCE);
+                        f.setR(20);
+                        game.addEnemy(f);
+                        break;
+                }
+                if (cycles > 50 && game.noMoreEnemies()) {
+                    wave++;
+                    cycles = 0;
+                }
+                break;
+            case 9:
+                switch (cycles) {
+                    case 40:
+                    game.addSpawner(new BIGFishSpawner(375, 100, 650, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+                        break;
+                }
+                if (cycles > 40 && game.noMoreEnemies()) {
                     wave++;
                     cycles = 0;
                 }

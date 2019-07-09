@@ -18,7 +18,11 @@
 
 package org.atoiks.games.nappou2.entities.enemy;
 
+import org.atoiks.games.nappou2.Vector2;
+
 public final class FishPart extends ManualEnemy {
+
+    private static final int SCREEN_EDGE_BUFFER = 100;
 
     private float direction;
     private float speed;
@@ -54,5 +58,17 @@ public final class FishPart extends ManualEnemy {
     @Override
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean isOutOfScreen(final int w, final int h) {
+        final Vector2 pos = this.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+        final float r = getR();
+        return (x + r < -SCREEN_EDGE_BUFFER)
+            || (x - r > w + SCREEN_EDGE_BUFFER)
+            || (y + r < -SCREEN_EDGE_BUFFER)
+            || (y - r > h + SCREEN_EDGE_BUFFER);
     }
 }
