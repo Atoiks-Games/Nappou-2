@@ -46,14 +46,12 @@ public final class Player implements ITrackable {
     private final IShieldEntity shield;
 
     private Vector2 position;
-    private Vector2 velocity;
-    private float speedScale = 1;
+    private boolean focusedMode;
 
     public Player(IShieldEntity shield) {
         this.shield = shield;
         this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
         this.respawnShield.setColor(Color.red);
-        this.velocity = Vector2.ZERO;
         this.setPosition(Vector2.ZERO);
     }
 
@@ -62,7 +60,7 @@ public final class Player implements ITrackable {
         final float x = position.getX();
         final float y = position.getY();
         g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
-        if (speedScale != 1) {
+        if (focusedMode) {
             g.setColor(Color.yellow);
             g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
         }
@@ -74,8 +72,6 @@ public final class Player implements ITrackable {
     public void update(final float dt) {
         this.shield.update(dt);
         this.respawnShield.update(dt);
-
-        this.setPosition(Vector2.muladd(this.speedScale * dt, this.velocity, this.position));
     }
 
     public IShield getShield() {
@@ -94,16 +90,8 @@ public final class Player implements ITrackable {
         return this.hpCounter;
     }
 
-    public void setSpeedScale(float scale) {
-        this.speedScale = scale;
-    }
-
-    public void resetSpeedScale() {
-        this.speedScale = 1;
-    }
-
-    public void setVelocity(Vector2 v) {
-        this.velocity = v;
+    public void setFocusedMode(boolean flag) {
+        this.focusedMode = flag;
     }
 
     @Override
