@@ -159,10 +159,18 @@ public final class Keymap implements Externalizable {
 
     private static String kcToStr(final int kc) {
         switch (kc) {
-            case KeyEvent.VK_SHIFT: return "<Shift>";
-            case KeyEvent.VK_ESCAPE: return "<Escape>";
-            case KeyEvent.VK_ENTER: return "<Enter>";
-            default:    return KeyEvent.getKeyText(kc);
+            case KeyEvent.VK_TAB:           return "<Tab>";
+            case KeyEvent.VK_SPACE:         return "<Space>";
+            case KeyEvent.VK_ENTER:         return "<Enter>";
+            case KeyEvent.VK_SHIFT:         return "<Shift>";
+            case KeyEvent.VK_CONTROL:       return "<Ctrl>";
+            case KeyEvent.VK_ALT:           return "<Alt>";
+            case KeyEvent.VK_WINDOWS:       return "<Windows>";
+            case KeyEvent.VK_META:          return "<Meta>";
+            case KeyEvent.VK_ESCAPE:        return "<Escape>";
+            case KeyEvent.VK_BACK_SPACE:    return "<Backspace>";
+            case KeyEvent.VK_DELETE:        return "<Delete>";
+            default:                        return KeyEvent.getKeyText(kc);
         }
     }
 
