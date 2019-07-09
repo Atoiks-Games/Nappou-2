@@ -158,14 +158,14 @@ public final class Keymap implements Externalizable {
 
     public String[][] getInfoMessage() {
         return new String[][] {
-            { "Move up:", keycodeToString(this.kcUp) },
-            { "     down:", keycodeToString(this.kcDown) },
-            { "     left:", keycodeToString(this.kcLeft) },
-            { "     right:", keycodeToString(this.kcRight) },
+            { "Move Up:", keycodeToString(this.kcUp) },
+            { "     Down:", keycodeToString(this.kcDown) },
+            { "     Left:", keycodeToString(this.kcLeft) },
+            { "     Right:", keycodeToString(this.kcRight) },
             {"Focus:", keycodeToString(this.kcSlow) },
             {"Shoot:", keycodeToString(this.kcFire) },
-            {"Activate shield:", keycodeToString(this.kcShield) },
-            {"Pause game:", keycodeToString(KeyEvent.VK_ESCAPE) },
+            {"Shield:", keycodeToString(this.kcShield) },
+            {"Pause:", keycodeToString(KeyEvent.VK_ESCAPE) },
             {"Select:", keycodeToString(KeyEvent.VK_ENTER) },
         };
     }
@@ -180,6 +180,8 @@ public final class Keymap implements Externalizable {
 
     public static String keycodeToString(final int kc) {
         switch (kc) {
+            //TODO: May want to consider just letting it be Space instead of <Space>.
+            //either that or add in things like <Period> or <Left> for consistency.
             case KeyEvent.VK_TAB:           return "<Tab>";
             case KeyEvent.VK_SPACE:         return "<Space>";
             case KeyEvent.VK_ENTER:         return "<Enter>";

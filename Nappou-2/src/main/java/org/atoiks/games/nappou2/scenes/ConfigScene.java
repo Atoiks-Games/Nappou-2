@@ -35,7 +35,7 @@ import org.atoiks.games.nappou2.GameConfig;
 public final class ConfigScene extends CenteringScene {
 
     private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE", "FULLSCREEN", "Change in-game controls"
+        "BGM", "CHALLENGE MODE", "FULLSCREEN", "CONFIGURE CONTROLS"
     };
     private static final int[] SELECTOR_Y = { 66, 115, 164, 213 };
     private static final int OPT_HEIGHT = 23;
@@ -73,7 +73,7 @@ public final class ConfigScene extends CenteringScene {
             final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
             g.drawString(OPTION_NAMES[i], 84, h);
             if (i != 3) {
-                // This corresponds to "Change in-game controls"
+                // This corresponds to "CONFIGURE CONTROLS"
                 g.drawString("ON", 560, h);
                 g.drawString("OFF", 720, h);
             }
