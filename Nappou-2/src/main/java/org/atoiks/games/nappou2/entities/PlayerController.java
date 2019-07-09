@@ -36,6 +36,7 @@ public final class PlayerController {
 
     private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
+    private static final Vector2 PLAYER_CENTER = new Vector2(Player.RADIUS, Player.RADIUS);
 
     private final Player player;
     private final Game game;
@@ -75,29 +76,24 @@ public final class PlayerController {
     }
 
     private void processPlayerMovement(final float dt) {
-        final Vector2 disp = drifter.getDrift();
+        int signX = 0;
+        int signY = 0;
 
-        // Calculate player's unscaled speed in y
-        float tmpDy = disp.getY();
-        final float tmpY = player.getY();
-        if (Input.isKeyDown(KeyEvent.VK_DOWN))  tmpDy += DEFAULT_DY;
-        if (Input.isKeyDown(KeyEvent.VK_UP))    tmpDy -= DEFAULT_DY;
-        if ((tmpY + Player.RADIUS >= this.border.getHeight() && tmpDy > 0) || (tmpY - Player.RADIUS <= 0 && tmpDy < 0)) {
-            tmpDy = 0;
-        }
+        if (Input.isKeyDown(KeyEvent.VK_DOWN))  ++signY;
+        if (Input.isKeyDown(KeyEvent.VK_UP))    --signY;
+        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) ++signX;
+        if (Input.isKeyDown(KeyEvent.VK_LEFT))  --signX;
 
-        // Calculate player's unscaled speed in x
-        float tmpDx = disp.getX();
-        final float tmpX = player.getX();
-        if (Input.isKeyDown(KeyEvent.VK_RIGHT)) tmpDx += DEFAULT_DX;
-        if (Input.isKeyDown(KeyEvent.VK_LEFT))  tmpDx -= DEFAULT_DX;
-        if ((tmpX + Player.RADIUS >= this.border.getWidth() && tmpDx > 0) || (tmpX - Player.RADIUS <= 0 && tmpDx < 0)) {
-            tmpDx = 0;
-        }
+        final Vector2 disp = drifter.getDrift().add(new Vector2(signX * DEFAULT_DX, signY * DEFAULT_DY));
 
-        player.setVelocity(new Vector2(tmpDx, tmpDy));
+        final boolean focusedMode = Input.isKeyDown(KeyEvent.VK_SHIFT);
+        final Vector2 newPos = Vector2.clamp(
+                Vector2.muladd((focusedMode ? 0.55f : 1) * dt, disp, player.getPosition()),
+                PLAYER_CENTER,
+                this.border.toVector().sub(PLAYER_CENTER));
 
-        player.setSpeedScale(Input.isKeyDown(KeyEvent.VK_SHIFT) ? 0.55f : 1);
+        player.setPosition(newPos);
+        player.setFocusedMode(focusedMode);
         player.update(dt);
     }
 
