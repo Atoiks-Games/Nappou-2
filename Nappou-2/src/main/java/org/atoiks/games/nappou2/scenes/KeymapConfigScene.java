@@ -47,7 +47,7 @@ public final class KeymapConfigScene extends CenteringScene {
         this.font16 = fnt.deriveFont(16f);
         this.font30 = fnt.deriveFont(30f);
 
-        this.infoMsg = this.keymap.getInfoMessage();
+        this.validateInfoMsg();
     }
 
     @Override
@@ -92,11 +92,22 @@ public final class KeymapConfigScene extends CenteringScene {
                 break;
             default:
                 this.keymap.changeKeycodeOfIndex(this.selector, lastKey);
+                this.invalidateInfoMsg();
                 break;
         }
 
-        this.infoMsg = this.keymap.getInfoMessage();
+        this.validateInfoMsg();
         return true;
+    }
+
+    private void invalidateInfoMsg() {
+        this.infoMsg = null;
+    }
+
+    private void validateInfoMsg() {
+        if (this.infoMsg == null) {
+            this.infoMsg = this.keymap.getInfoMessage();
+        }
     }
 
     private int getHeightForIndex(int i) {

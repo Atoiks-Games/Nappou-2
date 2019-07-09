@@ -41,9 +41,6 @@ public final class Keymap implements Externalizable {
     private int kcFire = KeyEvent.VK_Z;
     private int kcShield = KeyEvent.VK_X;
 
-    // see getInfoMessage
-    private transient String[][] INFO_MSG;
-
     public boolean shouldMoveUp() {
         return Input.isKeyDown(this.kcUp);
     }
@@ -74,37 +71,30 @@ public final class Keymap implements Externalizable {
 
     public void changeMoveUpKeycode(int kc) {
         this.kcUp = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeMoveDownKeycode(int kc) {
         this.kcDown = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeMoveLeftKeycode(int kc) {
         this.kcLeft = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeMoveRightKeycode(int kc) {
         this.kcRight = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeSlowDownKeycode(int kc) {
         this.kcSlow = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeFireKeycode(int kc) {
         this.kcFire = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeActivateShieldKeycode(int kc) {
         this.kcShield = kc;
-        this.INFO_MSG = null;
     }
 
     public void changeKeycodeOfIndex(int index, int kc) {
@@ -124,40 +114,31 @@ public final class Keymap implements Externalizable {
             default:
                 throw new IndexOutOfBoundsException(index);
         }
-
-        this.INFO_MSG = null;
     }
 
     public String[][] getInfoMessage() {
-        String[][] ref = this.INFO_MSG;
-        if (ref == null) {
-            ref = new String[][] {
-                { "Move up:", kcToStr(this.kcUp) },
-                { "     down:", kcToStr(this.kcDown) },
-                { "     left:", kcToStr(this.kcLeft) },
-                { "     right:", kcToStr(this.kcRight) },
-                {"Focus:", kcToStr(this.kcSlow) },
-                {"Shoot:", kcToStr(this.kcFire) },
-                {"Activate shield:", kcToStr(this.kcShield) },
-                {"Pause game:", kcToStr(KeyEvent.VK_ESCAPE) },
-                {"Select:", kcToStr(KeyEvent.VK_ENTER) },
+        return new String[][] {
+            { "Move up:", keycodeToString(this.kcUp) },
+            { "     down:", keycodeToString(this.kcDown) },
+            { "     left:", keycodeToString(this.kcLeft) },
+            { "     right:", keycodeToString(this.kcRight) },
+            {"Focus:", keycodeToString(this.kcSlow) },
+            {"Shoot:", keycodeToString(this.kcFire) },
+            {"Activate shield:", keycodeToString(this.kcShield) },
+            {"Pause game:", keycodeToString(KeyEvent.VK_ESCAPE) },
+            {"Select:", keycodeToString(KeyEvent.VK_ENTER) },
             };
-            this.INFO_MSG = ref;
-            return ref;
-        }
-
-        return ref;
     }
 
     public String getFireKeystr() {
-        return kcToStr(this.kcFire);
+        return keycodeToString(this.kcFire);
     }
 
     public String getShieldKeystr() {
-        return kcToStr(this.kcShield);
+        return keycodeToString(this.kcShield);
     }
 
-    private static String kcToStr(final int kc) {
+    public static String keycodeToString(final int kc) {
         switch (kc) {
             case KeyEvent.VK_TAB:           return "<Tab>";
             case KeyEvent.VK_SPACE:         return "<Space>";
