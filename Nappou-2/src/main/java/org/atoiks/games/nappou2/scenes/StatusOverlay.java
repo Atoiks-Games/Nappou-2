@@ -23,7 +23,9 @@ import java.awt.Color;
 import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
@@ -44,13 +46,15 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final HitpointCounter hpCounter;
     private final IShield shield;
     private final Image hpImg;
+    private final SaveData save;
 
-    public StatusOverlay(Font font, final Player player, Image hpImg) {
+    public StatusOverlay(Font font, final Player player) {
         this.font = font.deriveFont(16f);
         this.hpCounter = player.getHpCounter();
         this.scoreCounter = player.getScoreCounter();
         this.shield = player.getShield();
-        this.hpImg = hpImg;
+        this.hpImg = ResourceManager.get("/image/hp.png");
+        this.save = ResourceManager.get("./saves.dat");
     }
 
     public void render(final IGraphics g) {
@@ -76,6 +80,10 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
         if (this.shield.isReady()) {
             g.drawString("Shield Ready", GAME_BORDER + 30, 96);
+        }
+
+        if (this.save.isChallengeMode()) {
+            g.drawString("Challenge Mode", GAME_BORDER + 28, 120);
         }
     }
 }
