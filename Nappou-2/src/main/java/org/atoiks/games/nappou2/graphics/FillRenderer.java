@@ -16,24 +16,26 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.graphics;
+
+import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.graphics.Renderer;
-import org.atoiks.games.nappou2.graphics.FillRenderer;
-import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-/* package */ abstract class AbstractBullet implements Bullet {
+public final class FillRenderer implements Renderer {
 
-    private Renderer renderer = FillRenderer.DEFAULT;
+    public static final FillRenderer DEFAULT = new FillRenderer(Color.white);
 
-    @Override
-    public final Renderer getRenderer() {
-        return this.renderer;
+    private final Color color;
+
+    public FillRenderer(Color color) {
+        this.color = color;
     }
 
-    public final void setRenderer(Renderer renderer) {
-        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
+    public void render(IGraphics g, Shape shape) {
+        g.setColor(color);
+        shape.fill(g);
     }
 }

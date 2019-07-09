@@ -152,6 +152,18 @@ public final class Vector2 implements Serializable {
                 Utils.lerp(start.y, end.y, frac));
     }
 
+    public static Vector2 min(final Vector2 u, final Vector2 v) {
+        return new Vector2(
+                Math.min(u.x, v.x),
+                Math.min(u.y, v.y));
+    }
+
+    public static Vector2 max(final Vector2 u, final Vector2 v) {
+        return new Vector2(
+                Math.max(u.x, v.x),
+                Math.max(u.y, v.y));
+    }
+
     public static float angleBetween(final Vector2 u, final Vector2 v) {
         return (float) Math.atan2(v.y - u.y, v.x - u.x);
     }

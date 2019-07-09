@@ -20,25 +20,24 @@ package org.atoiks.games.nappou2.entities.shield;
 
 import java.io.Serializable;
 
-import org.atoiks.games.framework2d.IGraphics;
-
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.entities.Drawable;
 import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface ShieldEntity extends Shield, Serializable {
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
-    public float getR();
+public interface ShieldEntity extends Shield, Drawable, Serializable, Circular {
+
     public Vector2 getPosition();
     public void setPosition(Vector2 v);
 
     public void update(float dt);
-    public void render(IGraphics g);
 
     public ShieldEntity copy();
 
     @Override
     public default boolean collidesWith(Collidable col) {
-        return col.collidesWith(getPosition(), getR());
+        return col.collidesWith(this);
     }
 }

@@ -51,7 +51,7 @@ public abstract class ManualEnemy extends AbstractEnemy {
     }
 
     @Override
-    public final float getR() {
+    public final float getRadius() {
         return this.r;
     }
 
@@ -63,7 +63,7 @@ public abstract class ManualEnemy extends AbstractEnemy {
         this.y = y;
     }
 
-    public final void setR(float r) {
+    public final void setRadius(float r) {
         this.r = r;
     }
 }

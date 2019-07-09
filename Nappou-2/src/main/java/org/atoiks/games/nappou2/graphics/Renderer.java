@@ -16,24 +16,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.graphics;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.graphics.Renderer;
-import org.atoiks.games.nappou2.graphics.FillRenderer;
-import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-/* package */ abstract class AbstractBullet implements Bullet {
+public interface Renderer {
 
-    private Renderer renderer = FillRenderer.DEFAULT;
-
-    @Override
-    public final Renderer getRenderer() {
-        return this.renderer;
-    }
-
-    public final void setRenderer(Renderer renderer) {
-        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
-    }
+    public void render(IGraphics g, Shape shape);
 }

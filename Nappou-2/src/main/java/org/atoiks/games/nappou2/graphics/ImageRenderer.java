@@ -18,19 +18,21 @@
 
 package org.atoiks.games.nappou2.graphics;
 
+import java.awt.Image;
+
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.enemy.Enemy;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-public final class NullEnemyRenderer implements EnemyRenderer {
+public final class ImageRenderer implements Renderer {
 
-    public static final NullEnemyRenderer INSTANCE = new NullEnemyRenderer();
+    private final Image image;
 
-    private NullEnemyRenderer() {
-        //
+    public ImageRenderer(final Image image) {
+        this.image = image;
     }
 
-    public void render(IGraphics g, Enemy enemy) {
-        // Do nothing
+    public void render(IGraphics g, Shape shape) {
+        shape.renderTexture(g, image);
     }
 }

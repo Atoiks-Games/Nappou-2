@@ -26,23 +26,30 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
 import org.atoiks.games.nappou2.HitpointCounter;
 
-import org.atoiks.games.nappou2.entities.Collidable;
+import org.atoiks.games.nappou2.graphics.Renderer;
+import org.atoiks.games.nappou2.graphics.FillRenderer;
+import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
+
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import org.atoiks.games.nappou2.entities.shield.Shield;
 import org.atoiks.games.nappou2.entities.shield.ShieldEntity;
-import org.atoiks.games.nappou2.entities.shield.TrackingTimeShield;
+import org.atoiks.games.nappou2.entities.shield.RespawnShield;
 
-public final class Player implements Trackable {
+public final class Player implements Drawable, Circular {
 
     public static final int RADIUS = 8;
 
-    private static final int COLLISION_RADIUS = 2;
-    private static final int HINT_COL_RADIUS = COLLISION_RADIUS + 2;
+    private static final Renderer CYAN_RENDERER = new OutlineRenderer(Color.cyan);
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
     private final HitpointCounter hpCounter = new HitpointCounter();
 
-    private final TrackingTimeShield respawnShield;
+    private final SpeedHintCircle speedHint = new SpeedHintCircle(this);
+    private final CollisionCircle collider = new CollisionCircle(this);
+
+    private final RespawnShield respawnShield = new RespawnShield();
     private final ShieldEntity shield;
 
     private Vector2 position;
@@ -50,23 +57,24 @@ public final class Player implements Trackable {
 
     public Player(ShieldEntity shield) {
         this.shield = shield;
-        this.respawnShield = new TrackingTimeShield(3f, 0, Player.RADIUS);
-        this.respawnShield.setColor(Color.red);
         this.setPosition(Vector2.ZERO);
     }
 
     public void render(final IGraphics g) {
-        g.setColor(Color.cyan);
-        final float x = position.getX();
-        final float y = position.getY();
-        g.drawOval(x - RADIUS, y - RADIUS, x + RADIUS, y + RADIUS);
-        if (focusedMode) {
-            g.setColor(Color.yellow);
-            g.fillOval(x - HINT_COL_RADIUS, y - HINT_COL_RADIUS, x + HINT_COL_RADIUS, y + HINT_COL_RADIUS);
-        }
+        Drawable.render(g, this);
+        Drawable.render(g, this.speedHint);
+        Drawable.render(g, this.shield);
+        Drawable.render(g, this.respawnShield);
+    }
 
-        this.shield.render(g);
-        this.respawnShield.render(g);
+    @Override
+    public Renderer getRenderer() {
+        return CYAN_RENDERER;
+    }
+
+    @Override
+    public float getRadius() {
+        return RADIUS;
     }
 
     public void update(final float dt) {
@@ -94,6 +102,10 @@ public final class Player implements Trackable {
         this.focusedMode = flag;
     }
 
+    public boolean isInFocusedMode() {
+        return this.focusedMode;
+    }
+
     @Override
     public Vector2 getPosition() {
         return this.position;
@@ -118,6 +130,55 @@ public final class Player implements Trackable {
     }
 
     public boolean collidesWith(Collidable col) {
-        return col.collidesWith(this.position, Player.COLLISION_RADIUS);
+        return col.collidesWith(this.collider);
+    }
+}
+
+final class CollisionCircle implements Circular {
+
+    public static final int COLLISION_RADIUS = 2;
+
+    private Player player;
+
+    public CollisionCircle(Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public float getRadius() {
+        return COLLISION_RADIUS;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.player.getPosition();
+    }
+}
+
+final class SpeedHintCircle implements Drawable, Circular {
+
+    private static final int HINT_COL_RADIUS = CollisionCircle.COLLISION_RADIUS + 2;
+
+    private static final Renderer YELLOW_RENDERER = new FillRenderer(Color.yellow);
+
+    private Player player;
+
+    public SpeedHintCircle(Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public float getRadius() {
+        return HINT_COL_RADIUS;
+    }
+
+    @Override
+    public Renderer getRenderer() {
+        return this.player.isInFocusedMode() ? YELLOW_RENDERER : NullRenderer.INSTANCE;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.player.getPosition();
     }
 }

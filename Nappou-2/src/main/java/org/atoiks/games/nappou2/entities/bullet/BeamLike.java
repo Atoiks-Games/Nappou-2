@@ -22,11 +22,13 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.graphics.shapes.Line;
+
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
 import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
-/* package */ abstract class BeamLike extends AbstractBullet {
+/* package */ abstract class BeamLike extends AbstractBullet implements Line {
 
     private final float halfWidth;
 
@@ -52,27 +54,18 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
     }
 
     @Override
-    public final void render(final IGraphics g) {
-        // Instead of shifting the ray to the screen,
-        // we translate the rendering matrix.
+    public float getHalfWidth() {
+        return Math.min(this.length, this.halfWidth);
+    }
 
-        if (this.length == 0) {
-            return;
-        }
+    @Override
+    public float getLength() {
+        return this.length;
+    }
 
-        final Vector2 pos = this.getPosition();
-        final float tx = pos.getX();
-        final float ty = pos.getY();
-        final float hw = Math.min(this.length, this.halfWidth);
-
-        g.translate(tx, ty);
-        g.rotate(angle, 0, 0);
-
-        g.setColor(this.color);
-        g.fillRect(0, -hw, this.length, hw);
-
-        g.rotate(-angle, 0, 0);
-        g.translate(-tx, -ty);
+    @Override
+    public float getAngle() {
+        return this.angle;
     }
 
     @Override

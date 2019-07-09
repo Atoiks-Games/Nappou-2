@@ -16,13 +16,25 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.graphics;
+package org.atoiks.games.nappou2.graphics.shapes;
+
+import java.awt.Image;
+
+import org.atoiks.games.nappou2.Vector2;
+
+import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.entities.enemy.Enemy;
+public interface Shape extends Trackable {
 
-public interface EnemyRenderer {
+    public Rectangular getMinimumBoundingBox();
 
-    public void render(IGraphics g, Enemy enemy);
+    public default Rectangular getBoundingBox() {
+        return this.getMinimumBoundingBox();
+    }
+
+    public void draw(IGraphics g);
+    public void fill(IGraphics g);
+    public void renderTexture(IGraphics g, Image img);
 }

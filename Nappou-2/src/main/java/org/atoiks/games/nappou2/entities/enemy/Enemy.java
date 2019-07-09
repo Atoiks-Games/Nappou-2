@@ -19,22 +19,27 @@
 package org.atoiks.games.nappou2.entities.enemy;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.GameEntity;
+import org.atoiks.games.nappou2.entities.Drawable;
 import org.atoiks.games.nappou2.entities.Collidable;
+import org.atoiks.games.nappou2.entities.GameEntity;
 
-public interface Enemy extends GameEntity {
+import org.atoiks.games.nappou2.graphics.Renderer;
+
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+
+public interface Enemy extends Drawable, GameEntity, Circular {
 
     public boolean isDead();
     public int changeHp(int delta);
-
-    public float getR();
 
     public int getScore();
 
     public void attachGame(Game game);
     public Game getAssocGame();
 
+    public Renderer getRenderer();
+
     public default boolean collidesWith(Collidable col) {
-        return col.collidesWith(this.getPosition(), this.getR());
+        return col.collidesWith(this);
     }
 }

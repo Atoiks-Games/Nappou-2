@@ -20,12 +20,15 @@ package org.atoiks.games.nappou2.entities;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+
 public interface Collidable {
 
     public boolean isOutOfScreen(int width, int height);
     public boolean collidesWith(float x, float y, float r);
 
-    public default boolean collidesWith(final Vector2 position, float r) {
-        return collidesWith(position.getX(), position.getY(), r);
+    public default boolean collidesWith(final Circular circle) {
+        final Vector2 pos = circle.getPosition();
+        return collidesWith(pos.getX(), pos.getY(), circle.getRadius());
     }
 }

@@ -18,29 +18,24 @@
 
 package org.atoiks.games.nappou2.graphics;
 
-import java.awt.Image;
+import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-import org.atoiks.games.nappou2.entities.enemy.Enemy;
+public final class OutlineRenderer implements Renderer {
 
-public final class ImageEnemyRenderer implements EnemyRenderer {
+    public static final OutlineRenderer DEFAULT = new OutlineRenderer(Color.white);
 
-    private final Image image;
+    private final Color color;
 
-    public ImageEnemyRenderer(final Image image) {
-        this.image = image;
+    public OutlineRenderer(Color color) {
+        this.color = color;
     }
 
-    public void render(IGraphics g, Enemy obj) {
-        // x, y are the center of the enemy
-        final float r = obj.getR();
-        final Vector2 pos = obj.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        // Draw the image over the square occupied by the enemy
-        g.drawImage(image, x - r, y - r, x + r, y + r);
+    public void render(IGraphics g, Shape shape) {
+        g.setColor(color);
+        shape.draw(g);
     }
 }

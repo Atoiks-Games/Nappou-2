@@ -22,27 +22,22 @@ import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
-import org.atoiks.games.nappou2.entities.enemy.Enemy;
+public final class ColorRenderer implements Renderer {
 
-public final class ColorEnemyRenderer implements EnemyRenderer {
+    private final Color fill;
+    private final Color draw;
 
-    public static final ColorEnemyRenderer DEFAULT = new ColorEnemyRenderer(Color.white);
-
-    private final Color color;
-
-    public ColorEnemyRenderer(Color color) {
-        this.color = color;
+    public ColorRenderer(Color fill, Color draw) {
+        this.fill = fill;
+        this.draw = draw;
     }
 
-    public void render(IGraphics g, Enemy obj) {
-        g.setColor(color);
-        // x, y are the center of the enemy
-        final float r = obj.getR();
-        final Vector2 pos = obj.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        g.drawOval(x - r, y - r, x + r, y + r);
+    public void render(IGraphics g, Shape shape) {
+        g.setColor(fill);
+        shape.fill(g);
+        g.setColor(draw);
+        shape.draw(g);
     }
 }

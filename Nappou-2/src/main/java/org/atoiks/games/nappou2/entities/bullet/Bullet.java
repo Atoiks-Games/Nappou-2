@@ -20,10 +20,13 @@ package org.atoiks.games.nappou2.entities.bullet;
 
 import java.awt.Color;
 
+import org.atoiks.games.nappou2.entities.Drawable;
 import org.atoiks.games.nappou2.entities.GameEntity;
 
-public interface Bullet extends GameEntity {
+import org.atoiks.games.nappou2.graphics.Renderer;
 
-    public void setColor(Color newColor);
-    public Color getColor();
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
+
+public interface Bullet extends Drawable, GameEntity {
+
 }

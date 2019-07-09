@@ -16,24 +16,32 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities.bullet;
+package org.atoiks.games.nappou2.entities.shield;
 
-import org.atoiks.games.framework2d.IGraphics;
+import java.awt.Color;
+
+import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
-import org.atoiks.games.nappou2.graphics.FillRenderer;
 import org.atoiks.games.nappou2.graphics.NullRenderer;
+import org.atoiks.games.nappou2.graphics.OutlineRenderer;
 
-/* package */ abstract class AbstractBullet implements Bullet {
+public final class RespawnShield extends TimeBasedShield {
 
-    private Renderer renderer = FillRenderer.DEFAULT;
+    private static final long serialVersionUID = 2761514159978306296L;
+    private static final Renderer RENDERER = new OutlineRenderer(Color.red);
 
-    @Override
-    public final Renderer getRenderer() {
-        return this.renderer;
+    public RespawnShield() {
+        super(3f, 0, Player.RADIUS);
     }
 
-    public final void setRenderer(Renderer renderer) {
-        this.renderer = renderer != null ? renderer : NullRenderer.INSTANCE;
+    @Override
+    public Renderer getRenderer() {
+        return isActive() ? RENDERER : NullRenderer.INSTANCE;
+    }
+
+    @Override
+    public RespawnShield copy() {
+        return new RespawnShield();
     }
 }

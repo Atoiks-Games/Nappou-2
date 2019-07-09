@@ -19,11 +19,10 @@
 package org.atoiks.games.nappou2.entities;
 
 import org.atoiks.games.nappou2.Updatable;
-import org.atoiks.games.nappou2.Renderable;
 
 import org.atoiks.games.nappou2.entities.Driftable;
 import org.atoiks.games.nappou2.entities.Trackable;
 import org.atoiks.games.nappou2.entities.Collidable;
 
-public interface GameEntity extends Driftable, Trackable, Updatable, Collidable, Renderable {
+public interface GameEntity extends Driftable, Trackable, Updatable, Collidable {
 }

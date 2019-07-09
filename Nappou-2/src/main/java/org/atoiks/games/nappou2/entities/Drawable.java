@@ -16,11 +16,19 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2;
+package org.atoiks.games.nappou2.entities;
 
 import org.atoiks.games.framework2d.IGraphics;
 
-public interface Renderable {
+import org.atoiks.games.nappou2.graphics.Renderer;
 
-    public void render(IGraphics g);
+import org.atoiks.games.nappou2.graphics.shapes.Shape;
+
+public interface Drawable extends Shape {
+
+    public Renderer getRenderer();
+
+    public static void render(IGraphics g, final Drawable drawable) {
+        drawable.getRenderer().render(g, drawable);
+    }
 }
