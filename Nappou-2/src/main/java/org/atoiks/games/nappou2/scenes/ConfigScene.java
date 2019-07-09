@@ -31,14 +31,15 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
 public final class ConfigScene extends CenteringScene {
 
     private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE", "FULLSCREEN", "CONFIGURE CONTROLS"
+        "BGM", "CHALLENGE MODE", "FULLSCREEN", "CONFIGURE CONTROLS", "CLEAR SCORES"
     };
-    private static final int[] SELECTOR_Y = { 66, 115, 164, 213 };
+    private static final int[] SELECTOR_Y = { 66, 115, 164, 213, 262 };
     private static final int OPT_HEIGHT = 23;
     private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
@@ -76,8 +77,8 @@ public final class ConfigScene extends CenteringScene {
         for (int i = 0; i < OPTION_NAMES.length; ++i) {
             final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
             g.drawString(OPTION_NAMES[i], 84, h);
-            if (i != 3) {
-                // This corresponds to "CONFIGURE CONTROLS"
+            if (i < 3) {
+                // This corresponds to "CONFIGURE CONTROLS" and "CLEAR SCORES"
                 g.drawString("ON", 560, h);
                 g.drawString("OFF", 720, h);
             }
@@ -111,17 +112,24 @@ public final class ConfigScene extends CenteringScene {
             if (--selector < 0) selector = SELECTOR_Y.length - 1;
         }
 
-        if (selector == 3) {
-            // This entry invokes an overlay!
-            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-                SceneManager.pushScene(new KeymapConfigScene(config.keymap));
-                return true;
-            }
-        } else {
-            // Only dealing with boolean values, both right and left keys only need to invert value
-            if (this.keymap.shouldSelectRight() || this.keymap.shouldSelectLeft()) {
-                setValueAtSelector(!getValueAtSelector());
-            }
+        switch (this.selector) {
+            case 3:
+                // This entry invokes an overlay!
+                if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                    SceneManager.pushScene(new KeymapConfigScene(config.keymap));
+                    return true;
+                }
+                break;
+            case 4:
+                // This just clears the score
+                ResourceManager.<ScoreData>get("./score.dat").clear();
+                break;
+            default:
+                // Only dealing with boolean values, both right and left keys only need to invert value
+                if (this.keymap.shouldSelectRight() || this.keymap.shouldSelectLeft()) {
+                    setValueAtSelector(!getValueAtSelector());
+                }
+                break;
         }
         return true;
     }
