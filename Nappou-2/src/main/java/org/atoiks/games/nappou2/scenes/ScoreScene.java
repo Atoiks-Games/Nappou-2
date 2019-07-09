@@ -92,9 +92,8 @@ public final class ScoreScene extends CenteringScene {
             }
         }
 
-        g.drawString("Switch score mode with left and right arrows", 14, 540);
-        g.drawString("Hit C to clear current visible highscore", 14, 560);
-        g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
+        g.drawString("Hit Escape to return to title screen", 14, 540);
+        g.drawString("Switch score mode with left and right arrows", 14, 560);
     }
 
     @Override
@@ -104,12 +103,9 @@ public final class ScoreScene extends CenteringScene {
             showName = !showName;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
             SceneManager.popScene();
             return true;
-        }
-        if (Input.isKeyPressed(KeyEvent.VK_C)) {
-            score.clear(plane);
         }
         if (this.keymap.shouldSelectRight()) {
             plane = (plane + 1) % PLANE_MSG.length;
