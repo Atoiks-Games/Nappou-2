@@ -67,6 +67,7 @@ public final class KeymapConfigScene extends CenteringScene {
 
         g.setColor(Color.white);
         g.setFont(font16);
+        g.drawString("Hit the key you want when item is selected, Red entries are not saved!", 84, 500);
         g.drawString("Hit Escape to return to title screen", 84, 540);
         g.drawString("Hit Enter to cycle through the list", 84, 560);
 
