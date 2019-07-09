@@ -27,14 +27,14 @@ import org.atoiks.games.nappou2.Drifter;
 
 import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
-import org.atoiks.games.nappou2.entities.bullet.factory.PathwayPointBulletInfo;
+import org.atoiks.games.nappou2.entities.bullet.factory.LegacyPointBulletInfo;
 
 public final class PlayerController {
 
     public static final float DEFAULT_DX = 300f;
     public static final float DEFAULT_DY = 300f;
 
-    private static final BulletFactory PLAYER_BULLET_INFO = PathwayPointBulletInfo.createLegacyPointBullet(5, DEFAULT_DY * 4.5f);
+    private static final BulletFactory PLAYER_BULLET_INFO = new LegacyPointBulletInfo(5, DEFAULT_DY * 4.5f);
     private static final float MIN_FIRE_DELAY = 0.2f;
 
     private final Player player;

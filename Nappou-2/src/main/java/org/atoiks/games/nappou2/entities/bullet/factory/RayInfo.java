@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.bullet.Ray;
 
-public final class RayInfo implements BulletFactory {
+public final class RayInfo implements BulletFactory<Ray> {
 
     public final float growthRate;
     public final float width;

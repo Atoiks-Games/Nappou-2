@@ -31,7 +31,7 @@ import org.atoiks.games.nappou2.entities.bullet.PathwayPolygonBullet;
 // Angle parameter is ignored:
 //   Bullet can be rotated to an angle but not travel in that direction
 //   (we do not bother rotating the polygon at all)
-public final class PathwayPolygonBulletInfo<T extends IPathway> implements BulletFactory {
+public final class PathwayPolygonBulletInfo<T extends IPathway> implements BulletFactory<PathwayPolygonBullet<T>> {
 
     public final float[] coords;
     public final BiFunction<? super Vector2, ? super Float, ? extends T> pathway;
@@ -46,19 +46,14 @@ public final class PathwayPolygonBulletInfo<T extends IPathway> implements Bulle
     }
 
     @Override
-    public PathwayPolygonBullet<? extends T> createBullet(Vector2 position, float angle) {
+    public PathwayPolygonBullet<T> createBullet(Vector2 position, float angle) {
         // Do not need to copy the coordinates since pathway polygon does not
         // mutate the coordinates at all!
         return new PathwayPolygonBullet<>(coords, pathway.apply(position, angle));
     }
 
     @Override
-    public PathwayPolygonBullet<? extends T> createBullet(float x, float y, final float angle) {
+    public PathwayPolygonBullet<T> createBullet(float x, float y, final float angle) {
         return createBullet(new Vector2(x, y), angle);
-    }
-
-    public static PathwayPolygonBulletInfo<FixedVelocity> createLegacyPolygonBullet(float[] coords, final float speed) {
-        return new PathwayPolygonBulletInfo<>(coords, (position, angle) ->
-                new FixedVelocity(position, Vector2.fromPolar(speed, angle)));
     }
 }

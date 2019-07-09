@@ -20,27 +20,25 @@ package org.atoiks.games.nappou2.entities.bullet.factory;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.bullet.Beam;
+import org.atoiks.games.nappou2.entities.bullet.PointBullet;
 
-public final class BeamInfo implements BulletFactory<Beam> {
+public final class LegacyPointBulletInfo implements BulletFactory<PointBullet> {
 
-    public final float thickness;
-    public final float length;
+    public final float radius;
     public final float speed;
 
-    public BeamInfo(float thickness, float length, float speed) {
-        this.thickness = thickness;
-        this.length = length;
+    public LegacyPointBulletInfo(float radius, float speed) {
+        this.radius = radius;
         this.speed = speed;
     }
 
     @Override
-    public Beam createBullet(Vector2 position, float angle) {
-        return new Beam(position, thickness, length, Vector2.fromPolar(speed, angle));
+    public PointBullet createBullet(Vector2 position, float angle) {
+        return new PointBullet(position, this.radius, Vector2.fromPolar(this.speed, angle));
     }
 
     @Override
-    public Beam createBullet(float x, float y, float angle) {
-        return new Beam(x, y, thickness, length, angle, speed);
+    public PointBullet createBullet(float x, float y, float angle) {
+        return new PointBullet(new Vector2(x, y), this.radius, Vector2.fromPolar(this.speed, angle));
     }
 }
