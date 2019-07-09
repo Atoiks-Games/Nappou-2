@@ -58,20 +58,16 @@ public final class Keymap implements Externalizable {
         return Input.isKeyPressed(this.kcRight);
     }
 
-    public boolean shouldMoveUp() {
-        return Input.isKeyDown(this.kcUp);
-    }
+    public Vector2 getMovementDirection() {
+        int signX = 0;
+        int signY = 0;
 
-    public boolean shouldMoveDown() {
-        return Input.isKeyDown(this.kcDown);
-    }
+        if (Input.isKeyDown(this.kcDown))  ++signY;
+        if (Input.isKeyDown(this.kcUp))    --signY;
+        if (Input.isKeyDown(this.kcRight)) ++signX;
+        if (Input.isKeyDown(this.kcLeft))  --signX;
 
-    public boolean shouldMoveLeft() {
-        return Input.isKeyDown(this.kcLeft);
-    }
-
-    public boolean shouldMoveRight() {
-        return Input.isKeyDown(this.kcRight);
+        return new Vector2(signX, signY);
     }
 
     public boolean shouldSlowDown() {

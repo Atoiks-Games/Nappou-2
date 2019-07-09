@@ -28,10 +28,8 @@ import org.atoiks.games.nappou2.entities.bullet.factory.LegacyPointBulletInfo;
 
 public final class PlayerController {
 
-    public static final float DEFAULT_DX = 300f;
-    public static final float DEFAULT_DY = 300f;
-
-    private static final BulletFactory PLAYER_BULLET_INFO = new LegacyPointBulletInfo(5, DEFAULT_DY * 4.5f);
+    private static final float PLAYER_SPEED = 300;
+    private static final BulletFactory PLAYER_BULLET_INFO = new LegacyPointBulletInfo(5, 1350);
     private static final float MIN_FIRE_DELAY = 0.2f;
     private static final Vector2 PLAYER_CENTER = new Vector2(Player.RADIUS, Player.RADIUS);
 
@@ -75,15 +73,10 @@ public final class PlayerController {
     }
 
     private void processPlayerMovement(final float dt) {
-        int signX = 0;
-        int signY = 0;
-
-        if (this.keymap.shouldMoveDown())  ++signY;
-        if (this.keymap.shouldMoveUp())    --signY;
-        if (this.keymap.shouldMoveRight()) ++signX;
-        if (this.keymap.shouldMoveLeft())  --signX;
-
-        final Vector2 velocity = new Vector2(signX * DEFAULT_DX, signY * DEFAULT_DY).add(drifter.getDrift());
+        final Vector2 velocity = Vector2.muladd(
+                PLAYER_SPEED,
+                keymap.getMovementDirection(),
+                drifter.getDrift());
 
         final boolean focusedMode = this.keymap.shouldSlowDown();
         final Vector2 newPos = Vector2.clamp(
