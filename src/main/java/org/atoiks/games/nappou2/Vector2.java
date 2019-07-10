@@ -174,6 +174,14 @@ public final class Vector2 implements Serializable {
         return new Vector2(Math.abs(u.x), Math.abs(u.y));
     }
 
+    public static Vector2 rotateBy(final Vector2 u, final float angle) {
+        final float cos = (float) Math.cos(angle);
+        final float sin = (float) Math.sin(angle);
+        return new Vector2(
+                cos * u.x - sin * u.y,
+                sin * u.x + cos * u.y);
+    }
+
     public static float angleBetween(final Vector2 u, final Vector2 v) {
         return (float) Math.atan2(v.y - u.y, v.x - u.x);
     }
