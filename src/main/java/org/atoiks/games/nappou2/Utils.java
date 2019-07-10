@@ -200,31 +200,6 @@ public final class Utils {
         return enemy;
     }
 
-    public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
-                                                 Circular circle) {
-        final Vector2 pos = circle.getPosition();
-        return intersectSegmentCircle(x1, y1, x2, y2, pos.getX(), pos.getY(), circle.getRadius());
-    }
-
-    public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
-                                                 float cx, float cy, float cr) {
-        // Taken from https://stackoverflow.com/a/10392860
-        final float acx = cx - x1;
-        final float acy = cy - y1;
-
-        final float abx = x2 - x1;
-        final float aby = y2 - y1;
-
-        final float ab2 = abx * abx + aby * aby;
-        final float acab = acx * abx + acy * aby;
-        final float t = clamp01(acab / ab2);
-
-        final float hx = (abx * t) + x1 - cx;
-        final float hy = (aby * t) + y1 - cy;
-
-        return hx * hx + hy * hy <= cr * cr;
-    }
-
     public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h) {
         return isSquareOutOfScreen(pos, hw, w, h, 0);
     }

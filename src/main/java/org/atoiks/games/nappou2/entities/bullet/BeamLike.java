@@ -27,7 +27,6 @@ import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
-import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 /* package */ abstract class BeamLike extends AbstractBullet implements Line {
 
@@ -94,10 +93,10 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
                     Vector2.rotateBy(translated.getPosition(), -angle),
                     translated.getRadius());
             final float hw = Math.min(length, halfWidth);
-            return intersectSegmentCircle(0, -hw, length, -hw, transformed)
-                || intersectSegmentCircle(length, -hw, length, hw, transformed)
-                || intersectSegmentCircle(length, hw, 0, hw, transformed)
-                || intersectSegmentCircle(0, hw, 0, -hw, transformed);
+            return Circular.intersectedByRay(transformed, 0, -hw, length, -hw)
+                || Circular.intersectedByRay(transformed, length, -hw, length, hw)
+                || Circular.intersectedByRay(transformed, length, hw, 0, hw)
+                || Circular.intersectedByRay(transformed, 0, hw, 0, -hw);
         }
         return false;
     }

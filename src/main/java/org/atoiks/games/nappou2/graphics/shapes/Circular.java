@@ -24,6 +24,8 @@ import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import static org.atoiks.games.nappou2.Utils.clamp01;
+
 public interface Circular extends Shape {
 
     public float getRadius();
@@ -90,6 +92,21 @@ public interface Circular extends Shape {
         final float dist = a.getRadius() + b.getRadius();
         final Vector2 d = Vector2.abs(a.getPosition().sub(b.getPosition()));
         return d.getX() < dist && d.getY() < dist;
+    }
+
+    public static boolean intersectedByRay(Circular circle, float x1, float y1, float x2, float y2) {
+        // Taken from https://stackoverflow.com/a/10392860
+        final Vector2 pt = new Vector2(x1, y1);
+
+        final Vector2 ac = circle.getPosition().sub(pt);
+        final Vector2 ab = new Vector2(x2, y2).sub(pt);
+
+        final float t = clamp01(ab.dot(ac) / ab.dot(ab));
+
+        final Vector2 h = ab.mul(t).sub(ac);
+        final float r = circle.getRadius();
+
+        return h.dot(h) <= r * r;
     }
 }
 

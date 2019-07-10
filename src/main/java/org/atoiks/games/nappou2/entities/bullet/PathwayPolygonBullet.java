@@ -31,7 +31,6 @@ import org.atoiks.games.nappou2.graphics.shapes.Polygonal;
 import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
-import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> implements Polygonal {
 
@@ -99,13 +98,12 @@ public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> im
             final float startY = coords[i + 1];
             final float endX   = coords[i + 2];
             final float endY   = coords[i + 3];
-            if (intersectSegmentCircle(startX, startY, endX, endY, translated)) {
+            if (Circular.intersectedByRay(translated, startX, startY, endX, endY)) {
                 return true;
             }
         }
 
-        return intersectSegmentCircle(coords[length - 2], coords[length - 1], coords[0], coords[1],
-                translated);
+        return Circular.intersectedByRay(translated, coords[length - 2], coords[length - 1], coords[0], coords[1]);
     }
 
     @Override
