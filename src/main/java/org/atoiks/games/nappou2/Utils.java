@@ -201,6 +201,12 @@ public final class Utils {
     }
 
     public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
+                                                 Circular circle) {
+        final Vector2 pos = circle.getPosition();
+        return intersectSegmentCircle(x1, y1, x2, y2, pos.getX(), pos.getY(), circle.getRadius());
+    }
+
+    public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
                                                  float cx, float cy, float cr) {
         // Taken from https://stackoverflow.com/a/10392860
         final float acx = cx - x1;
