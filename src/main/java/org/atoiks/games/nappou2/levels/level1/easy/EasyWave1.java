@@ -27,7 +27,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
-import org.atoiks.games.nappou2.entities.enemy.FishPart;
+import static org.atoiks.games.nappou2.spawner.FishSpawner.fishPart;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
@@ -93,7 +93,7 @@ public class EasyWave1 implements LevelState {
             case 1700:
             case 1750:
             case 1800:
-                ctx.getGame().addEnemy(new FishPart(1, 750 * rnd.nextFloat(), 615, 20 * rnd.nextFloat() + 10, 900 * rnd.nextFloat() + 100, 3 * (float) Math.PI / 2, 900 * rnd.nextFloat() + 100, 10, rnd.nextBoolean()));
+                ctx.getGame().addEnemy(fishPart(1, 750 * rnd.nextFloat(), 615, 20 * rnd.nextFloat() + 10, 900 * rnd.nextFloat() + 100, 3 * (float) Math.PI / 2, 900 * rnd.nextFloat() + 100, 10, rnd.nextBoolean()));
                 break;
             default:
                 if (cycles > 1800 && ctx.getGame().noMoreEnemies()) {

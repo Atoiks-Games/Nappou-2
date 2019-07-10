@@ -18,9 +18,13 @@
 
 package org.atoiks.games.nappou2.spawner;
 
+import org.atoiks.games.nappou2.Vector2;
+
+import org.atoiks.games.nappou2.pathway.FishPathway;
+
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.FishPart;
+import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
 public final class FishSpawner implements Spawner {
 
@@ -57,33 +61,33 @@ public final class FishSpawner implements Spawner {
     public void onUpdate(final Game game, final float dt) {
         switch (++cycles) {
             case 0:
-                game.addEnemy(new FishPart(2, xmid, ymid, 16, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(2, xmid, ymid, 16, speed, angle, amplitude, 10, alt));
                 break;
             case 25:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 50:
-                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 75:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 100:
-                game.addEnemy(new FishPart(1, xmid, ymid, 8, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid, ymid, 8, speed, angle, amplitude, 10, alt));
                 break;
             case 125:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid - xrng, ymid - yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid + xrng, ymid + yrng, 6, speed, angle, amplitude, 10, alt));
                 break;
             case 145:
-                game.addEnemy(new FishPart(1, xmid, ymid, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid, ymid, 6, speed, angle, amplitude, 10, alt));
                 break;
             case 150:
-                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
+                game.addEnemy(fishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
                 break;
         }
     }
@@ -91,5 +95,13 @@ public final class FishSpawner implements Spawner {
     @Override
     public boolean isDoneSpawning() {
         return cycles > 150;
+    }
+
+    public static PathwayEnemy fishPart(int hp, float x, float y, float r, float speed, float direction, float amplitude, float wspd, boolean alt) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, hp);
+        enemy.setRadius(r);
+        enemy.setPathway(new FishPathway(new Vector2(x, y), speed, direction, (alt ? -1 : 1) * amplitude, wspd));
+        // XXX: currently has no attack pattern
+        return enemy;
     }
 }
