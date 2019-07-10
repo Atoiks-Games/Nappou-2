@@ -237,19 +237,6 @@ public final class Utils {
             && Math.abs(y1 - y2) < dist;
     }
 
-    public static boolean fastCircleCollision(float x1, float y1, float r1,
-                                              float x2, float y2, float r2) {
-        // Only perform accurate collision if both circles collide as squares
-        if (centerSquareCollision(x1, y1, r1, x2, y2, r2)) {
-            // Accurate collision check
-            final float dx = x1 - x2;
-            final float dy = y1 - y2;
-            final float dr = r1 + r2;
-            return dx * dx + dy * dy < dr * dr;
-        }
-        return false;
-    }
-
     public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h) {
         return isSquareOutOfScreen(pos, hw, w, h, 0);
     }

@@ -28,7 +28,6 @@ import org.atoiks.games.nappou2.pathway.Pathway;
 import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> implements Circular {
 
@@ -60,11 +59,8 @@ public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> impl
     }
 
     @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
-        final Vector2 pos = this.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        return fastCircleCollision(x, y, r, x1, y1, r1);
+    public boolean collidesWith(final Circular other) {
+        return Circular.overlaps(this, other);
     }
 
     @Override

@@ -24,8 +24,6 @@ import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
-
 public interface Circular extends Shape {
 
     public float getRadius();
@@ -73,11 +71,25 @@ public interface Circular extends Shape {
     }
 
     public static boolean overlaps(final Circular a, final Circular b) {
-        final Vector2 aPos = a.getPosition();
-        final Vector2 bPos = b.getPosition();
-        return fastCircleCollision(
-                aPos.getX(), aPos.getY(), a.getRadius(),
-                bPos.getX(), bPos.getY(), b.getRadius());
+        if (overlapsAsSquare(a, b)) {
+            final float dist = a.getRadius() + b.getRadius();
+            final Vector2 d = a.getPosition().sub(b.getPosition());
+            return d.dot(d) < dist * dist;
+        }
+        return false;
+    }
+
+    public static boolean overlapsAsSquare(final Circular a, final Circular b) {
+        // +------+
+        // |      | x, y = the center
+        // |      | h    = side length / 2 = apothem
+        // +------+
+        //
+        // squares do not rotate just check distance between
+
+        final float dist = a.getRadius() + b.getRadius();
+        final Vector2 d = Vector2.abs(a.getPosition().sub(b.getPosition()));
+        return d.getX() < dist && d.getY() < dist;
     }
 }
 

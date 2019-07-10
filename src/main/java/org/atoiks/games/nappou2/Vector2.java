@@ -170,6 +170,10 @@ public final class Vector2 implements Serializable {
                 Math.max(u.y, v.y));
     }
 
+    public static Vector2 abs(final Vector2 u) {
+        return new Vector2(Math.abs(u.x), Math.abs(u.y));
+    }
+
     public static float angleBetween(final Vector2 u, final Vector2 v) {
         return (float) Math.atan2(v.y - u.y, v.x - u.x);
     }

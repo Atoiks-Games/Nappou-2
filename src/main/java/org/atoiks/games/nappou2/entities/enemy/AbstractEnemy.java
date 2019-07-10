@@ -28,7 +28,7 @@ import org.atoiks.games.nappou2.graphics.Renderer;
 import org.atoiks.games.nappou2.graphics.NullRenderer;
 import org.atoiks.games.nappou2.graphics.OutlineRenderer;
 
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 /* package */ abstract class AbstractEnemy implements Enemy {
 
@@ -64,9 +64,8 @@ import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
     }
 
     @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
-        final Vector2 pos = this.getPosition();
-        return fastCircleCollision(pos.getX(), pos.getY(), getRadius(), x1, y1, r1);
+    public boolean collidesWith(final Circular other) {
+        return Circular.overlaps(this, other);
     }
 
     @Override

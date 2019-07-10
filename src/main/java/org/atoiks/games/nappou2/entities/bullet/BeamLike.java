@@ -23,6 +23,7 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.shapes.Line;
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
 import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
@@ -79,12 +80,14 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
     }
 
     @Override
-    public final boolean collidesWith(final float x1, final float y1, final float r1) {
+    public final boolean collidesWith(final Circular circle) {
         // transform the colliding entity to the ray's coordinate system
 
-        final Vector2 pos = this.getPosition();
-        final float tx = x1 - pos.getX();
-        final float ty = y1 - pos.getY();
+        final Vector2 translated = circle.getPosition().sub(this.getPosition());
+        final float tx = translated.getX();
+        final float ty = translated.getY();
+        final float r1 = circle.getRadius();
+
         if (centerSquareCollision(0, 0, Math.max(length, halfWidth), tx, ty, r1)) {
             // Apply rotation on to the colliding entity
 

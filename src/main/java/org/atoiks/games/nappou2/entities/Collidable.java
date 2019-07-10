@@ -25,10 +25,5 @@ import org.atoiks.games.nappou2.graphics.shapes.Circular;
 public interface Collidable {
 
     public boolean isOutOfScreen(int width, int height);
-    public boolean collidesWith(float x, float y, float r);
-
-    public default boolean collidesWith(final Circular circle) {
-        final Vector2 pos = circle.getPosition();
-        return collidesWith(pos.getX(), pos.getY(), circle.getRadius());
-    }
+    public boolean collidesWith(Circular circle);
 }

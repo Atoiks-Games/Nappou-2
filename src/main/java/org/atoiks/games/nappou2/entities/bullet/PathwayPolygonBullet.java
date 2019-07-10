@@ -26,6 +26,7 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.pathway.Pathway;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.Polygonal;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
@@ -76,7 +77,7 @@ public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> im
     }
 
     @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
+    public boolean collidesWith(final Circular circle) {
         // Instead of shifting the polygon to the screen,
         // we shift the colliding entity.
         // (polygon coordinates are fixed at origin)
@@ -85,9 +86,10 @@ public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> im
         // Convert to (x1 - x, y1 - y)
         //   where x, y are the polygon's onscreen position
 
-        final Vector2 pos = this.getPosition();
-        final float tx = x1 - pos.getX();
-        final float ty = y1 - pos.getY();
+        final Vector2 translated = circle.getPosition().sub(this.getPosition());
+        final float tx = translated.getX();
+        final float ty = translated.getY();
+        final float r1 = circle.getRadius();
 
         if (!centerSquareCollision(boundX, boundY, boundR, tx, ty, r1)) {
             return false;
