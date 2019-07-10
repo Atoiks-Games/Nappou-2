@@ -76,4 +76,13 @@ public interface Rectangular extends Shape {
                 Vector2.min(start1, start2),
                 Vector2.max(end1, end2));
     }
+
+    public static boolean overlaps(final Rectangular a, final Rectangular b) {
+        final Vector2 aPos = a.getPosition();
+        final Vector2 bPos = b.getPosition();
+        return aPos.getX() < bPos.getX() + b.getWidth()
+            && aPos.getX() + a.getWidth() > bPos.getX()
+            && aPos.getY() < bPos.getY() + b.getHeight()
+            && aPos.getY() + a.getHeight() > bPos.getY();
+    }
 }
