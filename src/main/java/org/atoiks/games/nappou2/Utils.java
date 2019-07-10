@@ -181,6 +181,14 @@ public final class Utils {
         return enemy;
     }
 
+    public static PathwayEnemy squirts(int hp, float x, float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setRadius(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300));
+        enemy.setAttackPattern(new SquirtsPattern());
+        return enemy;
+    }
+
     public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
                                                  float cx, float cy, float cr) {
         // Taken from https://stackoverflow.com/a/10392860

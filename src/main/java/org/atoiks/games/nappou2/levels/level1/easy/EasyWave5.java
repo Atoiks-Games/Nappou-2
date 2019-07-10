@@ -42,6 +42,7 @@ import org.atoiks.games.nappou2.pattern.*;
 
 import org.atoiks.games.nappou2.levels.level1.PrebossDialog;
 
+import static org.atoiks.games.nappou2.Utils.squirts;
 import static org.atoiks.games.nappou2.Utils.streamBeam;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
@@ -168,7 +169,7 @@ public class EasyWave5 implements LevelState {
             case 6:
                 switch (cycles) {
                     case 40:
-                        game.addEnemy(new Squirts(10, 375, -10, 20));
+                        game.addEnemy(squirts(10, 375, -10, 20));
                         break;
                     case 50:
                     case 100:
