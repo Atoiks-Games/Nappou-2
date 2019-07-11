@@ -32,6 +32,53 @@ import org.atoiks.games.nappou2.Vector2;
 
 public abstract class OptionSelectScene extends CenteringScene {
 
+    public static class Entry {
+
+        private static final Color DEFAULT_COLOR = Color.white;
+
+        private String text;
+        private Vector2 position;
+        private Color color;
+
+        public Entry(String text, Vector2 position) {
+            this(text, position, DEFAULT_COLOR);
+        }
+
+        public Entry(String text, Vector2 position, Color color) {
+            this.text = text;
+            this.position = position;
+            this.color = color;
+        }
+
+        public void setText(final String t) {
+            this.text = t != null ? t : "";
+        }
+
+        public void setColor(final Color c) {
+            this.color = c != null ? c : DEFAULT_COLOR;
+        }
+
+        public void setPosition(final Vector2 pos) {
+            this.position = pos != null ? pos : Vector2.ZERO;
+        }
+
+        public Vector2 getPosition() {
+            return this.position;
+        }
+
+        private void render(IGraphics g) {
+            g.setColor(this.color);
+            g.drawString(this.text, this.position.getX(), this.position.getY());
+        }
+
+        private void renderSelector(IGraphics g) {
+            final float endX = this.position.getX() - 6;
+            final float endY = this.position.getY() + 4;
+            final float height = g.getFont().getSize2D();
+            g.drawRect(endX - 4, endY - height, endX, endY);
+        }
+    }
+
     protected final Font font16;
     protected final Font font30;
 
@@ -39,8 +86,7 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     protected Keymap keymap;
 
-    private String[] optionNames = { };
-    private Vector2[] optionPosition = { };
+    private Entry[] entries = { };
 
     private int selector;
 
@@ -60,8 +106,17 @@ public abstract class OptionSelectScene extends CenteringScene {
     }
 
     protected void setOptions(String[] options, Vector2[] positions) {
-        this.optionNames = options;
-        this.optionPosition = positions;
+        final int limit = Math.min(options.length, positions.length);
+        final Entry[] entries = new Entry[limit];
+        for (int i = 0; i < limit; ++i) {
+            entries[i] = new Entry(options[i], positions[i]);
+        }
+
+        this.setOptions(entries);
+    }
+
+    protected void setOptions(Entry... entries) {
+        this.entries = entries;
     }
 
     @Override
@@ -75,13 +130,10 @@ public abstract class OptionSelectScene extends CenteringScene {
 
         final int max = getMaximumIndex();
         for (int i = getMinimumIndex(); i <= max; ++i) {
-            final Vector2 pos = this.optionPosition[i];
-            g.drawString(this.optionNames[i], pos.getX(), pos.getY());
-
+            final Entry entry = this.entries[i];
+            entry.render(g);
             if (i == this.selector) {
-                final float endX = pos.getX() - 6;
-                final float endY = pos.getY() + 4;
-                g.drawRect(endX - 4, endY - 30, endX, endY);
+                entry.renderSelector(g);
             }
         }
 
@@ -119,7 +171,7 @@ public abstract class OptionSelectScene extends CenteringScene {
     }
 
     protected int getMaximumIndex() {
-        return this.optionNames.length - 1;
+        return this.entries.length - 1;
     }
 
     protected final void normalizeSelectorIndex() {
