@@ -19,7 +19,6 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
-import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
@@ -29,7 +28,7 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Utils;
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.Difficulty;
@@ -42,47 +41,36 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.NullShield;
 
-public final class DiffOptionScene extends CenteringScene {
+public final class DiffOptionScene extends OptionSelectScene {
 
-    private static final int[] diffSelY = {274, 334, 393, 491};
-    private static final int OPT_HEIGHT = 37;
+    private static final Vector2[] OPT_POS = {
+        new Vector2(98, 274),
+        new Vector2(98, 334),
+        new Vector2(98, 393),
+        new Vector2(98, 491)
+    };
 
-    private int diffSel;
-
-    private final Font font30;
     private final Font font80;
-    private final Keymap keymap;
 
     public DiffOptionScene() {
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
+        super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap);
 
-        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
+        this.font80 = this.font30.deriveFont(80f);
+
+        this.setOptions(Utils.DIFF_NAMES, OPT_POS);
     }
 
     @Override
     public void render(IGraphics g) {
-        g.setClearColor(Color.black);
-        g.clearGraphics();
         super.render(g);
 
-        g.setColor(Color.white);
         g.setFont(this.font80);
         g.drawString("Choose Your Difficulty", 80, 120);
-        g.setFont(this.font30);
-        for (int i = 0; i < Utils.DIFF_NAMES.length; ++i) {
-            g.drawString(Utils.DIFF_NAMES[i], 98, diffSelY[i] + this.font30.getSize());
-        }
-        g.drawRect(90, diffSelY[diffSel], 94, diffSelY[diffSel] + OPT_HEIGHT);
     }
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            SceneManager.popScene();
-            return true;
-        }
+        super.update(dt);
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
             final LevelState level = new Preface(getLevelFromOption());
             if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
@@ -97,20 +85,12 @@ public final class DiffOptionScene extends CenteringScene {
             }
             return true;
         }
-
-        if (this.keymap.shouldSelectNext()) {
-            ++diffSel;
-            if (diffSel >= diffSelY.length) diffSel = 0;
-        }
-        if (this.keymap.shouldSelectPrevious()) {
-            if (--diffSel < 0) diffSel = diffSelY.length - 1;
-        }
         return true;
     }
 
     private Difficulty getDiffFromOption() {
         try {
-            return Difficulty.values()[diffSel];
+            return Difficulty.values()[this.getSelectorIndex()];
         } catch (IndexOutOfBoundsException ex) {
             return Difficulty.NORMAL;
         }
