@@ -31,72 +31,92 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.NullState;
-import org.atoiks.games.nappou2.levels.LevelState;
 
 import org.atoiks.games.nappou2.entities.Player;
 
-public final class TitleScene extends CenteringScene {
+public final class TitleScene extends OptionSelectScene {
 
-    // Conventionally, last scene is always Quit,
-    // sceneDest is always one less than the selectorY
     private static final String[] OPT_MSG = {
         "Continue", "New Game", "Highscore", "Settings", "Credits", "Quit"
     };
-    private static final int[] selectorY = {232, 270, 308, 346, 384, 469};
-    private static final int OPT_HEIGHT = 30;
+    private static final Vector2[] OPT_POS = {
+        new Vector2(68, 232),
+        new Vector2(68, 270),
+        new Vector2(68, 308),
+        new Vector2(68, 346),
+        new Vector2(68, 384),
+        new Vector2(68, 469)
+    };
 
+    private final Font font80;
     private final Clip bgm;
-    private int selector;
 
     private SaveData saves;
     private boolean blockContinueOption;
 
-    private final Font font16;
-    private final Font font30;
-    private final Font font80;
-    private final Keymap keymap;
-
     public TitleScene() {
+        super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap, false);
+
+        this.font80 = this.font16.deriveFont(80f);
+
         this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
+        this.setOptions(OPT_MSG, OPT_POS);
+    }
 
-        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
+    @Override
+    protected int getMinimumIndex() {
+        return this.blockContinueOption ? 1 : 0;
+    }
+
+    @Override
+    public void enter(final Scene from) {
+        // Enter only deals with scenes that play different songs!
+        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
+            bgm.setMicrosecondPosition(0);
+            bgm.start();
+            bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+
+        // Refetch in case SaveData was replaced
+        this.saves = ResourceManager.get("./saves.dat");
+        this.blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
+
+        if (this.blockContinueOption) {
+            // selector index will wrap back to last entry if we do not do this!
+            this.setSelectorIndex(this.getMinimumIndex());
+        }
+    }
+
+    @Override
+    public void leave() {
+        bgm.stop();
     }
 
     @Override
     public void render(IGraphics g) {
-        g.setClearColor(Color.black);
-        g.clearGraphics();
         super.render(g);
 
         g.setColor(Color.white);
         g.setFont(font80);
         g.drawString("Void Walker", 260, 178);
 
-        g.setFont(font30);
-        for (int i = getFirstSelectableIndex(); i < OPT_MSG.length; ++i) {
-            g.drawString(OPT_MSG[i], 68, selectorY[i] + font30.getSize() - 2);
-        }
-
-        g.setFont(font16);
-        g.drawString("      Made with love by Atoiks Games", 602, 540);
+        g.setFont(this.font16);
+        g.drawString("      Made with love by Atoiks Games", 603, 540);
         g.drawString("In association with Harvard Game Devs", 600, 560);
-
-        g.drawRect(61, selectorY[selector], 65, selectorY[selector] + OPT_HEIGHT);
     }
 
     @Override
     public boolean update(float dt) {
+        super.update(dt);
+
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+            final int selector = this.getSelectorIndex();
             switch (selector) {
                 case 0:
                     GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint());
@@ -121,43 +141,6 @@ public final class TitleScene extends CenteringScene {
             }
             return true;
         }
-
-        if (this.keymap.shouldSelectNext()) {
-            if (++selector >= selectorY.length) {
-                selector = getFirstSelectableIndex();
-            }
-        }
-        if (this.keymap.shouldSelectPrevious()) {
-            if (--selector < getFirstSelectableIndex()) {
-                selector = selectorY.length - 1;
-            }
-        }
         return true;
-    }
-
-    private int getFirstSelectableIndex() {
-        return this.blockContinueOption ? 1 : 0;
-    }
-
-    @Override
-    public void enter(final Scene from) {
-        // Enter only deals with scenes that play different songs!
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.setMicrosecondPosition(0);
-            bgm.start();
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        // Refetch in case SaveData was replaced
-        this.saves = ResourceManager.get("./saves.dat");
-        this.blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
-
-        // Make sure we are selecting a valid index
-        this.selector = getFirstSelectableIndex();
-    }
-
-    @Override
-    public void leave() {
-        bgm.stop();
     }
 }
