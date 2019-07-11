@@ -35,9 +35,9 @@ public abstract class OptionSelectScene extends CenteringScene {
     protected final Font font16;
     protected final Font font30;
 
-    private final Keymap keymap;
-
     private final boolean supportEsc;
+
+    protected Keymap keymap;
 
     private String[] optionNames = { };
     private Vector2[] optionPosition = { };
@@ -53,6 +53,10 @@ public abstract class OptionSelectScene extends CenteringScene {
         this.font30 = font.deriveFont(30f);
         this.keymap = keymap;
         this.supportEsc = supportEsc;
+    }
+
+    public OptionSelectScene(Font font, boolean supportEsc) {
+        this(font, new Keymap(), supportEsc);
     }
 
     protected void setOptions(String[] options, Vector2[] positions) {
@@ -118,7 +122,7 @@ public abstract class OptionSelectScene extends CenteringScene {
         return this.optionNames.length - 1;
     }
 
-    private void normalizeSelectorIndex() {
+    protected final void normalizeSelectorIndex() {
         final int min = this.getMinimumIndex();
         final int max = this.getMaximumIndex();
 
