@@ -53,6 +53,13 @@ public final class TitleScene extends OptionSelectScene {
         new Vector2(68, 469)
     };
 
+    private static final int[] BLOCK_CONTINUE_INDICES = {
+        1, 2, 3, 4, 5
+    };
+    private static final int[] STANDARD_INDICES = {
+        0, 1, 2, 3, 4, 5
+    };
+
     private final Font font80;
     private final Clip bgm;
 
@@ -81,17 +88,7 @@ public final class TitleScene extends OptionSelectScene {
         this.saves = ResourceManager.get("./saves.dat");
 
         final boolean blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
-
-        if (blockContinueOption) {
-            // selector index will wrap back to last entry if we do not do this!
-            this.updateSelectableIndices(new int[] {
-                1, 2, 3, 4, 5
-            });
-        } else {
-            this.updateSelectableIndices(new int[] {
-                0, 1, 2, 3, 4, 5
-            });
-        }
+        this.updateSelectableIndices(blockContinueOption ? BLOCK_CONTINUE_INDICES : STANDARD_INDICES);
     }
 
     @Override

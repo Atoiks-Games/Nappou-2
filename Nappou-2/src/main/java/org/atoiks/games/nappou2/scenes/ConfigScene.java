@@ -44,6 +44,10 @@ public final class ConfigScene extends OptionSelectScene {
         new Vector2(84, 262)
     };
 
+    private static final int[] BLOCK_SCORE_INDICES = {
+        0, 1, 2, 3
+    };
+
     private final Clip bgm;
     private final GameConfig config;
 
@@ -73,9 +77,7 @@ public final class ConfigScene extends OptionSelectScene {
                 // This clears the score and hides the option!
                 if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                     ResourceManager.<ScoreData>get("./score.dat").clear();
-                    this.updateSelectableIndices(new int[] {
-                        0, 1, 2, 3
-                    });
+                    this.updateSelectableIndices(BLOCK_SCORE_INDICES);
                     this.normalizeSelectorIndex();
                 }
                 break;
