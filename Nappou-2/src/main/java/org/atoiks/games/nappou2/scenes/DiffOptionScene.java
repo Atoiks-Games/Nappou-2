@@ -90,7 +90,7 @@ public final class DiffOptionScene extends OptionSelectScene {
 
     private Difficulty getDiffFromOption() {
         try {
-            return Difficulty.values()[this.getSelectorIndex()];
+            return Difficulty.values()[this.getSelectedIndex()];
         } catch (IndexOutOfBoundsException ex) {
             return Difficulty.NORMAL;
         }

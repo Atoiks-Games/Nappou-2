@@ -87,6 +87,7 @@ public abstract class OptionSelectScene extends CenteringScene {
     protected Keymap keymap;
 
     private Entry[] entries = { };
+    private int[] validIndices = { };
 
     private int selector;
 
@@ -117,6 +118,36 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     protected void setOptions(Entry... entries) {
         this.entries = entries;
+
+        // All entries are valid indices
+        final int limit = entries.length;
+        final int[] indices = new int[limit];
+        for (int i = 0; i < limit; ++i) {
+            indices[i] = i;
+        }
+        this.validIndices = indices;
+    }
+
+    protected void setOptions(final int[] indices, final Entry... entries) {
+        // Make sure all indices point to valid entries
+        this.indicesReferenceCheck(indices, entries);
+
+        this.entries = entries;
+        this.validIndices = indices;
+    }
+
+    protected void updateSelectableIndices(final int... indices) {
+        this.indicesReferenceCheck(indices, this.entries);
+
+        this.validIndices = indices;
+    }
+
+    private static void indicesReferenceCheck(final int[] indices, final Entry[] entries) {
+        for (final int offset : indices) {
+            if (offset < 0 || offset >= entries.length) {
+                throw new IndexOutOfBoundsException("Index offset " + offset + " does not reference valid entry");
+            }
+        }
     }
 
     @Override
@@ -128,9 +159,8 @@ public abstract class OptionSelectScene extends CenteringScene {
         g.setColor(Color.white);
         g.setFont(this.font30);
 
-        final int max = getMaximumIndex();
-        for (int i = getMinimumIndex(); i <= max; ++i) {
-            final Entry entry = this.entries[i];
+        for (int i = 0; i < this.validIndices.length; ++i) {
+            final Entry entry = this.entries[this.validIndices[i]];
             entry.render(g);
             if (i == this.selector) {
                 entry.renderSelector(g);
@@ -157,6 +187,10 @@ public abstract class OptionSelectScene extends CenteringScene {
         return true;
     }
 
+    protected final int getSelectedIndex() {
+        return this.validIndices[this.selector];
+    }
+
     protected final int getSelectorIndex() {
         return this.selector;
     }
@@ -166,31 +200,11 @@ public abstract class OptionSelectScene extends CenteringScene {
         this.normalizeSelectorIndex();
     }
 
-    protected int getMinimumIndex() {
-        return 0;
-    }
-
-    protected int getMaximumIndex() {
-        return this.entries.length - 1;
-    }
-
     protected final void normalizeSelectorIndex() {
-        final int min = this.getMinimumIndex();
-        final int max = this.getMaximumIndex();
-
-        int dist;
-        int sel = this.selector;
-
-        // wrap from back if selector is below minimum value
-        while ((dist = sel - min) < 0) {
-            sel = max + dist + 1;
-        }
+        final int limit = this.validIndices.length;
 
         // wrap to front if selector is above maximum value
-        while ((dist = sel - max) > 0) {
-            sel = min + dist - 1;
-        }
-
-        this.selector = sel;
+        // wrap from back if selector is below minimum value
+        this.selector = (this.selector % limit + limit) % limit;
     }
 }

@@ -47,8 +47,6 @@ public final class ConfigScene extends OptionSelectScene {
     private final Clip bgm;
     private final GameConfig config;
 
-    private boolean showClearScoresOption = true;
-
     public ConfigScene() {
         super(ResourceManager.get("/Logisoso.ttf"), true);
 
@@ -60,15 +58,10 @@ public final class ConfigScene extends OptionSelectScene {
     }
 
     @Override
-    protected int getMaximumIndex() {
-        return super.getMaximumIndex() - (this.showClearScoresOption ? 0 : 1);
-    }
-
-    @Override
     public boolean update(float dt) {
         super.update(dt);
 
-        switch (this.getSelectorIndex()) {
+        switch (this.getSelectedIndex()) {
             case 3:
                 // This entry invokes an overlay!
                 if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -80,7 +73,9 @@ public final class ConfigScene extends OptionSelectScene {
                 // This clears the score and hides the option!
                 if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                     ResourceManager.<ScoreData>get("./score.dat").clear();
-                    this.showClearScoresOption = false;
+                    this.updateSelectableIndices(new int[] {
+                        0, 1, 2, 3
+                    });
                     this.normalizeSelectorIndex();
                 }
                 break;
@@ -104,11 +99,11 @@ public final class ConfigScene extends OptionSelectScene {
     }
 
     private boolean getValueAtSelector() {
-        return getValueAtSelector(this.getSelectorIndex());
+        return getValueAtSelector(this.getSelectedIndex());
     }
 
     private void setValueAtSelector(final boolean newValue) {
-        final int selector = this.getSelectorIndex();
+        final int selector = this.getSelectedIndex();
         switch (selector) {
             case 0:
                 if ((config.bgm = newValue)) {

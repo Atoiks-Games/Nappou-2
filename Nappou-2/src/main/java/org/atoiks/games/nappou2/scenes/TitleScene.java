@@ -57,7 +57,6 @@ public final class TitleScene extends OptionSelectScene {
     private final Clip bgm;
 
     private SaveData saves;
-    private boolean blockContinueOption;
 
     public TitleScene() {
         super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap, false);
@@ -67,11 +66,6 @@ public final class TitleScene extends OptionSelectScene {
         this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
         this.setOptions(OPT_MSG, OPT_POS);
-    }
-
-    @Override
-    protected int getMinimumIndex() {
-        return this.blockContinueOption ? 1 : 0;
     }
 
     @Override
@@ -85,11 +79,18 @@ public final class TitleScene extends OptionSelectScene {
 
         // Refetch in case SaveData was replaced
         this.saves = ResourceManager.get("./saves.dat");
-        this.blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
 
-        if (this.blockContinueOption) {
+        final boolean blockContinueOption = this.saves.getCheckpoint() instanceof NullState;
+
+        if (blockContinueOption) {
             // selector index will wrap back to last entry if we do not do this!
-            this.setSelectorIndex(this.getMinimumIndex());
+            this.updateSelectableIndices(new int[] {
+                1, 2, 3, 4, 5
+            });
+        } else {
+            this.updateSelectableIndices(new int[] {
+                0, 1, 2, 3, 4, 5
+            });
         }
     }
 
@@ -116,7 +117,7 @@ public final class TitleScene extends OptionSelectScene {
         super.update(dt);
 
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            final int selector = this.getSelectorIndex();
+            final int selector = this.getSelectedIndex();
             switch (selector) {
                 case 0:
                     GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint());
