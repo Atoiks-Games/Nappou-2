@@ -165,7 +165,7 @@ public abstract class OptionSelectScene extends CenteringScene {
         g.setFont(this.font30);
 
         this.renderEntries(g);
-        this.entries[this.validIndices[this.selector]].renderSelector(g);
+        this.getSelectedEntry().renderSelector(g);
 
         if (this.supportEsc) {
             g.setFont(this.font16);
@@ -207,6 +207,10 @@ public abstract class OptionSelectScene extends CenteringScene {
     protected final void selectPrevious() {
         --this.selector;
         this.normalizeSelectorIndex();
+    }
+
+    protected final Entry getSelectedEntry() {
+        return this.entries[this.getSelectedIndex()];
     }
 
     protected final int getSelectedIndex() {
