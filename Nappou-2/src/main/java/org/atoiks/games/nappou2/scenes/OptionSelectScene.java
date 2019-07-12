@@ -187,6 +187,15 @@ public abstract class OptionSelectScene extends CenteringScene {
         return true;
     }
 
+    protected final void selectNext() {
+        ++this.selector;
+        this.normalizeSelectorIndex();
+    }
+
+    protected final void selectPrevious() {
+        --this.selector;
+        this.normalizeSelectorIndex();
+    }
     protected final int getSelectedIndex() {
         return this.validIndices[this.selector];
     }
