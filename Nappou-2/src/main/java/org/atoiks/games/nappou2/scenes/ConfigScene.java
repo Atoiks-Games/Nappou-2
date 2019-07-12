@@ -33,15 +33,12 @@ import org.atoiks.games.nappou2.GameConfig;
 
 public final class ConfigScene extends OptionSelectScene {
 
-    private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE", "FULLSCREEN", "CONFIGURE CONTROLS", "CLEAR SCORES"
-    };
-    private static final Vector2[] OPTION_POS = {
-        new Vector2(84, 66),
-        new Vector2(84, 115),
-        new Vector2(84, 164),
-        new Vector2(84, 213),
-        new Vector2(84, 262)
+    private static final Entry[] ENTRIES = {
+        new Entry("BGM", new Vector2(84, 66)),
+        new Entry("CHALLENGE MODE", new Vector2(84, 115)),
+        new Entry("FULLSCREEN", new Vector2(84, 164)),
+        new Entry("CONFIGURE CONTROLS", new Vector2(84, 213)),
+        new Entry("CLEAR SCORES", new Vector2(84, 262))
     };
 
     private static final int[] BLOCK_SCORE_INDICES = {
@@ -58,7 +55,7 @@ public final class ConfigScene extends OptionSelectScene {
         this.config = ResourceManager.get("./game.cfg");
         this.keymap = this.config.keymap;
 
-        this.setOptions(OPTION_NAMES, OPTION_POS);
+        this.setOptions(ENTRIES);
     }
 
     @Override
@@ -131,7 +128,7 @@ public final class ConfigScene extends OptionSelectScene {
         super.render(g);
 
         for (int i = 0; i < 3; ++i) {
-            final float h = OPTION_POS[i].getY();
+            final float h = ENTRIES[i].getPosition().getY();
             g.setFont(this.font30);
             g.drawString("ON", 560, h);
             g.drawString("OFF", 720, h);

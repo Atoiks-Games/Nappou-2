@@ -34,11 +34,17 @@ public final class KeymapConfigScene extends OptionSelectScene {
 
     private static final Entry RESET_TO_DEFAULT_ENTRY = new Entry("Reset to default", new Vector2(634, 400));
 
+    private Entry[] entries;
+    private int[] indices;
+
     public KeymapConfigScene(Keymap keymap) {
         super(ResourceManager.get("/Logisoso.ttf"), keymap, true);
 
         this.setRenderAllEntries(true);
         this.updateOptionEntries();
+
+        // This works because arrays are aliased
+        this.setOptions(this.indices, this.entries);
     }
 
     @Override
@@ -115,27 +121,46 @@ public final class KeymapConfigScene extends OptionSelectScene {
         // Convert info message into proper format!
         final String[][] infoMsg = this.keymap.getInfoMessage();
 
-        // * 2 because info message has two parts: description and key
-        // + 1 because of "Reset to default"
-        final Entry[] entries = new Entry[2 * infoMsg.length + 1];
+        // Allocate the arrays
+        this.generateEntriesArray(infoMsg.length);
+        this.generateIndicesArray(infoMsg.length);
+
+        // Fill the option entries
         for (int i = 0; i < infoMsg.length; ++i) {
-            final int h = 94 + i * font30.getSize() + 5;
-            entries[2 * i + 0] = new Entry(infoMsg[i][0], new Vector2(124, h));
-            entries[2 * i + 1] = new Entry(infoMsg[i][1], new Vector2(634, h));
+            this.entries[2 * i + 0].setText(infoMsg[i][0]);
+            this.entries[2 * i + 1].setText(infoMsg[i][1]);
         }
-        entries[entries.length - 1] = RESET_TO_DEFAULT_ENTRY;
+        this.entries[this.entries.length - 1] = RESET_TO_DEFAULT_ENTRY;
+    }
 
-        // Link indices to the correct entries
-        // -1 comes from:
-        //   -2 (due to pause and confirm being fixed) then
-        //   +1 (due to reset game)
-        final int[] indices = new int[infoMsg.length - 1];
-        for (int i = 0; i < indices.length - 1; ++i) {
-            indices[i] = 2 * i + 1;
+    private void generateEntriesArray(final int length) {
+        if (this.entries == null) {
+            // * 2 because info message has two parts: description and key
+            // + 1 because of "Reset to default"
+            this.entries = new Entry[2 * length + 1];
+
+            // Also allocate the entry slots
+            for (int i = 0; i < length; ++i) {
+                final int h = 94 + i * font30.getSize() + 5;
+                this.entries[2 * i + 0] = new Entry("", new Vector2(124, h));
+                this.entries[2 * i + 1] = new Entry("", new Vector2(634, h));
+            }
         }
-        indices[indices.length - 1] = entries.length - 1;
+    }
 
-        this.setOptions(indices, entries);
+    private void generateIndicesArray(final int length) {
+        if (this.indices == null) {
+            // -1 comes from:
+            //   -2 due to pause and confirm being fixed
+            //   +1 due to reset game
+            this.indices = new int[length - 1];
+
+            // Link indices to the correct entries (works because links do not change!)
+            for (int i = 0; i < length - 2; ++i) {
+                this.indices[i] = 2 * i + 1;
+            }
+            this.indices[length - 2] = this.entries.length - 1;
+        }
     }
 
     private boolean canAssignKeycodeToIndex(int index, final int kc) {

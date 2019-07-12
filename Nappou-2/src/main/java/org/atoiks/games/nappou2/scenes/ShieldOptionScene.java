@@ -38,13 +38,10 @@ import org.atoiks.games.nappou2.entities.shield.*;
 
 public final class ShieldOptionScene extends OptionSelectScene {
 
-    private static final String[] OPT_NAMES = {
-        "Bonfire", "Firefly", "None"
-    };
-    private static final Vector2[] OPT_POS = {
-        new Vector2(98, 356),
-        new Vector2(98, 414),
-        new Vector2(98, 498)
+    private static final Entry[] ENTRIES = {
+        new Entry("Bonfire", new Vector2(98, 356)),
+        new Entry("Firefly", new Vector2(98, 414)),
+        new Entry("None", new Vector2(98, 498))
     };
 
     private final LevelState nextState;
@@ -57,7 +54,7 @@ public final class ShieldOptionScene extends OptionSelectScene {
         this.nextState = nextState;
         this.font80 = this.font30.deriveFont(80f);
 
-        this.setOptions(OPT_NAMES, OPT_POS);
+        this.setOptions(ENTRIES);
     }
 
     @Override

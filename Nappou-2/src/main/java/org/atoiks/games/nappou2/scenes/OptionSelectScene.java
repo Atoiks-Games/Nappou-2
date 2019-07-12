@@ -111,16 +111,6 @@ public abstract class OptionSelectScene extends CenteringScene {
         this.renderAll = flag;
     }
 
-    protected void setOptions(String[] options, Vector2[] positions) {
-        final int limit = Math.min(options.length, positions.length);
-        final Entry[] entries = new Entry[limit];
-        for (int i = 0; i < limit; ++i) {
-            entries[i] = new Entry(options[i], positions[i]);
-        }
-
-        this.setOptions(entries);
-    }
-
     protected void setOptions(Entry... entries) {
         this.entries = entries;
 

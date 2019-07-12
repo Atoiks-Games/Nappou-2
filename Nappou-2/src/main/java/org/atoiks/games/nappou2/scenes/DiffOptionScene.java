@@ -43,12 +43,23 @@ import org.atoiks.games.nappou2.entities.shield.NullShield;
 
 public final class DiffOptionScene extends OptionSelectScene {
 
-    private static final Vector2[] OPT_POS = {
-        new Vector2(98, 274),
-        new Vector2(98, 334),
-        new Vector2(98, 393),
-        new Vector2(98, 491)
+    private static final Entry[] ENTRIES = {
+        new Entry("", new Vector2(98, 274)),
+        new Entry("", new Vector2(98, 334)),
+        new Entry("", new Vector2(98, 393)),
+        new Entry("", new Vector2(98, 491))
     };
+
+    static {
+        if (ENTRIES.length != Utils.DIFF_NAMES.length) {
+            // Sanity check: these two must be the same!
+            throw new IllegalStateException("ENTRIES.length != Utils.DIFF_NAMES.length");
+        }
+
+        for (int i = 0; i < ENTRIES.length; ++i) {
+            ENTRIES[i].setText(Utils.DIFF_NAMES[i]);
+        }
+    }
 
     private final Font font80;
 
@@ -57,7 +68,7 @@ public final class DiffOptionScene extends OptionSelectScene {
 
         this.font80 = this.font30.deriveFont(80f);
 
-        this.setOptions(Utils.DIFF_NAMES, OPT_POS);
+        this.setOptions(ENTRIES);
     }
 
     @Override

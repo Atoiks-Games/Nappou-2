@@ -41,16 +41,13 @@ import org.atoiks.games.nappou2.entities.Player;
 
 public final class TitleScene extends OptionSelectScene {
 
-    private static final String[] OPT_MSG = {
-        "Continue", "New Game", "Highscore", "Settings", "Credits", "Quit"
-    };
-    private static final Vector2[] OPT_POS = {
-        new Vector2(68, 232),
-        new Vector2(68, 270),
-        new Vector2(68, 308),
-        new Vector2(68, 346),
-        new Vector2(68, 384),
-        new Vector2(68, 469)
+    private static final Entry[] ENTRIES = {
+        new Entry("Continue", new Vector2(68, 232)),
+        new Entry("New Game", new Vector2(68, 270)),
+        new Entry("Highscore", new Vector2(68, 308)),
+        new Entry("Settings", new Vector2(68, 346)),
+        new Entry("Credits", new Vector2(68, 384)),
+        new Entry("Quit", new Vector2(68, 469))
     };
 
     private static final int[] BLOCK_CONTINUE_INDICES = {
@@ -72,7 +69,7 @@ public final class TitleScene extends OptionSelectScene {
 
         this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
-        this.setOptions(OPT_MSG, OPT_POS);
+        this.setOptions(STANDARD_INDICES, ENTRIES);
     }
 
     @Override
