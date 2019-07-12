@@ -88,6 +88,7 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     private Entry[] entries = { };
     private int[] validIndices = { };
+    private boolean renderAll = false;
 
     private int selector;
 
@@ -104,6 +105,10 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     public OptionSelectScene(Font font, boolean supportEsc) {
         this(font, new Keymap(), supportEsc);
+    }
+
+    protected void setRenderAllEntries(boolean flag) {
+        this.renderAll = flag;
     }
 
     protected void setOptions(String[] options, Vector2[] positions) {
@@ -159,17 +164,24 @@ public abstract class OptionSelectScene extends CenteringScene {
         g.setColor(Color.white);
         g.setFont(this.font30);
 
-        for (int i = 0; i < this.validIndices.length; ++i) {
-            final Entry entry = this.entries[this.validIndices[i]];
-            entry.render(g);
-            if (i == this.selector) {
-                entry.renderSelector(g);
-            }
-        }
+        this.renderEntries(g);
+        this.entries[this.validIndices[this.selector]].renderSelector(g);
 
         if (this.supportEsc) {
             g.setFont(this.font16);
             g.drawString("Hit Escape to exit", 84, 540);
+        }
+    }
+
+    private void renderEntries(final IGraphics g) {
+        if (this.renderAll) {
+            for (final Entry entry : this.entries) {
+                entry.render(g);
+            }
+        } else {
+            for (int i = 0; i < this.validIndices.length; ++i) {
+                this.entries[this.validIndices[i]].render(g);
+            }
         }
     }
 
@@ -196,6 +208,7 @@ public abstract class OptionSelectScene extends CenteringScene {
         --this.selector;
         this.normalizeSelectorIndex();
     }
+
     protected final int getSelectedIndex() {
         return this.validIndices[this.selector];
     }
