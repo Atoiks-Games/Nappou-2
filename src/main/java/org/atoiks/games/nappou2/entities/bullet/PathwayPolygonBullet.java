@@ -28,6 +28,7 @@ import org.atoiks.games.nappou2.pathway.Pathway;
 
 import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.Polygonal;
+import org.atoiks.games.nappou2.graphics.shapes.Rectangular;
 import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
@@ -41,26 +42,12 @@ public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> im
         super(pathway);
         this.coords = pts;
 
-        // shape bounding box
-        float x1 = Float.POSITIVE_INFINITY;
-        float y1 = Float.POSITIVE_INFINITY;
-        float x2 = Float.NEGATIVE_INFINITY;
-        float y2 = Float.NEGATIVE_INFINITY;
-
-        final int limit = pts.length;
-        for (int i = 0; i < limit; i += 2) {
-            final float x = pts[i];
-            final float y = pts[i + 1];
-
-            if (x < x1) x1 = x;
-            if (x > x2) x2 = x;
-            if (y < y1) y1 = y;
-            if (y > y2) y2 = y;
-        }
-
+        // shape bounding box into a square
+        final Rectangular minBoundingBox = this.getMinimumBoundingBox();
+        final float radius = Math.max(minBoundingBox.getWidth(), minBoundingBox.getHeight()) / 2;
         this.boundCircle = new ImmutableCircle(
-                new Vector2((x1 + x2) / 2, (y1 + y2) / 2),
-                Math.max(x2 - x1, y2 - y1));
+                new Vector2(radius, radius).add(minBoundingBox.getPosition()),
+                radius);
     }
 
     @Override
