@@ -24,9 +24,9 @@ public final class FishPathway implements UnboundPathway {
 
     private final float amplitude;
     private final float afreq;
+    private final float speed;
 
-    private final Vector2 baseVel;
-    private final Vector2 acaVector;
+    private final Vector2 direction;
 
     private float time;
 
@@ -40,9 +40,9 @@ public final class FishPathway implements UnboundPathway {
         this.position = pos;
         this.amplitude = amplitude;
         this.afreq = afreq;
+        this.speed = speed;
 
-        this.baseVel = Vector2.fromPolar(speed, direction);
-        this.acaVector = Vector2.fromPolar(1, direction - (float) (Math.PI / 2));
+        this.direction = Vector2.fromPolar(1, direction);
     }
 
     @Override
@@ -55,10 +55,11 @@ public final class FishPathway implements UnboundPathway {
         this.time += dt;
 
         final float aca = this.amplitude * (float) Math.cos(afreq * this.time);
+        final Vector2 u = new Vector2(speed, aca);
 
         this.position = Vector2.muladd(
                 dt,
-                Vector2.muladd(aca, this.acaVector, this.baseVel),
+                new Vector2(u.dot(direction), u.cross(direction)),
                 this.position);
     }
 }
