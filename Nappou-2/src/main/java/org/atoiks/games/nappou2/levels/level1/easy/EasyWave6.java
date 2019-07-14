@@ -18,42 +18,23 @@
 
 package org.atoiks.games.nappou2.levels.level1.easy;
 
-import org.atoiks.games.nappou2.spawner.BIGFishSpawner;
-import org.atoiks.games.nappou2.spawner.FishSpawner;
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.DefaultRestoreData;
 
-import org.atoiks.games.nappou2.entities.enemy.*;
-import org.atoiks.games.nappou2.entities.bullet.*;
-
-import org.atoiks.games.nappou2.entities.bullet.factory.RayInfo;
-
-import org.atoiks.games.nappou2.pathway.*;
-import org.atoiks.games.nappou2.pattern.*;
-
-import org.atoiks.games.nappou2.levels.level1.PrebossDialog;
-
-import static org.atoiks.games.nappou2.levels.level1.Data.*;
-
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
+import org.atoiks.games.nappou2.entities.enemy.Squirts;
+import org.atoiks.games.nappou2.entities.enemy.StreamBeam;
 
 public class EasyWave6 implements LevelState {
 
     private static final long serialVersionUID = -4818209983669418715L;
-
-    private final DefaultRestoreData data = new DefaultRestoreData();
 
     private transient int cycles;
 
