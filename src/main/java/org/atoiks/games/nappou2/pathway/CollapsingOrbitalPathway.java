@@ -20,12 +20,20 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.Sizer;
+import org.atoiks.games.nappou2.sizer.*;
 
 /**
  * Pathway that orbits with a decaying width around a singular point
  */
-public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<CollapsingThenExplodeSizer> {
+public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<SizerSwitch> {
+
+    // Switch into size of 100 because it will put the enemy (or whatever
+    // pathway-entity) out of the screen, causing it to be removed from
+    // the game, making it seem like it has disappeared after collapsing
+    private static final SizerSwitch SIZER =
+            new SizerSwitch(next -> next > 0,
+                    new LinearSizer(-1),
+                    new ConstantSizer(100));
 
     // Use if path is elliptical
     public CollapsingOrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, double startPos) {
@@ -38,27 +46,8 @@ public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<Collapsi
                 center,
                 speedMod / 500,
                 (float) startPos,
-                CollapsingThenExplodeSizer.INSTANCE);
+                SIZER);
 
         this.setOrbitalWidth(1);
-    }
-}
-
-final class CollapsingThenExplodeSizer implements Sizer {
-
-    public static final CollapsingThenExplodeSizer INSTANCE = new CollapsingThenExplodeSizer();
-
-    private CollapsingThenExplodeSizer() {
-    }
-
-    @Override
-    public float getNextSize(final float prev, float dt) {
-        // by returning 100, the position will be really far away from the
-        // center of the orbit, putting the enemy out of screen, causing it
-        // to be removed from the game (so it *disappears* after collapsing
-        // to one point)
-
-        final float next = prev - dt;
-        return next > 0 ? next : 100;
     }
 }
