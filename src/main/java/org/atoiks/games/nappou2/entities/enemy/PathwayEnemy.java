@@ -21,7 +21,7 @@ package org.atoiks.games.nappou2.entities.enemy;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.Sizer;
-import org.atoiks.games.nappou2.sizer.FixedSizer;
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 import org.atoiks.games.nappou2.pattern.NullPattern;
 import org.atoiks.games.nappou2.pattern.AttackPattern;
@@ -43,11 +43,11 @@ public final class PathwayEnemy extends AbstractEnemy {
     private final int score;
 
     public PathwayEnemy(int hp, int score) {
-        this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE, FixedSizer.INSTANCE);
+        this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE, IdentitySizer.INSTANCE);
     }
 
     public PathwayEnemy(int hp, int score, final Pathway path, final AttackPattern attack) {
-        this(hp, score, path, attack, FixedSizer.INSTANCE);
+        this(hp, score, path, attack, IdentitySizer.INSTANCE);
     }
 
     public PathwayEnemy(int hp, int score, final Pathway path, final AttackPattern attack, final Sizer sizer) {
@@ -80,7 +80,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     }
 
     public void setSizer(Sizer f) {
-        this.sizer = f != null ? f : FixedSizer.INSTANCE;
+        this.sizer = f != null ? f : IdentitySizer.INSTANCE;
     }
 
     public void ignoreDrift(boolean flag) {

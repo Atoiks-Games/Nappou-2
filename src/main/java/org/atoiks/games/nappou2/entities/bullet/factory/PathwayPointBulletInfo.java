@@ -24,7 +24,7 @@ import java.util.function.BiFunction;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.Sizer;
-import org.atoiks.games.nappou2.sizer.FixedSizer;
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 import org.atoiks.games.nappou2.pathway.Pathway;
 import org.atoiks.games.nappou2.pathway.FixedVelocity;
@@ -40,11 +40,11 @@ public final class PathwayPointBulletInfo<T extends Pathway> implements BulletFa
     public final BiFunction<? super Vector2, ? super Float, ? extends T> pathway;
 
     public PathwayPointBulletInfo(float radius, Supplier<? extends T> pathway) {
-        this(radius, () -> FixedSizer.INSTANCE, (_a, _b) -> pathway.get());
+        this(radius, () -> IdentitySizer.INSTANCE, (_a, _b) -> pathway.get());
     }
 
     public PathwayPointBulletInfo(float radius, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {
-        this(radius, () -> FixedSizer.INSTANCE, pathway);
+        this(radius, () -> IdentitySizer.INSTANCE, pathway);
     }
 
     public PathwayPointBulletInfo(float radius, Supplier<? extends Sizer> sizer, BiFunction<? super Vector2, ? super Float, ? extends T> pathway) {

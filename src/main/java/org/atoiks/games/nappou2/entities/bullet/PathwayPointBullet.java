@@ -21,7 +21,7 @@ package org.atoiks.games.nappou2.entities.bullet;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.Sizer;
-import org.atoiks.games.nappou2.sizer.FixedSizer;
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 import org.atoiks.games.nappou2.pathway.Pathway;
 
@@ -44,7 +44,7 @@ public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> impl
     }
 
     public PathwayPointBullet(float r, T pathway) {
-        this(r, FixedSizer.INSTANCE, pathway);
+        this(r, IdentitySizer.INSTANCE, pathway);
     }
 
     @Override

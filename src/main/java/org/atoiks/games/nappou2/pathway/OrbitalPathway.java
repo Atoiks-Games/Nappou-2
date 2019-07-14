@@ -20,12 +20,12 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.sizer.FixedSizer;
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 /**
  * Pathway that orbits with a fixed width around a singular point
  */
-public final class OrbitalPathway extends SizerOrbitalPathway<FixedSizer> {
+public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
 
     // Use if path is circular
     public OrbitalPathway(float radius, float x, float y, int direction, float speedMod, int startPos) {
@@ -43,7 +43,7 @@ public final class OrbitalPathway extends SizerOrbitalPathway<FixedSizer> {
                 center,
                 speedMod / 50,
                 startPos % 4 * (float) (Math.PI / 2),
-                FixedSizer.INSTANCE);
+                IdentitySizer.INSTANCE);
 
         this.setOrbitalWidth(1);
     }
