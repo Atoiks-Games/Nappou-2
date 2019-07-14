@@ -22,7 +22,7 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 
-public final class FishSpawner implements Spawner {
+public final class SmallFishSpawner implements Spawner {
 
     private int cycles = -1;
 
@@ -41,7 +41,7 @@ public final class FishSpawner implements Spawner {
      *  - when moving left-right, xrng should be 0
      *  - when moving top-bottom, yrng should be 0
      */
-    public FishSpawner(float xmid, float xrng, float ymid, float yrng, float speed, float angle, float amplitude, boolean alt) {
+    public SmallFishSpawner(float xmid, float xrng, float ymid, float yrng, float speed, float angle, float amplitude, boolean alt) {
         this.xmid = xmid;
         this.xrng = xrng;
         this.ymid = ymid;

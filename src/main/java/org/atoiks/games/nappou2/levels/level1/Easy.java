@@ -28,7 +28,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
-import org.atoiks.games.nappou2.spawner.FishSpawner;
+import org.atoiks.games.nappou2.spawner.SmallFishSpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -84,17 +84,17 @@ public final class Easy implements LevelState {
             //Fish group 1
             case 400: {
                 final Game game = ctx.getGame();
-                game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
-                game.addSpawner(new FishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
+                game.addSpawner(new SmallFishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
+                game.addSpawner(new SmallFishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
                 break;
             }
             //Fish group 2
             case 455: {
                 final Game game = ctx.getGame();
-                game.addSpawner(new FishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
-                game.addSpawner(new FishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
-                game.addSpawner(new FishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
-                game.addSpawner(new FishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
+                game.addSpawner(new SmallFishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
+                game.addSpawner(new SmallFishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
+                game.addSpawner(new SmallFishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
+                game.addSpawner(new SmallFishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
                 break;
             }
             default:

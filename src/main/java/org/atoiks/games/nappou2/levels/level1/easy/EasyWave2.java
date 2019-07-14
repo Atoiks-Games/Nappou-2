@@ -27,7 +27,7 @@ import org.atoiks.games.nappou2.GameConfig;
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
-import org.atoiks.games.nappou2.spawner.FishSpawner;
+import org.atoiks.games.nappou2.spawner.SmallFishSpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -62,8 +62,8 @@ public class EasyWave2 implements LevelState {
         if (cycles == 40) {
             final Game game = ctx.getGame();
             game.addEnemy(new Ripple(10, 375, -10, 20, 500, (float) Math.PI / 2));
-            game.addSpawner(new FishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
-            game.addSpawner(new FishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
+            game.addSpawner(new SmallFishSpawner(700, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+            game.addSpawner(new SmallFishSpawner(50, 10, 610, 0, 250, 3 * (float) Math.PI / 2, 100, true));
         } else if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
             ctx.setState(new EasyWave3());
             return;
