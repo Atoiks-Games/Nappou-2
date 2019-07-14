@@ -42,7 +42,7 @@ public class EasyWave7 implements LevelState {
 
     private static final long serialVersionUID = 4818290874443924057L;
 
-    private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
+    private static final RayInfo RAY_INFO = new RayInfo(25, 5, 500);
 
     private transient int cycles;
 
@@ -74,7 +74,7 @@ public class EasyWave7 implements LevelState {
             case 300:
             case 400:
             case 500:
-                PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
+                PathwayEnemy e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 10), new Vector2(100, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(8);
                 game.addEnemy(e);
                 break;
@@ -85,7 +85,7 @@ public class EasyWave7 implements LevelState {
             case 430:
             case 490:
             case 550:
-                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
+                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(13);
                 game.addEnemy(e);
                 break;
@@ -94,7 +94,7 @@ public class EasyWave7 implements LevelState {
             case 525:
             case 625:
             case 725:
-                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
+                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(25);
                 game.addEnemy(e);
             case 375:
@@ -102,7 +102,7 @@ public class EasyWave7 implements LevelState {
             case 575:
             case 675:
             case 775:
-                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, WAVE7_RAY_INFO));
+                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 25), new Vector2(-150, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(6);
                 game.addEnemy(e);
                 break;
