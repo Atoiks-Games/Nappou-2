@@ -22,17 +22,9 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.FishPart;
 
-public final class SmallFishSpawner implements Spawner {
+public final class SmallFishSpawner extends FishSpawner {
 
     private int cycles = -1;
-
-    private final float xmid, xrng;
-    private final float ymid, yrng;
-
-    private final float speed;
-    private final float angle;
-    private final float amplitude;
-    private final boolean alt;
 
     /**
      * Cycle based: constructs another fish part every 25 cycles from cycle 0
@@ -42,48 +34,35 @@ public final class SmallFishSpawner implements Spawner {
      *  - when moving top-bottom, yrng should be 0
      */
     public SmallFishSpawner(float xmid, float xrng, float ymid, float yrng, float speed, float angle, float amplitude, boolean alt) {
-        this.xmid = xmid;
-        this.xrng = xrng;
-        this.ymid = ymid;
-        this.yrng = yrng;
-
-        this.speed = speed;
-        this.angle = angle;
-        this.amplitude = amplitude;
-        this.alt = alt;
+        super(xmid, xrng, ymid, yrng, speed, angle, amplitude, alt);
     }
 
     @Override
     public void onUpdate(final Game game, final float dt) {
         switch (++cycles) {
             case 0:
-                game.addEnemy(new FishPart(2, xmid, ymid, 16, speed, angle, amplitude, 10, alt));
+                this.addSingular(game, 2, 16);
                 break;
             case 25:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
+                this.addSingleSpacing(game, 1, 8);
                 break;
             case 50:
-                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 8, speed, angle, amplitude, 10, alt));
+                this.addDoubleSpacing(game, 1, 8);
                 break;
             case 75:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 8, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 8, speed, angle, amplitude, 10, alt));
+                this.addSingleSpacing(game, 1, 8);
                 break;
             case 100:
-                game.addEnemy(new FishPart(1, xmid, ymid, 8, speed, angle, amplitude, 10, alt));
+                this.addSingular(game, 1, 8);
                 break;
             case 125:
-                game.addEnemy(new FishPart(1, xmid - xrng, ymid - yrng, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + xrng, ymid + yrng, 6, speed, angle, amplitude, 10, alt));
+                this.addSingleSpacing(game, 1, 6);
                 break;
             case 145:
-                game.addEnemy(new FishPart(1, xmid, ymid, 6, speed, angle, amplitude, 10, alt));
+                this.addSingular(game, 1, 6);
                 break;
             case 150:
-                game.addEnemy(new FishPart(1, xmid - 2.0f * xrng, ymid - 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
-                game.addEnemy(new FishPart(1, xmid + 2.0f * xrng, ymid + 2.0f * yrng, 6, speed, angle, amplitude, 10, alt));
+                this.addDoubleSpacing(game, 1, 6);
                 break;
         }
     }
