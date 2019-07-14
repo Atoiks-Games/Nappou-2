@@ -25,10 +25,8 @@ import org.atoiks.games.nappou2.Vector2;
  */
 public final class OrbitalPathway implements UnboundPathway {
 
-    private final Vector2 axis;
+    private final Vector2 scaledAxis;
     private final Vector2 center;
-
-    private final Vector2 direction;
     private final float mod;
     private final int spos;
 
@@ -47,11 +45,9 @@ public final class OrbitalPathway implements UnboundPathway {
     }
 
     public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
-        this.axis = axis;
-        this.center = center;
-
         // Direction is applied on the Y component
-        this.direction = new Vector2(1, direction);
+        this.scaledAxis = new Vector2(1, direction).mul(axis);
+        this.center = center;
         this.mod = speedMod;
         this.spos = startPos % 4;
 
@@ -70,6 +66,6 @@ public final class OrbitalPathway implements UnboundPathway {
         cycles++;
 
         final float k = mod * cycles / 50 + spos * (float) Math.PI / 2;
-        this.position = Vector2.muladd(axis, Vector2.fromPolar(1, k).mul(direction), center);
+        this.position = Vector2.muladd(this.scaledAxis, Vector2.fromPolar(1, k), center);
     }
 }

@@ -25,10 +25,8 @@ import org.atoiks.games.nappou2.Vector2;
  */
 public final class CollapsingOrbitalPathway implements UnboundPathway {
 
-    private Vector2 axis;
+    private final Vector2 scaledAxis;
     private final Vector2 center;
-
-    private final Vector2 direction;
     private final float mod;
     private final double spos;
     private float r = 1;
@@ -43,11 +41,9 @@ public final class CollapsingOrbitalPathway implements UnboundPathway {
     }
 
     public CollapsingOrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, double startPos) {
-        this.axis = axis;
-        this.center = center;
-
         // Direction is applied on the Y component
-        this.direction = new Vector2(1, direction);
+        this.scaledAxis = new Vector2(1, direction).mul(axis);
+        this.center = center;
         this.mod = speedMod;
         this.spos = startPos;
 
@@ -72,6 +68,6 @@ public final class CollapsingOrbitalPathway implements UnboundPathway {
         }
 
         final float k = mod / (10 * r) * cycles / 50 + (float) spos;
-        this.position = Vector2.muladd(this.axis, Vector2.fromPolar(r, k).mul(direction), center);
+        this.position = Vector2.muladd(this.scaledAxis, Vector2.fromPolar(r, k), center);
     }
 }
