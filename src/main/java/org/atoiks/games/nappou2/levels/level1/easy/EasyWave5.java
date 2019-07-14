@@ -238,10 +238,10 @@ public class EasyWave5 implements LevelState {
                         break;
                     case 50:
                         PathwayEnemy e = new PathwayEnemy(5, 5, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
-                        e.setR(20);
+                        e.setRadius(20);
                         game.addEnemy(e);
                         PathwayEnemy f = new PathwayEnemy(5, 5, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), -1, 1, Math.PI), NullPattern.INSTANCE);
-                        f.setR(20);
+                        f.setRadius(20);
                         game.addEnemy(f);
                         break;
                 }

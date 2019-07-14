@@ -65,7 +65,7 @@ public final class FishPart extends ManualEnemy {
         final Vector2 pos = this.getPosition();
         final float x = pos.getX();
         final float y = pos.getY();
-        final float r = getR();
+        final float r = getRadius();
         return (x + r < -SCREEN_EDGE_BUFFER)
             || (x - r > w + SCREEN_EDGE_BUFFER)
             || (y + r < -SCREEN_EDGE_BUFFER)
