@@ -20,19 +20,12 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.FixedSizer;
+
 /**
- * Pathway that orbits around a singular point
+ * Pathway that orbits with a fixed width around a singular point
  */
-public final class OrbitalPathway implements UnboundPathway {
-
-    private final Vector2 scaledAxis;
-    private final Vector2 center;
-    private final float mod;
-    private final int spos;
-
-    private Vector2 position;
-
-    private int cycles;
+public final class OrbitalPathway extends SizerOrbitalPathway<FixedSizer> {
 
     // Use if path is circular
     public OrbitalPathway(float radius, float x, float y, int direction, float speedMod, int startPos) {
@@ -46,26 +39,12 @@ public final class OrbitalPathway implements UnboundPathway {
 
     public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
         // Direction is applied on the Y component
-        this.scaledAxis = new Vector2(1, direction).mul(axis);
-        this.center = center;
-        this.mod = speedMod;
-        this.spos = startPos % 4;
+        super(new Vector2(1, direction).mul(axis),
+                center,
+                speedMod / 50,
+                startPos % 4 * (float) (Math.PI / 2),
+                FixedSizer.INSTANCE);
 
-        // calcuate initial position here, update will do increment cycles
-        this.cycles = -1;
-        update(0);
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void update(final float dt) {
-        cycles++;
-
-        final float k = mod * cycles / 50 + spos * (float) Math.PI / 2;
-        this.position = Vector2.muladd(this.scaledAxis, Vector2.fromPolar(1, k), center);
+        this.setOrbitalWidth(1);
     }
 }

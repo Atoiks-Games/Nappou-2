@@ -20,20 +20,12 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.Sizer;
+
 /**
- * Pathway that orbits around a singular point
+ * Pathway that orbits with a decaying width around a singular point
  */
-public final class CollapsingOrbitalPathway implements UnboundPathway {
-
-    private final Vector2 scaledAxis;
-    private final Vector2 center;
-    private final float mod;
-    private final double spos;
-    private float r = 1;
-
-    private Vector2 position;
-
-    private int cycles;
+public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<LocalSizer> {
 
     // Use if path is elliptical
     public CollapsingOrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, double startPos) {
@@ -42,32 +34,26 @@ public final class CollapsingOrbitalPathway implements UnboundPathway {
 
     public CollapsingOrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, double startPos) {
         // Direction is applied on the Y component
-        this.scaledAxis = new Vector2(1, direction).mul(axis);
-        this.center = center;
-        this.mod = speedMod;
-        this.spos = startPos;
+        super(new Vector2(1, direction).mul(axis),
+                center,
+                speedMod / 500,
+                (float) startPos,
+                LocalSizer.INSTANCE);
 
-        // calcuate initial position here, update will do increment cycles
-        this.cycles = -1;
-        update(0);
+        this.setOrbitalWidth(1);
+    }
+}
+
+final class LocalSizer implements Sizer {
+
+    public static final LocalSizer INSTANCE = new LocalSizer();
+
+    private LocalSizer() {
     }
 
     @Override
-    public Vector2 getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void update(final float dt) {
-        cycles++;
-
-        r -= dt;
-
-        if (r < 0) {
-            r = 100;
-        }
-
-        final float k = mod / (10 * r) * cycles / 50 + (float) spos;
-        this.position = Vector2.muladd(this.scaledAxis, Vector2.fromPolar(r, k), center);
+    public float getNextSize(final float prev, float dt) {
+        final float next = prev - dt;
+        return next > 0 ? next : 100;
     }
 }
