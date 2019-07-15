@@ -29,24 +29,22 @@ import org.atoiks.games.nappou2.entities.Game;
 
 import org.atoiks.games.nappou2.entities.enemy.Level1Normal;
 
-import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
+import org.atoiks.games.nappou2.levels.level1.AbstractBossWave;
 
-public class NormalBossWave implements LevelState {
+public class NormalBossWave extends AbstractBossWave {
 
     private static final long serialVersionUID = -4505613621927595705L;
 
-    private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.NORMAL);
+    public NormalBossWave() {
+        super(new SaveScoreState(0, Difficulty.NORMAL), 100, 100);
+    }
 
     private transient int cycles;
     private transient int phase;
 
     @Override
     public void enter(final LevelContext ctx) {
-        ctx.enableDamage();
-        ctx.shouldSkipPlayerUpdate(false);
-
-        this.cycles = 0;
-        this.phase = 0;
+        super.enter(ctx);
 
         final Game game = ctx.getGame();
         game.addEnemy(new Level1Normal(300, 375, -10, 20));
@@ -55,37 +53,5 @@ public class NormalBossWave implements LevelState {
         drift.accelY = -20;
         drift.accelX = 20;
         drift.clampDx(0, 100);
-    }
-
-    @Override
-    public void updateLevel(final LevelContext ctx, final float dt) {
-        if (++cycles % 4000 == 0) {
-            final Drifter drift = ctx.getGame().drifter;
-            switch (++phase) {
-                case 0:
-                    drift.accelY = -20;
-                    drift.accelX = 20;
-                    drift.clampDx(0, 100);
-                    break;
-                case 1:
-                    drift.accelX = -20;
-                    drift.accelY = 20;
-                    drift.clampDy(0, 100);
-                    break;
-                case 2:
-                    drift.accelY = -20;
-                    drift.clampDx(-100, 0);
-                    break;
-                case 3:
-                    drift.accelX = 20;
-                    drift.clampDy(-100, 0);
-                    break;
-            }
-        }
-
-        if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
-            ctx.setState(new PostbossDialog(EXIT_STATE));
-            return;
-        }
     }
 }

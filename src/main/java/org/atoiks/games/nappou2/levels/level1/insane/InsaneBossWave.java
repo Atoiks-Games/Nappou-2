@@ -29,7 +29,7 @@ import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
-import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
+import org.atoiks.games.nappou2.levels.level1.AbstractBossWave;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -37,22 +37,17 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-public class InsaneBossWave implements LevelState {
+public class InsaneBossWave extends AbstractBossWave {
 
     private static final long serialVersionUID = -4184588301058618848L;
 
-    private static final SaveScoreState EXIT_STATE = new SaveScoreState(0, Difficulty.INSANE);
-
-    private transient int cycles;
-    private transient int phase;
+    public InsaneBossWave() {
+        super(new SaveScoreState(0, Difficulty.INSANE), 250, 250);
+    }
 
     @Override
     public void enter(final LevelContext ctx) {
-        ctx.enableDamage();
-        ctx.shouldSkipPlayerUpdate(false);
-
-        this.cycles = 0;
-        this.phase = 0;
+        super.enter(ctx);
 
         final Game game = ctx.getGame();
         game.addEnemy(new Level1Insane(300, 375, -10, 20));
@@ -61,37 +56,5 @@ public class InsaneBossWave implements LevelState {
         drift.accelY = -20;
         drift.accelX = 20;
         drift.clampDx(0, 200);
-    }
-
-    @Override
-    public void updateLevel(final LevelContext ctx, final float dt) {
-        if (++cycles % 4000 == 0) {
-            final Drifter drift = ctx.getGame().drifter;
-            switch (++phase) {
-                case 0:
-                    drift.accelY = -20;
-                    drift.accelX = 20;
-                    drift.clampDx(0, 250);
-                    break;
-                case 1:
-                    drift.accelX = -20;
-                    drift.accelY = 20;
-                    drift.clampDy(0,250);
-                    break;
-                case 2:
-                    drift.accelY = -20;
-                    drift.clampDx(-250,0);
-                    break;
-                case 3:
-                    drift.accelX = 20;
-                    drift.clampDy(-250,0);
-                    break;
-            }
-        }
-
-        if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
-            ctx.setState(new PostbossDialog(EXIT_STATE));
-            return;
-        }
     }
 }
