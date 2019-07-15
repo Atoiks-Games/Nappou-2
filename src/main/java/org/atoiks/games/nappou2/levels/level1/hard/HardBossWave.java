@@ -56,22 +56,20 @@ public class HardBossWave implements LevelState {
 
         this.cycles = 0;
         this.phase = 0;
+
+        final Game game = ctx.getGame();
+        game.addEnemy(new Level1Hard(300, 375, -10, 20));
+
+        final Drifter drift = game.drifter;
+        drift.accelY = -20;
+        drift.accelX = 20;
+        drift.clampDx(0, 200);
     }
 
     @Override
     public void updateLevel(final LevelContext ctx, final float dt) {
-        final Game game = ctx.getGame();
-        final Drifter drift = game.drifter;
-
-        if (cycles++ == 0) {
-            game.addEnemy(new Level1Hard(300, 375, -10, 20));
-            drift.accelY = -20;
-            drift.accelX = 20;
-            drift.clampDx(0, 200);
-            return;
-        }
-
-        if (cycles % 4000 == 0) {
+        if (++cycles % 4000 == 0) {
+            final Drifter drift = ctx.getGame().drifter;
             switch (++phase) {
                 case 0:
                     drift.accelY = -20;
@@ -93,7 +91,8 @@ public class HardBossWave implements LevelState {
                     break;
             }
         }
-        if (cycles > 40 && game.noMoreEnemies()) {
+
+        if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
             ctx.setState(new PostbossDialog(EXIT_STATE));
             return;
         }
