@@ -44,6 +44,9 @@ public class EasyBossWave implements LevelState {
     public void enter(final LevelContext ctx) {
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
+
+        this.cycles = 0;
+        this.phase = 0;
     }
 
     @Override
