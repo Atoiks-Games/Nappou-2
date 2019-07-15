@@ -42,19 +42,13 @@ public class InsaneBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -4184588301058618848L;
 
     public InsaneBossWave() {
-        super(new SaveScoreState(0, Difficulty.INSANE), 250, 250);
+        super(new SaveScoreState(0, Difficulty.INSANE), 200, 250, 250);
     }
 
     @Override
     public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
-        final Game game = ctx.getGame();
-        game.addEnemy(new Level1Insane(300, 375, -10, 20));
-
-        final Drifter drift = game.drifter;
-        drift.accelY = -20;
-        drift.accelX = 20;
-        drift.clampDx(0, 200);
+        ctx.getGame().addEnemy(new Level1Insane(300, 375, -10, 20));
     }
 }

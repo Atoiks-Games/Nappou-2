@@ -36,7 +36,7 @@ public class NormalBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -4505613621927595705L;
 
     public NormalBossWave() {
-        super(new SaveScoreState(0, Difficulty.NORMAL), 100, 100);
+        super(new SaveScoreState(0, Difficulty.NORMAL), 100, 100, 100);
     }
 
     private transient int cycles;
@@ -46,12 +46,6 @@ public class NormalBossWave extends AbstractBossWave {
     public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
-        final Game game = ctx.getGame();
-        game.addEnemy(new Level1Normal(300, 375, -10, 20));
-
-        final Drifter drift = game.drifter;
-        drift.accelY = -20;
-        drift.accelX = 20;
-        drift.clampDx(0, 100);
+        ctx.getGame().addEnemy(new Level1Normal(300, 375, -10, 20));
     }
 }

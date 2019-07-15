@@ -18,6 +18,7 @@
 
 package org.atoiks.games.nappou2.levels.level1;
 
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
 import org.atoiks.games.nappou2.Difficulty;
 
@@ -32,14 +33,16 @@ public abstract class AbstractBossWave implements LevelState {
     private static final long serialVersionUID = -8597002284637792362L;
 
     private final SaveScoreState exitState;
+    private final float initialClamp;
     private final float clampDx;
     private final float clampDy;
 
     private transient int cycles;
     private transient int phase;
 
-    protected AbstractBossWave(SaveScoreState exitState, float clampDx, float clampDy) {
+    protected AbstractBossWave(SaveScoreState exitState, float initialClamp, float clampDx, float clampDy) {
         this.exitState = exitState;
+        this.initialClamp = initialClamp;
         this.clampDx = clampDx;
         this.clampDy = clampDy;
     }
@@ -51,6 +54,11 @@ public abstract class AbstractBossWave implements LevelState {
 
         this.cycles = 0;
         this.phase = 0;
+
+        final Drifter drift = ctx.getGame().drifter;
+        drift.accelY = -20;
+        drift.accelX = 20;
+        drift.clampDx(0, this.initialClamp);
     }
 
     @Override

@@ -36,19 +36,13 @@ public class EasyBossWave extends AbstractBossWave {
     private static final long serialVersionUID = 1914901384100845861L;
 
     public EasyBossWave() {
-        super(new SaveScoreState(0, Difficulty.EASY), 50, 50);
+        super(new SaveScoreState(0, Difficulty.EASY), 50, 50, 50);
     }
 
     @Override
     public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
-        final Game game = ctx.getGame();
-        game.addEnemy(new Level1Easy(300, 375, -10, 20));
-
-        final Drifter drift = game.drifter;
-        drift.accelY = -20;
-        drift.accelX = 20;
-        drift.clampDx(0, 50);
+        ctx.getGame().addEnemy(new Level1Easy(300, 375, -10, 20));
     }
 }

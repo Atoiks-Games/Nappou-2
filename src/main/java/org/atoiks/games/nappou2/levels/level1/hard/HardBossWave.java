@@ -45,19 +45,13 @@ public class HardBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -963938928723781698L;
 
     public HardBossWave() {
-        super(new SaveScoreState(0, Difficulty.HARD), 200, 200);
+        super(new SaveScoreState(0, Difficulty.HARD), 200, 200, 200);
     }
 
     @Override
     public void enter(final LevelContext ctx) {
         super.enter(ctx);
 
-        final Game game = ctx.getGame();
-        game.addEnemy(new Level1Hard(300, 375, -10, 20));
-
-        final Drifter drift = game.drifter;
-        drift.accelY = -20;
-        drift.accelX = 20;
-        drift.clampDx(0, 200);
+        ctx.getGame().addEnemy(new Level1Hard(300, 375, -10, 20));
     }
 }
