@@ -20,6 +20,10 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 /**
  * Pathway that orbits around a singular point
  */
@@ -41,14 +45,24 @@ public final class OrbitalPathway implements UnboundPathway {
         this(radius, radius, x, y, direction, speedMod, startPos);
     }
 
-    // Use if path is elliptical
-    public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
-        this(new Vector2(rx, ry), new Vector2(x, y), direction, speedMod, startPos);
+    public OrbitalPathway(Circular boundary, int direction, float speedMod, int startPos) {
+        this(Circular.asElliptical(boundary),
+                direction,
+                speedMod,
+                startPos);
     }
 
-    public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
-        this.axis = axis;
-        this.center = center;
+    // Use if path is elliptical
+    public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
+        this(new ImmutableEllipses(new Vector2(x, y), new Vector2(rx, ry)),
+                direction,
+                speedMod,
+                startPos);
+    }
+
+    public OrbitalPathway(final Elliptical boundary, int direction, float speedMod, int startPos) {
+        this.axis = boundary.getSemiAxes();
+        this.center = boundary.getPosition();
 
         // Direction is applied on the Y component
         this.direction = new Vector2(1, direction);

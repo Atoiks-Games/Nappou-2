@@ -65,4 +65,28 @@ public interface Circular extends Shape {
 
         g.drawTexture(img, x - r, y - r, x + r, y + r);
     }
+
+    public static Elliptical asElliptical(final Circular circ) {
+        return new ApproxElliptical(circ);
+    }
+}
+
+final class ApproxElliptical implements Elliptical {
+
+    private final Circular circ;
+
+    public ApproxElliptical(Circular circ) {
+        this.circ = circ;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return circ.getPosition();
+    }
+
+    @Override
+    public Vector2 getSemiAxes() {
+        final float r = circ.getRadius();
+        return new Vector2(r, r);
+    }
 }
