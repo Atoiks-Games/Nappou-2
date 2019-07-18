@@ -152,6 +152,12 @@ public final class Vector2 implements Serializable {
                 Utils.lerp(start.y, end.y, frac));
     }
 
+    public static Vector2 abs(final Vector2 v) {
+        return new Vector2(
+                Math.abs(v.x),
+                Math.abs(v.y));
+    }
+
     public static Vector2 min(final Vector2 u, final Vector2 v) {
         return new Vector2(
                 Math.min(u.x, v.x),
