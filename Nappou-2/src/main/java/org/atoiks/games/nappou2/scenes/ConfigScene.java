@@ -18,9 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
-import java.awt.Color;
-
 import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
@@ -30,98 +27,42 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
-public final class ConfigScene extends CenteringScene {
+public final class ConfigScene extends OptionSelectScene {
 
-    private static final String[] OPTION_NAMES = {
-        "BGM", "CHALLENGE MODE", "FULLSCREEN", "CONFIGURE CONTROLS", "CLEAR SCORES"
+    private static final Entry[] ENTRIES = {
+        new Entry("BGM", new Vector2(84, 66)),
+        new Entry("CHALLENGE MODE", new Vector2(84, 115)),
+        new Entry("FULLSCREEN", new Vector2(84, 164)),
+        new Entry("CONFIGURE CONTROLS", new Vector2(84, 213)),
+        new Entry("CLEAR SCORES", new Vector2(84, 262))
     };
-    private static final int[] SELECTOR_Y = { 66, 115, 164, 213, 262 };
-    private static final int OPT_HEIGHT = 23;
-    private static final int[] BOOL_SEL_X = { 560, 588, 720, 764 };
 
-    private final Font font16;
-    private final Font font30;
+    private static final int[] BLOCK_SCORE_INDICES = {
+        0, 1, 2, 3
+    };
 
     private final Clip bgm;
-    private final Keymap keymap;
     private final GameConfig config;
 
-    private int selector;
-    private float scaleFactor;
-    private float transX;
-    private float transY;
-
-    private boolean showClearScoresOption = true;
-
     public ConfigScene() {
-        bgm = ResourceManager.get("/music/Enter_The_Void.wav");
-        config = ResourceManager.get("./game.cfg");
+        super(ResourceManager.get("/Logisoso.ttf"), true);
 
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
+        this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
+        this.config = ResourceManager.get("./game.cfg");
+        this.keymap = this.config.keymap;
 
-        this.keymap = config.keymap;
-    }
-
-    @Override
-    public void render(IGraphics g) {
-        g.setClearColor(Color.black);
-        g.clearGraphics();
-        super.render(g);
-
-        g.setColor(Color.white);
-        g.setFont(this.font30);
-        for (int i = 0; i < getMaxOptions(); ++i) {
-            final int h = SELECTOR_Y[i] + this.font30.getSize() - 7;
-            g.drawString(OPTION_NAMES[i], 84, h);
-            if (i < 3) {
-                // This corresponds to "CONFIGURE CONTROLS" and "CLEAR SCORES"
-                g.drawString("ON", 560, h);
-                g.drawString("OFF", 720, h);
-            }
-        }
-
-        g.setFont(font16);
-        g.drawString("Hit Escape to return to title screen", 84, 540);
-
-        g.drawRect(74, SELECTOR_Y[selector], 78, SELECTOR_Y[selector] + OPT_HEIGHT);
-
-        renderBoolValue(g, config.bgm, 91);
-        renderBoolValue(g, config.challengeMode, 140);
-        renderBoolValue(g, config.fullscreen, 189);
-    }
-
-    private int getMaxOptions() {
-        if (this.showClearScoresOption) {
-            return OPTION_NAMES.length;
-        }
-        return OPTION_NAMES.length - 1;
-    }
-
-    private void renderBoolValue(final IGraphics g, final boolean value, final float height) {
-        final int offset = 2 * (value ? 0 : 1);
-        g.drawLine(BOOL_SEL_X[offset], height, BOOL_SEL_X[offset + 1], height);
+        this.setOptions(ENTRIES);
     }
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            SceneManager.popScene();
-            return true;
-        }
-        if (this.keymap.shouldSelectNext()) {
-            selector = (selector + 1) % getMaxOptions();
-        }
-        if (this.keymap.shouldSelectPrevious()) {
-            if (--selector < 0) selector = getMaxOptions() - 1;
-        }
+        super.update(dt);
 
-        switch (this.selector) {
+        switch (this.getSelectedIndex()) {
             case 3:
                 // This entry invokes an overlay!
                 if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
@@ -133,8 +74,8 @@ public final class ConfigScene extends CenteringScene {
                 // This clears the score and hides the option!
                 if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
                     ResourceManager.<ScoreData>get("./score.dat").clear();
-                    this.showClearScoresOption = false;
-                    this.selector = 0;
+                    this.updateSelectableIndices(BLOCK_SCORE_INDICES);
+                    this.normalizeSelectorIndex();
                 }
                 break;
             default:
@@ -147,7 +88,7 @@ public final class ConfigScene extends CenteringScene {
         return true;
     }
 
-    private boolean getValueAtSelector() {
+    private boolean getValueAtSelector(int selector) {
         switch (selector) {
             case 0: return config.bgm;
             case 1: return config.challengeMode;
@@ -156,7 +97,12 @@ public final class ConfigScene extends CenteringScene {
         }
     }
 
+    private boolean getValueAtSelector() {
+        return getValueAtSelector(this.getSelectedIndex());
+    }
+
     private void setValueAtSelector(final boolean newValue) {
+        final int selector = this.getSelectedIndex();
         switch (selector) {
             case 0:
                 if ((config.bgm = newValue)) {
@@ -174,6 +120,29 @@ public final class ConfigScene extends CenteringScene {
                 break;
             default:
                 throw new RuntimeException("Unknown selector index " + selector);
+        }
+    }
+
+    @Override
+    public void render(IGraphics g) {
+        super.render(g);
+
+        for (int i = 0; i < 3; ++i) {
+            final float h = ENTRIES[i].getPosition().getY();
+            g.setFont(this.font30);
+            g.drawString("ON", 560, h);
+            g.drawString("OFF", 720, h);
+
+            g.setFont(this.font16);
+            this.renderBoolValue(g, this.getValueAtSelector(i), h + 4);
+        }
+    }
+
+    private void renderBoolValue(final IGraphics g, final boolean value, final float height) {
+        if (value) {
+            g.drawLine(560, height, 588, height);
+        } else {
+            g.drawLine(720, height, 760, height);
         }
     }
 }

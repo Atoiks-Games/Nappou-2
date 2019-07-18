@@ -19,17 +19,14 @@
 package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
-import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
-import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
-import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -39,76 +36,49 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
-public final class ShieldOptionScene extends CenteringScene {
+public final class ShieldOptionScene extends OptionSelectScene {
 
-    private static final String[] SHIELD_MSG = {
-        "Bonfire", "Firefly", "None"
+    private static final Entry[] ENTRIES = {
+        new Entry("Bonfire", new Vector2(98, 356)),
+        new Entry("Firefly", new Vector2(98, 414)),
+        new Entry("None", new Vector2(98, 498))
     };
-    private static final int[] shieldSelY = {356, 414, 498};
-    private static final int OPT_HEIGHT = 37;
 
     private final LevelState nextState;
 
-    private int shieldSel;
-
-    private final Font font30;
     private final Font font80;
-    private final Keymap keymap;
 
     public ShieldOptionScene(LevelState nextState) {
+        super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap);
+
         this.nextState = nextState;
+        this.font80 = this.font30.deriveFont(80f);
 
-        final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
-
-        this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
+        this.setOptions(ENTRIES);
     }
 
     @Override
     public void render(IGraphics g) {
-        g.setClearColor(Color.black);
-        g.clearGraphics();
         super.render(g);
 
-        g.setColor(Color.white);
         g.setFont(this.font80);
         g.drawString("Choose Your Shield", 130, 120);
-        g.setFont(this.font30);
-        for (int i = 0; i < SHIELD_MSG.length; ++i) {
-            g.drawString(SHIELD_MSG[i], 98, shieldSelY[i] + this.font30.getSize());
-        }
-        g.drawRect(90, shieldSelY[shieldSel], 94, shieldSelY[shieldSel] + OPT_HEIGHT);
     }
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-            SceneManager.popScene();
-            return true;
-        }
+        super.update(dt);
+
         if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
-            return startGame();
+            final ShieldEntity shield = getShieldFromOption();
+            ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
+            GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
         }
-
-        if (this.keymap.shouldSelectNext()) {
-            if (++shieldSel >= shieldSelY.length) shieldSel = 0;
-        }
-        if (this.keymap.shouldSelectPrevious()) {
-            if (--shieldSel < 0) shieldSel = shieldSelY.length - 1;
-        }
-        return true;
-    }
-
-    private boolean startGame() {
-        final ShieldEntity shield = getShieldFromOption();
-        ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
-        GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
         return true;
     }
 
     private ShieldEntity getShieldFromOption() {
-        switch (shieldSel) {
+        switch (this.getSelectedIndex()) {
             default:
             case 0: return new FixedTimeShield(3.5f, 2, 50);
             case 1: return new TrackingTimeShield(2f, 3, 35);
