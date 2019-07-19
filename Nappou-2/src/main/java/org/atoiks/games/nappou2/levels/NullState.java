@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.levels;
 
+import java.io.ObjectStreamException;
+
 import org.atoiks.games.framework2d.IGraphics;
 
 public final class NullState implements LevelState {
@@ -32,5 +34,10 @@ public final class NullState implements LevelState {
     @Override
     public void updateLevel(LevelContext ctx, float dt) {
         // Do nothing
+    }
+
+    // Exists to make sure singleton works
+    private Object readResolve() throws ObjectStreamException {
+        return INSTANCE;
     }
 }

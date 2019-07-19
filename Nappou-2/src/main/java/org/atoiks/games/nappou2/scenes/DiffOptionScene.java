@@ -88,7 +88,7 @@ public final class DiffOptionScene extends OptionSelectScene {
                 // Challenge mode forces you to use no shields,
                 // so there is no need to jump into shield-option-scene.
 
-                final NullShield shield = new NullShield();
+                final NullShield shield = NullShield.INSTANCE;
                 ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
                 GameLevelScene.unwindAndStartLevel(new Player(shield), level);
             } else {

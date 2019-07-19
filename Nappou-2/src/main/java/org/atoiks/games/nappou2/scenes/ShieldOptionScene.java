@@ -82,7 +82,7 @@ public final class ShieldOptionScene extends OptionSelectScene {
             default:
             case 0: return new FixedTimeShield(3.5f, 2, 50);
             case 1: return new TrackingTimeShield(2f, 3, 35);
-            case 2: return new NullShield();
+            case 2: return NullShield.INSTANCE;
         }
     }
 }
