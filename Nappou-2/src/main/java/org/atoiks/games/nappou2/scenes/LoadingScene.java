@@ -151,7 +151,7 @@ public final class LoadingScene implements Scene {
     }
 
     private void loadImageFromResources(final String name) {
-        ResourceManager.load("/image/" + name, SceneManager.frame().getTextureDecoder());
+        ResourceManager.load("/image/" + name, SceneManager.frame().getRuntime().getTextureDecoder());
     }
 
     private void loadMusicFromResources(final String name) {
