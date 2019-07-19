@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.entities.shield;
 
+import java.io.ObjectStreamException;
+
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
@@ -28,6 +30,11 @@ import org.atoiks.games.nappou2.entities.Collidable;
 public final class NullShield implements ShieldEntity {
 
     private static final long serialVersionUID = -6024720306180805901L;
+
+    public static final NullShield INSTANCE = new NullShield();
+
+    private NullShield() {
+    }
 
     @Override
     public Renderer getRenderer() {
@@ -85,5 +92,10 @@ public final class NullShield implements ShieldEntity {
     public boolean collidesWith(Collidable col) {
         // It is impossible for this shield to collide with anything.
         return false;
+    }
+
+    // Exists to make sure singleton works
+    private Object readResolve() throws ObjectStreamException {
+        return INSTANCE;
     }
 }

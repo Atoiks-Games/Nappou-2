@@ -34,7 +34,7 @@ public final class SaveData implements Externalizable {
     private static final long serialVersionUID = -6315543815579288169L;
 
     private LevelState checkpoint = NullState.INSTANCE;
-    private ShieldEntity shield = new NullShield();
+    private ShieldEntity shield = NullShield.INSTANCE;
     private boolean challengeMode = false;
 
     public void setCheckpoint(final LevelState p, boolean m) {
@@ -47,7 +47,7 @@ public final class SaveData implements Externalizable {
     }
 
     public void setShield(final ShieldEntity s) {
-        this.shield = s != null ? s : new NullShield();
+        this.shield = s != null ? s : NullShield.INSTANCE;
     }
 
     public boolean isChallengeMode() {
