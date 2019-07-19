@@ -18,11 +18,11 @@
 
 package org.atoiks.games.nappou2.graphics.shapes;
 
-import java.awt.Image;
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.framework2d.IGraphics;
 
 public final class ImmutableRectangle implements Rectangular {
 
@@ -83,10 +83,10 @@ public final class ImmutableRectangle implements Rectangular {
     }
 
     @Override
-    public void renderTexture(IGraphics g, Image img) {
+    public void renderTexture(IGraphics g, Texture img) {
         final float x = this.pos.getX();
         final float y = this.pos.getY();
 
-        g.drawImage(img, x, y, x + this.w, y + this.h);
+        g.drawTexture(img, x, y, x + this.w, y + this.h);
     }
 }

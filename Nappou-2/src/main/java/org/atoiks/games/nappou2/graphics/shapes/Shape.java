@@ -18,13 +18,13 @@
 
 package org.atoiks.games.nappou2.graphics.shapes;
 
-import java.awt.Image;
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.entities.Trackable;
-
-import org.atoiks.games.framework2d.IGraphics;
 
 public interface Shape extends Trackable {
 
@@ -36,5 +36,5 @@ public interface Shape extends Trackable {
 
     public void draw(IGraphics g);
     public void fill(IGraphics g);
-    public void renderTexture(IGraphics g, Image img);
+    public void renderTexture(IGraphics g, Texture img);
 }

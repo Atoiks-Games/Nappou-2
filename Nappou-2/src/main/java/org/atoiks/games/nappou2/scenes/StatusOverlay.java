@@ -20,10 +20,11 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.ScoreCounter;
@@ -45,7 +46,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final ScoreCounter scoreCounter;
     private final HitpointCounter hpCounter;
     private final Shield shield;
-    private final Image hpImg;
+    private final Texture hpImg;
     private final SaveData save;
 
     public StatusOverlay(Font font, final Player player) {
@@ -69,9 +70,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawString("Score", GAME_BORDER + 2, 58);
 
         final int hp = this.hpCounter.getHp();
-        final int w = hpImg.getWidth(null);
+        final int w = hpImg.getWidth();
         for (int i = 0; i < hp; ++i) {
-            g.drawImage(hpImg, GAME_BORDER + 5 + i * w, 24);
+            g.drawTexture(hpImg, GAME_BORDER + 5 + i * w, 24);
         }
 
         final int rawScore = this.scoreCounter.getScore();

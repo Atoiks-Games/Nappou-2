@@ -20,10 +20,11 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Image;
 
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.entities.Message;
 
@@ -34,7 +35,7 @@ public final class DialogOverlay {
 
     private String msgSpeaker;
     private String[] msgLines;
-    private Image imgMsg;
+    private Texture imgMsg;
 
     private int xoffMsgImg;
     private int yoffMsgImg;
@@ -64,7 +65,7 @@ public final class DialogOverlay {
 
     public void render(final IGraphics g) {
         if (imgMsg != null) {
-            g.drawImage(imgMsg, xoffMsgImg, yoffMsgImg);
+            g.drawTexture(imgMsg, xoffMsgImg, yoffMsgImg);
         }
 
         if (msgSpeaker == null) {
@@ -94,15 +95,15 @@ public final class DialogOverlay {
         g.drawString("Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
     }
 
-    private Image loadMessageResource(final Message msg) {
+    private Texture loadMessageResource(final Message msg) {
         if (msg.imgRes != null) {
             return ResourceManager.get("/image/" + msg.imgRes);
         }
         return null;
     }
 
-    public static int alignVertical(Message.VerticalAlignment vAlign, Image img) {
-        final int imgH = img != null ? img.getHeight(null) : 0;
+    public static int alignVertical(Message.VerticalAlignment vAlign, Texture img) {
+        final int imgH = img != null ? img.getHeight() : 0;
         switch (vAlign) {
             case TOP:
                 return 0;
@@ -118,8 +119,8 @@ public final class DialogOverlay {
         }
     }
 
-    public static int alignHorizontal(Message.HorizontalAlignment vAlign, Image img) {
-        final int imgW = img != null ? img.getWidth(null) : 0;
+    public static int alignHorizontal(Message.HorizontalAlignment vAlign, Texture img) {
+        final int imgW = img != null ? img.getWidth() : 0;
         switch (vAlign) {
             case LEFT:
                 return 0;

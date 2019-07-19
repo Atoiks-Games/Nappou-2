@@ -32,8 +32,8 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.framework2d.decoder.ImageDecoder;
 import org.atoiks.games.framework2d.decoder.AudioDecoder;
+import org.atoiks.games.framework2d.decoder.TextureDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
 import org.atoiks.games.framework2d.decoder.ExternalizableDecoder;
 
@@ -151,7 +151,7 @@ public final class LoadingScene implements Scene {
     }
 
     private void loadImageFromResources(final String name) {
-        ResourceManager.load("/image/" + name, ImageDecoder.INSTANCE);
+        ResourceManager.load("/image/" + name, SceneManager.frame().getTextureDecoder());
     }
 
     private void loadMusicFromResources(final String name) {

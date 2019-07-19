@@ -18,11 +18,11 @@
 
 package org.atoiks.games.nappou2.graphics.shapes;
 
-import java.awt.Image;
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.framework2d.IGraphics;
 
 public interface Line extends Shape {
 
@@ -92,7 +92,7 @@ public interface Line extends Shape {
     }
 
     @Override
-    public default void renderTexture(IGraphics g, Image img) {
+    public default void renderTexture(IGraphics g, Texture img) {
         final float angle = getAngle();
         final float hw = getHalfWidth();
         final float length = getLength();
@@ -102,7 +102,7 @@ public interface Line extends Shape {
 
         g.translate(x, y);
         g.rotate(angle, 0, 0);
-        g.drawImage(img, 0, -hw, length, hw);
+        g.drawTexture(img, 0, -hw, length, hw);
         g.rotate(-angle, 0, 0);
         g.translate(-x, -y);
     }
