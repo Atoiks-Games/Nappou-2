@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -30,6 +29,8 @@ import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
@@ -65,7 +66,7 @@ public final class TitleScene extends OptionSelectScene {
     public TitleScene() {
         super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap, false);
 
-        this.font80 = this.font16.deriveFont(80f);
+        this.font80 = this.font16.deriveSize(80f);
 
         this.bgm = ResourceManager.get("/music/Enter_The_Void.wav");
 
@@ -98,12 +99,10 @@ public final class TitleScene extends OptionSelectScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(font80);
-        g.drawString("Void Walker", 260, 178);
+        this.font80.renderText(g, "Void Walker", 260, 178);
 
-        g.setFont(this.font16);
-        g.drawString("      Made with love by Atoiks Games", 603, 540);
-        g.drawString("In association with Harvard Game Devs", 600, 560);
+        this.font16.renderText(g, "      Made with love by Atoiks Games", 603, 540);
+        this.font16.renderText(g, "In association with Harvard Game Devs", 600, 560);
     }
 
     @Override

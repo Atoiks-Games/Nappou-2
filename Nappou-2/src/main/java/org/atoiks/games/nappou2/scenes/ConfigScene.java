@@ -129,11 +129,9 @@ public final class ConfigScene extends OptionSelectScene {
 
         for (int i = 0; i < 3; ++i) {
             final float h = ENTRIES[i].getPosition().getY();
-            g.setFont(this.font30);
-            g.drawString("ON", 560, h);
-            g.drawString("OFF", 720, h);
+            this.font30.renderText(g, "ON", 560, h);
+            this.font30.renderText(g, "OFF", 720, h);
 
-            g.setFont(this.font16);
             this.renderBoolValue(g, this.getValueAtSelector(i), h + 4);
         }
     }

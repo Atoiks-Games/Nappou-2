@@ -18,12 +18,12 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.framework2d.resource.Font;
 import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.entities.Message;
@@ -44,8 +44,8 @@ public final class DialogOverlay {
     private final Font font30;
 
     /* package */ DialogOverlay(Font font) {
-        this.font16 = font.deriveFont(16f);
-        this.font30 = font.deriveFont(30f);
+        this.font16 = font.deriveSize(16f);
+        this.font30 = font.deriveSize(30f);
     }
 
     public void clearMessage() {
@@ -82,17 +82,15 @@ public final class DialogOverlay {
 
         // Draw name inside msgbox
         g.setColor(Color.white);
-        g.setFont(this.font30);
-        g.drawString(msgSpeaker, 28, HEIGHT - 162);
+        this.font30.renderText(g, msgSpeaker, 28, HEIGHT - 162);
 
         // Draw message inside msgbox
-        g.setFont(this.font16);
         for (int i = 0; i < msgLines.length; ++i) {
-            g.drawString(msgLines[i], 28, HEIGHT - 142 + i * (this.font16.getSize()) + 10);
+            this.font16.renderText(g, msgLines[i], 28, HEIGHT - 142 + i * (this.font16.getSize()) + 10);
         }
 
         // Draw footer
-        g.drawString("Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
+        this.font16.renderText(g, "Press Enter to continue", GAME_BORDER - 180, HEIGHT - 26);
     }
 
     private Texture loadMessageResource(final Message msg) {

@@ -18,13 +18,14 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -51,7 +52,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
         this.nextState = nextState;
 
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font75 = fnt.deriveFont(75f);
+        this.font75 = fnt.deriveSize(75f);
     }
 
     @Override
@@ -72,8 +73,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
     @Override
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.green);
-        g.setFont(this.font75);
-        g.drawString(this.fireKey, 20, HEIGHT - 30);
+        this.font75.renderText(g, this.fireKey, 20, HEIGHT - 30);
     }
 
     @Override

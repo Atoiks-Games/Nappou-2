@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -27,6 +26,8 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.ScoreData;
@@ -80,9 +81,9 @@ public final class SaveHighscoreScene extends CenteringScene {
         this.mode = mode;
 
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
-        this.font80 = fnt.deriveFont(80f);
+        this.font16 = fnt.deriveSize(16f);
+        this.font30 = fnt.deriveSize(30f);
+        this.font80 = fnt.deriveSize(80f);
 
         this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
     }
@@ -94,19 +95,16 @@ public final class SaveHighscoreScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(font80);
-        g.drawString("Enter Your Name", 200, 120);
+        this.font80.renderText(g, "Enter Your Name", 200, 120);
 
-        g.setFont(font30);
-        g.drawString(currentStr, 275, 350);
+        this.font30.renderText(g, currentStr, 275, 350);
 
-        g.setFont(font16);
         if (currentStr.length() > NAME_LENGTH_CAP) {
-            g.drawString(NAME_LENGTH_CAP_MSG, 14, 580);
+            this.font16.renderText(g, NAME_LENGTH_CAP_MSG, 14, 580);
         }
         for (int i = 0; i < BANK_LENGTH; ++i) {
             g.setColor(i == currentIdx ? Color.yellow : Color.white);
-            g.drawString(CHAR_BANK[i], i % WRAP_LENGTH * 30 + 275, i / WRAP_LENGTH * 18 + 450);
+            this.font16.renderText(g, CHAR_BANK[i], i % WRAP_LENGTH * 30 + 275, i / WRAP_LENGTH * 18 + 450);
         }
     }
 

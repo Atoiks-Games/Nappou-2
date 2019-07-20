@@ -18,12 +18,12 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.framework2d.resource.Font;
 import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.SaveData;
@@ -50,7 +50,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final SaveData save;
 
     public StatusOverlay(Font font, final Player player) {
-        this.font = font.deriveFont(16f);
+        this.font = font.deriveSize(16f);
         this.hpCounter = player.getHpCounter();
         this.scoreCounter = player.getScoreCounter();
         this.shield = player.getShield();
@@ -65,9 +65,8 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         g.setColor(Color.white);
-        g.setFont(font);
-        g.drawString("HP Remaining", GAME_BORDER + 2, 16);
-        g.drawString("Score", GAME_BORDER + 2, 58);
+        this.font.renderText(g, "HP Remaining", GAME_BORDER + 2, 16);
+        this.font.renderText(g, "Score", GAME_BORDER + 2, 58);
 
         final int hp = this.hpCounter.getHp();
         final int w = hpImg.getWidth();
@@ -77,14 +76,14 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
         final int rawScore = this.scoreCounter.getScore();
         final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
-        g.drawString(str, GAME_BORDER + 5, 74);
+        this.font.renderText(g, str, GAME_BORDER + 5, 74);
 
         if (this.shield.isReady()) {
-            g.drawString("Shield Ready", GAME_BORDER + 30, 96);
+            this.font.renderText(g, "Shield Ready", GAME_BORDER + 30, 96);
         }
 
         if (this.save.isChallengeMode()) {
-            g.drawString("Challenge Mode", GAME_BORDER + 28, 120);
+            this.font.renderText(g, "Challenge Mode", GAME_BORDER + 28, 120);
         }
     }
 }

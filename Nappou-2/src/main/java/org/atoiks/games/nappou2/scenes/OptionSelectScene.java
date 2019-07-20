@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -26,6 +25,8 @@ import java.awt.event.KeyEvent;
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.Vector2;
@@ -66,15 +67,15 @@ public abstract class OptionSelectScene extends CenteringScene {
             return this.position;
         }
 
-        private void render(IGraphics g) {
+        private void render(Font fnt, IGraphics g) {
             g.setColor(this.color);
-            g.drawString(this.text, this.position.getX(), this.position.getY());
+            fnt.renderText(g, this.text, this.position.getX(), this.position.getY());
         }
 
-        private void renderSelector(IGraphics g) {
+        private void renderSelector(Font fnt, IGraphics g) {
             final float endX = this.position.getX() - 6;
             final float endY = this.position.getY() + 4;
-            final float height = g.getFont().getSize2D();
+            final float height = fnt.getSize();
             g.drawRect(endX - 4, endY - height, endX, endY);
         }
     }
@@ -97,8 +98,8 @@ public abstract class OptionSelectScene extends CenteringScene {
     }
 
     public OptionSelectScene(Font font, Keymap keymap, boolean supportEsc) {
-        this.font16 = font.deriveFont(16f);
-        this.font30 = font.deriveFont(30f);
+        this.font16 = font.deriveSize(16f);
+        this.font30 = font.deriveSize(30f);
         this.keymap = keymap;
         this.supportEsc = supportEsc;
     }
@@ -152,25 +153,23 @@ public abstract class OptionSelectScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(this.font30);
 
-        this.renderEntries(g);
-        this.getSelectedEntry().renderSelector(g);
+        this.renderEntries(this.font30, g);
+        this.getSelectedEntry().renderSelector(this.font30, g);
 
         if (this.supportEsc) {
-            g.setFont(this.font16);
-            g.drawString("Hit Escape to exit", 84, 540);
+            this.font16.renderText(g, "Hit Escape to exit", 84, 540);
         }
     }
 
-    private void renderEntries(final IGraphics g) {
+    private void renderEntries(final Font fnt, final IGraphics g) {
         if (this.renderAll) {
             for (final Entry entry : this.entries) {
-                entry.render(g);
+                entry.render(fnt, g);
             }
         } else {
             for (int i = 0; i < this.validIndices.length; ++i) {
-                this.entries[this.validIndices[i]].render(g);
+                this.entries[this.validIndices[i]].render(fnt, g);
             }
         }
     }

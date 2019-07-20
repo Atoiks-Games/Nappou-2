@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -27,6 +26,8 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.LevelState;
