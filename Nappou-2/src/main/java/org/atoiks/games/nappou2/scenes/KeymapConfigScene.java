@@ -51,9 +51,8 @@ public final class KeymapConfigScene extends OptionSelectScene {
     public void render(IGraphics g) {
         super.render(g);
 
-        g.setFont(this.font16);
-        g.drawString(this.getHintString(), 84, 500);
-        g.drawString("Hit Tab to cycle through the list", 84, 560);
+        this.font16.renderText(g, this.getHintString(), 84, 500);
+        this.font16.renderText(g, "Hit Tab to cycle through the list", 84, 560);
     }
 
     @Override
@@ -141,7 +140,7 @@ public final class KeymapConfigScene extends OptionSelectScene {
 
             // Also allocate the entry slots
             for (int i = 0; i < length; ++i) {
-                final int h = 94 + i * font30.getSize() + 5;
+                final float h = 94 + i * font30.getSize() + 5;
                 this.entries[2 * i + 0] = new Entry("", new Vector2(124, h));
                 this.entries[2 * i + 1] = new Entry("", new Vector2(634, h));
             }

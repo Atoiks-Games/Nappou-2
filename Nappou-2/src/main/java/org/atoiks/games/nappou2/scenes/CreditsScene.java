@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -28,6 +27,8 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.framework2d.resource.Font;
+
 public final class CreditsScene extends CenteringScene {
 
     private final Font font16;
@@ -35,8 +36,8 @@ public final class CreditsScene extends CenteringScene {
 
     public CreditsScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
+        this.font16 = fnt.deriveSize(16f);
+        this.font30 = fnt.deriveSize(30f);
     }
 
     @Override
@@ -46,14 +47,11 @@ public final class CreditsScene extends CenteringScene {
         super.render(g);
 
         g.setColor(Color.white);
-        g.setFont(this.font30);
-        g.drawString("Thanks folks!", 10, 30);
 
+        this.font30.renderText(g, "Thanks folks!", 10, 30);
+        this.font30.renderText(g, "Alexander Bimm, Jeongmin Lee, Paul Teng, Shelby Elder, Sam Markowitz", 10, 60);
 
-        g.drawString("Alexander Bimm, Jeongmin Lee, Paul Teng, Shelby Elder, Sam Markowitz", 10, 60);
-
-        g.setFont(this.font16);
-        g.drawString("Hit Escape or Enter to return to title screen", 14, 580);
+        this.font16.renderText(g, "Hit Escape or Enter to return to title screen", 14, 580);
     }
 
     @Override

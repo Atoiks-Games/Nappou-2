@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.tutorial;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -28,6 +27,8 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
@@ -70,8 +71,8 @@ public final class Preface implements LevelState {
     @Override
     public void enter(final LevelContext ctx) {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
+        this.font16 = fnt.deriveSize(16f);
+        this.font30 = fnt.deriveSize(30f);
 
         ctx.clearMessage();
 
@@ -108,17 +109,17 @@ public final class Preface implements LevelState {
     @Override
     public void renderBackground(final IGraphics g) {
         g.setColor(Color.white);
-        g.setFont(font30);
-        g.drawString("Controls", 25, 70);
-        g.setFont(font16);
+
+        this.font30.renderText(g, "Controls", 25, 70);
+
         for (int i = 0; i < this.infoMsg.length; ++i) {
-            final int h = 94 + i * (font16.getSize() + 5);
-            g.drawString(this.infoMsg[i][0], 40, h);
-            g.drawString(this.infoMsg[i][1], 160, h);
+            final float h = 94 + i * (this.font16.getSize() + 5);
+            this.font16.renderText(g, this.infoMsg[i][0], 40, h);
+            this.font16.renderText(g, this.infoMsg[i][1], 160, h);
         }
 
-        g.drawString("Survive the void", 25, 550);
-        g.drawString("Press Enter to continue", 25, 580);
+        this.font16.renderText(g, "Survive the void", 25, 550);
+        this.font16.renderText(g, "Press Enter to continue", 25, 580);
     }
 
     @Override

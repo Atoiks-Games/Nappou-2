@@ -18,17 +18,17 @@
 
 package org.atoiks.games.nappou2.graphics;
 
-import java.awt.Image;
-
 import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.graphics.shapes.Shape;
 
 public final class ImageRenderer implements Renderer {
 
-    private final Image image;
+    private final Texture image;
 
-    public ImageRenderer(final Image image) {
+    public ImageRenderer(final Texture image) {
         this.image = image;
     }
 

@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -27,6 +26,8 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.GameConfig;
@@ -51,8 +52,8 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final Keymap keymap;
 
     public PauseOverlay(Font font) {
-        this.font30 = font.deriveFont(30f);
-        this.font80 = font.deriveFont(80f);
+        this.font30 = font.deriveSize(30f);
+        this.font80 = font.deriveSize(80f);
 
         this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
     }
@@ -74,11 +75,10 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, GAME_BORDER, HEIGHT);
         g.setColor(Color.black);
-        g.setFont(this.font80);
-        g.drawString("PAUSE", 274, 202);
-        g.setFont(this.font30);
-        g.drawString("Continue Game", 52, 373);
-        g.drawString("Return to Title", 52, 433);
+        this.font80.renderText(g, "PAUSE", 274, 202);
+
+        this.font30.renderText(g, "Continue Game", 52, 373);
+        this.font30.renderText(g, "Return to Title", 52, 433);
         g.drawRect(45, SELECTOR_Y[selector], 49, SELECTOR_Y[selector] + OPT_HEIGHT);
     }
 

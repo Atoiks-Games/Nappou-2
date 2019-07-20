@@ -18,14 +18,14 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
-
 import java.awt.event.KeyEvent;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.Vector2;
@@ -66,7 +66,7 @@ public final class DiffOptionScene extends OptionSelectScene {
     public DiffOptionScene() {
         super(ResourceManager.get("/Logisoso.ttf"), ResourceManager.<GameConfig>get("./game.cfg").keymap);
 
-        this.font80 = this.font30.deriveFont(80f);
+        this.font80 = this.font30.deriveSize(80f);
 
         this.setOptions(ENTRIES);
     }
@@ -75,8 +75,7 @@ public final class DiffOptionScene extends OptionSelectScene {
     public void render(IGraphics g) {
         super.render(g);
 
-        g.setFont(this.font80);
-        g.drawString("Choose Your Difficulty", 80, 120);
+        this.font80.renderText(g, "Choose Your Difficulty", 80, 120);
     }
 
     @Override

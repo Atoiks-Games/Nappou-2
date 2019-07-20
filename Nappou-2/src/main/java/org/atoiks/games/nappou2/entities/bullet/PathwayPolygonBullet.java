@@ -18,9 +18,9 @@
 
 package org.atoiks.games.nappou2.entities.bullet;
 
-import java.awt.Image;
-
 import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
 
@@ -71,8 +71,8 @@ public class PathwayPolygonBullet<T extends Pathway> extends PathwayBullet<T> im
     }
 
     @Override
-    public void renderTexture(IGraphics g, Image img) {
-        g.drawImage(img, 0, 0, this.boundX, this.boundY);
+    public void renderTexture(IGraphics g, Texture img) {
+        g.drawTexture(img, 0, 0, this.boundX, this.boundY);
     }
 
     @Override

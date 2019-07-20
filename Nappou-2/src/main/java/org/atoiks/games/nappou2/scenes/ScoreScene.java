@@ -18,7 +18,6 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import java.awt.event.KeyEvent;
@@ -27,6 +26,8 @@ import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
 
 import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.Keymap;
@@ -51,8 +52,8 @@ public final class ScoreScene extends CenteringScene {
 
     public ScoreScene() {
         final Font fnt = ResourceManager.get("/Logisoso.ttf");
-        this.font16 = fnt.deriveFont(16f);
-        this.font30 = fnt.deriveFont(30f);
+        this.font16 = fnt.deriveSize(16f);
+        this.font30 = fnt.deriveSize(30f);
 
         this.score = ResourceManager.get("./score.dat");
         this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
@@ -67,33 +68,31 @@ public final class ScoreScene extends CenteringScene {
         if (score == null) return;
 
         g.setColor(Color.white);
-        g.setFont(this.font30);
-        g.drawString(PLANE_MSG[plane], 10, 30);
+        this.font30.renderText(g, PLANE_MSG[plane], 10, 30);
 
-        g.setFont(this.font16);
-        final int size = this.font16.getSize();
+        final float size = this.font16.getSize();
         final ScoreData.Pair[][][] splane = score.getScoreForPlane(plane);
         for (int i = 0; i < splane.length; ++i) {
-            final int bh = 55 + 8 * size * i;
-            g.drawString("Level " + (i + 1), 20, bh);
+            final float bh = 55 + 8 * size * i;
+            this.font16.renderText(g, "Level " + (i + 1), 20, bh);
             for (int diffId = 0; diffId < Utils.DIFF_NAMES.length; ++diffId) {
                 final int bw = 60 + diffId * 200;
                 final ScoreData.Pair[] p = splane[i][diffId];
-                g.drawString(Utils.DIFF_NAMES[diffId], bw, bh + size);
+                this.font16.renderText(g, Utils.DIFF_NAMES[diffId], bw, bh + size);
                 for (int j = 0; j < p.length; ++j) {
                     final int offset = p.length - 1 - j;
                     final ScoreData.Pair pair = p[offset];
 
                     if (pair != null && pair.isValid()) {
-                        g.drawString(showName ? pair.getProcessedName() : pair.getProcessedScore(),
+                        this.font16.renderText(g, showName ? pair.getProcessedName() : pair.getProcessedScore(),
                                 bw + 10, bh + (j + 2) * size);
                     }
                 }
             }
         }
 
-        g.drawString("Hit Escape to return to title screen", 14, 540);
-        g.drawString("Switch score mode with left and right arrows", 14, 560);
+        this.font16.renderText(g, "Hit Escape to return to title screen", 14, 540);
+        this.font16.renderText(g, "Switch score mode with left and right arrows", 14, 560);
     }
 
     @Override

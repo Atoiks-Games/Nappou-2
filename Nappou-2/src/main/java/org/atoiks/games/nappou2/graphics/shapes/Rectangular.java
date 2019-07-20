@@ -18,11 +18,11 @@
 
 package org.atoiks.games.nappou2.graphics.shapes;
 
-import java.awt.Image;
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.Vector2;
-
-import org.atoiks.games.framework2d.IGraphics;
 
 public interface Rectangular extends Shape {
 
@@ -58,12 +58,12 @@ public interface Rectangular extends Shape {
     }
 
     @Override
-    public default void renderTexture(IGraphics g, Image img) {
+    public default void renderTexture(IGraphics g, Texture img) {
         final Vector2 pos = getPosition();
         final float x = pos.getX();
         final float y = pos.getY();
 
-        g.drawImage(img, x, y, x + getWidth(), y + getHeight());
+        g.drawTexture(img, x, y, x + getWidth(), y + getHeight());
     }
 
     public static Rectangular of(Rectangular r1, Rectangular r2) {
