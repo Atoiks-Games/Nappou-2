@@ -32,7 +32,6 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.decoder.AudioDecoder;
-import org.atoiks.games.framework2d.decoder.TextureDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
 import org.atoiks.games.framework2d.decoder.ExternalizableDecoder;
 
