@@ -144,6 +144,12 @@ public final class KeymapConfigScene extends OptionSelectScene {
                 this.entries[2 * i + 0] = new Entry("", new Vector2(124, h));
                 this.entries[2 * i + 1] = new Entry("", new Vector2(634, h));
             }
+        } else {
+            // Need to turn entries back to white!
+            for (int i = 0; i < length; ++i) {
+                // Only the second column could be changed to red
+                this.entries[2 * i + 1].setColor(Color.white);
+            }
         }
     }
 
