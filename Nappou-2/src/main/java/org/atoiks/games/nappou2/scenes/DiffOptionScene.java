@@ -18,9 +18,8 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -81,7 +80,7 @@ public final class DiffOptionScene extends OptionSelectScene {
     @Override
     public boolean update(float dt) {
         super.update(dt);
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             final LevelState level = new Preface(getLevelFromOption());
             if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
                 // Challenge mode forces you to use no shields,

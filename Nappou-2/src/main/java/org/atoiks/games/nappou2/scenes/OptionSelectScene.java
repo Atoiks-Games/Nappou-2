@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 
@@ -176,7 +175,7 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     @Override
     public boolean update(float dt) {
-        if (this.supportEsc && Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        if (this.supportEsc && Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             SceneManager.popScene();
             return true;
         }

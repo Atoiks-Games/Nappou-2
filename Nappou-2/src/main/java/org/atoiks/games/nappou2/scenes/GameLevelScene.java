@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -137,7 +136,7 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
     public boolean update(final float dt) {
         if (pauseOverlay.isEnabled()) {
             pauseOverlay.update(dt);
-        } else if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        } else if (Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             pauseOverlay.enable();
         } else {
             levelUpdate(dt);

@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -102,7 +101,7 @@ public final class ScoreScene extends CenteringScene {
             showName = !showName;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             SceneManager.popScene();
             return true;
         }
