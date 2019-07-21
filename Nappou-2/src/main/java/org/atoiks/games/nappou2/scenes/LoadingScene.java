@@ -49,7 +49,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 public final class LoadingScene implements Scene {
 
     private enum LoadState {
-        WAITING, LOADING, DONE, NO_RES
+        WAITING, LOADING, AWAIT_FUTURE, DONE, NO_RES
     }
 
     private static final int RADIUS = 100;
@@ -92,6 +92,12 @@ public final class LoadingScene implements Scene {
                 return false;
             case LOADING:
                 break;
+            case AWAIT_FUTURE: {
+                if (!ResourceManager.hasTasksRemaining()) {
+                    loaded = LoadState.DONE;
+                }
+                break;
+            }
             case DONE:
                 loader.shutdown();
                 // Now entering fullscreen if user wanted it.
@@ -133,7 +139,7 @@ public final class LoadingScene implements Scene {
                     final SaveData saves = ResourceManager.loadOrDefault("./saves.dat", ExternalResourceResolver.INSTANCE,
                             ExternalizableDecoder.forInstance(SaveData::new), SaveData::new);
 
-                    loaded = LoadState.DONE;
+                    loaded = LoadState.AWAIT_FUTURE;
                 });
                 break;
         }
@@ -146,7 +152,9 @@ public final class LoadingScene implements Scene {
     }
 
     private void loadImageFromResources(final String name) {
-        ResourceManager.load("/image/" + name, SceneManager.frame().getRuntime().getTextureDecoder());
+        ResourceManager.loadDelay(
+                "/image/" + name,
+                SceneManager.frame().getRuntime().getTextureDecoder());
     }
 
     private void loadMusicFromResources(final String name) {
