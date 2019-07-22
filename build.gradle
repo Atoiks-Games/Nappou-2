@@ -12,7 +12,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Atoiks-Games.Framework2D:java2d:1.0'
+    implementation 'com.github.Atoiks-Games.Framework2D:core:2.0'
+
+    runtimeOnly 'com.github.Atoiks-Games.Framework2D:java2d:2.0'
 }
 
 task copyLicense {

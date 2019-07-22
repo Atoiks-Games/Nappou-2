@@ -22,28 +22,39 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
 import org.atoiks.games.framework2d.IFrame;
 import org.atoiks.games.framework2d.IRuntime;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.framework2d.java2d.JavaRuntime;
-
 import org.atoiks.games.nappou2.scenes.LoadingScene;
 
 public class App {
 
-    public static void main(String[] args) {
-        final IRuntime host = JavaRuntime.getInstance();
+    public static final IRuntime HOST;
 
+    static {
+        final ServiceLoader<IRuntime> loader = ServiceLoader.load(IRuntime.class);
+        final Iterator<IRuntime> hosts = loader.iterator();
+        if (!hosts.hasNext()) {
+            throw new Error("No hosts are loaded!");
+        }
+
+        HOST = hosts.next();
+    }
+
+    public static void main(String[] args) {
         final FrameInfo info = new FrameInfo()
                 .setTitle("Atoiks Games - Void Walker")
                 .setResizable(false)
                 .setSize(900, 600)
                 .setFps(120.0f);
 
-        try (final IFrame frame = host.createFrame(info)) {
+        try (final IFrame frame = HOST.createFrame(info)) {
             frame.init();
             SceneManager.pushScene(new LoadingScene());
             frame.loop();
