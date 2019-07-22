@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -88,13 +87,13 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             return;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             enabled = false;
             selector = 0;
             return;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             enabled = false;
 
             if (selector != SEL_RESUME_GAME) {

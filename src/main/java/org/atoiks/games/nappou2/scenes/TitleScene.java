@@ -20,12 +20,11 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -109,7 +108,7 @@ public final class TitleScene extends OptionSelectScene {
     public boolean update(float dt) {
         super.update(dt);
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             final int selector = this.getSelectedIndex();
             switch (selector) {
                 case 0:

@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -56,7 +55,7 @@ public final class CreditsScene extends CenteringScene {
 
     @Override
     public boolean update(float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE) || Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ESCAPE) || Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             SceneManager.popScene();
         }
         return true;

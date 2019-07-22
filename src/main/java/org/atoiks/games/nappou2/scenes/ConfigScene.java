@@ -18,11 +18,10 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -65,14 +64,14 @@ public final class ConfigScene extends OptionSelectScene {
         switch (this.getSelectedIndex()) {
             case 3:
                 // This entry invokes an overlay!
-                if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
                     SceneManager.pushScene(new KeymapConfigScene(config.keymap));
                     return true;
                 }
                 break;
             case 4:
                 // This clears the score and hides the option!
-                if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+                if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
                     ResourceManager.<ScoreData>get("./score.dat").clear();
                     this.updateSelectableIndices(BLOCK_SCORE_INDICES);
                     this.normalizeSelectorIndex();

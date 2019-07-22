@@ -20,11 +20,10 @@ package org.atoiks.games.nappou2.levels.tutorial;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
 
@@ -124,7 +123,7 @@ public final class Preface implements LevelState {
 
     @Override
     public void updateLevel(final LevelContext ctx, final float dt) {
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             ctx.setState(new SingleShotWave(this.nextState));
             return;
         }

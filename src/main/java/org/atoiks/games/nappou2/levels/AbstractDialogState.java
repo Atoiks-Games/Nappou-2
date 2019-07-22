@@ -18,11 +18,10 @@
 
 package org.atoiks.games.nappou2.levels;
 
-import java.awt.event.KeyEvent;
-
 import java.util.Iterator;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 
 import org.atoiks.games.nappou2.entities.Message;
 
@@ -60,7 +59,7 @@ public abstract class AbstractDialogState implements LevelState, Iterator<Messag
             }
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             this.fetchMessage = true;
         }
     }

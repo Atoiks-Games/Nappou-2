@@ -8,10 +8,11 @@ targetCompatibility = '1.8'
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compile project(':Framework2D')
+    implementation 'com.github.Atoiks-Games.Framework2D:java2d:1.0'
 }
 
 task copyLicense {

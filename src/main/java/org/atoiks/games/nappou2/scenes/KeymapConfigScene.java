@@ -20,9 +20,8 @@ package org.atoiks.games.nappou2.scenes;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
@@ -60,27 +59,27 @@ public final class KeymapConfigScene extends OptionSelectScene {
         // We do not use the parent class's update
         // since it handles option selection differently!
 
-        if (Input.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             SceneManager.popScene();
             return true;
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_TAB)) {
+        if (Input.isKeyPressed(KeyCode.KEY_TAB)) {
             this.selectNext();
         }
 
         if (this.isSelectingResetEntry()) {
-            if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+            if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
                 this.keymap.reset();
                 this.updateOptionEntries();
             }
         } else {
-            final int lastKey = Input.getLastDownKey();
+            final KeyCode lastKey = Input.getLastDownKey();
             switch (lastKey) {
-                case KeyEvent.VK_ESCAPE:
-                case KeyEvent.VK_ENTER:
-                case KeyEvent.VK_TAB:
-                case KeyEvent.VK_UNDEFINED:
+                case KEY_ESCAPE:
+                case KEY_ENTER:
+                case KEY_TAB:
+                case KEY_UNDEFINED:
                     // These keys cannot be binded as input keys
                     break;
                 default: {
@@ -168,7 +167,7 @@ public final class KeymapConfigScene extends OptionSelectScene {
         }
     }
 
-    private boolean canAssignKeycodeToIndex(int index, final int kc) {
+    private boolean canAssignKeycodeToIndex(int index, final KeyCode kc) {
         if (this.keymap.keyIsAlreadyAssigned(kc)) {
             // Check if the key is same as the existing value
             // if that is the case, then no problem assigning

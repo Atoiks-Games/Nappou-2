@@ -23,23 +23,22 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Externalizable;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 
 public final class Keymap implements Externalizable {
 
     private static final long serialVersionUID = -5418643969162122158L;
 
     // Default values = default settings
-    private int kcUp = KeyEvent.VK_UP;
-    private int kcDown = KeyEvent.VK_DOWN;
-    private int kcLeft = KeyEvent.VK_LEFT;
-    private int kcRight = KeyEvent.VK_RIGHT;
+    private KeyCode kcUp = KeyCode.KEY_UP;
+    private KeyCode kcDown = KeyCode.KEY_DOWN;
+    private KeyCode kcLeft = KeyCode.KEY_LEFT;
+    private KeyCode kcRight = KeyCode.KEY_RIGHT;
 
-    private int kcSlow = KeyEvent.VK_SHIFT;
-    private int kcFire = KeyEvent.VK_Z;
-    private int kcShield = KeyEvent.VK_X;
+    private KeyCode kcSlow = KeyCode.KEY_LSHIFT;
+    private KeyCode kcFire = KeyCode.KEY_Z;
+    private KeyCode kcShield = KeyCode.KEY_X;
 
     public boolean shouldSelectPrevious() {
         return Input.isKeyPressed(this.kcUp);
@@ -47,7 +46,7 @@ public final class Keymap implements Externalizable {
 
     public boolean shouldSelectNext() {
         return Input.isKeyPressed(this.kcDown)
-            || Input.isKeyPressed(KeyEvent.VK_TAB);
+            || Input.isKeyPressed(KeyCode.KEY_TAB);
     }
 
     public boolean shouldSelectLeft() {
@@ -82,36 +81,36 @@ public final class Keymap implements Externalizable {
         return Input.isKeyDown(this.kcShield);
     }
 
-    public void changeMoveUpKeycode(int kc) {
+    public void changeMoveUpKeycode(KeyCode kc) {
         this.kcUp = kc;
     }
 
-    public void changeMoveDownKeycode(int kc) {
+    public void changeMoveDownKeycode(KeyCode kc) {
         this.kcDown = kc;
     }
 
-    public void changeMoveLeftKeycode(int kc) {
+    public void changeMoveLeftKeycode(KeyCode kc) {
         this.kcLeft = kc;
     }
 
-    public void changeMoveRightKeycode(int kc) {
+    public void changeMoveRightKeycode(KeyCode kc) {
         this.kcRight = kc;
     }
 
-    public void changeSlowDownKeycode(int kc) {
+    public void changeSlowDownKeycode(KeyCode kc) {
         this.kcSlow = kc;
     }
 
-    public void changeFireKeycode(int kc) {
+    public void changeFireKeycode(KeyCode kc) {
         this.kcFire = kc;
     }
 
-    public void changeActivateShieldKeycode(int kc) {
+    public void changeActivateShieldKeycode(KeyCode kc) {
         this.kcShield = kc;
     }
 
-    public boolean keyIsAlreadyAssigned(final int kc) {
-        return kc == KeyEvent.VK_ESCAPE || kc == KeyEvent.VK_ENTER
+    public boolean keyIsAlreadyAssigned(final KeyCode kc) {
+        return kc == KeyCode.KEY_ESCAPE || kc == KeyCode.KEY_ENTER
             || kc == this.kcUp
             || kc == this.kcDown
             || kc == this.kcLeft
@@ -121,7 +120,7 @@ public final class Keymap implements Externalizable {
             || kc == this.kcShield;
     }
 
-    public int getKeycodeOfIndex(int index) {
+    public KeyCode getKeycodeOfIndex(int index) {
         // Index is based on info message format!
         switch (index) {
             case 0: return this.kcUp;
@@ -136,8 +135,8 @@ public final class Keymap implements Externalizable {
         }
     }
 
-    public void changeKeycodeOfIndex(int index, int kc) {
-        if (kc == KeyEvent.VK_UNDEFINED) {
+    public void changeKeycodeOfIndex(int index, KeyCode kc) {
+        if (kc == KeyCode.KEY_UNDEFINED) {
             throw new IllegalArgumentException("Keycode cannot be undefined!");
         }
 
@@ -178,8 +177,8 @@ public final class Keymap implements Externalizable {
             {"Focus:", keycodeToString(this.kcSlow) },
             {"Shoot:", keycodeToString(this.kcFire) },
             {"Shield:", keycodeToString(this.kcShield) },
-            {"Pause:", keycodeToString(KeyEvent.VK_ESCAPE) },
-            {"Select:", keycodeToString(KeyEvent.VK_ENTER) },
+            {"Pause:", keycodeToString(KeyCode.KEY_ESCAPE) },
+            {"Select:", keycodeToString(KeyCode.KEY_ENTER) },
         };
     }
 
@@ -191,44 +190,32 @@ public final class Keymap implements Externalizable {
         return keycodeToString(this.kcShield);
     }
 
-    public static String keycodeToString(final int kc) {
-        switch (kc) {
-            case KeyEvent.VK_TAB:           return "Tab";
-            case KeyEvent.VK_SPACE:         return "Space";
-            case KeyEvent.VK_ENTER:         return "Enter";
-            case KeyEvent.VK_SHIFT:         return "Shift";
-            case KeyEvent.VK_CONTROL:       return "Ctrl";
-            case KeyEvent.VK_ALT:           return "Alt";
-            case KeyEvent.VK_WINDOWS:       return "Windows";
-            case KeyEvent.VK_META:          return "Meta";
-            case KeyEvent.VK_ESCAPE:        return "Escape";
-            case KeyEvent.VK_BACK_SPACE:    return "Backspace";
-            case KeyEvent.VK_DELETE:        return "Delete";
-            default:                        return KeyEvent.getKeyText(kc);
-        }
+    public static String keycodeToString(final KeyCode kc) {
+        return kc.getKeyString();
     }
 
     @Override
     public void readExternal(final ObjectInput stream) throws IOException {
-        this.kcUp = stream.readInt();
-        this.kcDown = stream.readInt();
-        this.kcLeft = stream.readInt();
-        this.kcRight = stream.readInt();
+        final KeyCode[] array = KeyCode.values();
+        this.kcUp = array[stream.readInt()];
+        this.kcDown = array[stream.readInt()];
+        this.kcLeft = array[stream.readInt()];
+        this.kcRight = array[stream.readInt()];
 
-        this.kcSlow = stream.readInt();
-        this.kcFire = stream.readInt();
-        this.kcShield = stream.readInt();
+        this.kcSlow = array[stream.readInt()];
+        this.kcFire = array[stream.readInt()];
+        this.kcShield = array[stream.readInt()];
     }
 
     @Override
     public void writeExternal(final ObjectOutput stream) throws IOException {
-        stream.writeInt(this.kcUp);
-        stream.writeInt(this.kcDown);
-        stream.writeInt(this.kcLeft);
-        stream.writeInt(this.kcRight);
+        stream.writeInt(this.kcUp.ordinal());
+        stream.writeInt(this.kcDown.ordinal());
+        stream.writeInt(this.kcLeft.ordinal());
+        stream.writeInt(this.kcRight.ordinal());
 
-        stream.writeInt(this.kcSlow);
-        stream.writeInt(this.kcFire);
-        stream.writeInt(this.kcShield);
+        stream.writeInt(this.kcSlow.ordinal());
+        stream.writeInt(this.kcFire.ordinal());
+        stream.writeInt(this.kcShield.ordinal());
     }
 }

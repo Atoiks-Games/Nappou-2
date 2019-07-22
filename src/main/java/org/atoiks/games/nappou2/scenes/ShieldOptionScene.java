@@ -18,9 +18,8 @@
 
 package org.atoiks.games.nappou2.scenes;
 
-import java.awt.event.KeyEvent;
-
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.KeyCode;
 import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.framework2d.ResourceManager;
 
@@ -68,7 +67,7 @@ public final class ShieldOptionScene extends OptionSelectScene {
     public boolean update(float dt) {
         super.update(dt);
 
-        if (Input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             final ShieldEntity shield = getShieldFromOption();
             ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
             GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
