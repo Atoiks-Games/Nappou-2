@@ -173,10 +173,9 @@ public final class Level1Insane extends ManualEnemy {
         if (enemyTime % 18 == 0) {
             game.addEnemyBullet(new PointBullet(375 + 375 * (float) Math.sin(10 * time), 610, 2, 0, -1000));
 
-            final float x = getX();
-            final float y = getY();
-            final double angle = Math.atan2(game.player.getY() - y, game.player.getX() - x);
-            game.addEnemyBullet(new PointBullet(x, y, 2, 1000 * (float) Math.cos(angle), 1000 * (float) Math.sin(angle)));
+            final Vector2 pos = this.getPosition();
+            final Vector2 velocity = game.player.getPosition().sub(pos).normalize().mul(1000);
+            game.addEnemyBullet(new PointBullet(pos, 2, velocity));
         }
     }
 

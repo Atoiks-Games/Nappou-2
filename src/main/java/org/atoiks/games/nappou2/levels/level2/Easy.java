@@ -35,6 +35,7 @@ import org.atoiks.games.nappou2.entities.enemy.*;
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.leapEnemy;
 import static org.atoiks.games.nappou2.Utils.shiftEnemy;
+import static org.atoiks.games.nappou2.Utils.chargerEnemy;
 import static org.atoiks.games.nappou2.Utils.starShotEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 
@@ -147,18 +148,18 @@ public final class Easy implements LevelState {
                 switch (cycles) {
                     case 20:
                         game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
-                        game.addEnemy(new ChargerEnemy(1, 0, 0, 5, 5, 500));
-                        game.addEnemy(new ChargerEnemy(1, 750, 0, 5, 5, 500));
+                        game.addEnemy(chargerEnemy(1, 0, 0, 5, game.player, 5, 500));
+                        game.addEnemy(chargerEnemy(1, 750, 0, 5, game.player, 5, 500));
                         break;
                     case 120:
                         game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
-                        game.addEnemy(new ChargerEnemy(1, 0, 600, 10, 6, 500));
-                        game.addEnemy(new ChargerEnemy(1, 750, 600, 10, 6, 500));
+                        game.addEnemy(chargerEnemy(1, 0, 600, 10, game.player, 6, 500));
+                        game.addEnemy(chargerEnemy(1, 750, 600, 10, game.player, 6, 500));
                         break;
                     case 220:
                         game.addEnemy(singleShotEnemy(1, 375, -10, 8, false));
-                        game.addEnemy(new ChargerEnemy(1, 0, 300, 15, 7, 500));
-                        game.addEnemy(new ChargerEnemy(1, 750, 300, 15, 7, 500));
+                        game.addEnemy(chargerEnemy(1, 0, 300, 15, game.player, 7, 500));
+                        game.addEnemy(chargerEnemy(1, 750, 300, 15, game.player, 7, 500));
                         break;
                     case 310:
                         game.addEnemy(singleShotEnemy(5, 375, -10, 15, false));

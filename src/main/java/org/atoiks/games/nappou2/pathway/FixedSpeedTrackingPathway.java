@@ -23,22 +23,39 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.entities.Trackable;
 
 /**
- * Subclasses of this pathway follows a trackable entity
+ * Pathway that follows a trackable entity with constant speed. The path it takes is linear.
  */
-public abstract class TrackingPathway implements UnboundPathway {
+public final class FixedSpeedTrackingPathway extends TrackingPathway {
 
-    // weak reference?
-    protected final Trackable entity;
+    private final float speed;
 
-    protected Vector2 velocity = Vector2.ZERO;
-    protected Vector2 position = Vector2.ZERO;
+    private float timer;
 
-    protected TrackingPathway(Trackable entity) {
-        this.entity = entity;
+    public FixedSpeedTrackingPathway(final Trackable entity, float timer, float speed) {
+        super(entity);
+        this.speed = speed;
+        this.timer = timer;
+    }
+
+    public void setPosition(Vector2 pos) {
+        this.position = pos != null ? pos : Vector2.ZERO;
     }
 
     @Override
-    public final Vector2 getPosition() {
-        return this.position;
+    public void update(float dt) {
+        if (this.timer > 0) {
+            this.timer -= 10 * dt;
+        }
+
+        if (this.timer >= 0) {
+            this.velocity = this.entity.getPosition().sub(this.position)
+                    .normalize()
+                    .mul(this.speed);
+        }
+
+        this.position = Vector2.muladd(
+                dt,
+                this.velocity,
+                this.position);
     }
 }
