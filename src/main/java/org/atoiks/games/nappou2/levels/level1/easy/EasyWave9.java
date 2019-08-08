@@ -62,7 +62,7 @@ public class EasyWave9 implements LevelState {
 
         ++cycles;
         if (cycles == 40) {
-            game.addSpawner(new BIGFishSpawner(375, 100, 650, 0, 250, 3 * (float) Math.PI / 2, 100, false));
+            game.addSpawner(new BIGFishSpawner(375, 100, 700, 0, 250, 3 * (float) Math.PI / 2, 100, false));
         }
         if (cycles > 40 && game.noMoreEnemies()) {
             ctx.setState(new PrebossDialog(new EasyBossWave()));

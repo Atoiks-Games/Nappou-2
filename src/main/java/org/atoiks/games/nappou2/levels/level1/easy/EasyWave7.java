@@ -85,7 +85,7 @@ public class EasyWave7 implements LevelState {
             case 430:
             case 490:
             case 550:
-                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, RAY_INFO));
+                e = new PathwayEnemy(2, 2, new FixedVelocity(new Vector2(760, 50), new Vector2(-250, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(13);
                 game.addEnemy(e);
                 break;
@@ -94,7 +94,7 @@ public class EasyWave7 implements LevelState {
             case 525:
             case 625:
             case 725:
-                e = new PathwayEnemy(1, 1, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, RAY_INFO));
+                e = new PathwayEnemy(3, 3, new FixedVelocity(new Vector2(-10, 75), new Vector2(300, 0)), new RandomDropPattern(3, RAY_INFO));
                 e.setRadius(25);
                 game.addEnemy(e);
             case 375:

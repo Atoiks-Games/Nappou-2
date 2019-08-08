@@ -18,6 +18,8 @@
 
 package org.atoiks.games.nappou2.levels.level1.easy;
 
+import org.atoiks.games.framework2d.ResourceManager;
+import javax.sound.sampled.Clip;
 import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.LevelContext;
@@ -30,6 +32,7 @@ import org.atoiks.games.nappou2.levels.level1.AbstractBossWave;
 public class EasyBossWave extends AbstractBossWave {
 
     private static final long serialVersionUID = 1914901384100845861L;
+    private Clip bgm;
 
     public EasyBossWave() {
         super(new SaveScoreState(0, Difficulty.EASY), 50, 50, 50);
@@ -37,8 +40,14 @@ public class EasyBossWave extends AbstractBossWave {
 
     @Override
     public void enter(final LevelContext ctx) {
+        this.bgm = ResourceManager.get("/music/Level_One_Boss.wav");
         super.enter(ctx);
 
         ctx.getGame().addEnemy(new Level1Easy(300, 375, -10, 20));
+    }
+
+    @Override
+    public void exit() {
+        this.bgm.stop();
     }
 }
