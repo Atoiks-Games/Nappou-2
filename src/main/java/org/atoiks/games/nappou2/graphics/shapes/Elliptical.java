@@ -26,41 +26,44 @@ import org.atoiks.games.nappou2.Vector2;
 
 public interface Elliptical extends Shape {
 
-    public float getWidth();
-    public float getHeight();
+    public Vector2 getSemiAxes();
 
     @Override
     public default Rectangular getMinimumBoundingBox() {
-        return new ImmutableRectangle(
-                this.getPosition(),
-                this.getWidth(),
-                this.getHeight());
+        final Vector2 pos = this.getPosition();
+        final Vector2 axes = this.getSemiAxes();
+        return ImmutableRectangle.formedBetween(
+                pos.sub(axes),
+                pos.add(axes));
     }
 
     @Override
     public default void draw(final IGraphics g) {
-        final Vector2 pos = getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
+        final Vector2 pos = this.getPosition();
+        final Vector2 axes = this.getSemiAxes();
 
-        g.drawOval(x, y, x + getWidth(), y + getHeight());
+        g.drawOval(
+                pos.getX() - axes.getX(), pos.getY() - axes.getY(),
+                pos.getX() + axes.getX(), pos.getY() + axes.getY());
     }
 
     @Override
     public default void fill(final IGraphics g) {
-        final Vector2 pos = getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
+        final Vector2 pos = this.getPosition();
+        final Vector2 axes = this.getSemiAxes();
 
-        g.fillOval(x, y, x + getWidth(), y + getHeight());
+        g.fillOval(
+                pos.getX() - axes.getX(), pos.getY() - axes.getY(),
+                pos.getX() + axes.getX(), pos.getY() + axes.getY());
     }
 
     @Override
     public default void renderTexture(IGraphics g, Texture img) {
-        final Vector2 pos = getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
+        final Vector2 pos = this.getPosition();
+        final Vector2 axes = this.getSemiAxes();
 
-        g.drawTexture(img, x, y, x + getWidth(), y + getHeight());
+        g.drawTexture(img,
+                pos.getX() - axes.getX(), pos.getY() - axes.getY(),
+                pos.getX() + axes.getX(), pos.getY() + axes.getY());
     }
 }
