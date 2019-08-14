@@ -22,6 +22,10 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 /**
  * Pathway that orbits with a fixed width around a singular point
  */
@@ -32,9 +36,19 @@ public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
         this(radius, radius, x, y, direction, speedMod, startPos);
     }
 
+    public OrbitalPathway(Circular boundary, int direction, float speedMod, int startPos) {
+        this(Circular.asElliptical(boundary),
+                direction,
+                speedMod,
+                startPos);
+    }
+
     // Use if path is elliptical
     public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
-        this(new Vector2(rx, ry), new Vector2(x, y), direction, speedMod, startPos);
+        this(new ImmutableEllipses(new Vector2(x, y), new Vector2(rx, ry)),
+                direction,
+                speedMod,
+                startPos);
     }
 
     public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
@@ -46,5 +60,9 @@ public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
                 IdentitySizer.INSTANCE);
 
         this.setOrbitalWidth(1);
+    }
+
+    public OrbitalPathway(final Elliptical boundary, int direction, float speedMod, int startPos) {
+        this(boundary.getSemiAxes(), boundary.getPosition(), direction, speedMod, startPos);
     }
 }

@@ -25,6 +25,7 @@ import java.util.Collections;
 import org.atoiks.games.nappou2.spawner.EnemySpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
+import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
@@ -161,6 +162,14 @@ public final class Utils {
         enemy.setRadius(r);
         enemy.setPathway(new FixedVelocity(x, y, 300, 0));
         enemy.setAttackPattern(new TimedDropPattern(offset, alt, SHIFT_ENEMY_INFO));
+        return enemy;
+    }
+
+    public static PathwayEnemy chargerEnemy(int hp, float x, float y, float r, Trackable entity, float timer, float speed) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setRadius(r);
+        enemy.setPathway(new FixedSpeedTrackingPathway(entity, timer, speed));
+        // XXX: currently has no attack pattern
         return enemy;
     }
 

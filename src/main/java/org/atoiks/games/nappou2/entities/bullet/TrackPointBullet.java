@@ -23,10 +23,15 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.pathway.TrackingPathway;
+import org.atoiks.games.nappou2.pathway.TimeSlicedTrackingPathway;
 
-public final class TrackPointBullet extends PathwayPointBullet<TrackingPathway> {
+public final class TrackPointBullet<T extends TrackingPathway> extends PathwayPointBullet<T> {
 
-    public TrackPointBullet(float x, float y, float r, Trackable entity, float pathScale, float moveTime, float delay) {
-        super(r, new TrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
+    public TrackPointBullet(float r, T trackingPathway) {
+        super(r, trackingPathway);
+    }
+
+    public static TrackPointBullet<TimeSlicedTrackingPathway> newLegacyVariant(float x, float y, float r, Trackable entity, float pathScale, float moveTime, float delay) {
+        return new TrackPointBullet<>(r, new TimeSlicedTrackingPathway(new Vector2(x, y), entity, pathScale, moveTime, delay));
     }
 }

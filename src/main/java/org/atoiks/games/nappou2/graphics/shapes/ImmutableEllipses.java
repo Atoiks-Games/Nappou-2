@@ -16,29 +16,36 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.pathway;
+package org.atoiks.games.nappou2.graphics.shapes;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.entities.Trackable;
+public final class ImmutableEllipses implements Elliptical {
 
-/**
- * Subclasses of this pathway follows a trackable entity
- */
-public abstract class TrackingPathway implements UnboundPathway {
+    private final Vector2 pos;
+    private final Vector2 semis;
 
-    // weak reference?
-    protected final Trackable entity;
+    public ImmutableEllipses(Vector2 position, float semiX, float semiY) {
+        this(position, new Vector2(semiX, semiY));
+    }
 
-    protected Vector2 velocity = Vector2.ZERO;
-    protected Vector2 position = Vector2.ZERO;
+    public ImmutableEllipses(Vector2 position, Vector2 semiAxes) {
+        this.pos = position != null ? position : Vector2.ZERO;
+        this.semis = Vector2.abs(semiAxes);
+    }
 
-    protected TrackingPathway(Trackable entity) {
-        this.entity = entity;
+    public static Elliptical formedBetween(Vector2 u, Vector2 v) {
+        final Vector2 axes = v.sub(u).div(2);
+        return new ImmutableEllipses(u.add(axes), axes);
     }
 
     @Override
-    public final Vector2 getPosition() {
-        return this.position;
+    public Vector2 getSemiAxes() {
+        return this.semis;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.pos;
     }
 }
