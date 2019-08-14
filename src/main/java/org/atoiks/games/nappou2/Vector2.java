@@ -170,10 +170,6 @@ public final class Vector2 implements Serializable {
                 Math.max(u.y, v.y));
     }
 
-    public static Vector2 abs(final Vector2 u) {
-        return new Vector2(Math.abs(u.x), Math.abs(u.y));
-    }
-
     public static Vector2 rotateBy(final Vector2 u, final float angle) {
         final float cos = (float) Math.cos(angle);
         final float sin = (float) Math.sin(angle);
