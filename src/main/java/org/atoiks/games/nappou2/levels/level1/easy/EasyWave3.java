@@ -29,7 +29,7 @@ import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.Squirts;
+import static org.atoiks.games.nappou2.Utils.squirts;
 
 public class EasyWave3 implements LevelState {
 
@@ -59,8 +59,8 @@ public class EasyWave3 implements LevelState {
         ++cycles;
         if (cycles == 40) {
             final Game game = ctx.getGame();
-            game.addEnemy(new Squirts(10, 275, -10, 20));
-            game.addEnemy(new Squirts(10, 475, -10, 20));
+            game.addEnemy(squirts(10, 275, -10, 20));
+            game.addEnemy(squirts(10, 475, -10, 20));
         } else if (cycles > 80 && ctx.getGame().noMoreEnemies()) {
             ctx.setState(new EasyWave4());
             return;

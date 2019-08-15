@@ -29,7 +29,7 @@ import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.StreamBeam;
+import static org.atoiks.games.nappou2.Utils.streamBeam;
 
 public class EasyWave4 implements LevelState {
 
@@ -64,9 +64,9 @@ public class EasyWave4 implements LevelState {
             case 1640:
             case 2040: {
                 final Game game = ctx.getGame();
-                game.addEnemy(new StreamBeam(1, 10, 610, 8, true));
-                game.addEnemy(new StreamBeam(1, 375, -10, 8, false));
-                game.addEnemy(new StreamBeam(1, 740, 610, 8, true));
+                game.addEnemy(streamBeam(1, 10, 610, 8, true));
+                game.addEnemy(streamBeam(1, 375, -10, 8, false));
+                game.addEnemy(streamBeam(1, 740, 610, 8, true));
                 break;
             }
             default:
