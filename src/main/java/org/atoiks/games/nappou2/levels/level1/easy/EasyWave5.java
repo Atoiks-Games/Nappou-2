@@ -37,6 +37,8 @@ import org.atoiks.games.nappou2.entities.bullet.*;
 
 import org.atoiks.games.nappou2.entities.bullet.factory.RayInfo;
 
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
 
@@ -52,6 +54,9 @@ public class EasyWave5 implements LevelState {
     private static final long serialVersionUID = 5308372197610362137L;
 
     private static final RayInfo WAVE7_RAY_INFO = new RayInfo(25, 5, 500);
+
+    private static final ImmutableEllipses BOUNDARY_1 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(310, 310));
+    private static final ImmutableEllipses BOUNDARY_2 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(350, 350));
 
     private final DefaultRestoreData data = new DefaultRestoreData();
 
@@ -108,52 +113,52 @@ public class EasyWave5 implements LevelState {
             case 5:
                 switch (cycles) {
                     case 40:
-                        PathwayEnemy e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        PathwayEnemy e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 80:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, Math.PI), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_2, 1, 1, Math.PI), NullPattern.INSTANCE);
                         e.setRadius(10);
                         game.addEnemy(e);
                         break;
                     case 280:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(20);
                         game.addEnemy(e);
                         break;
                     case 380:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_2, 1, 1, 0), NullPattern.INSTANCE);
                         e.setRadius(6);
                         game.addEnemy(e);
                         break;
                     case 580:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, -1, Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 600:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_2, 1, 1, 0), NullPattern.INSTANCE);
                         e.setRadius(8);
                         game.addEnemy(e);
                         break;
                     case 880:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(350, 350), new Vector2(375, 300), 1, -1, 0), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_2, 1, -1, 0), NullPattern.INSTANCE);
                         e.setRadius(6);
                         game.addEnemy(e);
                         break;
                     case 1000:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, -1, 3 * Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(10);
                         game.addEnemy(e);
                         break;
                     case 1200:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, -1, Math.PI / 2), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, -1, Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(12);
                         game.addEnemy(e);
                         break;
                     case 1250:
-                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(new Vector2(310, 310), new Vector2(375, 300), 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
+                        e = new PathwayEnemy(1, 1, new CollapsingOrbitalPathway(BOUNDARY_1, 1, 1, 3 * Math.PI / 2), NullPattern.INSTANCE);
                         e.setRadius(8);
                         game.addEnemy(e);
                         break;

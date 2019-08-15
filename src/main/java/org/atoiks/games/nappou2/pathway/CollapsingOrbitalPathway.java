@@ -22,6 +22,8 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.*;
 
+import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
+
 /**
  * Pathway that orbits with a decaying width around a singular point
  */
@@ -35,15 +37,10 @@ public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<SizerSwi
                     new LinearSizer(-1),
                     new ConstantSizer(100));
 
-    // Use if path is elliptical
-    public CollapsingOrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, double startPos) {
-        this(new Vector2(rx, ry), new Vector2(x, y), direction, speedMod, startPos);
-    }
-
-    public CollapsingOrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, double startPos) {
+    public CollapsingOrbitalPathway(final Elliptical boundary, int direction, float speedMod, double startPos) {
         // Direction is applied on the Y component
-        super(new Vector2(1, direction).mul(axis),
-                center,
+        super(boundary,
+                new Vector2(1, direction),
                 speedMod / 500,
                 (float) startPos,
                 SIZER);

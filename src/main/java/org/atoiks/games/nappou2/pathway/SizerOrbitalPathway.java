@@ -22,6 +22,8 @@ import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.Sizer;
 
+import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
+
 /**
  * Pathway that orbits around a singular point
  */
@@ -29,8 +31,9 @@ public abstract class SizerOrbitalPathway<T extends Sizer> implements UnboundPat
 
     protected final T sizer;
 
-    private final Vector2 axis;
-    private final Vector2 center;
+    private final Elliptical shape;
+    private final Vector2 factor;
+
     private final float mod;
     private final float baseAngle;
 
@@ -39,9 +42,9 @@ public abstract class SizerOrbitalPathway<T extends Sizer> implements UnboundPat
 
     private int cycles;
 
-    protected SizerOrbitalPathway(Vector2 axis, Vector2 center, float speedMod, float baseAngle, T sizer) {
-        this.axis = axis;
-        this.center = center;
+    protected SizerOrbitalPathway(Elliptical shape, Vector2 factor, float speedMod, float baseAngle, T sizer) {
+        this.shape = shape;
+        this.factor = factor;
         this.mod = speedMod;
         this.baseAngle = baseAngle;
 
@@ -69,6 +72,8 @@ public abstract class SizerOrbitalPathway<T extends Sizer> implements UnboundPat
 
     private void computePosition() {
         final float k = this.mod * this.cycles / this.r + this.baseAngle;
-        this.position = Vector2.muladd(this.axis, Vector2.fromPolar(this.r, k), this.center);
+        final Vector2 axes = this.shape.getSemiAxes().mul(this.factor);
+        final Vector2 center = this.shape.getPosition();
+        this.position = Vector2.muladd(axes, Vector2.fromPolar(this.r, k), center);
     }
 }

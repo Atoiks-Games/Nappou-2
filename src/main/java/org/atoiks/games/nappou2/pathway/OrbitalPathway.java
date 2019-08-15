@@ -51,18 +51,14 @@ public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
                 startPos);
     }
 
-    public OrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, int startPos) {
+    public OrbitalPathway(final Elliptical boundary, int direction, float speedMod, int startPos) {
         // Direction is applied on the Y component
-        super(new Vector2(1, direction).mul(axis),
-                center,
+        super(boundary,
+                new Vector2(1, direction),
                 speedMod / 50,
                 startPos % 4 * (float) (Math.PI / 2),
                 IdentitySizer.INSTANCE);
 
         this.setOrbitalWidth(1);
-    }
-
-    public OrbitalPathway(final Elliptical boundary, int direction, float speedMod, int startPos) {
-        this(boundary.getSemiAxes(), boundary.getPosition(), direction, speedMod, startPos);
     }
 }
