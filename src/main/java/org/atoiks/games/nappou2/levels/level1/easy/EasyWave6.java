@@ -29,8 +29,8 @@ import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.Squirts;
-import org.atoiks.games.nappou2.entities.enemy.StreamBeam;
+import static org.atoiks.games.nappou2.Utils.squirts;
+import static org.atoiks.games.nappou2.Utils.streamBeam;
 
 public class EasyWave6 implements LevelState {
 
@@ -62,14 +62,14 @@ public class EasyWave6 implements LevelState {
         ++cycles;
         switch (cycles) {
             case 40:
-                game.addEnemy(new Squirts(10, 375, -10, 20));
+                game.addEnemy(squirts(10, 375, -10, 20));
                 break;
             case 50:
             case 100:
             case 150:
             case 200:
-                game.addEnemy(new StreamBeam(1, 10, 610, 8, true));
-                game.addEnemy(new StreamBeam(1, 740, 610, 8, true));
+                game.addEnemy(streamBeam(1, 10, 610, 8, true));
+                game.addEnemy(streamBeam(1, 740, 610, 8, true));
                 break;
         }
         if (cycles > 200 && game.noMoreEnemies()) {

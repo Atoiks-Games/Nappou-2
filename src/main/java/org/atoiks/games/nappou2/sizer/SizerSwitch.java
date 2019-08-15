@@ -16,14 +16,28 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.sizer;
 
-import org.atoiks.games.nappou2.Vector2;
+public final class SizerSwitch implements Sizer {
 
-import org.atoiks.games.nappou2.graphics.shapes.Circular;
+    public static interface FloatPredicate {
 
-public interface Collidable {
+        public boolean test(float value);
+    }
 
-    public boolean isOutOfScreen(int width, int height);
-    public boolean collidesWith(Circular circle);
+    private final FloatPredicate predicate;
+    private final Sizer ifTrue;
+    private final Sizer ifFalse;
+
+    public SizerSwitch(FloatPredicate predicate, Sizer ifTrue, Sizer ifFalse) {
+        this.predicate = predicate;
+        this.ifTrue = ifTrue;
+        this.ifFalse = ifFalse;
+    }
+
+    @Override
+    public float getNextSize(final float prev, final float dt) {
+        final Sizer dispatch = this.predicate.test(prev) ? this.ifTrue : this.ifFalse;
+        return dispatch.getNextSize(prev, dt);
+    }
 }

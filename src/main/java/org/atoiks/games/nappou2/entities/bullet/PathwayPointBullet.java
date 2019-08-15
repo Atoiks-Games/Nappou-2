@@ -21,14 +21,13 @@ package org.atoiks.games.nappou2.entities.bullet;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.sizer.Sizer;
-import org.atoiks.games.nappou2.sizer.FixedSizer;
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 import org.atoiks.games.nappou2.pathway.Pathway;
 
 import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
-import static org.atoiks.games.nappou2.Utils.fastCircleCollision;
 
 public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> implements Circular {
 
@@ -44,7 +43,7 @@ public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> impl
     }
 
     public PathwayPointBullet(float r, T pathway) {
-        this(r, FixedSizer.INSTANCE, pathway);
+        this(r, IdentitySizer.INSTANCE, pathway);
     }
 
     @Override
@@ -60,11 +59,8 @@ public class PathwayPointBullet<T extends Pathway> extends PathwayBullet<T> impl
     }
 
     @Override
-    public boolean collidesWith(final float x1, final float y1, final float r1) {
-        final Vector2 pos = this.getPosition();
-        final float x = pos.getX();
-        final float y = pos.getY();
-        return fastCircleCollision(x, y, r, x1, y1, r1);
+    public boolean collidesWith(final Circular other) {
+        return Circular.overlaps(this, other);
     }
 
     @Override

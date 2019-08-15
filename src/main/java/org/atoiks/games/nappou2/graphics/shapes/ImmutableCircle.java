@@ -16,14 +16,27 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.graphics.shapes;
 
 import org.atoiks.games.nappou2.Vector2;
 
-import org.atoiks.games.nappou2.graphics.shapes.Circular;
+public final class ImmutableCircle implements Circular {
 
-public interface Collidable {
+    private final Vector2 pos;
+    private final float radius;
 
-    public boolean isOutOfScreen(int width, int height);
-    public boolean collidesWith(Circular circle);
+    public ImmutableCircle(Vector2 position, float radius) {
+        this.pos = position != null ? position : Vector2.ZERO;
+        this.radius = Math.abs(radius);
+    }
+
+    @Override
+    public float getRadius() {
+        return this.radius;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.pos;
+    }
 }

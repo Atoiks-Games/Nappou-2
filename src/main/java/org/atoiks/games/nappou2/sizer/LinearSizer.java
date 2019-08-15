@@ -16,14 +16,18 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.entities;
+package org.atoiks.games.nappou2.sizer;
 
-import org.atoiks.games.nappou2.Vector2;
+public final class LinearSizer implements Sizer {
 
-import org.atoiks.games.nappou2.graphics.shapes.Circular;
+    private final float slope;
 
-public interface Collidable {
+    public LinearSizer(float slope) {
+        this.slope = slope;
+    }
 
-    public boolean isOutOfScreen(int width, int height);
-    public boolean collidesWith(Circular circle);
+    @Override
+    public float getNextSize(final float prev, float dt) {
+        return prev + this.slope * dt;
+    }
 }

@@ -20,30 +20,15 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.IdentitySizer;
+
 import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
-import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
 
 /**
- * Pathway that orbits around a singular point
+ * Pathway that orbits with a fixed width around a singular point
  */
-public final class OrbitalPathway implements UnboundPathway {
-
-    private final Vector2 axis;
-    private final Vector2 center;
-
-    private final Vector2 direction;
-    private final float mod;
-    private final int spos;
-
-    private Vector2 position;
-
-    private int cycles;
-
-    // Use if path is circular
-    public OrbitalPathway(float radius, float x, float y, int direction, float speedMod, int startPos) {
-        this(radius, radius, x, y, direction, speedMod, startPos);
-    }
+public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
 
     public OrbitalPathway(Circular boundary, int direction, float speedMod, int startPos) {
         this(Circular.asElliptical(boundary),
@@ -52,38 +37,14 @@ public final class OrbitalPathway implements UnboundPathway {
                 startPos);
     }
 
-    // Use if path is elliptical
-    public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
-        this(new ImmutableEllipses(new Vector2(x, y), new Vector2(rx, ry)),
-                direction,
-                speedMod,
-                startPos);
-    }
-
     public OrbitalPathway(final Elliptical boundary, int direction, float speedMod, int startPos) {
-        this.axis = boundary.getSemiAxes();
-        this.center = boundary.getPosition();
-
         // Direction is applied on the Y component
-        this.direction = new Vector2(1, direction);
-        this.mod = speedMod;
-        this.spos = startPos % 4;
+        super(boundary,
+                new Vector2(1, direction),
+                speedMod / 50,
+                startPos % 4 * (float) (Math.PI / 2),
+                IdentitySizer.INSTANCE);
 
-        // calcuate initial position here, update will do increment cycles
-        this.cycles = -1;
-        update(0);
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void update(final float dt) {
-        cycles++;
-
-        final float k = mod * cycles / 50 + spos * (float) Math.PI / 2;
-        this.position = Vector2.muladd(axis, Vector2.fromPolar(1, k).mul(direction), center);
+        this.setOrbitalWidth(1);
     }
 }

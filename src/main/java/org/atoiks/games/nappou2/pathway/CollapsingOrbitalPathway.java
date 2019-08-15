@@ -20,58 +20,31 @@ package org.atoiks.games.nappou2.pathway;
 
 import org.atoiks.games.nappou2.Vector2;
 
+import org.atoiks.games.nappou2.sizer.*;
+
+import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
+
 /**
- * Pathway that orbits around a singular point
+ * Pathway that orbits with a decaying width around a singular point
  */
-public final class CollapsingOrbitalPathway implements UnboundPathway {
+public final class CollapsingOrbitalPathway extends SizerOrbitalPathway<SizerSwitch> {
 
-    private Vector2 axis;
-    private final Vector2 center;
+    // Switch into size of 100 because it will put the enemy (or whatever
+    // pathway-entity) out of the screen, causing it to be removed from
+    // the game, making it seem like it has disappeared after collapsing
+    private static final SizerSwitch SIZER =
+            new SizerSwitch(next -> next > 0,
+                    new LinearSizer(-1),
+                    new ConstantSizer(100));
 
-    private final Vector2 direction;
-    private final float mod;
-    private final double spos;
-    private float r = 1;
-
-    private Vector2 position;
-
-    private int cycles;
-
-    // Use if path is elliptical
-    public CollapsingOrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, double startPos) {
-        this(new Vector2(rx, ry), new Vector2(x, y), direction, speedMod, startPos);
-    }
-
-    public CollapsingOrbitalPathway(Vector2 axis, Vector2 center, int direction, float speedMod, double startPos) {
-        this.axis = axis;
-        this.center = center;
-
+    public CollapsingOrbitalPathway(final Elliptical boundary, int direction, float speedMod, double startPos) {
         // Direction is applied on the Y component
-        this.direction = new Vector2(1, direction);
-        this.mod = speedMod;
-        this.spos = startPos;
+        super(boundary,
+                new Vector2(1, direction),
+                speedMod / 500,
+                (float) startPos,
+                SIZER);
 
-        // calcuate initial position here, update will do increment cycles
-        this.cycles = -1;
-        update(0);
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public void update(final float dt) {
-        cycles++;
-
-        r -= dt;
-
-        if (r < 0) {
-            r = 100;
-        }
-
-        final float k = mod / (10 * r) * cycles / 50 + (float) spos;
-        this.position = Vector2.muladd(this.axis, Vector2.fromPolar(r, k).mul(direction), center);
+        this.setOrbitalWidth(1);
     }
 }

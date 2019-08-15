@@ -34,6 +34,8 @@ import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
 import org.atoiks.games.nappou2.entities.bullet.StutterBullet;
 
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 import org.atoiks.games.nappou2.pathway.CollapsingOrbitalPathway;
 
 import org.atoiks.games.nappou2.pattern.NullPattern;
@@ -41,6 +43,8 @@ import org.atoiks.games.nappou2.pattern.NullPattern;
 public class EasyWave8 implements LevelState {
 
     private static final long serialVersionUID = -5144665572565203146L;
+
+    private static final ImmutableEllipses BOUNDARY_1 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(385, 385));
 
     private transient int cycles;
 
@@ -74,10 +78,10 @@ public class EasyWave8 implements LevelState {
                 }
                 break;
             case 50:
-                PathwayEnemy e = new PathwayEnemy(3, 3, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), 1, 1, 0), NullPattern.INSTANCE);
+                PathwayEnemy e = new PathwayEnemy(3, 3, new CollapsingOrbitalPathway(BOUNDARY_1, 1, 1, 0), NullPattern.INSTANCE);
                 e.setRadius(20);
                 game.addEnemy(e);
-                PathwayEnemy f = new PathwayEnemy(3, 3, new CollapsingOrbitalPathway(new Vector2(385, 385), new Vector2(375, 300), -1, 1, Math.PI), NullPattern.INSTANCE);
+                PathwayEnemy f = new PathwayEnemy(3, 3, new CollapsingOrbitalPathway(BOUNDARY_1, -1, 1, Math.PI), NullPattern.INSTANCE);
                 f.setRadius(20);
                 game.addEnemy(f);
                 break;

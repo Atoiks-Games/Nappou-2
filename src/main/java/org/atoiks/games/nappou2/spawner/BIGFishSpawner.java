@@ -20,8 +20,6 @@ package org.atoiks.games.nappou2.spawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.FishPart;
-
 public final class BIGFishSpawner extends FishSpawner {
 
     private int cycles = -1;

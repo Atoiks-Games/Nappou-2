@@ -18,9 +18,13 @@
 
 package org.atoiks.games.nappou2.spawner;
 
+import org.atoiks.games.nappou2.Vector2;
+
+import org.atoiks.games.nappou2.pathway.FishPathway;
+
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.entities.enemy.FishPart;
+import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
 public abstract class FishSpawner implements Spawner {
 
@@ -52,16 +56,24 @@ public abstract class FishSpawner implements Spawner {
     }
 
     protected final void addSingular(final Game game, int hp, float r) {
-        game.addEnemy(new FishPart(hp, xmid, ymid, r, speed, angle, amplitude, 10, alt));
+        game.addEnemy(fishPart(hp, xmid, ymid, r, speed, angle, amplitude, 10, alt));
     }
 
     protected final void addSingleSpacing(final Game game, int hp, float r) {
-        game.addEnemy(new FishPart(hp, xmid - xrng, ymid - yrng, r, speed, angle, amplitude, 10, alt));
-        game.addEnemy(new FishPart(hp, xmid + xrng, ymid + yrng, r, speed, angle, amplitude, 10, alt));
+        game.addEnemy(fishPart(hp, xmid - xrng, ymid - yrng, r, speed, angle, amplitude, 10, alt));
+        game.addEnemy(fishPart(hp, xmid + xrng, ymid + yrng, r, speed, angle, amplitude, 10, alt));
     }
 
     protected final void addDoubleSpacing(final Game game, int hp, float r) {
-        game.addEnemy(new FishPart(hp, xmid - 2.0f * xrng, ymid - 2.0f * yrng, r, speed, angle, amplitude, 10, alt));
-        game.addEnemy(new FishPart(hp, xmid + 2.0f * xrng, ymid + 2.0f * yrng, r, speed, angle, amplitude, 10, alt));
+        game.addEnemy(fishPart(hp, xmid - 2.0f * xrng, ymid - 2.0f * yrng, r, speed, angle, amplitude, 10, alt));
+        game.addEnemy(fishPart(hp, xmid + 2.0f * xrng, ymid + 2.0f * yrng, r, speed, angle, amplitude, 10, alt));
+    }
+
+    public static PathwayEnemy fishPart(int hp, float x, float y, float r, float speed, float direction, float amplitude, float wspd, boolean alt) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, hp);
+        enemy.setRadius(r);
+        enemy.setPathway(new FishPathway(new Vector2(x, y), speed, direction, (alt ? -1 : 1) * amplitude, wspd));
+        // XXX: currently has no attack pattern
+        return enemy;
     }
 }

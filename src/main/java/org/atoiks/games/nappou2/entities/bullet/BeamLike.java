@@ -23,10 +23,10 @@ import org.atoiks.games.framework2d.IGraphics;
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.shapes.Line;
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
 
 import static org.atoiks.games.nappou2.Utils.isSquareOutOfScreen;
-import static org.atoiks.games.nappou2.Utils.centerSquareCollision;
-import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
 
 /* package */ abstract class BeamLike extends AbstractBullet implements Line {
 
@@ -79,25 +79,24 @@ import static org.atoiks.games.nappou2.Utils.intersectSegmentCircle;
     }
 
     @Override
-    public final boolean collidesWith(final float x1, final float y1, final float r1) {
+    public final boolean collidesWith(final Circular circle) {
         // transform the colliding entity to the ray's coordinate system
 
-        final Vector2 pos = this.getPosition();
-        final float tx = x1 - pos.getX();
-        final float ty = y1 - pos.getY();
-        if (centerSquareCollision(0, 0, Math.max(length, halfWidth), tx, ty, r1)) {
+        final Circular translated = new ImmutableCircle(
+                circle.getPosition().sub(this.getPosition()),
+                circle.getRadius());
+
+        if (Circular.overlapsAsSquare(new ImmutableCircle(Vector2.ZERO, Math.max(length, halfWidth)), translated)) {
             // Apply rotation on to the colliding entity
 
-            final float cos = (float) Math.cos(-angle);
-            final float sin = (float) Math.sin(-angle);
-
-            final float rx = cos * tx - sin * ty;
-            final float ry = sin * tx + cos * ty;
+            final Circular transformed = new ImmutableCircle(
+                    Vector2.rotateBy(translated.getPosition(), -angle),
+                    translated.getRadius());
             final float hw = Math.min(length, halfWidth);
-            return intersectSegmentCircle(0, -hw, length, -hw, rx, ry, r1)
-                || intersectSegmentCircle(length, -hw, length, hw, rx, ry, r1)
-                || intersectSegmentCircle(length, hw, 0, hw, rx, ry, r1)
-                || intersectSegmentCircle(0, hw, 0, -hw, rx, ry, r1);
+            return Circular.intersectedByRay(transformed, 0, -hw, length, -hw)
+                || Circular.intersectedByRay(transformed, length, -hw, length, hw)
+                || Circular.intersectedByRay(transformed, length, hw, 0, hw)
+                || Circular.intersectedByRay(transformed, 0, hw, 0, -hw);
         }
         return false;
     }

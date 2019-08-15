@@ -18,11 +18,11 @@
 
 package org.atoiks.games.nappou2.sizer;
 
-public final class FixedSizer implements Sizer {
+public final class IdentitySizer implements Sizer {
 
-    public static final FixedSizer INSTANCE = new FixedSizer();
+    public static final IdentitySizer INSTANCE = new IdentitySizer();
 
-    private FixedSizer() {
+    private IdentitySizer() {
     }
 
     @Override

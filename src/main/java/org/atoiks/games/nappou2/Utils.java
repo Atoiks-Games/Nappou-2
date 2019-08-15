@@ -29,6 +29,9 @@ import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
 import org.atoiks.games.nappou2.equations.*;
@@ -91,10 +94,14 @@ public final class Utils {
         return enemy;
     }
 
-    public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
+    public static PathwayEnemy circularPathEnemy(int hp, Circular pathBoundary, float r, int direction, float speedMod, int startPos, float bulletSpeed) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setRadius(r);
-        enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
+        enemy.setPathway(new OrbitalPathway(
+                pathBoundary,
+                direction,
+                speedMod,
+                startPos));
         enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SINGLE_SHOT_PATTERN));
         return enemy;
     }
@@ -152,7 +159,11 @@ public final class Utils {
     public static PathwayEnemy leapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setRadius(r);
-        enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
+        enemy.setPathway(new OrbitalPathway(
+                new ImmutableEllipses(new Vector2(x, y), radius * stretchx, radius * stretchy),
+                direction,
+                speedMod,
+                startPos));
         // XXX: currently has no attack pattern
         return enemy;
     }
@@ -173,54 +184,20 @@ public final class Utils {
         return enemy;
     }
 
-    public static boolean intersectSegmentCircle(float x1, float y1, float x2, float y2,
-                                                 float cx, float cy, float cr) {
-        // Taken from https://stackoverflow.com/a/10392860
-        final float acx = cx - x1;
-        final float acy = cy - y1;
-
-        final float abx = x2 - x1;
-        final float aby = y2 - y1;
-
-        final float ab2 = abx * abx + aby * aby;
-        final float acab = acx * abx + acy * aby;
-        final float t = clamp01(acab / ab2);
-
-        final float hx = (abx * t) + x1 - cx;
-        final float hy = (aby * t) + y1 - cy;
-
-        return hx * hx + hy * hy <= cr * cr;
+    public static PathwayEnemy streamBeam(int hp, float x, float y, float r, boolean inverted) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setRadius(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, (inverted ? -1 : 1) * 300));
+        enemy.setAttackPattern(new StreamBeamPattern());
+        return enemy;
     }
 
-    public static boolean centerSquareCollision(float x1, float y1, float h1,
-                                                float x2, float y2, float h2) {
-        // +------+
-        // |      | x, y = the center
-        // |      | h    = side length / 2 = apothem
-        // +------+
-        //
-        // squares do not rotate just check distance between
-
-        // return x1 - h1 < x2 + h2
-        //     && x1 + h1 > x2 - h2
-        //     && y1 - h1 < y2 + h2
-        //     && y1 + h1 > y2 - h1;
-        final float dist = h1 + h2;
-        return Math.abs(x1 - x2) < dist
-            && Math.abs(y1 - y2) < dist;
-    }
-
-    public static boolean fastCircleCollision(float x1, float y1, float r1,
-                                              float x2, float y2, float r2) {
-        // Only perform accurate collision if both circles collide as squares
-        if (centerSquareCollision(x1, y1, r1, x2, y2, r2)) {
-            // Accurate collision check
-            final float dx = x1 - x2;
-            final float dy = y1 - y2;
-            final float dr = r1 + r2;
-            return dx * dx + dy * dy < dr * dr;
-        }
-        return false;
+    public static PathwayEnemy squirts(int hp, float x, float y, float r) {
+        final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
+        enemy.setRadius(r);
+        enemy.setPathway(new FixedVelocity(x, y, 0, 300));
+        enemy.setAttackPattern(new SquirtsPattern());
+        return enemy;
     }
 
     public static boolean isSquareOutOfScreen(final Vector2 pos, final float hw, final int w, final int h) {
