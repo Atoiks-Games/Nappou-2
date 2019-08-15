@@ -24,28 +24,14 @@ import org.atoiks.games.nappou2.sizer.IdentitySizer;
 
 import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.Elliptical;
-import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
 
 /**
  * Pathway that orbits with a fixed width around a singular point
  */
 public final class OrbitalPathway extends SizerOrbitalPathway<IdentitySizer> {
 
-    // Use if path is circular
-    public OrbitalPathway(float radius, float x, float y, int direction, float speedMod, int startPos) {
-        this(radius, radius, x, y, direction, speedMod, startPos);
-    }
-
     public OrbitalPathway(Circular boundary, int direction, float speedMod, int startPos) {
         this(Circular.asElliptical(boundary),
-                direction,
-                speedMod,
-                startPos);
-    }
-
-    // Use if path is elliptical
-    public OrbitalPathway(float rx, float ry, float x, float y, int direction, float speedMod, int startPos) {
-        this(new ImmutableEllipses(new Vector2(x, y), new Vector2(rx, ry)),
                 direction,
                 speedMod,
                 startPos);

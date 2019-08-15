@@ -29,6 +29,8 @@ import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
+
 import org.atoiks.games.nappou2.pathway.*;
 import org.atoiks.games.nappou2.pattern.*;
 import org.atoiks.games.nappou2.equations.*;
@@ -94,7 +96,11 @@ public final class Utils {
     public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setRadius(r);
-        enemy.setPathway(new OrbitalPathway(radius, x, y, direction, speedMod, startPos));
+        enemy.setPathway(new OrbitalPathway(
+                new ImmutableEllipses(new Vector2(x, y), radius, radius),
+                direction,
+                speedMod,
+                startPos));
         enemy.setAttackPattern(new SineFireGate(bulletSpeed, 0, 0.01, SINGLE_SHOT_PATTERN));
         return enemy;
     }
@@ -152,7 +158,11 @@ public final class Utils {
     public static PathwayEnemy leapEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float stretchx, float stretchy) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setRadius(r);
-        enemy.setPathway(new OrbitalPathway(radius * stretchx, radius * stretchy, x, y, direction, speedMod, startPos));
+        enemy.setPathway(new OrbitalPathway(
+                new ImmutableEllipses(new Vector2(x, y), radius * stretchx, radius * stretchy),
+                direction,
+                speedMod,
+                startPos));
         // XXX: currently has no attack pattern
         return enemy;
     }
