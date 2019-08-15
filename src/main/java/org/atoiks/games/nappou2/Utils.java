@@ -29,6 +29,7 @@ import org.atoiks.games.nappou2.entities.Trackable;
 
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
+import org.atoiks.games.nappou2.graphics.shapes.Circular;
 import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
 
 import org.atoiks.games.nappou2.pathway.*;
@@ -93,11 +94,11 @@ public final class Utils {
         return enemy;
     }
 
-    public static PathwayEnemy circularPathEnemy(int hp, float x, float y, float r, float radius, int direction, float speedMod, int startPos, float bulletSpeed) {
+    public static PathwayEnemy circularPathEnemy(int hp, Circular pathBoundary, float r, int direction, float speedMod, int startPos, float bulletSpeed) {
         final PathwayEnemy enemy = new PathwayEnemy(hp, 1);
         enemy.setRadius(r);
         enemy.setPathway(new OrbitalPathway(
-                new ImmutableEllipses(new Vector2(x, y), radius, radius),
+                pathBoundary,
                 direction,
                 speedMod,
                 startPos));

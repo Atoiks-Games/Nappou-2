@@ -68,8 +68,8 @@ public class InsaneWave3 implements LevelState {
                 break;
             case 80: {
                 final Game game = ctx.getGame();
-                game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_50, 8, 1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_50, 8, -1, 0.25f, 3, 100));
                 game.addEnemy(altMb1(10, 225, -10, 20));
                 game.addEnemy(altMb1(10, 525, -10, 20));
                 break;
@@ -79,12 +79,12 @@ public class InsaneWave3 implements LevelState {
                 game.addEnemy(altMb1(10, 375, -10, 20));
                 game.addEnemy(altMb1(10, 225, -10, 20));
                 game.addEnemy(altMb1(10, 525, -10, 20));
-                game.addEnemy(circularPathEnemy(1, 750, 50, 8, 100, 1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 50, 8, 100, -1, 0.25f, 3, 100));
-                game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
-                game.addEnemy(circularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_50, 8, 1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_50, 8, -1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_0, 8, 1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_0, 8, -1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_600, 8, -1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_600, 8, 1, 0.25f, 3, 100));
                 break;
             }
             case 2080: {
@@ -92,10 +92,10 @@ public class InsaneWave3 implements LevelState {
                 game.addEnemy(altMb1(10, 375, -10, 20));
                 game.addEnemy(altMb1(10, 225, -10, 20));
                 game.addEnemy(altMb1(10, 525, -10, 20));
-                game.addEnemy(circularPathEnemy(1, 750, 0, 8, 100, 1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 0, 8, 100, -1, 0.25f, 3, 100));
-                game.addEnemy(circularPathEnemy(1, 750, 600, 8, 100, -1, 0.25f, 1, 100));
-                game.addEnemy(circularPathEnemy(1, 0, 600, 8, 100, 1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_0, 8, 1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_0, 8, -1, 0.25f, 3, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_750_600, 8, -1, 0.25f, 1, 100));
+                game.addEnemy(circularPathEnemy(1, BOUNDARY_0_600, 8, 1, 0.25f, 3, 100));
                 break;
             }
         }

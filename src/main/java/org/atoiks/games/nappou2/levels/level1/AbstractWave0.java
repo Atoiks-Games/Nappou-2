@@ -22,6 +22,7 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
 
+import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -29,6 +30,8 @@ import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
 import org.atoiks.games.nappou2.entities.Game;
+
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
 
 import static org.atoiks.games.nappou2.Utils.dropEnemy;
 import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
@@ -42,6 +45,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 public abstract class AbstractWave0 implements LevelState {
 
     private static final long serialVersionUID = 2073727756645267798L;
+
+    private static final ImmutableCircle BOUNDARY_650_M1 = new ImmutableCircle(new Vector2(650, -1), 100);
+    private static final ImmutableCircle BOUNDARY_100_M1 = new ImmutableCircle(new Vector2(100, -1), 100);
 
     private transient Clip bgm;
 
@@ -98,7 +104,7 @@ public abstract class AbstractWave0 implements LevelState {
     }
 
     protected void circularPathEnemies(Game game) {
-        game.addEnemy(circularPathEnemy(1, 650, -1, 8, 100, 1, 1, 0, 100));
-        game.addEnemy(circularPathEnemy(1, 100, -1, 8, 100, -1, 1, 2, 100));
+        game.addEnemy(circularPathEnemy(1, BOUNDARY_650_M1, 8, 1, 1, 0, 100));
+        game.addEnemy(circularPathEnemy(1, BOUNDARY_100_M1, 8, -1, 1, 2, 100));
     }
 }

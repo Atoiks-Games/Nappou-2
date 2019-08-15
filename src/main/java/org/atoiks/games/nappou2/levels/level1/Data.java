@@ -20,6 +20,10 @@ package org.atoiks.games.nappou2.levels.level1;
 
 import java.util.Random;
 
+import org.atoiks.games.nappou2.Vector2;
+
+import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
+
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
 public final class Data {
@@ -36,6 +40,13 @@ public final class Data {
 
     public static final float[] w4eX = { 30, GAME_BORDER - 30, 10, GAME_BORDER - 10 };
     public static final float[] w4eR = { 0, (float) Math.PI, (float) (Math.PI / 2), (float) (Math.PI / 2) };
+
+    public static final ImmutableCircle BOUNDARY_750_0 = new ImmutableCircle(new Vector2(750, 0), 100);
+    public static final ImmutableCircle BOUNDARY_0_0 = new ImmutableCircle(Vector2.ZERO, 100);
+    public static final ImmutableCircle BOUNDARY_750_50 = new ImmutableCircle(new Vector2(750, 50), 100);
+    public static final ImmutableCircle BOUNDARY_0_50 = new ImmutableCircle(new Vector2(0, 50), 100);
+    public static final ImmutableCircle BOUNDARY_750_600 = new ImmutableCircle(new Vector2(750, 600), 100);
+    public static final ImmutableCircle BOUNDARY_0_600 = new ImmutableCircle(new Vector2(0, 600), 100);
 
     private Data() {
     }
