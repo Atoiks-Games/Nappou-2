@@ -31,6 +31,9 @@ import org.atoiks.games.framework2d.resource.Font;
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.GameConfig;
 
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.LevelContext;
+
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
@@ -38,8 +41,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     public static final Color BACKGROUND_COLOR = new Color(192, 192, 192, 100);
 
-    private static final int[] SELECTOR_Y = {342, 402};
-    private static final int SEL_RESUME_GAME = 0;
+    private static final int[] SELECTOR_Y = {342, 402, 462};
     private static final int OPT_HEIGHT = 37;
 
     private int selector;
@@ -50,11 +52,14 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final Font font80;
     private final Keymap keymap;
 
-    public PauseOverlay(Font font) {
+    private final LevelContext levelCtx;
+
+    public PauseOverlay(Font font, LevelContext levelCtx) {
         this.font30 = font.deriveSize(30f);
         this.font80 = font.deriveSize(80f);
 
         this.keymap = ResourceManager.<GameConfig>get("./game.cfg").keymap;
+        this.levelCtx = levelCtx;
     }
 
     public void enable() {
@@ -77,7 +82,8 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         this.font80.renderText(g, "PAUSE", 274, 202);
 
         this.font30.renderText(g, "Continue Game", 52, 373);
-        this.font30.renderText(g, "Return to Title", 52, 433);
+        this.font30.renderText(g, "Restart Level", 52, 433);
+        this.font30.renderText(g, "Return to Title", 52, 493);
         g.drawRect(45, SELECTOR_Y[selector], 49, SELECTOR_Y[selector] + OPT_HEIGHT);
     }
 
@@ -96,8 +102,22 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             enabled = false;
 
-            if (selector != SEL_RESUME_GAME) {
-                SceneManager.swapScene(new TitleScene());
+            switch (selector) {
+                default:
+                case 0:
+                    break;
+                case 1: {
+                    final LevelState state = this.levelCtx
+                            .getState()
+                            .getAssociatedLevel();
+                    state.restore(this.levelCtx);
+                    this.levelCtx.reset();
+                    this.levelCtx.setState(state);
+                    break;
+                }
+                case 2:
+                    SceneManager.swapScene(new TitleScene());
+                    break;
             }
             return;
         }
