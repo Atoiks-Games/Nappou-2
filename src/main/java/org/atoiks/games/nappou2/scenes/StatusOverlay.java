@@ -44,14 +44,14 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
     private final Font font;
     private final ScoreCounter scoreCounter;
     private final Shield shield;
-    private final Texture hpImg;
+    private final Texture circImg;
     private final SaveData save;
 
     public StatusOverlay(Font font, final Player player) {
         this.font = font.deriveSize(16f);
         this.scoreCounter = player.getScoreCounter();
         this.shield = player.getShield();
-        this.hpImg = ResourceManager.get("/image/hp.png");
+        this.circImg = ResourceManager.get("/image/circ.png");
         this.save = ResourceManager.get("./saves.dat");
     }
 
@@ -72,11 +72,16 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             final CounterBasedShield cbs = (CounterBasedShield) this.shield;
 
             final int activationsRemaining = cbs.getTimesRemaining();
+
             this.font.renderText(g, "Shields Remaining", GAME_BORDER + 2, 96);
-            this.font.renderText(g, activationsRemaining == 0 ? "None" : Integer.toString(activationsRemaining), GAME_BORDER + 5, 112);
+
+            final int w = circImg.getWidth();
+            for (int i = 0; i < activationsRemaining; ++i) {
+                g.drawTexture(circImg, GAME_BORDER + 5 + i * w, 100);
+            }
 
             if (cbs.isReady()) {
-                this.font.renderText(g, "Ready", GAME_BORDER + 78, 112);
+                this.font.renderText(g, "Ready", GAME_BORDER + 78, 114);
             }
         } else if (this.shield instanceof TimedReloadShield) {
             final TimedReloadShield trs = (TimedReloadShield) this.shield;
