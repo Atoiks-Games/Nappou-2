@@ -32,6 +32,7 @@ import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
+import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -156,11 +157,23 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
 
         this.game.performCollisionCheck();
         if (this.game.shouldAbort()) {
-            SceneManager.swapScene(new TitleScene());
+            this.performAbort();
             return;
         }
 
         state.updateLevel(this, dt);
+    }
+
+    private void performAbort() {
+        // Try to restart at the most recent checkpoint
+        // before sending player back to the title scene
+
+        final SaveData saves = ResourceManager.get("./saves.dat");
+        if (saves.getCheckpoint() instanceof NullState) {
+            SceneManager.swapScene(new TitleScene());
+        } else {
+            unwindAndStartLevel(new Player(saves.getShieldCopy()), saves.getCheckpoint());
+        }
     }
 
     /* package */ static void unwindAndStartLevel(Player player, LevelState state) {

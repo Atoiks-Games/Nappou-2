@@ -20,13 +20,10 @@ package org.atoiks.games.nappou2.levels.level1.easy;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.ResourceManager;
-
 import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
+import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
 import org.atoiks.games.nappou2.entities.Game;
 
@@ -38,29 +35,22 @@ import org.atoiks.games.nappou2.pathway.FixedVelocity;
 
 import org.atoiks.games.nappou2.pattern.RandomDropPattern;
 
-public class EasyWave7 implements LevelState {
+import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
+
+public class EasyWave7 extends AbstractGameWave {
 
     private static final long serialVersionUID = 4818290874443924057L;
 
     private static final RayInfo RAY_INFO = new RayInfo(25, 5, 500);
 
-    private transient int cycles;
-
-    private transient Clip bgm;
-
-    @Override
-    public void enter(final LevelContext ctx) {
-        this.cycles = 0;
-
-        this.bgm = ResourceManager.get("/music/Level_One.wav");
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-        }
+    public EasyWave7() {
+        super("/music/Level_One.wav");
     }
 
     @Override
-    public void exit() {
-        bgm.stop();
+    protected void configureBgm(Clip bgm) {
+        super.configureBgm(bgm);
+        bgm.setLoopPoints(LEVEL_LOOP, -1);
     }
 
     @Override

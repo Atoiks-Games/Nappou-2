@@ -31,6 +31,7 @@ import org.atoiks.games.nappou2.levels.level1.AbstractBossWave;
 public class EasyBossWave extends AbstractBossWave {
 
     private static final long serialVersionUID = 1914901384100845861L;
+
     private Clip bgm;
 
     public EasyBossWave() {
