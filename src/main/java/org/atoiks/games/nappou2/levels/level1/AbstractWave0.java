@@ -67,9 +67,9 @@ public abstract class AbstractWave0 implements LevelState {
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
+            bgm.start();
         }
     }
 
