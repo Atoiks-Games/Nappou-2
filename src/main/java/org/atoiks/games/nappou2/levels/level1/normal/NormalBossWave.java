@@ -33,9 +33,6 @@ public class NormalBossWave extends AbstractBossWave {
         super(new SaveScoreState(0), 100, 100, 100);
     }
 
-    private transient int cycles;
-    private transient int phase;
-
     @Override
     public void enter(final LevelContext ctx) {
         super.enter(ctx);
