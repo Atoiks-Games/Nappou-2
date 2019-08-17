@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.level1.hard;
 
-import org.atoiks.games.nappou2.Difficulty;
-
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
@@ -32,7 +30,7 @@ public class HardBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -963938928723781698L;
 
     public HardBossWave() {
-        super(new SaveScoreState(0, Difficulty.HARD), 200, 200, 200);
+        super(new SaveScoreState(0), 200, 200, 200);
     }
 
     @Override

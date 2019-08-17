@@ -21,7 +21,6 @@ package org.atoiks.games.nappou2.levels.level2;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.Difficulty;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.LevelState;
@@ -252,7 +251,7 @@ final class EasyBossWave implements LevelState {
 
     private static final long serialVersionUID = -4257651682666683051L;
 
-    private static final SaveScoreState EXIT_STATE = new SaveScoreState(1, Difficulty.EASY);
+    private static final SaveScoreState EXIT_STATE = new SaveScoreState(1);
 
     private transient int cycles;
 

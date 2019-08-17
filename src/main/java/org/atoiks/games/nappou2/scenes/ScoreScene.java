@@ -70,22 +70,18 @@ public final class ScoreScene extends CenteringScene {
         this.font30.renderText(g, PLANE_MSG[plane], 10, 30);
 
         final float size = this.font16.getSize();
-        final ScoreData.Pair[][][] splane = score.getScoreForPlane(plane);
+        final ScoreData.Pair[][] splane = score.getScoreForPlane(plane);
         for (int i = 0; i < splane.length; ++i) {
             final float bh = 55 + 8 * size * i;
             this.font16.renderText(g, "Level " + (i + 1), 20, bh);
-            for (int diffId = 0; diffId < Utils.DIFF_NAMES.length; ++diffId) {
-                final int bw = 60 + diffId * 200;
-                final ScoreData.Pair[] p = splane[i][diffId];
-                this.font16.renderText(g, Utils.DIFF_NAMES[diffId], bw, bh + size);
-                for (int j = 0; j < p.length; ++j) {
-                    final int offset = p.length - 1 - j;
-                    final ScoreData.Pair pair = p[offset];
+            final ScoreData.Pair[] p = splane[i];
+            for (int j = 0; j < p.length; ++j) {
+                final int offset = p.length - 1 - j;
+                final ScoreData.Pair pair = p[offset];
 
-                    if (pair != null && pair.isValid()) {
-                        this.font16.renderText(g, showName ? pair.getProcessedName() : pair.getProcessedScore(),
-                                bw + 10, bh + (j + 2) * size);
-                    }
+                if (pair != null && pair.isValid()) {
+                    this.font16.renderText(g, showName ? pair.getProcessedName() : pair.getProcessedScore(),
+                            70, bh + (j + 2) * size);
                 }
             }
         }

@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.level1.normal;
 
-import org.atoiks.games.nappou2.Difficulty;
-
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
@@ -32,7 +30,7 @@ public class NormalBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -4505613621927595705L;
 
     public NormalBossWave() {
-        super(new SaveScoreState(0, Difficulty.NORMAL), 100, 100, 100);
+        super(new SaveScoreState(0), 100, 100, 100);
     }
 
     private transient int cycles;

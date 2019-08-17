@@ -57,11 +57,6 @@ public final class Utils {
             new MultiTrackPattern(DEFAULT_BULLET_INFO,
                     0, (float) (Math.PI / 2), (float) Math.PI, (float) (-Math.PI / 2));
 
-    public static final String[] DIFF_NAMES =
-            Arrays.stream(Difficulty.values())
-                    .map(Object::toString)
-                    .toArray(String[]::new);
-
     private Utils() {
     }
 

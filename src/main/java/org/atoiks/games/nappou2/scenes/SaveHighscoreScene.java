@@ -31,7 +31,6 @@ import org.atoiks.games.framework2d.resource.Font;
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.Difficulty;
 
 public final class SaveHighscoreScene extends CenteringScene {
 
@@ -68,13 +67,11 @@ public final class SaveHighscoreScene extends CenteringScene {
     private final Font font80;
     private final Keymap keymap;
 
-    private final Difficulty diff;
     private final int levelId;
     private final int levelScore;
     private final boolean mode;
 
-    public SaveHighscoreScene(Difficulty diff, int levelId, int score, boolean mode) {
-        this.diff = diff;
+    public SaveHighscoreScene(int levelId, int score, boolean mode) {
         this.levelId = levelId;
         this.levelScore = score;
         this.mode = mode;
@@ -139,13 +136,11 @@ public final class SaveHighscoreScene extends CenteringScene {
                     break;
                 case BANK_LENGTH - 1: // Done
                     // We will save the score here!
-                    final int levelDiff = this.diff.ordinal();
-
                     final ScoreData scoreDat = ResourceManager.get("./score.dat");
                     final String name = currentStr.length() > NAME_LENGTH_CAP
                             ? currentStr.substring(0, NAME_LENGTH_CAP) : currentStr;
 
-                    scoreDat.updateScores(mode, levelId, levelDiff,
+                    scoreDat.updateScores(mode, levelId,
                             new ScoreData.Pair(name, (mode ? 2 : 1) * levelScore));
 
                     // Then transition to correct scene

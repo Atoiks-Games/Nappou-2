@@ -22,7 +22,6 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.scenes.TitleScene;
 import org.atoiks.games.nappou2.scenes.SaveHighscoreScene;
@@ -36,11 +35,9 @@ public final class SaveScoreState implements LevelState {
     private static final long serialVersionUID = -2383669267335286411L;
 
     private final int levelId;
-    private final Difficulty diff;
 
-    public SaveScoreState(int levelId, Difficulty diff) {
+    public SaveScoreState(int levelId) {
         this.levelId = levelId;
-        this.diff = diff;
     }
 
     @Override
@@ -49,7 +46,6 @@ public final class SaveScoreState implements LevelState {
 
         SceneManager.swapScene(new TitleScene());
         SceneManager.pushScene(new SaveHighscoreScene(
-                diff,
                 levelId,
                 ctx.getGame().player.getScoreCounter().getScore(),
                 mode));

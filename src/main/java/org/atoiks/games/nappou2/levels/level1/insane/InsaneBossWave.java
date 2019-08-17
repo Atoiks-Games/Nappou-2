@@ -18,8 +18,6 @@
 
 package org.atoiks.games.nappou2.levels.level1.insane;
 
-import org.atoiks.games.nappou2.Difficulty;
-
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
@@ -32,7 +30,7 @@ public class InsaneBossWave extends AbstractBossWave {
     private static final long serialVersionUID = -4184588301058618848L;
 
     public InsaneBossWave() {
-        super(new SaveScoreState(0, Difficulty.INSANE), 200, 250, 250);
+        super(new SaveScoreState(0), 200, 250, 250);
     }
 
     @Override

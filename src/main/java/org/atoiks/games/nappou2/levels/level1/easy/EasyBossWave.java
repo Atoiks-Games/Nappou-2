@@ -20,7 +20,6 @@ package org.atoiks.games.nappou2.levels.level1.easy;
 
 import org.atoiks.games.framework2d.ResourceManager;
 import javax.sound.sampled.Clip;
-import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
@@ -35,7 +34,7 @@ public class EasyBossWave extends AbstractBossWave {
     private Clip bgm;
 
     public EasyBossWave() {
-        super(new SaveScoreState(0, Difficulty.EASY), 50, 50, 50);
+        super(new SaveScoreState(0), 50, 50, 50);
     }
 
     @Override

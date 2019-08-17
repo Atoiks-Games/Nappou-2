@@ -30,7 +30,6 @@ import org.atoiks.games.nappou2.Utils;
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
-import org.atoiks.games.nappou2.Difficulty;
 
 import org.atoiks.games.nappou2.levels.level1.*;
 import org.atoiks.games.nappou2.levels.LevelState;
@@ -43,22 +42,8 @@ import org.atoiks.games.nappou2.entities.shield.NullShield;
 public final class DiffOptionScene extends OptionSelectScene {
 
     private static final Entry[] ENTRIES = {
-        new Entry("", new Vector2(98, 274)),
-        new Entry("", new Vector2(98, 334)),
-        new Entry("", new Vector2(98, 393)),
-        new Entry("", new Vector2(98, 491))
+        new Entry("The Only Game Mode~~~", new Vector2(98, 274))
     };
-
-    static {
-        if (ENTRIES.length != Utils.DIFF_NAMES.length) {
-            // Sanity check: these two must be the same!
-            throw new IllegalStateException("ENTRIES.length != Utils.DIFF_NAMES.length");
-        }
-
-        for (int i = 0; i < ENTRIES.length; ++i) {
-            ENTRIES[i].setText(Utils.DIFF_NAMES[i]);
-        }
-    }
 
     private final Font font80;
 
@@ -97,27 +82,7 @@ public final class DiffOptionScene extends OptionSelectScene {
         return true;
     }
 
-    private Difficulty getDiffFromOption() {
-        try {
-            return Difficulty.values()[this.getSelectedIndex()];
-        } catch (IndexOutOfBoundsException ex) {
-            return Difficulty.NORMAL;
-        }
-    }
-
     private LevelState getLevelFromOption() {
-        final Difficulty diff = getDiffFromOption();
-        switch (diff) {
-            case EASY:
-                return new Easy();
-            case NORMAL:
-                return new Normal();
-            case HARD:
-                return new Hard();
-            case INSANE:
-                return new Insane();
-            default:
-                throw new AssertionError("Unhandled difficulty: " + diff);
-        }
+        return new Easy();
     }
 }

@@ -81,7 +81,6 @@ public final class ScoreData implements Externalizable {
 
     // Only keep level 1 for now?
     public static final int LEVELS = 1;
-    public static final int DIFFICULTIES = Difficulty.values().length;
     public static final int KEPT_SCORES = 5;
 
     private static final int PANELS = 2;
@@ -89,41 +88,37 @@ public final class ScoreData implements Externalizable {
     private static final Comparator<ScoreData.Pair> NULLS_FIRST_CMP =
             Comparator.nullsFirst(Comparator.naturalOrder());
 
-    private Pair[][][][] data = makeScoreBuffer(PANELS, LEVELS, DIFFICULTIES, KEPT_SCORES);
+    private Pair[][][] data = makeScoreBuffer(PANELS, LEVELS, KEPT_SCORES);
 
     public void clear() {
-        for (final Pair[][][] p : data) {
-            for (final Pair[][] pp : p) {
-                for (final Pair[] ppp : pp) {
-                    Arrays.fill(ppp, null);
-                }
+        for (final Pair[][] p : data) {
+            for (final Pair[] pp : p) {
+                Arrays.fill(pp, null);
             }
         }
     }
 
     public void clear(int plane) {
-        final Pair[][][] p = data[plane];
-        for (final Pair[][] pp : p) {
-            for (final Pair[] ppp : pp) {
-                Arrays.fill(ppp, null);
-            }
+        final Pair[][] p = data[plane];
+        for (final Pair[] pp : p) {
+            Arrays.fill(pp, null);
         }
     }
 
-    public Pair[][][] getScoreForPlane(int plane) {
+    public Pair[][] getScoreForPlane(int plane) {
         return data[plane];
     }
 
-    public void updateScores(boolean challengeMode, int level, int difficulty, Pair newEntry) {
-        final Pair[] alias = data[challengeMode ? 1 : 0][level][difficulty];
+    public void updateScores(boolean challengeMode, int level, Pair newEntry) {
+        final Pair[] alias = data[challengeMode ? 1 : 0][level];
         final Pair[] acopy = Arrays.copyOf(alias, alias.length + 1);
         acopy[acopy.length - 1] = newEntry;
         Arrays.sort(acopy, NULLS_FIRST_CMP);
         System.arraycopy(acopy, 1, alias, 0, alias.length);
     }
 
-    private static Pair[][][][] makeScoreBuffer(int panels, int levels, int difficulties, int keptScores) {
-        return new Pair[panels][levels][difficulties][keptScores];
+    private static Pair[][][] makeScoreBuffer(int panels, int levels, int keptScores) {
+        return new Pair[panels][levels][keptScores];
     }
 
     @Override
@@ -131,13 +126,12 @@ public final class ScoreData implements Externalizable {
         // Read array size
         final int panels = stream.readInt();
         final int levels = stream.readInt();
-        final int difficulties = stream.readInt();
         final int keptScores = stream.readInt();
 
         // Check if the data written out has the same size
         // as the current one
         if (panels != PANELS || levels != LEVELS
-            || difficulties != DIFFICULTIES || keptScores != KEPT_SCORES)
+            || keptScores != KEPT_SCORES)
         {
             // If any size mismatches, we do not try to read from the stream.
             // Since constructor would have been called already, we would have
@@ -146,14 +140,12 @@ public final class ScoreData implements Externalizable {
         }
 
         // Read the actual scores
-        for (final Pair[][][] p : data) {
-            for (final Pair[][] pp : p) {
-                for (final Pair[] ppp : pp) {
-                    for (int i = 0; i < ppp.length; ++i) {
-                        final Pair pair = new Pair();
-                        pair.readExternal(stream);
-                        ppp[i] = pair;
-                    }
+        for (final Pair[][] p : data) {
+            for (final Pair[] pp : p) {
+                for (int i = 0; i < pp.length; ++i) {
+                    final Pair pair = new Pair();
+                    pair.readExternal(stream);
+                    pp[i] = pair;
                 }
             }
         }
@@ -164,19 +156,16 @@ public final class ScoreData implements Externalizable {
         // Write out array size
         stream.writeInt(PANELS);
         stream.writeInt(LEVELS);
-        stream.writeInt(DIFFICULTIES);
         stream.writeInt(KEPT_SCORES);
 
         // Allocate dummy score pair just in case some pairs are null
         final Pair dummy = new Pair("", -1);
 
         // Write out actual data
-        for (final Pair[][][] p : data) {
-            for (final Pair[][] pp : p) {
-                for (final Pair[] ppp : pp) {
-                    for (final Pair pppp : ppp) {
-                        (pppp != null ? pppp : dummy).writeExternal(stream);
-                    }
+        for (final Pair[][] p : data) {
+            for (final Pair[] pp : p) {
+                for (final Pair ppp : pp) {
+                    (ppp != null ? ppp : dummy).writeExternal(stream);
                 }
             }
         }
