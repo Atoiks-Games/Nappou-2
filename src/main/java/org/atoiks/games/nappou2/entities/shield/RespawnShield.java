@@ -32,7 +32,7 @@ public final class RespawnShield extends TimeBasedShield {
     private static final Renderer RENDERER = new OutlineRenderer(Color.red);
 
     public RespawnShield() {
-        super(3f, 0, Player.RADIUS);
+        super(3f, Player.RADIUS);
     }
 
     @Override

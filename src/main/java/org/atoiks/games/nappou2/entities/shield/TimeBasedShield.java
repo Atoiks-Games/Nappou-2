@@ -34,12 +34,10 @@ import org.atoiks.games.nappou2.graphics.OutlineRenderer;
 
 public abstract class TimeBasedShield implements ShieldEntity {
 
-    private static final long serialVersionUID = 172635916L;
+    private static final long serialVersionUID = 1607481798186246352L;
     private static final Renderer DEFAULT_RENDERER = new OutlineRenderer(Color.orange);
 
     // see read/writeObject
-    private transient Color color = Color.orange;
-    private transient float reloadTime;
     private transient float timeout;
 
     protected transient float r;
@@ -49,30 +47,27 @@ public abstract class TimeBasedShield implements ShieldEntity {
     protected transient float time;
 
     protected TimeBasedShield(final TimeBasedShield from) {
-        this(from.timeout, from.reloadTime, from.r);
-        this.color = from.color;
+        this(from.timeout, from.r);
     }
 
-    protected TimeBasedShield(final float timeout, final float reloadTime, final float r) {
+    protected TimeBasedShield(final float timeout, final float r) {
         this.timeout = timeout;
-        this.reloadTime = reloadTime;
-        this.time = timeout + reloadTime;
         this.r = r;
     }
 
     @Override
     public Vector2 getPosition() {
-        return position;
+        return this.position;
     }
 
     @Override
     public float getRadius() {
-        return r;
+        return this.r;
     }
 
     @Override
     public Renderer getRenderer() {
-        return active ? DEFAULT_RENDERER : NullRenderer.INSTANCE;
+        return this.active ? DEFAULT_RENDERER : NullRenderer.INSTANCE;
     }
 
     @Override
@@ -82,45 +77,37 @@ public abstract class TimeBasedShield implements ShieldEntity {
 
     @Override
     public void update(float dt) {
-        time += dt;
-        if (active && time >= timeout) {
-            deactivate();
+        if (!this.active) {
+            return;
+        }
+
+        this.time += dt;
+        if (this.time >= this.timeout) {
+            this.deactivate();
         }
     }
 
     @Override
     public void activate() {
-        if (!active && isReady()) {
-            active = true;
-            time = 0;
+        if (!this.active && this.isReady()) {
+            this.active = true;
         }
     }
 
     @Override
     public void deactivate() {
-        active = false;
+        this.active = false;
+        this.time = 0;
     }
 
     @Override
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
     @Override
     public boolean isReady() {
-        return time > timeout + reloadTime;
-    }
-
-    public void setColor(Color c) {
-        this.color = c != null ? c : Color.orange;
-    }
-
-    public Color getColor() {
-        return this.color;
-    }
-
-    protected final float getReloadTime() {
-        return this.reloadTime;
+        return this.time == 0;
     }
 
     protected final float getTimeout() {
@@ -131,11 +118,7 @@ public abstract class TimeBasedShield implements ShieldEntity {
         // Have java serialize as much as possible
         s.defaultWriteObject();
 
-        // Write color as packed bytes a, r, g, b
-        s.writeInt(this.color.getRGB());
-
         s.writeFloat(this.r);
-        s.writeFloat(this.reloadTime);
         s.writeFloat(this.timeout);
     }
 
@@ -143,11 +126,7 @@ public abstract class TimeBasedShield implements ShieldEntity {
         // Have java deserialize as much as possible
         s.defaultReadObject();
 
-        // Read color as packed bytes a, r, g, b
-        this.color = new Color(s.readInt(), true);
-
         this.r = s.readFloat();
-        this.reloadTime = s.readFloat();
         this.timeout = s.readFloat();
     }
 }
