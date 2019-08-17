@@ -35,11 +35,17 @@ public final class CounterBasedShield implements ShieldEntity {
     private transient ShieldEntity wrapper;
     private transient int maxTimes;
 
-    private transient int count = -1;
+    private transient int count;
 
     public CounterBasedShield(ShieldEntity wrapper, int maxTimes) {
         this.wrapper = wrapper;
         this.maxTimes = maxTimes;
+
+        this.resetCounter();
+    }
+
+    public void resetCounter() {
+        this.count = -1;
     }
 
     @Override
