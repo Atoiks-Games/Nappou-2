@@ -86,7 +86,9 @@ public final class CounterBasedShield implements ShieldEntity {
 
     @Override
     public CounterBasedShield copy() {
-        return new CounterBasedShield(wrapper.copy(), this.maxTimes);
+        // Unlike other shields, this only copies the internal shield
+        this.wrapper = this.wrapper.copy();
+        return this;
     }
 
     @Override
