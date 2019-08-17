@@ -20,39 +20,28 @@ package org.atoiks.games.nappou2.levels.level1.easy;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.ResourceManager;
-
-import org.atoiks.games.nappou2.GameConfig;
-
-import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
+import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
 import org.atoiks.games.nappou2.entities.Game;
 
 import static org.atoiks.games.nappou2.Utils.squirts;
 import static org.atoiks.games.nappou2.Utils.streamBeam;
 
-public class EasyWave6 implements LevelState {
+import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
+
+public class EasyWave6 extends AbstractGameWave {
 
     private static final long serialVersionUID = -4818209983669418715L;
 
-    private transient int cycles;
-
-    private transient Clip bgm;
-
-    @Override
-    public void enter(final LevelContext ctx) {
-        this.cycles = 0;
-
-        this.bgm = ResourceManager.get("/music/Level_One.wav");
-        if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
-            bgm.start();
-        }
+    public EasyWave6() {
+        super("/music/Level_One.wav");
     }
 
     @Override
-    public void exit() {
-        bgm.stop();
+    protected void configureBgm(Clip bgm) {
+        super.configureBgm(bgm);
+        bgm.setLoopPoints(LEVEL_LOOP, -1);
     }
 
     @Override

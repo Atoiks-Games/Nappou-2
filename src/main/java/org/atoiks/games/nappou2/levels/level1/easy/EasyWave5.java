@@ -20,17 +20,12 @@ package org.atoiks.games.nappou2.levels.level1.easy;
 
 import javax.sound.sampled.Clip;
 
-import org.atoiks.games.framework2d.ResourceManager;
-
 import org.atoiks.games.nappou2.Vector2;
-import org.atoiks.games.nappou2.SaveData;
-import org.atoiks.games.nappou2.GameConfig;
 
-import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
+import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
 import org.atoiks.games.nappou2.entities.Game;
-import org.atoiks.games.nappou2.entities.DefaultRestoreData;
 
 import org.atoiks.games.nappou2.entities.enemy.PathwayEnemy;
 
@@ -42,58 +37,21 @@ import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
-import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
-
-public class EasyWave5 implements LevelState {
+public class EasyWave5 extends AbstractGameWave {
 
     private static final long serialVersionUID = 5308372197610362137L;
 
     private static final ImmutableEllipses BOUNDARY_1 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(310, 310));
     private static final ImmutableEllipses BOUNDARY_2 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(350, 350));
 
-    private final DefaultRestoreData data = new DefaultRestoreData();
-
-    private transient int cycles;
-
-    private transient Clip bgm;
-
-    @Override
-    public void restore(final LevelContext ctx) {
-        final Game game = ctx.getGame();
-        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        this.data.restore(game);
-
-        // Restart music if we resume
-        this.bgm = ResourceManager.get("/music/Level_One.wav");
-        this.bgm.setMicrosecondPosition(0);
+    public EasyWave5() {
+        super("/music/Level_One.wav");
     }
 
     @Override
-    public void enter(final LevelContext ctx) {
-        this.cycles = 0;
-
-        final Game game = ctx.getGame();
-        this.data.fetch(game);
-
-        final GameConfig cfg = ResourceManager.get("./game.cfg");
-
-        if (this.bgm == null) {
-            bgm = ResourceManager.get("/music/Level_One.wav");
-        }
-
-        if (cfg.bgm) {
-            bgm.start();
-            bgm.setLoopPoints(LEVEL_LOOP, -1);
-            bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        ResourceManager.<SaveData>get("./saves.dat").setCheckpoint(this);
-    }
-
-    @Override
-    public void exit() {
-        bgm.stop();
+    protected void configureBgm(Clip bgm) {
+        super.configureBgm(bgm);
+        bgm.setLoopPoints(LEVEL_LOOP, -1);
     }
 
     @Override
