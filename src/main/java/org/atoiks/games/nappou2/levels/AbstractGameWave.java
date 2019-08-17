@@ -55,15 +55,29 @@ public abstract class AbstractGameWave implements LevelState, Externalizable {
 
     @Override
     public void restore(final LevelContext ctx) {
-        final Game game = ctx.getGame();
-        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        this.restoreData.restore(game);
+        this.defaultRestore(ctx);
 
         // Restart music if we resume
         if (this.bgmPath != null) {
             this.bgm = ResourceManager.get(this.bgmPath);
             this.bgm.setMicrosecondPosition(0);
         }
+    }
+
+    @Override
+    public void respawn(final LevelContext ctx) {
+        this.defaultRestore(ctx);
+
+        // Fetch the music, but no not start from beginning
+        if (this.bgmPath != null) {
+            this.bgm = ResourceManager.get(this.bgmPath);
+        }
+    }
+
+    private void defaultRestore(final LevelContext ctx) {
+        final Game game = ctx.getGame();
+        game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
+        this.restoreData.restore(game);
     }
 
     @Override
