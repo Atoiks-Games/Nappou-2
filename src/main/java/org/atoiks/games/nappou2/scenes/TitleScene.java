@@ -30,14 +30,18 @@ import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.resource.Font;
-
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.NullState;
+import org.atoiks.games.nappou2.levels.LevelState;
+import org.atoiks.games.nappou2.levels.level1.Easy;
+import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.Player;
+
+import org.atoiks.games.nappou2.entities.shield.NullShield;
 
 public final class TitleScene extends OptionSelectScene {
 
@@ -115,7 +119,7 @@ public final class TitleScene extends OptionSelectScene {
                     GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint());
                     break;
                 case 1:
-                    SceneManager.pushScene(new DiffOptionScene());
+                    startGameOption();
                     break;
                 case 2:
                     SceneManager.pushScene(new ScoreScene());
@@ -135,5 +139,19 @@ public final class TitleScene extends OptionSelectScene {
             return true;
         }
         return true;
+    }
+
+    private void startGameOption() {
+        final LevelState level = new Preface(new Easy());
+        if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
+            // Challenge mode forces you to use no shields,
+            // so there is no need to jump into shield-option-scene.
+
+            final NullShield shield = NullShield.INSTANCE;
+            ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
+            GameLevelScene.unwindAndStartLevel(new Player(shield), level);
+        } else {
+            SceneManager.pushScene(new ShieldOptionScene(level));
+        }
     }
 }
