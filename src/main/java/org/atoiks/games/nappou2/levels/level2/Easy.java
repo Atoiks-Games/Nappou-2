@@ -61,7 +61,7 @@ public final class Easy implements LevelState {
         final Game game = ctx.getGame();
         game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(saveData.isChallengeMode() ? 1 : 5);
+        game.player.getHpCounter().restoreTo(1);
         game.player.getScoreCounter().reset();
     }
 
