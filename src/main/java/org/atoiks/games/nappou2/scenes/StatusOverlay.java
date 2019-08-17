@@ -28,11 +28,10 @@ import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.ScoreCounter;
-import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.Player;
 
-import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.*;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -44,17 +43,15 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private final Font font;
     private final ScoreCounter scoreCounter;
-    private final HitpointCounter hpCounter;
     private final Shield shield;
-    private final Texture hpImg;
+    private final Texture circImg;
     private final SaveData save;
 
     public StatusOverlay(Font font, final Player player) {
         this.font = font.deriveSize(16f);
-        this.hpCounter = player.getHpCounter();
         this.scoreCounter = player.getScoreCounter();
         this.shield = player.getShield();
-        this.hpImg = ResourceManager.get("/image/hp.png");
+        this.circImg = ResourceManager.get("/image/circ.png");
         this.save = ResourceManager.get("./saves.dat");
     }
 
@@ -65,25 +62,46 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         g.setColor(Color.white);
-        this.font.renderText(g, "HP Remaining", GAME_BORDER + 2, 16);
-        this.font.renderText(g, "Score", GAME_BORDER + 2, 58);
-
-        final int hp = this.hpCounter.getHp();
-        final int w = hpImg.getWidth();
-        for (int i = 0; i < hp; ++i) {
-            g.drawTexture(hpImg, GAME_BORDER + 5 + i * w, 24);
-        }
+        this.font.renderText(g, "Score", GAME_BORDER + 2, 16);
 
         final int rawScore = this.scoreCounter.getScore();
         final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
-        this.font.renderText(g, str, GAME_BORDER + 5, 74);
+        this.font.renderText(g, str, GAME_BORDER + 5, 32);
 
-        if (this.shield.isReady()) {
+        if (this.shield instanceof CounterBasedShield) {
+            final CounterBasedShield cbs = (CounterBasedShield) this.shield;
+
+            final int activationsRemaining = cbs.getTimesRemaining();
+
+            this.font.renderText(g, "Shields Remaining", GAME_BORDER + 2, 56);
+
+            final int w = circImg.getWidth();
+            for (int i = 0; i < activationsRemaining; ++i) {
+                g.drawTexture(circImg, GAME_BORDER + 5 + i * w, 60);
+            }
+
+            if (cbs.isReady()) {
+                this.font.renderText(g, "Ready", GAME_BORDER + 78, 74);
+            }
+        } else if (this.shield instanceof TimedReloadShield) {
+            final TimedReloadShield trs = (TimedReloadShield) this.shield;
+
+            final float secondsRemaining = trs.getRemainingReloadTime();
+            if (secondsRemaining > 0) {
+                this.font.renderText(g, "Shield Reloading", GAME_BORDER + 2, 96);
+                this.font.renderText(g, String.format("%.1fs left", secondsRemaining), GAME_BORDER + 5, 112);
+            } else if (trs.isReady()) {
+                this.font.renderText(g, "Shield Ready", GAME_BORDER + 2, 96);
+            } else if (trs.isActive()) {
+                this.font.renderText(g, "Shield Active", GAME_BORDER + 2, 96);
+            }
+        } else if (this.shield.isReady()) {
+            // Default way of notifying a shield that is ready
             this.font.renderText(g, "Shield Ready", GAME_BORDER + 30, 96);
         }
 
         if (this.save.isChallengeMode()) {
-            this.font.renderText(g, "Challenge Mode", GAME_BORDER + 28, 120);
+            this.font.renderText(g, "Challenge Mode", GAME_BORDER + 28, 136);
         }
     }
 }
