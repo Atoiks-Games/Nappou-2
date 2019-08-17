@@ -32,7 +32,7 @@ import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.entities.Player;
 
-import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.*;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.WIDTH;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -78,12 +78,35 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
         this.font.renderText(g, str, GAME_BORDER + 5, 74);
 
-        if (this.shield.isReady()) {
+        if (this.shield instanceof CounterBasedShield) {
+            final CounterBasedShield cbs = (CounterBasedShield) this.shield;
+
+            final int activationsRemaining = cbs.getTimesRemaining();
+            this.font.renderText(g, "Shields Remaining", GAME_BORDER + 2, 96);
+            this.font.renderText(g, activationsRemaining == 0 ? "None" : Integer.toString(activationsRemaining), GAME_BORDER + 5, 112);
+
+            if (cbs.isReady()) {
+                this.font.renderText(g, "Ready", GAME_BORDER + 78, 112);
+            }
+        } else if (this.shield instanceof TimedReloadShield) {
+            final TimedReloadShield trs = (TimedReloadShield) this.shield;
+
+            final float secondsRemaining = trs.getRemainingReloadTime();
+            if (secondsRemaining > 0) {
+                this.font.renderText(g, "Shield Reloading", GAME_BORDER + 2, 96);
+                this.font.renderText(g, String.format("%.1fs left", secondsRemaining), GAME_BORDER + 5, 112);
+            } else if (trs.isReady()) {
+                this.font.renderText(g, "Shield Ready", GAME_BORDER + 2, 96);
+            } else if (trs.isActive()) {
+                this.font.renderText(g, "Shield Active", GAME_BORDER + 2, 96);
+            }
+        } else if (this.shield.isReady()) {
+            // Default way of notifying a shield that is ready
             this.font.renderText(g, "Shield Ready", GAME_BORDER + 30, 96);
         }
 
         if (this.save.isChallengeMode()) {
-            this.font.renderText(g, "Challenge Mode", GAME_BORDER + 28, 120);
+            this.font.renderText(g, "Challenge Mode", GAME_BORDER + 28, 136);
         }
     }
 }
