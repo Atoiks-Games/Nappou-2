@@ -18,6 +18,11 @@
 
 package org.atoiks.games.nappou2.levels;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Externalizable;
+
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
@@ -34,17 +39,15 @@ import org.atoiks.games.nappou2.entities.DefaultRestoreData;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public abstract class AbstractGameWave implements LevelState {
+public abstract class AbstractGameWave implements LevelState, Externalizable {
 
     private static final long serialVersionUID = -6227625815801486593L;
 
     protected final DefaultRestoreData restoreData = new DefaultRestoreData();
+    protected int cycles;
 
-    protected transient int cycles;
-
-    private final String bgmPath;
-
-    private transient Clip bgm;
+    private String bgmPath;
+    private Clip bgm;
 
     protected AbstractGameWave(String bgmPath) {
         this.bgmPath = bgmPath;
@@ -91,5 +94,17 @@ public abstract class AbstractGameWave implements LevelState {
     @Override
     public void exit() {
         this.bgm.stop();
+    }
+
+    @Override
+    public void writeExternal(final ObjectOutput s) throws IOException {
+        this.restoreData.writeExternal(s);
+        s.writeUTF(this.bgmPath);
+    }
+
+    @Override
+    public void readExternal(final ObjectInput s) throws IOException, ClassNotFoundException {
+        this.restoreData.readExternal(s);
+        this.bgmPath = s.readUTF();
     }
 }
