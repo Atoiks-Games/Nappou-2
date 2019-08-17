@@ -78,8 +78,8 @@ public final class ShieldOptionScene extends OptionSelectScene {
     private ShieldEntity getShieldFromOption() {
         switch (this.getSelectedIndex()) {
             default:
-            case 0: return new TimedReloadShield(new FixedTimeShield(3.5f, 50), 2);
-            case 1: return new TimedReloadShield(new TrackingTimeShield(2f, 35), 3);
+            case 0: return new CounterBasedShield(new FixedTimeShield(3.5f, 50), 3);
+            case 1: return new CounterBasedShield(new TrackingTimeShield(2f, 35), 3);
             case 2: return NullShield.INSTANCE;
         }
     }
