@@ -46,6 +46,10 @@ public final class TimedReloadShield implements ShieldEntity {
         return this.timeRemaining > 0;
     }
 
+    public float getRemainingReloadTime() {
+        return Math.max(this.timeRemaining, 0);
+    }
+
     public void restartReloadTimer() {
         this.timeRemaining = this.reloadTime;
     }
