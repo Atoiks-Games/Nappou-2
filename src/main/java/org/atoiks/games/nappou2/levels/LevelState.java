@@ -31,6 +31,17 @@ public interface LevelState extends Serializable {
     public default void restore(LevelContext ctx) {
     }
 
+    /**
+     * Only called when player dies and the game restarts
+     * the most recent checkpoint.
+     * If called, it will happen before the enter method.
+     *
+     * Defaults to the restore method!
+     */
+    public default void respawn(LevelContext ctx) {
+        this.restore(ctx);
+    }
+
     // Maybe pass in the previous state?
     public default void enter(LevelContext ctx) {
     }

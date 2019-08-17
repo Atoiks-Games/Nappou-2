@@ -172,14 +172,18 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
         if (saves.getCheckpoint() instanceof NullState) {
             SceneManager.swapScene(new TitleScene());
         } else {
-            unwindAndStartLevel(new Player(saves.getShieldCopy()), saves.getCheckpoint());
+            unwindAndStartLevel(new Player(saves.getShieldCopy()), saves.getCheckpoint(), false);
         }
     }
 
-    /* package */ static void unwindAndStartLevel(Player player, LevelState state) {
+    /* package */ static void unwindAndStartLevel(Player player, LevelState state, boolean callRestore) {
         final GameLevelScene next = new GameLevelScene(player);
         SceneManager.unwindToScene(next);
-        state.restore(next);
+        if (callRestore) {
+            state.restore(next);
+        } else {
+            state.respawn(next);
+        }
         next.setState(state);
     }
 }

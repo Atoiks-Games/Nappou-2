@@ -116,7 +116,7 @@ public final class TitleScene extends OptionSelectScene {
             final int selector = this.getSelectedIndex();
             switch (selector) {
                 case 0:
-                    GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint());
+                    GameLevelScene.unwindAndStartLevel(new Player(this.saves.getShieldCopy()), this.saves.getCheckpoint(), true);
                     break;
                 case 1:
                     startGameOption();
@@ -149,7 +149,7 @@ public final class TitleScene extends OptionSelectScene {
 
             final NullShield shield = NullShield.INSTANCE;
             ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
-            GameLevelScene.unwindAndStartLevel(new Player(shield), level);
+            GameLevelScene.unwindAndStartLevel(new Player(shield), level, true);
         } else {
             SceneManager.pushScene(new ShieldOptionScene(level));
         }

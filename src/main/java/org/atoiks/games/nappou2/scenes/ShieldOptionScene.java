@@ -70,7 +70,7 @@ public final class ShieldOptionScene extends OptionSelectScene {
         if (Input.isKeyPressed(KeyCode.KEY_ENTER)) {
             final ShieldEntity shield = getShieldFromOption();
             ResourceManager.<SaveData>get("./saves.dat").setShield(shield);
-            GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState);
+            GameLevelScene.unwindAndStartLevel(new Player(shield.copy()), this.nextState, true);
         }
         return true;
     }
