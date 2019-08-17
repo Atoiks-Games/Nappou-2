@@ -32,6 +32,9 @@ import org.atoiks.games.nappou2.spawner.SmallFishSpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
 
+import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.CounterBasedShield;
+
 import org.atoiks.games.nappou2.levels.level1.easy.EasyWave1;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
@@ -61,6 +64,11 @@ public final class Easy implements LevelState {
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(1);
         game.player.getScoreCounter().reset();
+
+        final Shield shield = game.player.getShield();
+        if (shield instanceof CounterBasedShield) {
+            ((CounterBasedShield) shield).resetCounter();
+        }
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {

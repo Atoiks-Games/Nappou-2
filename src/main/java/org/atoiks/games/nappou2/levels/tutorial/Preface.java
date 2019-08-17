@@ -34,6 +34,9 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.entities.Game;
 
+import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.CounterBasedShield;
+
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
@@ -65,6 +68,11 @@ public final class Preface implements LevelState {
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
         game.player.getHpCounter().restoreTo(1);
         game.player.getScoreCounter().reset();
+
+        final Shield shield = game.player.getShield();
+        if (shield instanceof CounterBasedShield) {
+            ((CounterBasedShield) shield).resetCounter();
+        }
     }
 
     @Override
