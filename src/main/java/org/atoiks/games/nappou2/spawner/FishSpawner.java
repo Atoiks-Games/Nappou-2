@@ -73,6 +73,7 @@ public abstract class FishSpawner implements Spawner {
         final PathwayEnemy enemy = new PathwayEnemy(hp, hp);
         enemy.setRadius(r);
         enemy.setPathway(new FishPathway(new Vector2(x, y), speed, direction, (alt ? -1 : 1) * amplitude, wspd));
+        enemy.setBuffer(101);
         // XXX: currently has no attack pattern
         return enemy;
     }

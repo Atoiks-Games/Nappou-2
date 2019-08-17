@@ -41,6 +41,7 @@ public final class PathwayEnemy extends AbstractEnemy {
     private Vector2 displacement = Vector2.ZERO;
 
     private final int score;
+    private int SCREEN_EDGE_BUFFER = 16;
 
     public PathwayEnemy(int hp, int score) {
         this(hp, score, FixedPosition.DEFAULT, NullPattern.INSTANCE, IdentitySizer.INSTANCE);
@@ -91,6 +92,10 @@ public final class PathwayEnemy extends AbstractEnemy {
         this.displacement = Vector2.ZERO;
     }
 
+    public void setBuffer(int buff) {
+        this.SCREEN_EDGE_BUFFER = buff;
+    }
+
     @Override
     public void update(float dt) {
         path.update(dt);
@@ -122,5 +127,17 @@ public final class PathwayEnemy extends AbstractEnemy {
     @Override
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean isOutOfScreen(final int w, final int h) {
+        final Vector2 pos = this.getPosition();
+        final float x = pos.getX();
+        final float y = pos.getY();
+        final float r = getRadius();
+        return (x + r < -this.SCREEN_EDGE_BUFFER)
+            || (x - r > w + this.SCREEN_EDGE_BUFFER)
+            || (y + r < -this.SCREEN_EDGE_BUFFER)
+            || (y - r > h + this.SCREEN_EDGE_BUFFER);
     }
 }
