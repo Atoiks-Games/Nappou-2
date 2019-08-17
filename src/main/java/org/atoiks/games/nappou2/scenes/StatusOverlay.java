@@ -62,26 +62,26 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
         g.drawLine(GAME_BORDER, 0, GAME_BORDER, HEIGHT);
 
         g.setColor(Color.white);
-        this.font.renderText(g, "Score", GAME_BORDER + 2, 58);
+        this.font.renderText(g, "Score", GAME_BORDER + 2, 16);
 
         final int rawScore = this.scoreCounter.getScore();
         final String str = rawScore == 0 ? "0" : Integer.toString(rawScore) + "000";
-        this.font.renderText(g, str, GAME_BORDER + 5, 74);
+        this.font.renderText(g, str, GAME_BORDER + 5, 32);
 
         if (this.shield instanceof CounterBasedShield) {
             final CounterBasedShield cbs = (CounterBasedShield) this.shield;
 
             final int activationsRemaining = cbs.getTimesRemaining();
 
-            this.font.renderText(g, "Shields Remaining", GAME_BORDER + 2, 96);
+            this.font.renderText(g, "Shields Remaining", GAME_BORDER + 2, 56);
 
             final int w = circImg.getWidth();
             for (int i = 0; i < activationsRemaining; ++i) {
-                g.drawTexture(circImg, GAME_BORDER + 5 + i * w, 100);
+                g.drawTexture(circImg, GAME_BORDER + 5 + i * w, 60);
             }
 
             if (cbs.isReady()) {
-                this.font.renderText(g, "Ready", GAME_BORDER + 78, 114);
+                this.font.renderText(g, "Ready", GAME_BORDER + 78, 74);
             }
         } else if (this.shield instanceof TimedReloadShield) {
             final TimedReloadShield trs = (TimedReloadShield) this.shield;
