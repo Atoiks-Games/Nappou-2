@@ -111,4 +111,9 @@ public final class Stage implements LevelState {
                 }
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this;
+    }
 }

@@ -28,6 +28,8 @@ import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
+import org.atoiks.games.nappou2.levels.level1.Stage;
+
 import org.atoiks.games.nappou2.entities.enemy.Level1Easy;
 
 import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
@@ -94,5 +96,10 @@ public class BossWave implements LevelState {
             ctx.setState(new PostbossDialog(new SaveScoreState(0)));
             return;
         }
+    }
+
+    @Override
+    public Stage getAssociatedLevel() {
+        return new Stage();
     }
 }

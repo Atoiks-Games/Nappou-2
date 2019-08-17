@@ -63,4 +63,9 @@ public abstract class AbstractDialogState implements LevelState, Iterator<Messag
             this.fetchMessage = true;
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this.nextState.getAssociatedLevel();
+    }
 }

@@ -244,6 +244,11 @@ public final class Stage implements LevelState {
                 break;
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this;
+    }
 }
 
 final class BossWave implements LevelState {
@@ -276,5 +281,10 @@ final class BossWave implements LevelState {
             ctx.setState(new PostbossDialog(EXIT_STATE));
             return;
         }
+    }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return new Stage();
     }
 }

@@ -23,6 +23,8 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
+import org.atoiks.games.nappou2.levels.level1.Stage;
+
 import org.atoiks.games.nappou2.entities.Game;
 
 import static org.atoiks.games.nappou2.Utils.streamBeam;
@@ -64,5 +66,10 @@ public class Wave4 extends AbstractGameWave {
                     return;
                 }
         }
+    }
+
+    @Override
+    public Stage getAssociatedLevel() {
+        return new Stage();
     }
 }

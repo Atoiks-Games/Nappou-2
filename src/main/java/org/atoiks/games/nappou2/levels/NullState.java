@@ -40,4 +40,9 @@ public final class NullState implements LevelState {
     private Object readResolve() throws ObjectStreamException {
         return INSTANCE;
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this;
+    }
 }

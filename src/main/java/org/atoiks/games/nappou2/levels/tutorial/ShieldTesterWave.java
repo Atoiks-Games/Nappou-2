@@ -94,4 +94,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
             }
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return new Preface(this.nextState);
+    }
 }

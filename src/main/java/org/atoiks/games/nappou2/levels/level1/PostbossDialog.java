@@ -26,9 +26,12 @@ import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractDialogState;
 
+import org.atoiks.games.nappou2.levels.level1.Stage;
+
 import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
+
 
 public final class PostbossDialog extends AbstractDialogState {
 
@@ -61,5 +64,10 @@ public final class PostbossDialog extends AbstractDialogState {
     public Message next() {
         this.firstRun = false;
         return MESSAGE;
+    }
+
+    @Override
+    public Stage getAssociatedLevel() {
+        return new Stage();
     }
 }
