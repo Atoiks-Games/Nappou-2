@@ -44,6 +44,10 @@ public final class CounterBasedShield implements ShieldEntity {
         this.resetCounter();
     }
 
+    public int getTimesRemaining() {
+        return this.maxTimes - 1 - this.count;
+    }
+
     public void resetCounter() {
         this.count = -1;
     }
