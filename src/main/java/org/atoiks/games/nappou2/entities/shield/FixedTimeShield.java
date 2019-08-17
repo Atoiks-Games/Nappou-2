@@ -30,8 +30,8 @@ public final class FixedTimeShield extends TimeBasedShield {
         super(from);
     }
 
-    public FixedTimeShield(float timeout, float reloadTime, float r) {
-        super(timeout, reloadTime, r);
+    public FixedTimeShield(float timeout, float r) {
+        super(timeout, r);
     }
 
     @Override
