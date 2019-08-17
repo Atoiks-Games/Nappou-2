@@ -64,9 +64,11 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
         this.game = new Game(player, this.border);
         this.playerController = new PlayerController(this.game, this.border, config.keymap);
 
-        this.pauseOverlay = new PauseOverlay(fnt);
+        this.pauseOverlay = new PauseOverlay(fnt, this);
         this.dialogOverlay = new DialogOverlay(fnt);
         this.statusOverlay = new StatusOverlay(fnt, player);
+
+        this.reset();
     }
 
     @Override
@@ -79,6 +81,19 @@ public final class GameLevelScene extends CenteringScene implements LevelContext
 
         nextState.enter(this);
         this.state = nextState;
+    }
+
+    @Override
+    public LevelState getState() {
+        return this.state;
+    }
+
+    @Override
+    public void reset() {
+        this.enableDamage();
+        this.shouldSkipPlayerUpdate(false);
+        this.clearMessage();
+        this.game.cleanup();
     }
 
     @Override
