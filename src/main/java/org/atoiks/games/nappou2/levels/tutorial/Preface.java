@@ -100,7 +100,6 @@ public final class Preface implements LevelState {
         if (cfg.bgm) {
             final Clip bgm = ResourceManager.get("/music/Awakening.wav");
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 

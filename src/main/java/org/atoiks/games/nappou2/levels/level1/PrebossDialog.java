@@ -63,7 +63,6 @@ public final class PrebossDialog extends AbstractDialogState {
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Level_One_Boss.wav");
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.setLoopPoints(BOSS_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }

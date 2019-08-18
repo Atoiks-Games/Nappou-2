@@ -79,7 +79,6 @@ public final class TitleScene extends OptionSelectScene {
         // Enter only deals with scenes that play different songs!
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
