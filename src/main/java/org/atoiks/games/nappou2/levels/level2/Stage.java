@@ -41,7 +41,7 @@ import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Easy implements LevelState {
+public final class Stage implements LevelState {
 
     private static final long serialVersionUID = 1935810609973937620L;
 
@@ -238,7 +238,7 @@ public final class Easy implements LevelState {
                 }
                 if (cycles > 1510) {
                     if (game.noMoreEnemies()) {
-                        ctx.setState(new PrebossDialog(new EasyBossWave()));
+                        ctx.setState(new PrebossDialog(new BossWave()));
                         return;
                     }
                 }
@@ -247,7 +247,7 @@ public final class Easy implements LevelState {
     }
 }
 
-final class EasyBossWave implements LevelState {
+final class BossWave implements LevelState {
 
     private static final long serialVersionUID = -4257651682666683051L;
 

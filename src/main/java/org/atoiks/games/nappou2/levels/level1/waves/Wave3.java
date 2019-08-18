@@ -16,26 +16,24 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels.level1.easy;
+package org.atoiks.games.nappou2.levels.level1.waves;
 
 import javax.sound.sampled.Clip;
 
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
-import org.atoiks.games.nappou2.spawner.BIGFishSpawner;
-
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.levels.level1.PrebossDialog;
+import static org.atoiks.games.nappou2.Utils.squirts;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 
-public class EasyWave9 extends AbstractGameWave {
+public class Wave3 extends AbstractGameWave {
 
-    private static final long serialVersionUID = -5008359930974156371L;
+    private static final long serialVersionUID = 5109955367434206118L;
 
-    public EasyWave9() {
+    public Wave3() {
         super("/music/Level_One.wav");
     }
 
@@ -47,14 +45,13 @@ public class EasyWave9 extends AbstractGameWave {
 
     @Override
     public void updateLevel(final LevelContext ctx, final float dt) {
-        final Game game = ctx.getGame();
-
         ++cycles;
         if (cycles == 40) {
-            game.addSpawner(new BIGFishSpawner(375, 100, 700, 0, 250, 3 * (float) Math.PI / 2, 100, false));
-        }
-        if (cycles > 40 && game.noMoreEnemies()) {
-            ctx.setState(new PrebossDialog(new EasyBossWave()));
+            final Game game = ctx.getGame();
+            game.addEnemy(squirts(10, 275, -10, 20));
+            game.addEnemy(squirts(10, 475, -10, 20));
+        } else if (cycles > 80 && ctx.getGame().noMoreEnemies()) {
+            ctx.setState(new Wave4());
             return;
         }
     }

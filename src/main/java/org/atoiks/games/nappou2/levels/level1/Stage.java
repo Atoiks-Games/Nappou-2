@@ -35,14 +35,14 @@ import org.atoiks.games.nappou2.entities.Game;
 import org.atoiks.games.nappou2.entities.shield.Shield;
 import org.atoiks.games.nappou2.entities.shield.CounterBasedShield;
 
-import org.atoiks.games.nappou2.levels.level1.easy.EasyWave1;
+import org.atoiks.games.nappou2.levels.level1.waves.Wave1;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public final class Easy implements LevelState {
+public final class Stage implements LevelState {
 
     private static final long serialVersionUID = 1033236077109661435L;
 
@@ -107,7 +107,7 @@ public final class Easy implements LevelState {
             }
             default:
                 if (cycles > 605 && ctx.getGame().noMoreEnemies()) {
-                    ctx.setState(new EasyWave1());
+                    ctx.setState(new Wave1());
                     return;
                 }
         }

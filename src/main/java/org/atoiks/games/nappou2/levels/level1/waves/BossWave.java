@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels.level1.easy;
+package org.atoiks.games.nappou2.levels.level1.waves;
 
 import javax.sound.sampled.Clip;
 
@@ -32,7 +32,7 @@ import org.atoiks.games.nappou2.entities.enemy.Level1Easy;
 
 import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
 
-public class EasyBossWave implements LevelState {
+public class BossWave implements LevelState {
 
     private static final long serialVersionUID = 1914901384100845861L;
 
@@ -46,7 +46,7 @@ public class EasyBossWave implements LevelState {
 
     private transient Clip bgm;
 
-    public EasyBossWave() {
+    public BossWave() {
         this.exitState = new SaveScoreState(0);
         this.initialClamp = 50;
         this.clampDx = 50;
