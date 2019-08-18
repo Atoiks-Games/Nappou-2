@@ -27,26 +27,21 @@ public final class DefaultRestoreData implements Externalizable {
 
     private static final long serialVersionUID = 7388399896699153942L;
 
-    private int hp;
     private int score;
 
     public void restore(Game game) {
-        game.player.getHpCounter().restoreTo(this.hp);
         game.player.getScoreCounter().restoreTo(this.score);
     }
 
     public void fetch(Game game) {
-        this.hp = game.player.getHpCounter().getHp();
         this.score = game.player.getScoreCounter().getScore();
     }
 
     public void readExternal(ObjectInput s) throws IOException, ClassNotFoundException {
-        this.hp = s.readInt();
         this.score = s.readInt();
     }
 
     public void writeExternal(ObjectOutput s) throws IOException {
-        s.writeInt(this.hp);
         s.writeInt(this.score);
     }
 }

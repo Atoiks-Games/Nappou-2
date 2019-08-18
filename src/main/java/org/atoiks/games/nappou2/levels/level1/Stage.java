@@ -22,32 +22,31 @@ import javax.sound.sampled.Clip;
 
 import org.atoiks.games.framework2d.ResourceManager;
 
-import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.SaveData;
 import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 
+import org.atoiks.games.nappou2.spawner.SmallFishSpawner;
+
 import org.atoiks.games.nappou2.entities.Game;
 
-import org.atoiks.games.nappou2.graphics.shapes.ImmutableCircle;
+import org.atoiks.games.nappou2.entities.shield.Shield;
+import org.atoiks.games.nappou2.entities.shield.CounterBasedShield;
 
-import static org.atoiks.games.nappou2.Utils.dropEnemy;
-import static org.atoiks.games.nappou2.Utils.singleShotEnemy;
-import static org.atoiks.games.nappou2.Utils.circularPathEnemy;
+import org.atoiks.games.nappou2.levels.level1.waves.Wave1;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
-public abstract class AbstractWave0 implements LevelState {
+public final class Stage implements LevelState {
 
-    private static final long serialVersionUID = 2073727756645267798L;
+    private static final long serialVersionUID = 1033236077109661435L;
 
-    private static final ImmutableCircle BOUNDARY_650_M1 = new ImmutableCircle(new Vector2(650, -1), 100);
-    private static final ImmutableCircle BOUNDARY_100_M1 = new ImmutableCircle(new Vector2(100, -1), 100);
+    private transient int cycles;
 
     private transient Clip bgm;
 
@@ -55,22 +54,30 @@ public abstract class AbstractWave0 implements LevelState {
     public void enter(final LevelContext ctx) {
         ctx.clearMessage();
 
+        this.cycles = 0;
+
         final GameConfig cfg = ResourceManager.get("./game.cfg");
         final SaveData saveData = ResourceManager.get("./saves.dat");
 
         final Game game = ctx.getGame();
         game.drifter.clampSpeed(0, 0, 0, 0);
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(1);
         game.player.getScoreCounter().reset();
+
+        final Shield shield = game.player.getShield();
+        if (shield instanceof CounterBasedShield) {
+            ((CounterBasedShield) shield).resetCounter();
+        }
 
         bgm = ResourceManager.get("/music/Level_One.wav");
         if (cfg.bgm) {
             bgm.setMicrosecondPosition(0);
+            bgm.start();
             bgm.setLoopPoints(LEVEL_LOOP, -1);
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
-            bgm.start();
         }
+
+        saveData.setCheckpoint(this);
     }
 
     @Override
@@ -78,33 +85,30 @@ public abstract class AbstractWave0 implements LevelState {
         bgm.stop();
     }
 
-    protected void singleShotEnemiesTopDown(Game game, int k) {
-        this.singleShotEnemiesDownwards(game, k);
-        this.singleShotEnemiesUpwards(game, k);
-    }
-
-    protected void singleShotEnemiesDownwards(Game game, int k) {
-        game.addEnemy(singleShotEnemy(1, 300 - k, -10, 8, false));
-        game.addEnemy(singleShotEnemy(1, 450 + k, -10, 8, false));
-    }
-
-    protected void singleShotEnemiesUpwards(Game game, int k) {
-        game.addEnemy(singleShotEnemy(1, 300 - k, 610, 8, true));
-        game.addEnemy(singleShotEnemy(1, 450 + k, 610, 8, true));
-    }
-
-    protected void dropAndCircularPathEnemies(Game game) {
-        this.dropEnemies(game);
-        this.circularPathEnemies(game);
-    }
-
-    protected void dropEnemies(Game game) {
-        game.addEnemy(dropEnemy(1, -10, 10, 8, false));
-        game.addEnemy(dropEnemy(1, 760, 10, 8, false));
-    }
-
-    protected void circularPathEnemies(Game game) {
-        game.addEnemy(circularPathEnemy(1, BOUNDARY_650_M1, 8, 1, 1, 0, 100));
-        game.addEnemy(circularPathEnemy(1, BOUNDARY_100_M1, 8, -1, 1, 2, 100));
+    @Override
+    public void updateLevel(final LevelContext ctx, final float dt) {
+        switch (++cycles) {
+            //Fish group 1
+            case 400: {
+                final Game game = ctx.getGame();
+                game.addSpawner(new SmallFishSpawner(375, 10, -10, 0, 500, 7 * (float) Math.PI / 12, 1000, false));
+                game.addSpawner(new SmallFishSpawner(375, 10, -10, 0, 500, 5 * (float) Math.PI / 12, 1000, true));
+                break;
+            }
+            //Fish group 2
+            case 455: {
+                final Game game = ctx.getGame();
+                game.addSpawner(new SmallFishSpawner(760, 0, 50, 10, 500, (float) Math.PI, 100, false));
+                game.addSpawner(new SmallFishSpawner(-10, 0, 550, 10, 500, 0, 100, true));
+                game.addSpawner(new SmallFishSpawner(760, 0, 400, 10, 500, (float) Math.PI, 100, false));
+                game.addSpawner(new SmallFishSpawner(-10, 0, 200, 10, 500, 0, 100, true));
+                break;
+            }
+            default:
+                if (cycles > 605 && ctx.getGame().noMoreEnemies()) {
+                    ctx.setState(new Wave1());
+                    return;
+                }
+        }
     }
 }

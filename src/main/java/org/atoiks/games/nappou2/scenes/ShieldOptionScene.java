@@ -39,8 +39,7 @@ public final class ShieldOptionScene extends OptionSelectScene {
 
     private static final Entry[] ENTRIES = {
         new Entry("Bonfire", new Vector2(98, 356)),
-        new Entry("Firefly", new Vector2(98, 414)),
-        new Entry("None", new Vector2(98, 498))
+        new Entry("Firefly", new Vector2(98, 414))
     };
 
     private final LevelState nextState;
@@ -80,7 +79,6 @@ public final class ShieldOptionScene extends OptionSelectScene {
             default:
             case 0: return new CounterBasedShield(new FixedTimeShield(3.5f, 50), 3);
             case 1: return new CounterBasedShield(new TrackingTimeShield(2f, 35), 3);
-            case 2: return NullShield.INSTANCE;
         }
     }
 }

@@ -37,10 +37,10 @@ public interface LevelContext {
     public void displayMessage(Message msg);
 
     public default void disableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(true);
+        getGame().setDamageEnabled(false);
     }
 
     public default void enableDamage() {
-        getGame().player.getHpCounter().setIgnoreHpChange(false);
+        getGame().setDamageEnabled(true);
     }
 }

@@ -24,7 +24,6 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
-import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
 import org.atoiks.games.nappou2.graphics.FillRenderer;
@@ -35,7 +34,6 @@ import org.atoiks.games.nappou2.graphics.shapes.Circular;
 
 import org.atoiks.games.nappou2.entities.shield.Shield;
 import org.atoiks.games.nappou2.entities.shield.ShieldEntity;
-import org.atoiks.games.nappou2.entities.shield.RespawnShield;
 
 public final class Player implements Drawable, Circular {
 
@@ -44,12 +42,10 @@ public final class Player implements Drawable, Circular {
     private static final Renderer CYAN_RENDERER = new OutlineRenderer(Color.cyan);
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
-    private final HitpointCounter hpCounter = new HitpointCounter();
 
     private final SpeedHintCircle speedHint = new SpeedHintCircle(this);
     private final CollisionCircle collider = new CollisionCircle(this);
 
-    private final RespawnShield respawnShield = new RespawnShield();
     private final ShieldEntity shield;
 
     private Vector2 position;
@@ -64,7 +60,6 @@ public final class Player implements Drawable, Circular {
         Drawable.render(g, this);
         Drawable.render(g, this.speedHint);
         Drawable.render(g, this.shield);
-        Drawable.render(g, this.respawnShield);
     }
 
     @Override
@@ -79,23 +74,14 @@ public final class Player implements Drawable, Circular {
 
     public void update(final float dt) {
         this.shield.update(dt);
-        this.respawnShield.update(dt);
     }
 
     public Shield getShield() {
         return this.shield;
     }
 
-    public Shield getRespawnShield() {
-        return this.respawnShield;
-    }
-
     public ScoreCounter getScoreCounter() {
         return this.scoreCounter;
-    }
-
-    public HitpointCounter getHpCounter() {
-        return this.hpCounter;
     }
 
     public void setFocusedMode(boolean flag) {
@@ -126,7 +112,6 @@ public final class Player implements Drawable, Circular {
     public void setPosition(final Vector2 pos) {
         this.position = pos;
         this.shield.setPosition(pos);
-        this.respawnShield.setPosition(pos);
     }
 
     public boolean collidesWith(Collidable col) {
