@@ -45,6 +45,9 @@ public final class Game {
 
     private final Border border;
 
+    private boolean damageFlag = true;
+    private boolean abortFlag;
+
     public Game(Player player, Border border) {
         this.player = player;
         this.border = border;
@@ -90,8 +93,18 @@ public final class Game {
         spawners.clear();
     }
 
+    public void reset() {
+        this.cleanup();
+        this.abortFlag = false;
+        this.damageFlag = true;
+    }
+
+    public void setDamageEnabled(boolean flag) {
+        this.damageFlag = flag;
+    }
+
     public boolean shouldAbort() {
-        return this.player.getHpCounter().isOutOfHp();
+        return this.abortFlag;
     }
 
     public void update(final float dt) {
@@ -171,12 +184,10 @@ public final class Game {
             final Bullet bullet = it.next();
             if (shieldActive && shield.collidesWith(bullet)) {
                 it.remove();
-            } else if (player.collidesWith(bullet)) {
-                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
-                    // Player is dead, no more collision can happen
-                    return;
-                }
-                it.remove();
+            } else if (this.damageFlag && player.collidesWith(bullet)) {
+                // Player dies as soon as it touches anything (1 hp)
+                this.abortFlag = true;
+                return;
             }
         }
 
@@ -195,14 +206,10 @@ public final class Game {
                 }
             }
 
-            if (player.collidesWith(enemy)) {
-                if (player.getHpCounter().changeBy(-1).isOutOfHp()) {
-                    return;
-                }
-                if (enemy.changeHp(-1) <= 0) {
-                    this.player.getScoreCounter().changeBy(enemy.getScore());
-                    outer.remove();
-                }
+            if (this.damageFlag && player.collidesWith(enemy)) {
+                // Player dies as soon as it touches anything (1 hp)
+                this.abortFlag = true;
+                return;
             }
         }
     }

@@ -66,7 +66,6 @@ public final class Preface implements LevelState {
     public void restore(final LevelContext ctx) {
         final Game game = ctx.getGame();
         game.player.setPosition(GAME_BORDER / 2, HEIGHT / 6 * 5);
-        game.player.getHpCounter().restoreTo(1);
         game.player.getScoreCounter().reset();
 
         final Shield shield = game.player.getShield();

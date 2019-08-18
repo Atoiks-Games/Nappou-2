@@ -24,7 +24,6 @@ import org.atoiks.games.framework2d.IGraphics;
 
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreCounter;
-import org.atoiks.games.nappou2.HitpointCounter;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
 import org.atoiks.games.nappou2.graphics.FillRenderer;
@@ -43,7 +42,6 @@ public final class Player implements Drawable, Circular {
     private static final Renderer CYAN_RENDERER = new OutlineRenderer(Color.cyan);
 
     private final ScoreCounter scoreCounter = new ScoreCounter();
-    private final HitpointCounter hpCounter = new HitpointCounter();
 
     private final SpeedHintCircle speedHint = new SpeedHintCircle(this);
     private final CollisionCircle collider = new CollisionCircle(this);
@@ -84,10 +82,6 @@ public final class Player implements Drawable, Circular {
 
     public ScoreCounter getScoreCounter() {
         return this.scoreCounter;
-    }
-
-    public HitpointCounter getHpCounter() {
-        return this.hpCounter;
     }
 
     public void setFocusedMode(boolean flag) {
