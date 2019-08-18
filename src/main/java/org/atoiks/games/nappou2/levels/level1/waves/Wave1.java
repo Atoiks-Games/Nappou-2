@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels.level1.easy;
+package org.atoiks.games.nappou2.levels.level1.waves;
 
 import javax.sound.sampled.Clip;
 
@@ -29,11 +29,11 @@ import static org.atoiks.games.nappou2.spawner.FishSpawner.fishPart;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.*;
 
-public class EasyWave1 extends AbstractGameWave {
+public class Wave1 extends AbstractGameWave {
 
     private static final long serialVersionUID = 9135918145681392179L;
 
-    public EasyWave1() {
+    public Wave1() {
         super("/music/Level_One.wav");
     }
 
@@ -86,7 +86,7 @@ public class EasyWave1 extends AbstractGameWave {
                 break;
             default:
                 if (cycles > 1800 && ctx.getGame().noMoreEnemies()) {
-                    ctx.setState(new EasyWave2());
+                    ctx.setState(new Wave2());
                     return;
                 }
         }

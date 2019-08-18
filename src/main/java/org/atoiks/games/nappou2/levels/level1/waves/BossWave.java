@@ -16,7 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels.level1;
+package org.atoiks.games.nappou2.levels.level1.waves;
+
+import javax.sound.sampled.Clip;
+
+import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.nappou2.Drifter;
 
@@ -24,27 +28,23 @@ import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
-public abstract class AbstractBossWave implements LevelState {
+import org.atoiks.games.nappou2.entities.enemy.Level1Easy;
 
-    private static final long serialVersionUID = -8597002284637792362L;
+import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
 
-    private final SaveScoreState exitState;
-    private final float initialClamp;
-    private final float clampDx;
-    private final float clampDy;
+public class BossWave implements LevelState {
+
+    private static final long serialVersionUID = 1914901384100845861L;
 
     private transient int cycles;
     private transient int phase;
 
-    protected AbstractBossWave(SaveScoreState exitState, float initialClamp, float clampDx, float clampDy) {
-        this.exitState = exitState;
-        this.initialClamp = initialClamp;
-        this.clampDx = clampDx;
-        this.clampDy = clampDy;
-    }
+    private transient Clip bgm;
 
     @Override
     public void enter(final LevelContext ctx) {
+        this.bgm = ResourceManager.get("/music/Level_One_Boss.wav");
+
         ctx.enableDamage();
         ctx.shouldSkipPlayerUpdate(false);
 
@@ -54,7 +54,14 @@ public abstract class AbstractBossWave implements LevelState {
         final Drifter drift = ctx.getGame().drifter;
         drift.accelY = -20;
         drift.accelX = 20;
-        drift.clampDx(0, this.initialClamp);
+        drift.clampDx(0, 50);
+
+        ctx.getGame().addEnemy(new Level1Easy(300, 375, -10, 20));
+    }
+
+    @Override
+    public void exit() {
+        this.bgm.stop();
     }
 
     @Override
@@ -65,26 +72,26 @@ public abstract class AbstractBossWave implements LevelState {
                 case 0:
                     drift.accelY = -20;
                     drift.accelX = 20;
-                    drift.clampDx(0, this.clampDx);
+                    drift.clampDx(0, 50);
                     break;
                 case 1:
                     drift.accelX = -20;
                     drift.accelY = 20;
-                    drift.clampDy(0, this.clampDy);
+                    drift.clampDy(0, 50);
                     break;
                 case 2:
                     drift.accelY = -20;
-                    drift.clampDx(-this.clampDx, 0);
+                    drift.clampDx(-50, 0);
                     break;
                 case 3:
                     drift.accelX = 20;
-                    drift.clampDy(-this.clampDy, 0);
+                    drift.clampDy(-50, 0);
                     break;
             }
         }
 
         if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
-            ctx.setState(new PostbossDialog(this.exitState));
+            ctx.setState(new PostbossDialog(new SaveScoreState(0)));
             return;
         }
     }

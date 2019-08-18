@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.atoiks.games.nappou2.levels.level1.easy;
+package org.atoiks.games.nappou2.levels.level1.waves;
 
 import javax.sound.sampled.Clip;
 
@@ -37,14 +37,14 @@ import org.atoiks.games.nappou2.graphics.shapes.ImmutableEllipses;
 
 import static org.atoiks.games.nappou2.levels.level1.Data.LEVEL_LOOP;
 
-public class EasyWave5 extends AbstractGameWave {
+public class Wave5 extends AbstractGameWave {
 
     private static final long serialVersionUID = 5308372197610362137L;
 
     private static final ImmutableEllipses BOUNDARY_1 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(310, 310));
     private static final ImmutableEllipses BOUNDARY_2 = new ImmutableEllipses(new Vector2(375, 300), new Vector2(350, 350));
 
-    public EasyWave5() {
+    public Wave5() {
         super("/music/Level_One.wav");
     }
 
@@ -112,7 +112,7 @@ public class EasyWave5 extends AbstractGameWave {
                 break;
         }
         if (cycles > 1250 && game.noMoreEnemies()) {
-            ctx.setState(new EasyWave6());
+            ctx.setState(new Wave6());
             return;
         }
     }

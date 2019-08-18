@@ -36,7 +36,7 @@ import org.atoiks.games.nappou2.GameConfig;
 
 import org.atoiks.games.nappou2.levels.NullState;
 import org.atoiks.games.nappou2.levels.LevelState;
-import org.atoiks.games.nappou2.levels.level1.Easy;
+import org.atoiks.games.nappou2.levels.level1.Stage;
 import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.Player;
@@ -142,7 +142,7 @@ public final class TitleScene extends OptionSelectScene {
     }
 
     private void startGameOption() {
-        final LevelState level = new Preface(new Easy());
+        final LevelState level = new Preface(new Stage());
         if (ResourceManager.<GameConfig>get("./game.cfg").challengeMode) {
             // Challenge mode forces you to use no shields,
             // so there is no need to jump into shield-option-scene.
