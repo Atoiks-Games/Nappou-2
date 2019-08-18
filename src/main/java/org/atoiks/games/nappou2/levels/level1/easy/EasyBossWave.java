@@ -18,30 +18,55 @@
 
 package org.atoiks.games.nappou2.levels.level1.easy;
 
-import org.atoiks.games.framework2d.ResourceManager;
 import javax.sound.sampled.Clip;
 
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.nappou2.Drifter;
+
+import org.atoiks.games.nappou2.levels.LevelState;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.SaveScoreState;
 
 import org.atoiks.games.nappou2.entities.enemy.Level1Easy;
 
-import org.atoiks.games.nappou2.levels.level1.AbstractBossWave;
+import org.atoiks.games.nappou2.levels.level1.PostbossDialog;
 
-public class EasyBossWave extends AbstractBossWave {
+public class EasyBossWave implements LevelState {
 
     private static final long serialVersionUID = 1914901384100845861L;
 
-    private Clip bgm;
+    private final SaveScoreState exitState;
+    private final float initialClamp;
+    private final float clampDx;
+    private final float clampDy;
+
+    private transient int cycles;
+    private transient int phase;
+
+    private transient Clip bgm;
 
     public EasyBossWave() {
-        super(new SaveScoreState(0), 50, 50, 50);
+        this.exitState = new SaveScoreState(0);
+        this.initialClamp = 50;
+        this.clampDx = 50;
+        this.clampDy = 50;
     }
 
     @Override
     public void enter(final LevelContext ctx) {
         this.bgm = ResourceManager.get("/music/Level_One_Boss.wav");
-        super.enter(ctx);
+
+        ctx.enableDamage();
+        ctx.shouldSkipPlayerUpdate(false);
+
+        this.cycles = 0;
+        this.phase = 0;
+
+        final Drifter drift = ctx.getGame().drifter;
+        drift.accelY = -20;
+        drift.accelX = 20;
+        drift.clampDx(0, this.initialClamp);
 
         ctx.getGame().addEnemy(new Level1Easy(300, 375, -10, 20));
     }
@@ -49,5 +74,37 @@ public class EasyBossWave extends AbstractBossWave {
     @Override
     public void exit() {
         this.bgm.stop();
+    }
+
+    @Override
+    public void updateLevel(final LevelContext ctx, final float dt) {
+        if (++cycles % 4000 == 0) {
+            final Drifter drift = ctx.getGame().drifter;
+            switch (++phase) {
+                case 0:
+                    drift.accelY = -20;
+                    drift.accelX = 20;
+                    drift.clampDx(0, this.clampDx);
+                    break;
+                case 1:
+                    drift.accelX = -20;
+                    drift.accelY = 20;
+                    drift.clampDy(0, this.clampDy);
+                    break;
+                case 2:
+                    drift.accelY = -20;
+                    drift.clampDx(-this.clampDx, 0);
+                    break;
+                case 3:
+                    drift.accelX = 20;
+                    drift.clampDy(-this.clampDy, 0);
+                    break;
+            }
+        }
+
+        if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
+            ctx.setState(new PostbossDialog(this.exitState));
+            return;
+        }
     }
 }
