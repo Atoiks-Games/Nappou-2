@@ -32,7 +32,6 @@ import org.atoiks.games.nappou2.entities.Message;
 
 import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
 
-
 public final class PostbossDialog extends AbstractDialogState {
 
     private static final long serialVersionUID = 6378909470491402086L;
