@@ -36,22 +36,10 @@ public class BossWave implements LevelState {
 
     private static final long serialVersionUID = 1914901384100845861L;
 
-    private final SaveScoreState exitState;
-    private final float initialClamp;
-    private final float clampDx;
-    private final float clampDy;
-
     private transient int cycles;
     private transient int phase;
 
     private transient Clip bgm;
-
-    public BossWave() {
-        this.exitState = new SaveScoreState(0);
-        this.initialClamp = 50;
-        this.clampDx = 50;
-        this.clampDy = 50;
-    }
 
     @Override
     public void enter(final LevelContext ctx) {
@@ -66,7 +54,7 @@ public class BossWave implements LevelState {
         final Drifter drift = ctx.getGame().drifter;
         drift.accelY = -20;
         drift.accelX = 20;
-        drift.clampDx(0, this.initialClamp);
+        drift.clampDx(0, 50);
 
         ctx.getGame().addEnemy(new Level1Easy(300, 375, -10, 20));
     }
@@ -84,26 +72,26 @@ public class BossWave implements LevelState {
                 case 0:
                     drift.accelY = -20;
                     drift.accelX = 20;
-                    drift.clampDx(0, this.clampDx);
+                    drift.clampDx(0, 50);
                     break;
                 case 1:
                     drift.accelX = -20;
                     drift.accelY = 20;
-                    drift.clampDy(0, this.clampDy);
+                    drift.clampDy(0, 50);
                     break;
                 case 2:
                     drift.accelY = -20;
-                    drift.clampDx(-this.clampDx, 0);
+                    drift.clampDx(-50, 0);
                     break;
                 case 3:
                     drift.accelX = 20;
-                    drift.clampDy(-this.clampDy, 0);
+                    drift.clampDy(-50, 0);
                     break;
             }
         }
 
         if (cycles > 40 && ctx.getGame().noMoreEnemies()) {
-            ctx.setState(new PostbossDialog(this.exitState));
+            ctx.setState(new PostbossDialog(new SaveScoreState(0)));
             return;
         }
     }
