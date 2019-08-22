@@ -22,6 +22,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.atoiks.games.framework2d.IGraphics;
+import org.atoiks.games.framework2d.ResourceManager;
+
+import org.atoiks.games.framework2d.resource.Font;
+import org.atoiks.games.framework2d.resource.Texture;
+
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
@@ -36,6 +42,7 @@ public final class CounterBasedShield implements ShieldEntity {
     private transient int maxTimes;
 
     private transient int count;
+    private transient Texture circImg;
 
     public CounterBasedShield(ShieldEntity wrapper, int maxTimes) {
         this.wrapper = wrapper;
@@ -112,6 +119,26 @@ public final class CounterBasedShield implements ShieldEntity {
             return this.wrapper.getRenderer();
         }
         return NullRenderer.INSTANCE;
+    }
+
+    @Override
+    public void drawStatus(IGraphics g, Font font) {
+        if (this.circImg == null) {
+            this.circImg = ResourceManager.get("/image/circ.png");
+        }
+
+        final int activationsRemaining = this.getTimesRemaining();
+
+        font.renderText(g, "Shields Remaining", 2, 0);
+
+        final int w = this.circImg.getWidth();
+        for (int i = 0; i < activationsRemaining; ++i) {
+            g.drawTexture(this.circImg, 5 + i * w, 4);
+        }
+
+        if (this.isReady()) {
+            font.renderText(g, "Ready", 78, 18);
+        }
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {

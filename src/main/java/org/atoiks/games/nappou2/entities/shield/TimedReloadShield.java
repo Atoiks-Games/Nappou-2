@@ -22,6 +22,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Font;
+
 import org.atoiks.games.nappou2.Vector2;
 
 import org.atoiks.games.nappou2.graphics.Renderer;
@@ -126,6 +130,19 @@ public final class TimedReloadShield implements ShieldEntity {
             return NullRenderer.INSTANCE;
         }
         return this.wrapper.getRenderer();
+    }
+
+    @Override
+    public void drawStatus(IGraphics g, Font font) {
+        final float secondsRemaining = this.getRemainingReloadTime();
+        if (secondsRemaining > 0) {
+            font.renderText(g, "Shield Reloading", 2, 0);
+            font.renderText(g, String.format("%.1fs left", secondsRemaining), 5, 16);
+        } else if (this.isReady()) {
+            font.renderText(g, "Shield Ready", 2, 0);
+        } else if (this.isActive()) {
+            font.renderText(g, "Shield Active", 2, 0);
+        }
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {
