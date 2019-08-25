@@ -28,7 +28,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.resource.Font;
 
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.GameInput;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
@@ -65,7 +65,7 @@ public final class SaveHighscoreScene extends CenteringScene {
     private final Font font16;
     private final Font font30;
     private final Font font80;
-    private final Keymap keymap;
+    private final GameInput keymap;
 
     private final int levelId;
     private final int levelScore;

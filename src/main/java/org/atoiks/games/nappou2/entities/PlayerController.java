@@ -18,9 +18,9 @@
 
 package org.atoiks.games.nappou2.entities;
 
-import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.Drifter;
+import org.atoiks.games.nappou2.GameInput;
 
 import org.atoiks.games.nappou2.entities.Border;
 import org.atoiks.games.nappou2.entities.bullet.factory.BulletFactory;
@@ -37,12 +37,12 @@ public final class PlayerController {
     private final Game game;
     private final Border border;
     private final Drifter drifter;
-    private final Keymap keymap;
+    private final GameInput keymap;
 
     private boolean ignoreUpdateFlag;
     private float playerFireLimiter;
 
-    public PlayerController(final Game game, Border border, final Keymap keymap) {
+    public PlayerController(final Game game, Border border, final GameInput keymap) {
         this.game = game;
         this.player = this.game.player;
         this.drifter = this.game.drifter;
