@@ -41,7 +41,7 @@ import org.atoiks.games.nappou2.levels.tutorial.Preface;
 
 import org.atoiks.games.nappou2.entities.Player;
 
-public final class TitleScene extends OptionSelectScene {
+public final class TitleScene extends StandardOptionSelectScene {
 
     private static final Entry[] ENTRIES = {
         new Entry("Continue", new Vector2(68, 232)),

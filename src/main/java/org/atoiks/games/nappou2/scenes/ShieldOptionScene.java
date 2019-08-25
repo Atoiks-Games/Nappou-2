@@ -35,7 +35,7 @@ import org.atoiks.games.nappou2.entities.Player;
 
 import org.atoiks.games.nappou2.entities.shield.*;
 
-public final class ShieldOptionScene extends OptionSelectScene {
+public final class ShieldOptionScene extends StandardOptionSelectScene {
 
     private static final Entry[] ENTRIES = {
         new Entry("Bonfire", new Vector2(98, 356)),

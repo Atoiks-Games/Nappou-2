@@ -30,7 +30,7 @@ import org.atoiks.games.nappou2.Vector2;
 import org.atoiks.games.nappou2.ScoreData;
 import org.atoiks.games.nappou2.GameConfig;
 
-public final class ConfigScene extends OptionSelectScene {
+public final class ConfigScene extends StandardOptionSelectScene {
 
     private static final Entry[] ENTRIES = {
         new Entry("BGM", new Vector2(84, 66)),
