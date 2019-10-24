@@ -28,6 +28,9 @@ import org.atoiks.games.nappou2.entities.Message;
 public interface LevelContext {
 
     public void setState(final LevelState nextState);
+    public LevelState getState();
+
+    public void reset();
 
     public Game getGame();
 

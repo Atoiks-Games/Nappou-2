@@ -135,4 +135,9 @@ public final class Preface implements LevelState {
             return;
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this;
+    }
 }

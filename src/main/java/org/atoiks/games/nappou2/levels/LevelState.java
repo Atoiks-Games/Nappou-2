@@ -53,4 +53,6 @@ public interface LevelState extends Serializable {
     }
 
     public void updateLevel(LevelContext ctx, float dt);
+
+    public LevelState getAssociatedLevel();
 }

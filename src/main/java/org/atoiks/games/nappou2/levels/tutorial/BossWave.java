@@ -76,4 +76,9 @@ import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
             }
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return new Preface(this.nextState);
+    }
 }

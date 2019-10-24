@@ -23,6 +23,8 @@ import javax.sound.sampled.Clip;
 import org.atoiks.games.nappou2.levels.LevelContext;
 import org.atoiks.games.nappou2.levels.AbstractGameWave;
 
+import org.atoiks.games.nappou2.levels.level1.Stage;
+
 import org.atoiks.games.nappou2.spawner.BIGFishSpawner;
 
 import org.atoiks.games.nappou2.entities.Game;
@@ -57,5 +59,10 @@ public class Wave9 extends AbstractGameWave {
             ctx.setState(new PrebossDialog(new BossWave()));
             return;
         }
+    }
+
+    @Override
+    public Stage getAssociatedLevel() {
+        return new Stage();
     }
 }

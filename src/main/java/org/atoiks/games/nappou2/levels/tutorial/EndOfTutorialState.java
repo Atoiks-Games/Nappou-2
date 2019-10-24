@@ -46,4 +46,9 @@ import org.atoiks.games.nappou2.levels.LevelContext;
         ctx.setState(this.nextState);
         return;
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return this.nextState;
+    }
 }

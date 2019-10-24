@@ -50,4 +50,9 @@ public final class SaveScoreState implements LevelState {
                 ctx.getGame().player.getScoreCounter().getScore(),
                 mode));
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return NullState.INSTANCE;
+    }
 }

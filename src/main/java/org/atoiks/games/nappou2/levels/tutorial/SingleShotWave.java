@@ -89,4 +89,9 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
             }
         }
     }
+
+    @Override
+    public LevelState getAssociatedLevel() {
+        return new Preface(this.nextState);
+    }
 }
