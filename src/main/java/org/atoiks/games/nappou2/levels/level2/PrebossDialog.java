@@ -64,7 +64,6 @@ import static org.atoiks.games.nappou2.entities.Message.HorizontalAlignment;
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Broken_Soul.wav");
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }

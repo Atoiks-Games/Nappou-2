@@ -105,7 +105,6 @@ public final class ConfigScene extends OptionSelectScene {
         switch (selector) {
             case 0:
                 if ((config.bgm = newValue)) {
-                    bgm.start();
                     bgm.loop(Clip.LOOP_CONTINUOUSLY);
                 } else {
                     bgm.stop();

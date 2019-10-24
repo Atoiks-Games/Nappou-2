@@ -51,7 +51,6 @@ import org.atoiks.games.nappou2.entities.enemy.CAITutorial;
         if (ResourceManager.<GameConfig>get("./game.cfg").bgm) {
             final Clip bgm = ResourceManager.get("/music/Unlocked.wav");
             bgm.setMicrosecondPosition(0);
-            bgm.start();
             bgm.loop(Clip.LOOP_CONTINUOUSLY);
         }
 
