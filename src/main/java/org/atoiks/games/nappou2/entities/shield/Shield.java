@@ -20,6 +20,10 @@ package org.atoiks.games.nappou2.entities.shield;
 
 import org.atoiks.games.nappou2.entities.Collidable;
 
+import org.atoiks.games.framework2d.IGraphics;
+
+import org.atoiks.games.framework2d.resource.Font;
+
 public interface Shield {
 
     public void activate();
@@ -28,4 +32,10 @@ public interface Shield {
     public boolean isReady();
 
     public boolean collidesWith(Collidable col);
+
+    public default void drawStatus(IGraphics g, Font font) {
+        if (this.isReady()) {
+            font.renderText(g, "Shield Ready", 30, 0);
+        }
+    }
 }
