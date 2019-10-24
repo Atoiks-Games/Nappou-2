@@ -28,7 +28,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 
 import org.atoiks.games.framework2d.resource.Font;
 
-import org.atoiks.games.nappou2.Keymap;
+import org.atoiks.games.nappou2.GameInput;
 import org.atoiks.games.nappou2.GameConfig;
 
 import static org.atoiks.games.nappou2.scenes.GameLevelScene.HEIGHT;
@@ -48,7 +48,7 @@ import static org.atoiks.games.nappou2.scenes.GameLevelScene.GAME_BORDER;
 
     private final Font font30;
     private final Font font80;
-    private final Keymap keymap;
+    private final GameInput keymap;
 
     public PauseOverlay(Font font) {
         this.font30 = font.deriveSize(30f);

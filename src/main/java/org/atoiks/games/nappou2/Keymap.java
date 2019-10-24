@@ -26,7 +26,7 @@ import java.io.Externalizable;
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.KeyCode;
 
-public final class Keymap implements Externalizable {
+public final class Keymap implements GameInput, Externalizable {
 
     private static final long serialVersionUID = -5418643969162122158L;
 
@@ -40,23 +40,28 @@ public final class Keymap implements Externalizable {
     private KeyCode kcFire = KeyCode.KEY_Z;
     private KeyCode kcShield = KeyCode.KEY_X;
 
+    @Override
     public boolean shouldSelectPrevious() {
         return Input.isKeyPressed(this.kcUp);
     }
 
+    @Override
     public boolean shouldSelectNext() {
         return Input.isKeyPressed(this.kcDown)
             || Input.isKeyPressed(KeyCode.KEY_TAB);
     }
 
+    @Override
     public boolean shouldSelectLeft() {
         return Input.isKeyPressed(this.kcLeft);
     }
 
+    @Override
     public boolean shouldSelectRight() {
         return Input.isKeyPressed(this.kcRight);
     }
 
+    @Override
     public Vector2 getMovementDirection() {
         int signX = 0;
         int signY = 0;
@@ -69,14 +74,17 @@ public final class Keymap implements Externalizable {
         return new Vector2(signX, signY);
     }
 
+    @Override
     public boolean shouldSlowDown() {
         return Input.isKeyDown(this.kcSlow);
     }
 
+    @Override
     public boolean shouldFire() {
         return Input.isKeyDown(this.kcFire);
     }
 
+    @Override
     public boolean shouldActivateShield() {
         return Input.isKeyDown(this.kcShield);
     }

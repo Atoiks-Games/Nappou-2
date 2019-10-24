@@ -29,7 +29,7 @@ import org.atoiks.games.framework2d.ResourceManager;
 import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.Vector2;
 
-public final class KeymapConfigScene extends OptionSelectScene {
+public final class KeymapConfigScene extends OptionSelectScene<Keymap> {
 
     private static final Entry RESET_TO_DEFAULT_ENTRY = new Entry("Reset to default", new Vector2(634, 400));
 
@@ -56,9 +56,6 @@ public final class KeymapConfigScene extends OptionSelectScene {
 
     @Override
     public boolean update(float dt) {
-        // We do not use the parent class's update
-        // since it handles option selection differently!
-
         if (Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
             SceneManager.popScene();
             return true;

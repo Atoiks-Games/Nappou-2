@@ -27,10 +27,10 @@ import org.atoiks.games.framework2d.SceneManager;
 
 import org.atoiks.games.framework2d.resource.Font;
 
-import org.atoiks.games.nappou2.Keymap;
 import org.atoiks.games.nappou2.Vector2;
+import org.atoiks.games.nappou2.GameInput;
 
-public abstract class OptionSelectScene extends CenteringScene {
+public abstract class OptionSelectScene<T extends GameInput> extends CenteringScene {
 
     public static class Entry {
 
@@ -82,9 +82,9 @@ public abstract class OptionSelectScene extends CenteringScene {
     protected final Font font16;
     protected final Font font30;
 
-    private final boolean supportEsc;
+    protected final boolean supportEsc;
 
-    protected Keymap keymap;
+    protected T keymap;
 
     private Entry[] entries = { };
     private int[] validIndices = { };
@@ -92,19 +92,15 @@ public abstract class OptionSelectScene extends CenteringScene {
 
     private int selector;
 
-    public OptionSelectScene(Font font, Keymap keymap) {
+    public OptionSelectScene(Font font, T keymap) {
         this(font, keymap, true);
     }
 
-    public OptionSelectScene(Font font, Keymap keymap, boolean supportEsc) {
+    public OptionSelectScene(Font font, T keymap, boolean supportEsc) {
         this.font16 = font.deriveSize(16f);
         this.font30 = font.deriveSize(30f);
         this.keymap = keymap;
         this.supportEsc = supportEsc;
-    }
-
-    public OptionSelectScene(Font font, boolean supportEsc) {
-        this(font, new Keymap(), supportEsc);
     }
 
     protected void setRenderAllEntries(boolean flag) {
@@ -171,20 +167,6 @@ public abstract class OptionSelectScene extends CenteringScene {
                 this.entries[this.validIndices[i]].render(fnt, g);
             }
         }
-    }
-
-    @Override
-    public boolean update(float dt) {
-        if (this.supportEsc && Input.isKeyPressed(KeyCode.KEY_ESCAPE)) {
-            SceneManager.popScene();
-            return true;
-        }
-
-        if (this.keymap.shouldSelectNext()) ++this.selector;
-        if (this.keymap.shouldSelectPrevious()) --this.selector;
-        this.normalizeSelectorIndex();
-
-        return true;
     }
 
     protected final void selectNext() {
